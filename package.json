@@ -1,0 +1,72 @@
+{
+  "name": "inventory-management-api",
+  "version": "1.0.0",
+  "description": "CSE 341 Final project - Team 14 - Inventory Management API for managing inventory items, including CRUD operations, user authentication, and integration with MongoDB.",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "format": "prettier --write .",
+    "swagger-gen": "node ./scripts/swagger.js",
+    "prestart": "npm run swagger-gen",
+    "debug": "nodemon --inspect src/server.js"
+  },
+  "keywords": [
+    "inventory",
+    "management",
+    "api",
+    "node.js",
+    "express",
+    "mongodb"
+  ],
+  "author": "George Olwal",
+  "contributors": [
+    {
+      "name": "Tro Opong Ebenezer"
+    },
+    {
+      "name": "Jules Samuel"
+    },
+    {
+      "name": "Santiago Ariel Chaparro"
+    },
+    {
+      "name": "Ndikum Sabastine Ndifor"
+    },
+    {
+      "name": "George Omondi Olwal"
+    }
+  ],
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.8.4",
+    "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
+    "connect-mongo": "^5.1.0",
+    "connect-mongodb-session": "^5.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.21.2",
+    "express-async-handler": "^1.2.0",
+    "express-session": "^1.18.1",
+    "express-validator": "^7.0.1",
+    "mongodb": "^6.15.0",
+    "mongoose": "^8.0.3",
+    "passport": "^0.7.0",
+    "passport-github2": "^0.1.12",
+    "passport-google-oauth20": "^2.0.0",
+    "passport-local": "^1.0.0",
+    "swagger-ui-express": "^5.0.1",
+    "winston": "^3.11.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.55.0",
+    "eslint-config-prettier": "^10.1.1",
+    "nodemon": "^3.0.2",
+    "prettier": "^3.1.1",
+    "swagger-autogen": "^2.23.7"
+  }
+}

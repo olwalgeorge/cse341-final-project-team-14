@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory Management Dashboard</title>
+    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="dashboard-body">
+    <nav class="top-nav">
+        <div class="nav-brand">
+            <img src="/images/inventory-logo.png" alt="Inventory Logo" class="brand-logo">
+            <span>Inventory Management</span>
+        </div>
+        <div class="nav-actions">
+            <span class="system-status online">System Online</span>
+            <div class="user-menu">
+                <img src="/images/default-profile.png" alt="Profile" class="avatar-small">
+                <span id="userName">User</span>
+                <a href="/logout.html" class="btn-logout" title="Logout"><i class="fas fa-power-off"></i></a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <div class="quick-stats">
+            <div class="stat-card" id="totalItems">
+                <i class="fas fa-boxes"></i>
+                <div class="stat-info">
+                    <span class="stat-value">1,234</span>
+                    <span class="stat-label">Total Items</span>
+                </div>
+            </div>
+            <div class="stat-card" id="lowStock">
+                <i class="fas fa-exclamation-circle"></i>
+                <div class="stat-info">
+                    <span class="stat-value">15</span>
+                    <span class="stat-label">Low Stock Items</span>
+                </div>
+            </div>
+            <div class="stat-card" id="pending">
+                <i class="fas fa-clock"></i>
+                <div class="stat-info">
+                    <span class="stat-value">28</span>
+                    <span class="stat-label">Pending Orders</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid-container">
+            <div class="grid-item inventory-status">
+                <h3>Stock Status</h3>
+                <div class="inventory-grid">
+                    <div class="inventory-item">
+                        <div class="inventory-icon"><i class="fas fa-warehouse"></i></div>
+                        <div class="inventory-data">
+                            <span class="value">85%</span>
+                            <span class="label">Storage Capacity</span>
+                        </div>
+                    </div>
+                    <div class="inventory-item">
+                        <div class="inventory-icon"><i class="fas fa-truck-loading"></i></div>
+                        <div class="inventory-data">
+                            <span class="value">24</span>
+                            <span class="label">Incoming Shipments</span>
+                        </div>
+                    </div>
+                    <div class="inventory-item">
+                        <div class="inventory-icon"><i class="fas fa-shopping-cart"></i></div>
+                        <div class="inventory-data">
+                            <span class="value">156</span>
+                            <span class="label">Orders Today</span>
+                        </div>
+                    </div>
+                    <div class="inventory-item">
+                        <div class="inventory-icon"><i class="fas fa-chart-line"></i></div>
+                        <div class="inventory-data">
+                            <span class="value">12%</span>
+                            <span class="label">Growth Rate</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid-item quick-actions">
+                <h3>Quick Actions</h3>
+                <div class="control-panel">
+                    <button class="control-btn">
+                        <i class="fas fa-plus"></i>
+                        <span>Add Item</span>
+                    </button>
+                    <button class="control-btn">
+                        <i class="fas fa-sync"></i>
+                        <span>Update Stock</span>
+                    </button>
+                    <button class="control-btn">
+                        <i class="fas fa-file-export"></i>
+                        <span>Export Report</span>
+                    </button>
+                    <button class="control-btn">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid-item alerts-panel">
+                <h3>Recent Activities</h3>
+                <div class="alerts-list">
+                    <div class="alert-item warning">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <span>Product ID #5123 running low on stock</span>
+                        <span class="time">2m ago</span>
+                    </div>
+                    <div class="alert-item success">
+                        <i class="fas fa-check-circle"></i>
+                        <span>New shipment received - Order #8547</span>
+                        <span class="time">15m ago</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/scripts/script.js"></script>
+</body>
+</html>

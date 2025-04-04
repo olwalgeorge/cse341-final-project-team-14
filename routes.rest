@@ -1,0 +1,79 @@
+### Register User
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+  "fullName": "Omondi",
+  "username": "omond",
+  "password": "SuperAdmin1234!",
+  "email": "omondi@example.com"
+}
+
+
+### Login User
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "password": "SuperAdmin1234!",
+  "email": "superadmin@example.com" 
+}
+
+### Get User Profile (Requires Authentication)
+GET http://localhost:3000/users/profile
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+### Update User Profile (Requires Authentication) not working
+PUT http://localhost:3000/users/profile 
+Content-Type: application/json
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+{
+  "fullName": "Super Admin",
+  
+  "password": "SuperAdmin1234!",
+  "email": "superadmin@example.com" 
+}
+
+### Logout User (Requires Authentication)
+POST http://localhost:3000/auth/logout
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+### Get All Users (Requires Authentication)
+GET http://localhost:3000/users
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+### Get User By ID (Requires Authentication)
+GET http://localhost:3000/users/SM-00001
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+### Delete User By ID (Requires Authentication)
+DELETE http://localhost:3000/users/67ed48c7bc4cde6b1c5e7add
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+### Get User By Username (Requires Authentication)
+GET http://localhost:3000/users/username/
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+### Get User By Email (Requires Authentication)
+GET http://localhost:3000/users/email/superadmin@example.com
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+### Get Users By Role (Requires Authentication)
+GET http://localhost:3000/users/role/ADMIN
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+### Delete All Users (Requires Authentication)
+DELETE http://localhost:3000/users
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+### Update User By ID (Requires Authentication)
+PUT http://localhost:3000/users/67ed48c7b
+Content-Type: application/json
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+{
+ "fullName": "Super Admin",
+ "role": "SUPERADMIN"
+}
+

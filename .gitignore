@@ -1,0 +1,5 @@
+.env.development
+.env.production
+*.txt
+node_modules
+db_*.*
