@@ -23,10 +23,6 @@
     {
       "name": "Users",
       "description": "User management endpoints"
-    },
-    {
-      "name": "Sensors",
-      "description": "Sensor management endpoints"
     }
   ],
   "components": {

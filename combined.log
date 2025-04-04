@@ -4237,3 +4237,12 @@ TypeError: req.flash is not a function
 2025-04-05 02:44:49 DEBUG [smart-farm-api]: Session: 
 2025-04-05 02:44:50 DEBUG [smart-farm-api]: Session: 
 2025-04-05 02:44:51 DEBUG [smart-farm-api]: Session: 
+2025-04-05 02:50:07 INFO [smart-farm-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-05 02:50:10 INFO [smart-farm-api]: MongoDB Connected... 
+2025-04-05 02:50:25 DEBUG [smart-farm-api]: Session: 
+2025-04-05 02:50:26 DEBUG [smart-farm-api]: Session: 
+2025-04-05 02:50:34 DEBUG [smart-farm-api]: Session: 
+2025-04-05 02:50:34 DEBUG [smart-farm-api]: Session: 
+2025-04-05 02:50:36 DEBUG [smart-farm-api]: Session: 
+2025-04-05 02:50:36 DEBUG [smart-farm-api]: Session: 
+2025-04-05 02:50:37 DEBUG [smart-farm-api]: Session: 

@@ -25,8 +25,7 @@ const swaggerConfig = {
   ],
   tags: [
     { name: 'Authentication', description: 'Authentication endpoints' },
-    { name: 'Users', description: 'User management endpoints' },
-    { name: 'Sensors', description: 'Sensor management endpoints' }
+    { name: 'Users', description: 'User management endpoints' }
   ],
   components: components,
   paths: {
