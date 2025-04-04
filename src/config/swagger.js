@@ -18,7 +18,7 @@ const swaggerConfig = {
   servers: [
     {
       url: config.env === 'production' 
-        ? 'https://cse341-w03-project-02.onrender.com'
+        ? 'https://cse341-final-project-team-14.onrender.com'
         : 'http://localhost:3000',
       description: config.env === 'production' ? 'Production server' : 'Development server'
     }
