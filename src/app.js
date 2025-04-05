@@ -50,7 +50,7 @@ app.use("/", routes);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerConfig, {
   explorer: true,
   customCss: '.swagger-ui .topbar { display: none }',
-  customSiteTitle: "Smart Farm API Documentation"
+  customSiteTitle: "Inventory API Documentation"
 }));
 
 // Error Handling Middleware

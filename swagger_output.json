@@ -1,12 +1,12 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "Smart Farm API",
+    "title": "Inventory API",
     "version": "1.0.0",
-    "description": "API documentation for the Smart Farm project",
+    "description": "API documentation for the Inventory Management project",
     "contact": {
       "name": "API Support",
-      "email": "support@smartfarm.com"
+      "email": "support@inventory-api.com"
     }
   },
   "servers": [
