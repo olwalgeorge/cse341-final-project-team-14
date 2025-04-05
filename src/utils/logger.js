@@ -19,7 +19,7 @@ const consoleFormat = winston.format.combine(
 
 const logger = winston.createLogger({
     level: config.env === "production" ? "info" : "debug",
-    defaultMeta: { service: "smart-farm-api" },
+    defaultMeta: { service: "inventory-api" },
     transports: [
         new winston.transports.File({ filename: "error.log", level: "error", format: fileFormat }),
         new winston.transports.File({ filename: "combined.log", format: fileFormat }),
