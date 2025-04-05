@@ -7,9 +7,9 @@ const components = require('../docs/components');
 const swaggerConfig = {
   openapi: '3.0.0',
   info: {
-    title: 'Smart Farm API',
+    title: 'Inventory Management API',
     version: '1.0.0',
-    description: 'API documentation for the Smart Farm project',
+    description: 'CSE 341 Final project - Team 14 - API documentation for the Inventory Management project',
     contact: {
       name: 'API Support',
       email: 'support@smartfarm.com'
