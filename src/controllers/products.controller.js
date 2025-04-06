@@ -3,6 +3,7 @@ const asyncHandler = require("express-async-handler");
 const logger = require("../utils/logger.js");
 const createHttpError = require("http-errors");
 const productService = require("../services/products.service.js");
+const { transformProduct } = require("../utils/product.utils.js");
 
 /**
  * @desc    Get all products
@@ -12,34 +13,17 @@ const productService = require("../services/products.service.js");
 const getAllProducts = asyncHandler(async (req, res, next) => {
     logger.info("getAllProducts called");
     try {
-        const products = await productService.getAllProductsService(req.query);
-        sendResponse(res, 200, "Products retrieved successfully", products);
+        const result = await productService.getAllProductsService(req.query);
+        // Transform each product in the results
+        const transformedProducts = result.products.map(product => transformProduct(product));
+        
+        sendResponse(res, 200, "Products retrieved successfully", {
+            products: transformedProducts,
+            pagination: result.pagination
+        });
     } catch (error) {
         logger.error("Error retrieving all products:", error);
         next(createHttpError(500, "Failed to retrieve products", { message: error.message }));
-    }
-});
-
-/**
- * @desc    Get product by ID
- * @route   GET /products/:_id
- * @access  Public
- */
-const getProductById = asyncHandler(async (req, res, next) => {
-    logger.info(`getProductById called with ID: ${req.params._id}`);
-    try {
-        const product = await productService.getProductByIdService(req.params._id);
-        if (product) {
-            sendResponse(res, 200, "Product retrieved successfully", product);
-        } else {
-            return next(createHttpError(404, "Product not found"));
-        }
-    } catch (error) {
-        logger.error(`Error retrieving product with ID: ${req.params._id}`, error);
-        if (error.name === "CastError" && error.kind === "ObjectId") {
-            return next(createHttpError(400, "Invalid product ID format"));
-        }
-        next(createHttpError(500, "Failed to retrieve product", { message: error.message }));
     }
 });
 
@@ -53,12 +37,37 @@ const getProductByProductID = asyncHandler(async (req, res, next) => {
     try {
         const product = await productService.getProductByProductIDService(req.params.productID);
         if (product) {
-            sendResponse(res, 200, "Product retrieved successfully", product);
+            const transformedProduct = transformProduct(product);
+            sendResponse(res, 200, "Product retrieved successfully", transformedProduct);
         } else {
             return next(createHttpError(404, "Product not found"));
         }
     } catch (error) {
         logger.error(`Error retrieving product with productID: ${req.params.productID}`, error);
+        next(createHttpError(500, "Failed to retrieve product", { message: error.message }));
+    }
+});
+
+/**
+ * @desc    Get product by MongoDB ID
+ * @route   GET /products/:_id
+ * @access  Public
+ */
+const getProductById = asyncHandler(async (req, res, next) => {
+    logger.info(`getProductById called with ID: ${req.params._id}`);
+    try {
+        const product = await productService.getProductByIdService(req.params._id);
+        if (product) {
+            const transformedProduct = transformProduct(product);
+            sendResponse(res, 200, "Product retrieved successfully", transformedProduct);
+        } else {
+            return next(createHttpError(404, "Product not found"));
+        }
+    } catch (error) {
+        logger.error(`Error retrieving product with ID: ${req.params._id}`, error);
+        if (error.name === "CastError" && error.kind === "ObjectId") {
+            return next(createHttpError(400, "Invalid product ID format"));
+        }
         next(createHttpError(500, "Failed to retrieve product", { message: error.message }));
     }
 });
@@ -73,7 +82,8 @@ const createProduct = asyncHandler(async (req, res, next) => {
     logger.debug("Request body:", req.body);
     try {
         const product = await productService.createProductService(req.body);
-        sendResponse(res, 201, "Product created successfully", product);
+        const transformedProduct = transformProduct(product);
+        sendResponse(res, 201, "Product created successfully", transformedProduct);
     } catch (error) {
         logger.error("Error creating product:", error);
         if (error.name === "ValidationError") {
@@ -96,11 +106,12 @@ const createProduct = asyncHandler(async (req, res, next) => {
  */
 const updateProductById = asyncHandler(async (req, res, next) => {
     logger.info(`updateProductById called with ID: ${req.params._id}`);
-    logger.debug("Request body:", req.body);
+    logger.debug("Update data:", req.body);
     try {
         const product = await productService.updateProductService(req.params._id, req.body);
         if (product) {
-            sendResponse(res, 200, "Product updated successfully", product);
+            const transformedProduct = transformProduct(product);
+            sendResponse(res, 200, "Product updated successfully", transformedProduct);
         } else {
             return next(createHttpError(404, "Product not found"));
         }
@@ -155,7 +166,8 @@ const getProductsByCategory = asyncHandler(async (req, res, next) => {
     try {
         const products = await productService.getProductsByCategoryService(req.params.category);
         if (products && products.length > 0) {
-            sendResponse(res, 200, "Products retrieved successfully", products);
+            const transformedProducts = products.map(product => transformProduct(product));
+            sendResponse(res, 200, "Products retrieved successfully", transformedProducts);
         } else {
             sendResponse(res, 200, "No products found for this category", []);
         }
@@ -175,7 +187,8 @@ const getProductsBySupplier = asyncHandler(async (req, res, next) => {
     try {
         const products = await productService.getProductsBySupplierService(req.params.supplierId);
         if (products && products.length > 0) {
-            sendResponse(res, 200, "Products retrieved successfully", products);
+            const transformedProducts = products.map(product => transformProduct(product));
+            sendResponse(res, 200, "Products retrieved successfully", transformedProducts);
         } else {
             sendResponse(res, 200, "No products found for this supplier", []);
         }
@@ -203,21 +216,43 @@ const searchProducts = asyncHandler(async (req, res, next) => {
     
     try {
         const products = await productService.searchProductsService(searchTerm);
-        sendResponse(res, 200, "Search results retrieved successfully", products);
+        const transformedProducts = products.map(product => transformProduct(product));
+        sendResponse(res, 200, "Search results retrieved successfully", transformedProducts);
     } catch (error) {
         logger.error(`Error searching products with term: ${searchTerm}`, error);
         next(createHttpError(500, "Failed to search products", { message: error.message }));
     }
 });
 
+/**
+ * @desc    Delete all products
+ * @route   DELETE /products
+ * @access  Private
+ */
+const deleteAllProducts = asyncHandler(async (req, res, next) => {
+    logger.info("deleteAllProducts called");
+    try {
+        const result = await productService.deleteAllProductsService();
+        if (result.deletedCount > 0) {
+            sendResponse(res, 200, `Successfully deleted ${result.deletedCount} products`);
+        } else {
+            sendResponse(res, 200, "No products to delete");
+        }
+    } catch (error) {
+        logger.error("Error deleting all products:", error);
+        next(createHttpError(500, "Failed to delete all products", { message: error.message }));
+    }
+});
+
 module.exports = {
-    getAllProducts,
-    getProductById,
+    getAllProducts,   
     getProductByProductID,
+    getProductById,
     createProduct,
     updateProductById,
     deleteProductById,
     getProductsByCategory,
     getProductsBySupplier,
-    searchProducts
+    searchProducts,
+    deleteAllProducts
 };

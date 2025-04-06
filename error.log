@@ -1,1 +1,33 @@
 2025-04-06 22:55:30 ERROR [inventory-api]: No account found with this email - POST /auth/login 
+2025-04-06 23:15:05 ERROR [inventory-api]: Error retrieving product with productID: PR-00001 Schema hasn't been registered for model "Supplier".
+Use mongoose.model(name, schema) 
+MissingSchemaError: Schema hasn't been registered for model "Supplier".
+Use mongoose.model(name, schema)
+    at NativeConnection.model (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\connection.js:1491:13)
+    at _getModelFromConn (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:579:15)
+    at addModelNamesToMap (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:507:17)
+    at getModelsMapForPopulate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:208:7)
+    at _populatePath (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4446:21)
+    at Function.populate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4413:21)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2605:11
+    at _init (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:3275:5)
+    at Document.init (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:654:5)
+    at Document.$init (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:667:42)
+2025-04-06 23:15:05 ERROR [inventory-api]: Schema hasn't been registered for model "Supplier".
+Use mongoose.model(name, schema) - GET /products/productID/PR-00001 
+2025-04-06 23:19:51 ERROR [inventory-api]: Error retrieving product with productID: PR-00001 Schema hasn't been registered for model "Supplier".
+Use mongoose.model(name, schema) 
+MissingSchemaError: Schema hasn't been registered for model "Supplier".
+Use mongoose.model(name, schema)
+    at NativeConnection.model (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\connection.js:1491:13)
+    at _getModelFromConn (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:579:15)
+    at addModelNamesToMap (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:507:17)
+    at getModelsMapForPopulate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:208:7)
+    at _populatePath (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4446:21)
+    at Function.populate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4413:21)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2605:11
+    at _init (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:3275:5)
+    at Document.init (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:654:5)
+    at Document.$init (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:667:42)
+2025-04-06 23:19:51 ERROR [inventory-api]: Schema hasn't been registered for model "Supplier".
+Use mongoose.model(name, schema) - GET /products/productID/PR-00001 

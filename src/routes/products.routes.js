@@ -9,7 +9,8 @@ const {
   deleteProductById,
   getProductsByCategory,
   getProductsBySupplier,
-  searchProducts
+  searchProducts,
+  deleteAllProducts
 } = require('../controllers/products.controller.js');
 const validate = require('../middlewares/validation.middleware.js');
 const isAuthenticated = require('../middlewares/auth.middleware.js');
@@ -23,14 +24,15 @@ const {
 // Public routes
 router.get('/', getAllProducts);
 router.get('/search', searchProducts);
-router.get('/:_id', validate(product_IdValidationRules()), getProductById);
 router.get('/productID/:productID', validate(productIDValidationRules()), getProductByProductID);
 router.get('/category/:category', getProductsByCategory);
 router.get('/supplier/:supplierId', getProductsBySupplier);
+router.get('/:_id', validate(product_IdValidationRules()), getProductById);
 
-// Protected routes - require authentication
+// Protected routes - require authentication 
 router.post('/', isAuthenticated, validate(productCreateValidationRules()), createProduct);
 router.put('/:_id', isAuthenticated, validate(product_IdValidationRules()), validate(productUpdateValidationRules()), updateProductById);
-router.delete('/:_id', isAuthenticated, validate(product_IdValidationRules()), deleteProductById);
+router.delete('/:_id', isAuthenticated , validate(product_IdValidationRules()), deleteProductById);
+router.delete('/', isAuthenticated, deleteAllProducts);
 
 module.exports = router;

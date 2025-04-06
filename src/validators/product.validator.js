@@ -18,6 +18,7 @@ const product_IdValidationRules = () => {
 const productCreateValidationRules = () => {
     return [
         check("productID")
+            .optional() 
             .matches(/^PR-\d{5}$/)
             .withMessage("Product ID should be in the format PR-xxxxx"),
         check("name")

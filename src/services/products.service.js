@@ -1,7 +1,6 @@
 const Product = require("../models/product.model.js");
 const { generateProductId } = require("../utils/product.utils.js");
 
-
 /**
  * Get all products with optional filtering and pagination
  */
@@ -68,17 +67,17 @@ const getAllProductsService = async (query = {}) => {
 };
 
 /**
+ * Get product by product ID (PR-xxxxx format)
+ */
+const getProductByProductIDService = async (productID) => {
+    return await Product.findOne({ productID: productID }).populate('supplier', 'name');
+};
+
+/**
  * Get product by MongoDB ID
  */
 const getProductByIdService = async (id) => {
     return await Product.findById(id).populate('supplier', 'name');
-};
-
-/**
- * Get product by product ID (PR-xxxxx format)
- */
-const getProductByProductIDService = async (productID) => {
-    return await Product.findOne({ productID }).populate('supplier', 'name');
 };
 
 /**
@@ -123,7 +122,7 @@ const getProductsByCategoryService = async (category) => {
  * Get products by supplier ID
  */
 const getProductsBySupplierService = async (supplierId) => {
-    return await Product.find({ supplier: supplierId });
+    return await Product.find({ supplier: supplierId }).populate('supplier', 'name');
 };
 
 /**
@@ -140,14 +139,22 @@ const searchProductsService = async (searchTerm) => {
     .populate('supplier', 'name');
 };
 
+/**
+ * Delete all products - use with caution
+ */
+const deleteAllProductsService = async () => {
+    return await Product.deleteMany({});
+};
+
 module.exports = {
-    getAllProductsService,
-    getProductByIdService,
+    getAllProductsService,   
     getProductByProductIDService,
+    getProductByIdService,
     createProductService,
     updateProductService,
     deleteProductService,
     getProductsByCategoryService,
     getProductsBySupplierService,
-    searchProductsService
+    searchProductsService,
+    deleteAllProductsService
 };

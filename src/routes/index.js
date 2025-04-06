@@ -3,6 +3,7 @@ const express = require("express");
 const userRoutes = require("./users.routes.js");
 const authRoutes = require("./auth.routes.js");
 const productRoutes = require("./products.routes.js");
+const supplierRoutes = require("./suppliers.routes.js");
 
 const path = require('path');
 
@@ -15,6 +16,6 @@ router.get("/", (req, res) => {
 router.use("/auth", authRoutes);
 router.use("/users", userRoutes);
 router.use("/products", productRoutes);
-
+router.use("/suppliers", supplierRoutes);
 
 module.exports = router;

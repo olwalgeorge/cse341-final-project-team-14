@@ -89,7 +89,7 @@ GET http://localhost:3000/products?category=Electronics&minPrice=100&maxPrice=10
 GET http://localhost:3000/products/search?term=laptop
 
 ### Get Product by MongoDB ID
-GET http://localhost:3000/products/65fb123abc456d789e012345
+GET http://localhost:3000/products/67f2e07fbf6d04573678e7f0
 
 ### Get Product by Product ID
 GET http://localhost:3000/products/productID/PR-00001
@@ -128,5 +128,62 @@ Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
 
 ### Delete Product (Requires Authentication)
 DELETE http://localhost:3000/products/65fb123abc456d789e012345
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+### SUPPLIER ROUTES ###
+
+### Get All Suppliers
+GET http://localhost:3000/suppliers
+
+### Get Suppliers with Filtering
+GET http://localhost:3000/suppliers?name=Tech&country=USA&page=1&limit=10
+
+### Search Suppliers
+GET http://localhost:3000/suppliers/search?term=electronics
+
+### Get Supplier by MongoDB ID
+GET http://localhost:3000/suppliers/65fb123abc456d789e012346
+
+### Get Supplier by Supplier ID
+GET http://localhost:3000/suppliers/supplierID/SP-00001
+
+### Create New Supplier (Requires Authentication)
+POST http://localhost:3000/suppliers
+Content-Type: application/json
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+{
+  "name": "TechSupply Co",
+  "contact": {
+    "phone": "1234567890",
+    "email": "info@techsupply.com"
+  },
+  "address": {
+    "street": "123 Tech Street",
+    "city": "San Francisco",
+    "state": "CA",
+    "postalCode": "94107",
+    "country": "USA"
+  }
+}
+
+### Update Supplier (Requires Authentication)
+PUT http://localhost:3000/suppliers/65fb123abc456d789e012346
+Content-Type: application/json
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+{
+  "name": "TechSupply Corporation",
+  "contact": {
+    "phone": "9876543210"
+  }
+}
+
+### Delete Supplier (Requires Authentication)
+DELETE http://localhost:3000/suppliers/65fb123abc456d789e012346
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+### Delete All Suppliers (Requires Authentication)
+DELETE http://localhost:3000/suppliers
 Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
 
