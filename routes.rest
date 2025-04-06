@@ -3,8 +3,8 @@ POST http://localhost:3000/auth/register
 Content-Type: application/json
 
 {
-  "fullName": "Omondi",
-  "username": "omond",
+  "fullName": "Super Admin",
+  "username": "superadmin",
   "password": "SuperAdmin1234!",
   "email": "omondi@example.com"
 }
@@ -15,8 +15,8 @@ POST http://localhost:3000/auth/login
 Content-Type: application/json
 
 {
-  "password": "SuperAdmin1234!",
-  "email": "superadmin@example.com" 
+   "password": "SuperAdmin1234!",
+  "email": "omondi@example.com" 
 }
 
 ### Get User Profile (Requires Authentication)
@@ -76,4 +76,57 @@ Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
  "fullName": "Super Admin",
  "role": "SUPERADMIN"
 }
+
+### PRODUCT ROUTES ###
+
+### Get All Products
+GET http://localhost:3000/products
+
+### Get Products with Filtering
+GET http://localhost:3000/products?category=Electronics&minPrice=100&maxPrice=1000&inStock=true&page=1&limit=10
+
+### Search Products
+GET http://localhost:3000/products/search?term=laptop
+
+### Get Product by MongoDB ID
+GET http://localhost:3000/products/65fb123abc456d789e012345
+
+### Get Product by Product ID
+GET http://localhost:3000/products/productID/PR-00001
+
+### Get Products by Category
+GET http://localhost:3000/products/category/Electronics
+
+### Get Products by Supplier
+GET http://localhost:3000/products/supplier/65fb123abc456d789e012345
+
+### Create New Product (Requires Authentication)
+POST http://localhost:3000/products
+Content-Type: application/json
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+{
+  "name": "MacBook Pro M3",
+  "description": "Latest MacBook Pro with M3 chip",
+  "price": 1999.99,
+  "quantity": 10,
+  "category": "Electronics",
+  "supplier": "65fb123abc456d789e012345",
+  "sku": "APPL123456"
+}
+
+### Update Product (Requires Authentication)
+PUT http://localhost:3000/products/65fb123abc456d789e012345
+Content-Type: application/json
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+{
+  "name": "MacBook Pro M3 Pro",
+  "price": 2199.99,
+  "quantity": 8
+}
+
+### Delete Product (Requires Authentication)
+DELETE http://localhost:3000/products/65fb123abc456d789e012345
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
 

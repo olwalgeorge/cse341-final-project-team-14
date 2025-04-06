@@ -4248,3 +4248,28 @@ TypeError: req.flash is not a function
 2025-04-05 02:50:37 DEBUG [inventory-api]: Session: 
 2025-04-05 03:59:10 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
 2025-04-05 03:59:13 INFO [inventory-api]: MongoDB Connected... 
+2025-04-06 22:53:59 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-06 22:54:04 INFO [inventory-api]: MongoDB Connected... 
+2025-04-06 22:54:33 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-06 22:54:38 INFO [inventory-api]: MongoDB Connected... 
+2025-04-06 22:54:40 DEBUG [inventory-api]: Session: 
+2025-04-06 22:54:47 DEBUG [inventory-api]: Session: 
+2025-04-06 22:55:11 DEBUG [inventory-api]: Session: 
+2025-04-06 22:55:29 DEBUG [inventory-api]: Session: 
+2025-04-06 22:55:30 WARN [inventory-api]: Login failed: No account found for email - superadmin@example.com 
+2025-04-06 22:55:30 ERROR [inventory-api]: No account found with this email - POST /auth/login 
+2025-04-06 22:56:00 DEBUG [inventory-api]: Session: 
+2025-04-06 22:58:52 DEBUG [inventory-api]: Session: 
+2025-04-06 22:58:56 INFO [inventory-api]: Register endpoint called 
+2025-04-06 22:58:56 DEBUG [inventory-api]: Request body: 
+2025-04-06 22:58:57 INFO [inventory-api]: User registered successfully: superadmin 
+2025-04-06 22:59:29 DEBUG [inventory-api]: Session: 
+2025-04-06 22:59:29 INFO [inventory-api]: User superadmin logged in successfully 
+2025-04-06 22:59:30 INFO [inventory-api]: User superadmin logged in successfully. 
+2025-04-06 22:59:42 DEBUG [inventory-api]: Session: 
+2025-04-06 23:00:03 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-06 23:00:08 INFO [inventory-api]: MongoDB Connected... 
+2025-04-06 23:00:32 DEBUG [inventory-api]: Session: 
+2025-04-06 23:00:32 DEBUG [inventory-api]: Auth check: 
+2025-04-06 23:00:32 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-06 23:00:32 WARN [inventory-api]: Validation failed 
