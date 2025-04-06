@@ -261,3 +261,131 @@ Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
 DELETE http://localhost:3000/suppliers
 Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
 
+### CUSTOMER ROUTES ###
+
+### Get All Customers (Requires Authentication)
+GET http://localhost:3000/customers
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+### Get Customers with Filtering (Requires Authentication)
+GET http://localhost:3000/customers?name=John&page=1&limit=10
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+### Search Customers (Requires Authentication)
+GET http://localhost:3000/customers/search?term=john
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+### Get Customer by MongoDB ID (Requires Authentication)
+GET http://localhost:3000/customers/65fb123abc456d789e012349
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+### Get Customer by Customer ID (Requires Authentication)
+GET http://localhost:3000/customers/customerID/CU-00001
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+### Get Customer by Email (Requires Authentication)
+GET http://localhost:3000/customers/email/john.doe@example.com
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+### Create New Customer (Requires Authentication)
+POST http://localhost:3000/customers
+Content-Type: application/json
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+{
+  "name": "John Doe",
+  "email": "john.doe@example.com",
+  "phone": "1234567890",
+  "address": {
+    "street": "123 Main St",
+    "city": "Anytown",
+    "state": "CA",
+    "postalCode": "12345",
+    "country": "USA"
+  }
+}
+
+### Update Customer (Requires Authentication)
+PUT http://localhost:3000/customers/65fb123abc456d789e012349
+Content-Type: application/json
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+{
+  "name": "John M. Doe",
+  "phone": "9876543210"
+}
+
+### Delete Customer (Requires Authentication)
+DELETE http://localhost:3000/customers/65fb123abc456d789e012349
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+### Delete All Customers (Requires Authentication)
+DELETE http://localhost:3000/customers
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+### PURCHASE ROUTES ###
+
+### Get All Purchases (Requires Authentication)
+GET http://localhost:3000/purchases
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+### Get Purchases with Filtering (Requires Authentication)
+GET http://localhost:3000/purchases?status=ordered&fromDate=2023-01-01&toDate=2023-12-31&page=1&limit=10
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+### Get Purchase by MongoDB ID (Requires Authentication)
+GET http://localhost:3000/purchases/65fb123abc456d789e012350
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+### Get Purchase by Purchase ID (Requires Authentication)
+GET http://localhost:3000/purchases/purchaseID/PU-00001
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+### Get Purchases by Supplier (Requires Authentication)
+GET http://localhost:3000/purchases/supplier/65fb123abc456d789e012346
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+### Get Purchases by Status (Requires Authentication)
+GET http://localhost:3000/purchases/status/ordered
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+### Create New Purchase (Requires Authentication)
+POST http://localhost:3000/purchases
+Content-Type: application/json
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+{
+  "supplier": "65fb123abc456d789e012346",
+  "items": [
+    {
+      "product": "65fb123abc456d789e012345",
+      "quantity": 5,
+      "price": 1800.00
+    }
+  ],
+  "totalAmount": 9000.00,
+  "purchaseDate": "2023-05-15T10:00:00Z",
+  "status": "ordered",
+  "paymentStatus": "unpaid",
+  "paymentDue": "2023-06-15T10:00:00Z",
+  "notes": "Bulk purchase of laptops for inventory"
+}
+
+### Update Purchase (Requires Authentication)
+PUT http://localhost:3000/purchases/65fb123abc456d789e012350
+Content-Type: application/json
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+{
+  "status": "received",
+  "paymentStatus": "paid"
+}
+
+### Delete Purchase (Requires Authentication)
+DELETE http://localhost:3000/purchases/65fb123abc456d789e012350
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+### Delete All Purchases (Requires Authentication)
+DELETE http://localhost:3000/purchases
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
