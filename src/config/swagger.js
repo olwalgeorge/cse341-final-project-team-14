@@ -2,6 +2,11 @@
 const config = require("./config");
 const authRoutes = require('../docs/auth.docs');
 const userRoutes = require('../docs/user.docs');
+const productRoutes = require('../docs/product.docs');
+const supplierRoutes = require('../docs/supplier.docs');
+const orderRoutes = require('../docs/order.docs');
+const customerRoutes = require('../docs/customer.docs');
+const purchaseRoutes = require('../docs/purchase.docs');
 const components = require('../docs/components');
 
 const swaggerConfig = {
@@ -25,13 +30,22 @@ const swaggerConfig = {
   ],
   tags: [
     { name: 'Authentication', description: 'Authentication endpoints' },
-    { name: 'Users', description: 'User management endpoints' }
+    { name: 'Users', description: 'User management endpoints' },
+    { name: 'Products', description: 'Product management endpoints' },
+    { name: 'Suppliers', description: 'Supplier management endpoints' },
+    { name: 'Orders', description: 'Order management endpoints' },
+    { name: 'Customers', description: 'Customer management endpoints' },
+    { name: 'Purchases', description: 'Purchase management endpoints' }
   ],
   components: components,
   paths: {
     ...authRoutes,
     ...userRoutes,
-    
+    ...productRoutes,
+    ...supplierRoutes,
+    ...orderRoutes,
+    ...customerRoutes,
+    ...purchaseRoutes
   }
 };
 
