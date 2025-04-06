@@ -1,68 +1,104 @@
-const { check, param } = require("express-validator");
-
-const isMongoIdParam = (paramName, errorMessage) => {
-    return param(paramName, errorMessage).isMongoId();
-};
+const { check } = require('express-validator');
+const mongoose = require('mongoose');
 
 const orderIDValidationRules = () => {
     return [
-        param("orderID", "Order ID should be in the format OR-xxxxx")
+        check("orderID")
             .matches(/^OR-\d{5}$/)
+            .withMessage("Invalid order ID format. Must be OR-XXXXX where X is a digit")
     ];
 };
 
 const order_IdValidationRules = () => {
-    return [isMongoIdParam("_id", "Invalid Order ID format")];
+    return [
+        check("_id")
+            .custom(value => mongoose.Types.ObjectId.isValid(value))
+            .withMessage("Invalid MongoDB ID format")
+    ];
+};
+
+const customerIdValidationRules = () => {
+    return [
+        check("customerId")
+            .custom(value => mongoose.Types.ObjectId.isValid(value))
+            .withMessage("Invalid customer ID format")
+    ];
+};
+
+const orderStatusValidationRules = () => {
+    return [
+        check("status")
+            .isIn(['pending', 'processing', 'shipped', 'delivered', 'cancelled'])
+            .withMessage("Invalid order status")
+    ];
 };
 
 const orderCreateValidationRules = () => {
     return [
-        check("products")
-            .isArray()
-            .withMessage("Products must be an array")
+        check("customer")
             .notEmpty()
-            .withMessage("At least one product is required"),
-        check("products.*.product")
-            .isMongoId()
-            .withMessage("Invalid product ID"),
-        check("products.*.quantity")
+            .withMessage("Customer ID is required")
+            .custom(value => mongoose.Types.ObjectId.isValid(value))
+            .withMessage("Invalid customer ID format"),
+        check("items")
+            .isArray({ min: 1 })
+            .withMessage("At least one item is required"),
+        check("items.*.product")
+            .notEmpty()
+            .withMessage("Product ID is required")
+            .custom(value => mongoose.Types.ObjectId.isValid(value))
+            .withMessage("Invalid product ID format"),
+        check("items.*.quantity")
+            .isInt({ min: 1 })
+            .withMessage("Quantity must be at least 1"),
+        check("shippingAddress.street")
+            .notEmpty()
+            .withMessage("Shipping street is required"),
+        check("shippingAddress.city")
+            .notEmpty()
+            .withMessage("Shipping city is required"),
+        check("shippingAddress.state")
+            .notEmpty()
+            .withMessage("Shipping state is required"),
+        check("shippingAddress.postalCode")
+            .notEmpty()
+            .withMessage("Shipping postal code is required"),
+        check("shippingAddress.country")
+            .notEmpty()
+            .withMessage("Shipping country is required"),
+        check("status")
+            .optional()
+            .isIn(['pending', 'processing', 'shipped', 'delivered', 'cancelled'])
+            .withMessage("Invalid order status")
+    ];
+};
+
+const orderUpdateValidationRules = () => {
+    return [
+        check("items")
+            .optional()
+            .isArray()
+            .withMessage("Items must be an array"),
+        check("items.*.product")
+            .optional()
+            .custom(value => mongoose.Types.ObjectId.isValid(value))
+            .withMessage("Invalid product ID format"),
+        check("items.*.quantity")
+            .optional()
             .isInt({ min: 1 })
             .withMessage("Quantity must be at least 1"),
         check("status")
-            .isIn(['Pending', 'Processing', 'Shipped', 'Delivered', 'Cancelled'])
-            .withMessage("Invalid order status"),
-        check("shippingAddress")
-            .isObject()
-            .withMessage("Shipping address is required"),
-        check("shippingAddress.street")
-            .notEmpty()
-            .withMessage("Street is required"),
-        check("shippingAddress.city")
-            .notEmpty()
-            .withMessage("City is required"),
-        check("shippingAddress.state")
-            .notEmpty()
-            .withMessage("State is required"),
-        check("shippingAddress.postalCode")
-            .notEmpty()
-            .withMessage("Postal code is required"),
-        check("shippingAddress.country")
-            .notEmpty()
-            .withMessage("Country is required"),
-        check("customer.name")
-            .notEmpty()
-            .withMessage("Customer name is required"),
-        check("customer.email")
-            .isEmail()
-            .withMessage("Invalid customer email"),
-        check("customer.phone")
-            .notEmpty()
-            .withMessage("Customer phone is required")
+            .optional()
+            .isIn(['pending', 'processing', 'shipped', 'delivered', 'cancelled'])
+            .withMessage("Invalid order status")
     ];
 };
 
 module.exports = {
     orderIDValidationRules,
     order_IdValidationRules,
-    orderCreateValidationRules
+    orderCreateValidationRules,
+    orderUpdateValidationRules,
+    customerIdValidationRules,
+    orderStatusValidationRules
 };
