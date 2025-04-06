@@ -3,6 +3,13 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const orderSchema = new Schema({
+  orderID: {
+    type: String,
+    unique: true,
+    match: [/^OR-\d{5}$/],
+    index: true,
+    required: true
+  },
   products: [{
     product: {
       type: Schema.Types.ObjectId,

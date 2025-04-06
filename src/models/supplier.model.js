@@ -3,6 +3,13 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const supplierSchema = new Schema({
+  supplierID: {
+    type: String,
+    unique: true,
+    match: [/^SP-\d{5}$/],
+    index: true,
+    required: true
+  },
   name: {
     type: String,
     required: [true, 'Supplier name is required'],
