@@ -1,8 +1,8 @@
-const passport = require('passport');
-const LocalStrategy = require('../auth/local.auth');
-const GitHubStrategy = require('../auth/github');
-const User = require('../models/user.model');
-const logger = require('../utils/logger');
+const passport = require("passport");
+const LocalStrategy = require("../auth/local.auth");
+const GitHubStrategy = require("../auth/github");
+const User = require("../models/user.model");
+const logger = require("../utils/logger");
 
 // Strategies
 passport.use(LocalStrategy);
@@ -17,7 +17,7 @@ passport.deserializeUser(async (id, done) => {
     const user = await User.findById(id);
     done(null, user);
   } catch (error) {
-    logger.error('Error deserializing user:', error);
+    logger.error("Error deserializing user:", error);
     done(error);
   }
 });

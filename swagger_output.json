@@ -111,12 +111,7 @@
           },
           "role": {
             "type": "string",
-            "enum": [
-              "SUPERADMIN",
-              "ADMIN",
-              "USER",
-              "ORG"
-            ]
+            "enum": ["SUPERADMIN", "ADMIN", "USER", "ORG"]
           }
         }
       },
@@ -184,10 +179,7 @@
       },
       "SupplierInput": {
         "type": "object",
-        "required": [
-          "name",
-          "contact"
-        ],
+        "required": ["name", "contact"],
         "properties": {
           "name": {
             "type": "string",
@@ -336,13 +328,7 @@
       },
       "ProductInput": {
         "type": "object",
-        "required": [
-          "name",
-          "price",
-          "quantity",
-          "category",
-          "supplier"
-        ],
+        "required": ["name", "price", "quantity", "category", "supplier"],
         "properties": {
           "name": {
             "type": "string",
@@ -504,11 +490,7 @@
       },
       "OrderInput": {
         "type": "object",
-        "required": [
-          "customer",
-          "items",
-          "shippingAddress"
-        ],
+        "required": ["customer", "items", "shippingAddress"],
         "properties": {
           "customer": {
             "type": "string",
@@ -630,10 +612,7 @@
       },
       "CustomerInput": {
         "type": "object",
-        "required": [
-          "name",
-          "email"
-        ],
+        "required": ["name", "email"],
         "properties": {
           "name": {
             "type": "string",
@@ -730,21 +709,11 @@
           },
           "status": {
             "type": "string",
-            "enum": [
-              "pending",
-              "ordered",
-              "received",
-              "cancelled",
-              "returned"
-            ]
+            "enum": ["pending", "ordered", "received", "cancelled", "returned"]
           },
           "paymentStatus": {
             "type": "string",
-            "enum": [
-              "unpaid",
-              "partially_paid",
-              "paid"
-            ]
+            "enum": ["unpaid", "partially_paid", "paid"]
           },
           "paymentDue": {
             "type": "string",
@@ -766,11 +735,7 @@
       },
       "PurchaseInput": {
         "type": "object",
-        "required": [
-          "supplier",
-          "items",
-          "totalAmount"
-        ],
+        "required": ["supplier", "items", "totalAmount"],
         "properties": {
           "supplier": {
             "type": "string",
@@ -806,21 +771,11 @@
           },
           "status": {
             "type": "string",
-            "enum": [
-              "pending",
-              "ordered",
-              "received",
-              "cancelled",
-              "returned"
-            ]
+            "enum": ["pending", "ordered", "received", "cancelled", "returned"]
           },
           "paymentStatus": {
             "type": "string",
-            "enum": [
-              "unpaid",
-              "partially_paid",
-              "paid"
-            ]
+            "enum": ["unpaid", "partially_paid", "paid"]
           },
           "paymentDue": {
             "type": "string",
@@ -1044,9 +999,7 @@
   "paths": {
     "/auth/register": {
       "post": {
-        "tags": [
-          "Authentication"
-        ],
+        "tags": ["Authentication"],
         "summary": "Register new user",
         "requestBody": {
           "required": true,
@@ -1054,12 +1007,7 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": [
-                  "email",
-                  "password",
-                  "username",
-                  "fullName"
-                ],
+                "required": ["email", "password", "username", "fullName"],
                 "properties": {
                   "email": {
                     "type": "string",
@@ -1126,9 +1074,7 @@
     },
     "/auth/login": {
       "post": {
-        "tags": [
-          "Authentication"
-        ],
+        "tags": ["Authentication"],
         "summary": "Login user",
         "requestBody": {
           "required": true,
@@ -1136,10 +1082,7 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": [
-                  "email",
-                  "password"
-                ],
+                "required": ["email", "password"],
                 "properties": {
                   "email": {
                     "type": "string",
@@ -1176,9 +1119,7 @@
     },
     "/auth/logout": {
       "post": {
-        "tags": [
-          "Authentication"
-        ],
+        "tags": ["Authentication"],
         "summary": "Logout user",
         "security": [
           {
@@ -1204,9 +1145,7 @@
     },
     "/auth/github": {
       "get": {
-        "tags": [
-          "Authentication"
-        ],
+        "tags": ["Authentication"],
         "summary": "GitHub OAuth login",
         "description": "Initiates GitHub OAuth flow",
         "responses": {
@@ -1218,9 +1157,7 @@
     },
     "/auth/github/callback": {
       "get": {
-        "tags": [
-          "Authentication"
-        ],
+        "tags": ["Authentication"],
         "summary": "GitHub OAuth callback",
         "responses": {
           "302": {
@@ -1244,9 +1181,7 @@
     },
     "/users/profile": {
       "get": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Get current user profile",
         "security": [
           {
@@ -1273,9 +1208,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Update user profile",
         "security": [
           {
@@ -1327,9 +1260,7 @@
     },
     "/users/{userID}": {
       "get": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Get user by ID",
         "security": [
           {
@@ -1383,9 +1314,7 @@
     },
     "/users/email/{email}": {
       "get": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Get user by email",
         "security": [
           {
@@ -1425,9 +1354,7 @@
     },
     "/users/username/{username}": {
       "get": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Get user by username",
         "security": [
           {
@@ -1467,9 +1394,7 @@
     },
     "/users/role/{role}": {
       "get": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Get users by role",
         "security": [
           {
@@ -1483,12 +1408,7 @@
             "required": true,
             "schema": {
               "type": "string",
-              "enum": [
-                "SUPERADMIN",
-                "ADMIN",
-                "USER",
-                "ORG"
-              ]
+              "enum": ["SUPERADMIN", "ADMIN", "USER", "ORG"]
             }
           }
         ],
@@ -1517,9 +1437,7 @@
     },
     "/users": {
       "get": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Get all users",
         "security": [
           {
@@ -1546,9 +1464,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Delete all users",
         "security": [
           {
@@ -1584,9 +1500,7 @@
     },
     "/users/{_id}": {
       "put": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Update user by MongoDB ID",
         "security": [
           {
@@ -1637,9 +1551,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Delete user by MongoDB ID",
         "security": [
           {
@@ -1679,9 +1591,7 @@
     },
     "/products": {
       "get": {
-        "tags": [
-          "Products"
-        ],
+        "tags": ["Products"],
         "summary": "Get all products",
         "description": "Retrieve a list of all products with optional filtering and pagination",
         "parameters": [
@@ -1714,10 +1624,7 @@
             "name": "inStock",
             "schema": {
               "type": "string",
-              "enum": [
-                "true",
-                "false"
-              ]
+              "enum": ["true", "false"]
             },
             "description": "Filter products that are in stock (quantity > 0)"
           },
@@ -1787,9 +1694,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Products"
-        ],
+        "tags": ["Products"],
         "summary": "Create a new product",
         "description": "Create a new product in the system",
         "security": [
@@ -1844,9 +1749,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Products"
-        ],
+        "tags": ["Products"],
         "summary": "Delete all products",
         "description": "Delete all products from the system (use with caution)",
         "security": [
@@ -1884,9 +1787,7 @@
     },
     "/products/search": {
       "get": {
-        "tags": [
-          "Products"
-        ],
+        "tags": ["Products"],
         "summary": "Search products",
         "description": "Search products by text",
         "parameters": [
@@ -1936,9 +1837,7 @@
     },
     "/products/productID/{productID}": {
       "get": {
-        "tags": [
-          "Products"
-        ],
+        "tags": ["Products"],
         "summary": "Get product by product ID",
         "description": "Retrieve product details by product ID (PR-XXXXX format)",
         "parameters": [
@@ -1985,9 +1884,7 @@
     },
     "/products/category/{category}": {
       "get": {
-        "tags": [
-          "Products"
-        ],
+        "tags": ["Products"],
         "summary": "Get products by category",
         "description": "Retrieve products that belong to a specific category",
         "parameters": [
@@ -2034,9 +1931,7 @@
     },
     "/products/supplier/{supplierId}": {
       "get": {
-        "tags": [
-          "Products"
-        ],
+        "tags": ["Products"],
         "summary": "Get products by supplier",
         "description": "Retrieve products that are supplied by a specific supplier",
         "parameters": [
@@ -2086,9 +1981,7 @@
     },
     "/products/{_id}": {
       "get": {
-        "tags": [
-          "Products"
-        ],
+        "tags": ["Products"],
         "summary": "Get product by ID",
         "description": "Retrieve product details by MongoDB ID",
         "parameters": [
@@ -2136,9 +2029,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Products"
-        ],
+        "tags": ["Products"],
         "summary": "Update product",
         "description": "Update product details by MongoDB ID",
         "security": [
@@ -2204,9 +2095,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Products"
-        ],
+        "tags": ["Products"],
         "summary": "Delete product",
         "description": "Delete product by MongoDB ID",
         "security": [
@@ -2261,9 +2150,7 @@
     },
     "/suppliers": {
       "get": {
-        "tags": [
-          "Suppliers"
-        ],
+        "tags": ["Suppliers"],
         "summary": "Get all suppliers",
         "description": "Retrieve a list of all suppliers with optional filtering and pagination",
         "security": [
@@ -2354,9 +2241,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Suppliers"
-        ],
+        "tags": ["Suppliers"],
         "summary": "Create a new supplier",
         "description": "Create a new supplier in the system",
         "security": [
@@ -2411,9 +2296,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Suppliers"
-        ],
+        "tags": ["Suppliers"],
         "summary": "Delete all suppliers",
         "description": "Delete all suppliers from the system (use with caution)",
         "security": [
@@ -2451,9 +2334,7 @@
     },
     "/suppliers/search": {
       "get": {
-        "tags": [
-          "Suppliers"
-        ],
+        "tags": ["Suppliers"],
         "summary": "Search suppliers",
         "description": "Search suppliers by name",
         "security": [
@@ -2508,9 +2389,7 @@
     },
     "/suppliers/supplierID/{supplierID}": {
       "get": {
-        "tags": [
-          "Suppliers"
-        ],
+        "tags": ["Suppliers"],
         "summary": "Get supplier by supplier ID",
         "description": "Retrieve supplier details by supplier ID (SP-XXXXX format)",
         "security": [
@@ -2562,9 +2441,7 @@
     },
     "/suppliers/{_id}": {
       "get": {
-        "tags": [
-          "Suppliers"
-        ],
+        "tags": ["Suppliers"],
         "summary": "Get supplier by ID",
         "description": "Retrieve supplier details by MongoDB ID",
         "security": [
@@ -2617,9 +2494,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Suppliers"
-        ],
+        "tags": ["Suppliers"],
         "summary": "Update supplier",
         "description": "Update supplier details by MongoDB ID",
         "security": [
@@ -2685,9 +2560,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Suppliers"
-        ],
+        "tags": ["Suppliers"],
         "summary": "Delete supplier",
         "description": "Delete supplier by MongoDB ID",
         "security": [
@@ -2742,9 +2615,7 @@
     },
     "/orders": {
       "get": {
-        "tags": [
-          "Orders"
-        ],
+        "tags": ["Orders"],
         "summary": "Get all orders",
         "description": "Retrieve a list of all orders with optional filtering and pagination",
         "security": [
@@ -2863,9 +2734,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Orders"
-        ],
+        "tags": ["Orders"],
         "summary": "Create a new order",
         "description": "Create a new order in the system",
         "security": [
@@ -2920,9 +2789,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Orders"
-        ],
+        "tags": ["Orders"],
         "summary": "Delete all orders",
         "description": "Delete all orders from the system (use with caution)",
         "security": [
@@ -2960,9 +2827,7 @@
     },
     "/orders/orderID/{orderID}": {
       "get": {
-        "tags": [
-          "Orders"
-        ],
+        "tags": ["Orders"],
         "summary": "Get order by order ID",
         "description": "Retrieve order details by order ID (OR-XXXXX format)",
         "security": [
@@ -3020,9 +2885,7 @@
     },
     "/orders/customer/{customerId}": {
       "get": {
-        "tags": [
-          "Orders"
-        ],
+        "tags": ["Orders"],
         "summary": "Get orders by customer",
         "description": "Retrieve orders for a specific customer",
         "security": [
@@ -3080,9 +2943,7 @@
     },
     "/orders/status/{status}": {
       "get": {
-        "tags": [
-          "Orders"
-        ],
+        "tags": ["Orders"],
         "summary": "Get orders by status",
         "description": "Retrieve orders with a specific status",
         "security": [
@@ -3147,9 +3008,7 @@
     },
     "/orders/{_id}": {
       "get": {
-        "tags": [
-          "Orders"
-        ],
+        "tags": ["Orders"],
         "summary": "Get order by ID",
         "description": "Retrieve order details by MongoDB ID",
         "security": [
@@ -3205,9 +3064,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Orders"
-        ],
+        "tags": ["Orders"],
         "summary": "Update order",
         "description": "Update order details by MongoDB ID",
         "security": [
@@ -3273,9 +3130,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Orders"
-        ],
+        "tags": ["Orders"],
         "summary": "Delete order",
         "description": "Delete order by MongoDB ID",
         "security": [
@@ -3330,9 +3185,7 @@
     },
     "/customers": {
       "get": {
-        "tags": [
-          "Customers"
-        ],
+        "tags": ["Customers"],
         "summary": "Get all customers",
         "description": "Retrieve a list of all customers with optional filtering and pagination",
         "security": [
@@ -3426,9 +3279,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Customers"
-        ],
+        "tags": ["Customers"],
         "summary": "Create a new customer",
         "description": "Create a new customer in the system",
         "security": [
@@ -3483,9 +3334,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Customers"
-        ],
+        "tags": ["Customers"],
         "summary": "Delete all customers",
         "description": "Delete all customers from the system (use with caution)",
         "security": [
@@ -3523,9 +3372,7 @@
     },
     "/customers/search": {
       "get": {
-        "tags": [
-          "Customers"
-        ],
+        "tags": ["Customers"],
         "summary": "Search customers",
         "description": "Search customers by name or email",
         "security": [
@@ -3583,9 +3430,7 @@
     },
     "/customers/customerID/{customerID}": {
       "get": {
-        "tags": [
-          "Customers"
-        ],
+        "tags": ["Customers"],
         "summary": "Get customer by customer ID",
         "description": "Retrieve customer details by customer ID (CU-XXXXX format)",
         "security": [
@@ -3643,9 +3488,7 @@
     },
     "/customers/email/{email}": {
       "get": {
-        "tags": [
-          "Customers"
-        ],
+        "tags": ["Customers"],
         "summary": "Get customer by email",
         "description": "Retrieve customer details by email address",
         "security": [
@@ -3703,9 +3546,7 @@
     },
     "/customers/{_id}": {
       "get": {
-        "tags": [
-          "Customers"
-        ],
+        "tags": ["Customers"],
         "summary": "Get customer by ID",
         "description": "Retrieve customer details by MongoDB ID",
         "security": [
@@ -3761,9 +3602,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Customers"
-        ],
+        "tags": ["Customers"],
         "summary": "Update customer",
         "description": "Update customer details by MongoDB ID",
         "security": [
@@ -3829,9 +3668,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Customers"
-        ],
+        "tags": ["Customers"],
         "summary": "Delete customer",
         "description": "Delete customer by MongoDB ID",
         "security": [
@@ -3886,9 +3723,7 @@
     },
     "/purchases": {
       "get": {
-        "tags": [
-          "Purchases"
-        ],
+        "tags": ["Purchases"],
         "summary": "Get all purchases",
         "description": "Retrieve a list of all purchases with optional filtering and pagination",
         "security": [
@@ -3925,11 +3760,7 @@
             "name": "paymentStatus",
             "schema": {
               "type": "string",
-              "enum": [
-                "unpaid",
-                "partially_paid",
-                "paid"
-              ]
+              "enum": ["unpaid", "partially_paid", "paid"]
             },
             "description": "Filter purchases by payment status"
           },
@@ -4020,9 +3851,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Purchases"
-        ],
+        "tags": ["Purchases"],
         "summary": "Create a new purchase",
         "description": "Create a new purchase in the system",
         "security": [
@@ -4077,9 +3906,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Purchases"
-        ],
+        "tags": ["Purchases"],
         "summary": "Delete all purchases",
         "description": "Delete all purchases from the system (use with caution)",
         "security": [
@@ -4117,9 +3944,7 @@
     },
     "/purchases/purchaseID/{purchaseID}": {
       "get": {
-        "tags": [
-          "Purchases"
-        ],
+        "tags": ["Purchases"],
         "summary": "Get purchase by purchase ID",
         "description": "Retrieve purchase details by purchase ID (PU-XXXXX format)",
         "security": [
@@ -4177,9 +4002,7 @@
     },
     "/purchases/supplier/{supplierId}": {
       "get": {
-        "tags": [
-          "Purchases"
-        ],
+        "tags": ["Purchases"],
         "summary": "Get purchases by supplier",
         "description": "Retrieve purchases for a specific supplier",
         "security": [
@@ -4237,9 +4060,7 @@
     },
     "/purchases/status/{status}": {
       "get": {
-        "tags": [
-          "Purchases"
-        ],
+        "tags": ["Purchases"],
         "summary": "Get purchases by status",
         "description": "Retrieve purchases with a specific status",
         "security": [
@@ -4304,9 +4125,7 @@
     },
     "/purchases/{_id}": {
       "get": {
-        "tags": [
-          "Purchases"
-        ],
+        "tags": ["Purchases"],
         "summary": "Get purchase by ID",
         "description": "Retrieve purchase details by MongoDB ID",
         "security": [
@@ -4362,9 +4181,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Purchases"
-        ],
+        "tags": ["Purchases"],
         "summary": "Update purchase",
         "description": "Update purchase details by MongoDB ID",
         "security": [
@@ -4430,9 +4247,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Purchases"
-        ],
+        "tags": ["Purchases"],
         "summary": "Delete purchase",
         "description": "Delete purchase by MongoDB ID",
         "security": [

@@ -1,154 +1,189 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Inventory Management Dashboard</title>
-    <link rel="stylesheet" href="styles/styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-</head>
-<body class="dashboard-body">
+    <link rel="stylesheet" href="styles/styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body class="dashboard-body">
     <div class="dashboard-wrapper">
-        <div class="dashboard-layout">
-            <aside class="sidebar">
-                <div class="nav-brand">
-                    <img src="/images/inventory-logo.png" alt="Inventory Logo" class="brand-logo">
-                    <span>Inventory Management</span>
+      <div class="dashboard-layout">
+        <aside class="sidebar">
+          <div class="nav-brand">
+            <img
+              src="/images/inventory-logo.png"
+              alt="Inventory Logo"
+              class="brand-logo"
+            />
+            <span>Inventory Management</span>
+          </div>
+          <nav class="side-nav">
+            <a href="#" class="nav-item active"
+              ><i class="fas fa-home"></i> Dashboard</a
+            >
+            <a href="#" class="nav-item"
+              ><i class="fas fa-boxes"></i> Inventory</a
+            >
+            <a href="#" class="nav-item"><i class="fas fa-truck"></i> Orders</a>
+            <a href="#" class="nav-item"
+              ><i class="fas fa-chart-bar"></i> Analytics</a
+            >
+            <a href="#" class="nav-item"><i class="fas fa-cog"></i> Settings</a>
+          </nav>
+        </aside>
+
+        <main class="main-content">
+          <header class="top-header">
+            <div class="search-bar">
+              <i class="fas fa-search"></i>
+              <input type="text" placeholder="Search inventory..." />
+            </div>
+            <div class="header-actions">
+              <span class="system-status online"
+                ><i class="fas fa-circle"></i> System Online</span
+              >
+              <div class="user-menu">
+                <img
+                  src="/images/default-profile.png"
+                  alt="Profile"
+                  class="avatar-small"
+                />
+                <span id="userName">User</span>
+                <a href="/logout.html" class="btn-logout" title="Logout"
+                  ><i class="fas fa-power-off"></i
+                ></a>
+              </div>
+            </div>
+          </header>
+
+          <div class="dashboard-grid">
+            <div class="quick-stats">
+              <div class="stat-card" id="totalItems">
+                <div class="stat-icon"><i class="fas fa-boxes"></i></div>
+                <div class="stat-info">
+                  <span class="stat-value">1,234</span>
+                  <span class="stat-label">Total Items</span>
+                  <div class="stat-trend positive">
+                    +3.2% <i class="fas fa-arrow-up"></i>
+                  </div>
                 </div>
-                <nav class="side-nav">
-                    <a href="#" class="nav-item active"><i class="fas fa-home"></i> Dashboard</a>
-                    <a href="#" class="nav-item"><i class="fas fa-boxes"></i> Inventory</a>
-                    <a href="#" class="nav-item"><i class="fas fa-truck"></i> Orders</a>
-                    <a href="#" class="nav-item"><i class="fas fa-chart-bar"></i> Analytics</a>
-                    <a href="#" class="nav-item"><i class="fas fa-cog"></i> Settings</a>
-                </nav>
-            </aside>
-
-            <main class="main-content">
-                <header class="top-header">
-                    <div class="search-bar">
-                        <i class="fas fa-search"></i>
-                        <input type="text" placeholder="Search inventory...">
-                    </div>
-                    <div class="header-actions">
-                        <span class="system-status online"><i class="fas fa-circle"></i> System Online</span>
-                        <div class="user-menu">
-                            <img src="/images/default-profile.png" alt="Profile" class="avatar-small">
-                            <span id="userName">User</span>
-                            <a href="/logout.html" class="btn-logout" title="Logout"><i class="fas fa-power-off"></i></a>
-                        </div>
-                    </div>
-                </header>
-
-                <div class="dashboard-grid">
-                    <div class="quick-stats">
-                        <div class="stat-card" id="totalItems">
-                            <div class="stat-icon"><i class="fas fa-boxes"></i></div>
-                            <div class="stat-info">
-                                <span class="stat-value">1,234</span>
-                                <span class="stat-label">Total Items</span>
-                                <div class="stat-trend positive">+3.2% <i class="fas fa-arrow-up"></i></div>
-                            </div>
-                        </div>
-                        <div class="stat-card" id="lowStock">
-                            <div class="stat-icon warning"><i class="fas fa-exclamation-circle"></i></div>
-                            <div class="stat-info">
-                                <span class="stat-value">15</span>
-                                <span class="stat-label">Low Stock Items</span>
-                                <div class="stat-trend negative">+2 <i class="fas fa-arrow-up"></i></div>
-                            </div>
-                        </div>
-                        <div class="stat-card" id="pending">
-                            <div class="stat-icon"><i class="fas fa-clock"></i></div>
-                            <div class="stat-info">
-                                <span class="stat-value">28</span>
-                                <span class="stat-label">Pending Orders</span>
-                                <div class="stat-trend neutral">0% <i class="fas fa-minus"></i></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="dashboard-panels">
-                        <div class="panel inventory-status">
-                            <div class="panel-header">
-                                <h3>Stock Status</h3>
-                                <div class="panel-actions">
-                                    <button class="btn-icon"><i class="fas fa-ellipsis-v"></i></button>
-                                </div>
-                            </div>
-                            <div class="inventory-grid">
-                                <div class="inventory-item">
-                                    <div class="progress-circle" data-value="85">
-                                        <div class="progress-text">85%</div>
-                                    </div>
-                                    <span class="label">Storage Capacity</span>
-                                </div>
-                                <div class="inventory-item">
-                                    <div class="progress-circle" data-value="60">
-                                        <div class="progress-text">24</div>
-                                    </div>
-                                    <span class="label">Incoming Shipments</span>
-                                </div>
-                                <div class="inventory-item">
-                                    <div class="progress-circle" data-value="75">
-                                        <div class="progress-text">156</div>
-                                    </div>
-                                    <span class="label">Orders Today</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="panel quick-actions">
-                            <div class="panel-header">
-                                <h3>Quick Actions</h3>
-                            </div>
-                            <div class="action-buttons">
-                                <button class="action-btn primary">
-                                    <i class="fas fa-plus"></i>
-                                    <span>New Item</span>
-                                </button>
-                                <button class="action-btn">
-                                    <i class="fas fa-sync"></i>
-                                    <span>Update Stock</span>
-                                </button>
-                                <button class="action-btn">
-                                    <i class="fas fa-file-export"></i>
-                                    <span>Export</span>
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="panel recent-activities">
-                            <div class="panel-header">
-                                <h3>Recent Activities</h3>
-                                <div class="panel-actions">
-                                    <button class="btn-text">View All</button>
-                                </div>
-                            </div>
-                            <div class="activity-list">
-                                <div class="activity-item warning">
-                                    <i class="fas fa-exclamation-triangle"></i>
-                                    <div class="activity-content">
-                                        <p>Product ID #5123 running low on stock</p>
-                                        <span class="time">2m ago</span>
-                                    </div>
-                                    <button class="btn-icon"><i class="fas fa-chevron-right"></i></button>
-                                </div>
-                                <div class="activity-item success">
-                                    <i class="fas fa-check-circle"></i>
-                                    <div class="activity-content">
-                                        <p>New shipment received - Order #8547</p>
-                                        <span class="time">15m ago</span>
-                                    </div>
-                                    <button class="btn-icon"><i class="fas fa-chevron-right"></i></button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+              </div>
+              <div class="stat-card" id="lowStock">
+                <div class="stat-icon warning">
+                  <i class="fas fa-exclamation-circle"></i>
                 </div>
-            </main>
-        </div>
+                <div class="stat-info">
+                  <span class="stat-value">15</span>
+                  <span class="stat-label">Low Stock Items</span>
+                  <div class="stat-trend negative">
+                    +2 <i class="fas fa-arrow-up"></i>
+                  </div>
+                </div>
+              </div>
+              <div class="stat-card" id="pending">
+                <div class="stat-icon"><i class="fas fa-clock"></i></div>
+                <div class="stat-info">
+                  <span class="stat-value">28</span>
+                  <span class="stat-label">Pending Orders</span>
+                  <div class="stat-trend neutral">
+                    0% <i class="fas fa-minus"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="dashboard-panels">
+              <div class="panel inventory-status">
+                <div class="panel-header">
+                  <h3>Stock Status</h3>
+                  <div class="panel-actions">
+                    <button class="btn-icon">
+                      <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="inventory-grid">
+                  <div class="inventory-item">
+                    <div class="progress-circle" data-value="85">
+                      <div class="progress-text">85%</div>
+                    </div>
+                    <span class="label">Storage Capacity</span>
+                  </div>
+                  <div class="inventory-item">
+                    <div class="progress-circle" data-value="60">
+                      <div class="progress-text">24</div>
+                    </div>
+                    <span class="label">Incoming Shipments</span>
+                  </div>
+                  <div class="inventory-item">
+                    <div class="progress-circle" data-value="75">
+                      <div class="progress-text">156</div>
+                    </div>
+                    <span class="label">Orders Today</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="panel quick-actions">
+                <div class="panel-header">
+                  <h3>Quick Actions</h3>
+                </div>
+                <div class="action-buttons">
+                  <button class="action-btn primary">
+                    <i class="fas fa-plus"></i>
+                    <span>New Item</span>
+                  </button>
+                  <button class="action-btn">
+                    <i class="fas fa-sync"></i>
+                    <span>Update Stock</span>
+                  </button>
+                  <button class="action-btn">
+                    <i class="fas fa-file-export"></i>
+                    <span>Export</span>
+                  </button>
+                </div>
+              </div>
+
+              <div class="panel recent-activities">
+                <div class="panel-header">
+                  <h3>Recent Activities</h3>
+                  <div class="panel-actions">
+                    <button class="btn-text">View All</button>
+                  </div>
+                </div>
+                <div class="activity-list">
+                  <div class="activity-item warning">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <div class="activity-content">
+                      <p>Product ID #5123 running low on stock</p>
+                      <span class="time">2m ago</span>
+                    </div>
+                    <button class="btn-icon">
+                      <i class="fas fa-chevron-right"></i>
+                    </button>
+                  </div>
+                  <div class="activity-item success">
+                    <i class="fas fa-check-circle"></i>
+                    <div class="activity-content">
+                      <p>New shipment received - Order #8547</p>
+                      <span class="time">15m ago</span>
+                    </div>
+                    <button class="btn-icon">
+                      <i class="fas fa-chevron-right"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
     </div>
     <script src="/scripts/script.js"></script>
-</body>
+  </body>
 </html>

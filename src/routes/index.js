@@ -8,12 +8,12 @@ const orderRoutes = require("./orders.routes.js");
 const customerRoutes = require("./customers.routes.js");
 const purchaseRoutes = require("./purchases.routes.js");
 
-const path = require('path');
+const path = require("path");
 
 const router = express.Router();
 
 router.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, '../public/index.html')); 
+  res.sendFile(path.join(__dirname, "../public/index.html"));
 });
 
 router.use("/auth", authRoutes);

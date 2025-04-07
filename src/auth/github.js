@@ -1,9 +1,9 @@
 // auth/github.js
 const GitHubStrategy = require("passport-github2").Strategy;
 const config = require("../config/config");
-const User = require('../models/user.model');
-const logger = require('../utils/logger');
-const { generateuserID } = require('../utils/user.utils');
+const User = require("../models/user.model");
+const logger = require("../utils/logger");
+const { generateuserID } = require("../utils/user.utils");
 
 const githubStrategy = new GitHubStrategy(
   {
@@ -17,7 +17,10 @@ const githubStrategy = new GitHubStrategy(
       let user = await User.findOne({ githubId: profile.id });
 
       if (!user) {
-        const email = profile.emails && profile.emails.length > 0 ? profile.emails[0].value : null;
+        const email =
+          profile.emails && profile.emails.length > 0
+            ? profile.emails[0].value
+            : null;
         const emailExists = email ? await User.exists({ email: email }) : false;
 
         if (emailExists) {
@@ -32,7 +35,7 @@ const githubStrategy = new GitHubStrategy(
           email: email,
           fullName: profile.displayName || profile.username,
           isVerified: true,
-          userID: userID
+          userID: userID,
         });
       }
 
@@ -40,10 +43,15 @@ const githubStrategy = new GitHubStrategy(
       user.githubRefreshToken = refreshToken;
 
       await user.save();
-      logger.info(`User ${user.username} logged in successfully using GitHub strategy.`);
+      logger.info(
+        `User ${user.username} logged in successfully using GitHub strategy.`
+      );
       return done(null, user);
     } catch (error) {
-      logger.error(`Error during GitHub authentication: ${error.message}`, error);
+      logger.error(
+        `Error during GitHub authentication: ${error.message}`,
+        error
+      );
       return done(error);
     }
   }

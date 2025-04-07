@@ -1,6 +1,10 @@
 const { body } = require("express-validator");
 const User = require("../models/user.model");
-const { isValidEmail, isValidUsernameBody, isValidRoleBody } = require("./user.validator");
+const {
+  isValidEmail,
+  isValidUsernameBody,
+  isValidRoleBody,
+} = require("./user.validator");
 
 const userUniquenessValidationRules = () => {
   return [
@@ -55,7 +59,11 @@ const userRequiredValidationRules = () => {
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,50}$/
       ),
     body("role").optional(),
-    isValidRoleBody("role", ["SUPERADMIN", "ADMIN", "USER", "ORG"], "Role should be one of SUPERADMIN, ADMIN, USER, ORG"),
+    isValidRoleBody(
+      "role",
+      ["SUPERADMIN", "ADMIN", "USER", "ORG"],
+      "Role should be one of SUPERADMIN, ADMIN, USER, ORG"
+    ),
   ];
 };
 
@@ -76,20 +84,14 @@ const userGeneralValidationRules = () => {
 };
 
 const userCreateValidationRules = () => {
-  return [
-    ...userRequiredValidationRules(),
-    ...userUniquenessValidationRules(),
-  ];
+  return [...userRequiredValidationRules(), ...userUniquenessValidationRules()];
 };
 
 const userCreateProfileRules = () => {
-  return [
-    ...userGeneralValidationRules
-  ]
-}
+  return [...userGeneralValidationRules];
+};
 
 module.exports = {
   userCreateValidationRules,
-  userCreateProfileRules
-
+  userCreateProfileRules,
 };

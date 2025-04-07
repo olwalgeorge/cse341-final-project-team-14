@@ -1,5 +1,5 @@
 // models/Order.js
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const orderSchema = new Schema({
@@ -8,43 +8,45 @@ const orderSchema = new Schema({
     unique: true,
     match: [/^OR-\d{5}$/],
     index: true,
-    required: true
+    required: true,
   },
-  products: [{
-    product: {
-      type: Schema.Types.ObjectId,
-      ref: 'Product',
-      required: [true, 'Product reference is required']
+  products: [
+    {
+      product: {
+        type: Schema.Types.ObjectId,
+        ref: "Product",
+        required: [true, "Product reference is required"],
+      },
+      quantity: {
+        type: Number,
+        required: [true, "Quantity is required"],
+        min: [1, "Quantity must be at least 1"],
+      },
+      priceAtOrder: {
+        type: Number,
+        required: [true, "Price at order time is required"],
+        min: [0, "Price cannot be negative"],
+      },
     },
-    quantity: {
-      type: Number,
-      required: [true, 'Quantity is required'],
-      min: [1, 'Quantity must be at least 1']
-    },
-    priceAtOrder: {
-      type: Number,
-      required: [true, 'Price at order time is required'],
-      min: [0, 'Price cannot be negative']
-    }
-  }],
+  ],
   orderDate: {
     type: Date,
-    required: [true, 'Order date is required'],
-    default: Date.now
+    required: [true, "Order date is required"],
+    default: Date.now,
   },
   status: {
     type: String,
-    required: [true, 'Order status is required'],
+    required: [true, "Order status is required"],
     enum: {
-      values: ['Pending', 'Processing', 'Shipped', 'Delivered', 'Cancelled'],
-      message: 'Invalid order status'
+      values: ["Pending", "Processing", "Shipped", "Delivered", "Cancelled"],
+      message: "Invalid order status",
     },
-    default: 'Pending'
+    default: "Pending",
   },
   totalAmount: {
     type: Number,
-    required: [true, 'Total amount is required'],
-    min: [0, 'Total amount cannot be negative']
+    required: [true, "Total amount is required"],
+    min: [0, "Total amount cannot be negative"],
   },
   shippingAddress: {
     type: {
@@ -52,44 +54,44 @@ const orderSchema = new Schema({
       city: String,
       state: String,
       postalCode: String,
-      country: String
+      country: String,
     },
-    required: [true, 'Shipping address is required']
+    required: [true, "Shipping address is required"],
   },
   customer: {
     name: {
       type: String,
-      required: [true, 'Customer name is required'],
-      trim: true
+      required: [true, "Customer name is required"],
+      trim: true,
     },
     email: {
       type: String,
-      required: [true, 'Customer email is required'],
+      required: [true, "Customer email is required"],
       trim: true,
-      lowercase: true
+      lowercase: true,
     },
     phone: {
       type: String,
-      required: [true, 'Customer phone is required']
-    }
+      required: [true, "Customer phone is required"],
+    },
   },
   createdAt: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
   updatedAt: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
 });
 
 // Calculate total amount before saving
-orderSchema.pre('save', function(next) {
+orderSchema.pre("save", function (next) {
   this.updatedAt = Date.now();
 
-  if (this.isModified('products')) {
+  if (this.isModified("products")) {
     this.totalAmount = this.products.reduce((total, item) => {
-      return total + (item.priceAtOrder * item.quantity);
+      return total + item.priceAtOrder * item.quantity;
     }, 0);
   }
 
@@ -97,16 +99,16 @@ orderSchema.pre('save', function(next) {
 });
 
 // Update product quantities when order status changes to "Delivered" or "Cancelled"
-orderSchema.post('save', async function(doc, next) {
-  if (doc.status === 'Delivered' || doc.status === 'Cancelled') {
-    const Product = mongoose.model('Product');
+orderSchema.post("save", async function (doc, next) {
+  if (doc.status === "Delivered" || doc.status === "Cancelled") {
+    const Product = mongoose.model("Product");
 
     for (const item of doc.products) {
       const product = await Product.findById(item.product);
       if (product) {
-        if (doc.status === 'Delivered') {
+        if (doc.status === "Delivered") {
           product.quantity -= item.quantity;
-        } else if (doc.status === 'Cancelled') {
+        } else if (doc.status === "Cancelled") {
           product.quantity += item.quantity;
         }
         await product.save();
@@ -116,6 +118,6 @@ orderSchema.post('save', async function(doc, next) {
   next();
 });
 
-const Order = mongoose.model('Order', orderSchema);
+const Order = mongoose.model("Order", orderSchema);
 
 module.exports = Order;

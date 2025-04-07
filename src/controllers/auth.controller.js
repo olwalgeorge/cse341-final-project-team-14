@@ -11,25 +11,29 @@ const authService = require("../services/auth.service.js");
  * @access  Public
  */
 const register = asyncHandler(async (req, res, next) => {
-    logger.info("Register endpoint called");
-    logger.debug("Request body:", req.body);
+  logger.info("Register endpoint called");
+  logger.debug("Request body:", req.body);
 
-    try {
-        const user = await authService.registerUser(req.body);
-        // Log in the user after registration
-        req.login(user, (err) => {
-            if (err) {
-                logger.error("Error logging in after registration:", err);
-                return next(ApiError.serverError("Registration successful but login failed"));
-            }
-            const transformedUser = transformUser(user);
-            sendResponse(res, 201, "Registration successful", { user: transformedUser });
-        });
-    } catch (error) {
-        logger.error("Error during registration:", error);
-        // Pass raw validation errors to middleware
-        next(error);
-    }
+  try {
+    const user = await authService.registerUser(req.body);
+    // Log in the user after registration
+    req.login(user, (err) => {
+      if (err) {
+        logger.error("Error logging in after registration:", err);
+        return next(
+          ApiError.serverError("Registration successful but login failed")
+        );
+      }
+      const transformedUser = transformUser(user);
+      sendResponse(res, 201, "Registration successful", {
+        user: transformedUser,
+      });
+    });
+  } catch (error) {
+    logger.error("Error during registration:", error);
+    // Pass raw validation errors to middleware
+    next(error);
+  }
 });
 
 /**
@@ -38,9 +42,9 @@ const register = asyncHandler(async (req, res, next) => {
  * @access  Public
  */
 const loginSuccess = (req, res) => {
-    logger.info(`User ${req.user.username} logged in successfully.`);
-    const transformedUser = transformUser(req.user);
-    sendResponse(res, 200, "Login successful", { user: transformedUser });
+  logger.info(`User ${req.user.username} logged in successfully.`);
+  const transformedUser = transformUser(req.user);
+  sendResponse(res, 200, "Login successful", { user: transformedUser });
 };
 
 /**
@@ -49,18 +53,18 @@ const loginSuccess = (req, res) => {
  * @access  Private
  */
 const logout = (req, res, next) => {
-    req.logout((err) => {
-        if (err) {
-            logger.error("Error during logout:", err);
-            return next(AuthError.loginError());
-        }
-        logger.info(`User logged out successfully.`);
-        sendResponse(res, 200, "Logged out successfully");
-    });
+  req.logout((err) => {
+    if (err) {
+      logger.error("Error during logout:", err);
+      return next(AuthError.loginError());
+    }
+    logger.info(`User logged out successfully.`);
+    sendResponse(res, 200, "Logged out successfully");
+  });
 };
 
 module.exports = {
-    register,
-    loginSuccess,
-    logout,
+  register,
+  loginSuccess,
+  logout,
 };
