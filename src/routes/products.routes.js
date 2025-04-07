@@ -19,6 +19,7 @@ const {
   product_IdValidationRules,
   productCreateValidationRules,
   productUpdateValidationRules,
+  categoryValidationRules,
 } = require("../validators/product.validator.js");
 
 // Public routes
@@ -29,7 +30,7 @@ router.get(
   validate(productIDValidationRules()),
   getProductByProductID
 );
-router.get("/category/:category", getProductsByCategory);
+router.get("/category/:category", validate(categoryValidationRules()), getProductsByCategory);
 router.get("/supplier/:supplierId", getProductsBySupplier);
 router.get("/:_id", validate(product_IdValidationRules()), getProductById);
 

@@ -4433,3 +4433,135 @@ Use mongoose.model(name, schema) - GET /products/productID/PR-00001
 2025-04-07 13:12:13 DEBUG [inventory-api]: Session: 
 2025-04-07 13:12:13 DEBUG [inventory-api]: Session: 
 2025-04-07 13:12:13 DEBUG [inventory-api]: Session: 
+2025-04-07 13:50:24 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-07 13:50:27 INFO [inventory-api]: MongoDB Connected... 
+2025-04-07 13:50:53 DEBUG [inventory-api]: Session: 
+2025-04-07 13:50:53 INFO [inventory-api]: getAllProducts called 
+2025-04-07 13:50:53 DEBUG [inventory-api]: getAllProductsService called 
+2025-04-07 13:51:19 DEBUG [inventory-api]: Session: 
+2025-04-07 13:51:19 INFO [inventory-api]: getProductByProductID called with product ID: PR-00001 
+2025-04-07 13:51:19 DEBUG [inventory-api]: getProductByProductIDService called with product ID: PR-00001 
+2025-04-07 13:51:24 DEBUG [inventory-api]: Session: 
+2025-04-07 13:51:24 INFO [inventory-api]: getProductsByCategory called with category: Electronics 
+2025-04-07 13:51:24 DEBUG [inventory-api]: getProductsByCategoryService called with category: Electronics 
+2025-04-07 13:51:54 DEBUG [inventory-api]: Session: 
+2025-04-07 13:51:54 INFO [inventory-api]: getProductsBySupplier called with supplier ID: 67f2e07fbf6d04573678e7f0 
+2025-04-07 13:51:54 DEBUG [inventory-api]: getProductsBySupplierService called with supplier ID: 67f2e07fbf6d04573678e7f0 
+2025-04-07 13:53:33 DEBUG [inventory-api]: Session: 
+2025-04-07 13:53:33 INFO [inventory-api]: getProductByProductID called with product ID: PR-00000 
+2025-04-07 13:53:33 DEBUG [inventory-api]: getProductByProductIDService called with product ID: PR-00000 
+2025-04-07 13:53:33 ERROR [inventory-api]: Product not found - GET /products/productID/PR-00000 
+2025-04-07 13:53:58 DEBUG [inventory-api]: Session: 
+2025-04-07 13:53:58 INFO [inventory-api]: getProductsByCategory called with category: Electronic 
+2025-04-07 13:53:58 DEBUG [inventory-api]: getProductsByCategoryService called with category: Electronic 
+2025-04-07 13:53:58 ERROR [inventory-api]: Products in category not found - GET /products/category/Electronic 
+2025-04-07 13:55:02 DEBUG [inventory-api]: Session: 
+2025-04-07 13:55:02 INFO [inventory-api]: getProductsBySupplier called with supplier ID: 34554 
+2025-04-07 13:55:02 DEBUG [inventory-api]: getProductsBySupplierService called with supplier ID: 34554 
+2025-04-07 13:55:02 ERROR [inventory-api]: Error retrieving products for supplier: 34554 Cast to ObjectId failed for value "34554" (type string) at path "supplier" for model "Product" 
+CastError: Cast to ObjectId failed for value "34554" (type string) at path "supplier" for model "Product"
+    at SchemaObjectId.cast (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schema\objectId.js:251:11)
+    at SchemaType.applySetters (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schemaType.js:1255:12)
+    at SchemaType.castForQuery (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schemaType.js:1673:17)
+    at cast (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\cast.js:390:32)
+    at Query.cast (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:4907:12)
+    at Query._castConditions (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2325:10)
+    at model.Query._find (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2352:8)
+    at model.Query.exec (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:4456:80)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async getProductsBySupplierService (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\products.service.js:50:10)
+2025-04-07 13:55:02 ERROR [inventory-api]: Invalid ID Format - GET /products/supplier/34554 
+2025-04-07 13:58:34 DEBUG [inventory-api]: Session: 
+2025-04-07 13:58:34 INFO [inventory-api]: getProductsByCategory called with category: Electronics 
+2025-04-07 13:58:34 DEBUG [inventory-api]: getProductsByCategoryService called with category: Electronics 
+2025-04-07 14:07:25 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-07 14:07:27 INFO [inventory-api]: MongoDB Connected... 
+2025-04-07 14:07:55 DEBUG [inventory-api]: Session: 
+2025-04-07 14:07:55 WARN [inventory-api]: Validation failed 
+2025-04-07 14:14:59 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-07 14:15:02 INFO [inventory-api]: MongoDB Connected... 
+2025-04-07 14:15:20 DEBUG [inventory-api]: Session: 
+2025-04-07 14:15:21 INFO [inventory-api]: getProductById called with ID: 67f2e07fbf6d04573678e7f0 
+2025-04-07 14:15:21 DEBUG [inventory-api]: getProductByIdService called with ID: 67f2e07fbf6d04573678e7f0 
+2025-04-07 14:16:01 DEBUG [inventory-api]: Session: 
+2025-04-07 14:16:01 WARN [inventory-api]: Validation failed 
+2025-04-07 14:16:38 DEBUG [inventory-api]: Session: 
+2025-04-07 14:16:38 INFO [inventory-api]: getProductByProductID called with product ID: PR-00000 
+2025-04-07 14:16:38 DEBUG [inventory-api]: getProductByProductIDService called with product ID: PR-00000 
+2025-04-07 14:16:38 ERROR [inventory-api]: Product not found - GET /products/productID/PR-00000 
+2025-04-07 14:17:15 DEBUG [inventory-api]: Session: 
+2025-04-07 14:17:15 WARN [inventory-api]: Validation failed 
+2025-04-07 14:17:24 DEBUG [inventory-api]: Session: 
+2025-04-07 14:17:24 WARN [inventory-api]: Validation failed 
+2025-04-07 14:17:38 DEBUG [inventory-api]: Session: 
+2025-04-07 14:17:38 INFO [inventory-api]: getProductsByCategory called with category: Electronics 
+2025-04-07 14:17:38 DEBUG [inventory-api]: getProductsByCategoryService called with category: Electronics 
+2025-04-07 14:17:48 DEBUG [inventory-api]: Session: 
+2025-04-07 14:17:48 WARN [inventory-api]: Validation failed 
+2025-04-07 14:21:42 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-07 14:21:45 INFO [inventory-api]: MongoDB Connected... 
+2025-04-07 14:21:50 DEBUG [inventory-api]: Session: 
+2025-04-07 14:21:50 DEBUG [inventory-api]: Session: 
+2025-04-07 14:22:34 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-07 14:22:36 INFO [inventory-api]: MongoDB Connected... 
+2025-04-07 14:22:45 DEBUG [inventory-api]: Session: 
+2025-04-07 14:22:45 INFO [inventory-api]: getProductsByCategory called with category: electronics 
+2025-04-07 14:22:45 DEBUG [inventory-api]: getProductsByCategoryService called with category: electronics 
+2025-04-07 14:22:46 ERROR [inventory-api]: Products in category not found - GET /products/category/electronics 
+2025-04-07 14:28:19 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-07 14:28:22 INFO [inventory-api]: MongoDB Connected... 
+2025-04-07 14:28:28 DEBUG [inventory-api]: Session: 
+2025-04-07 14:28:28 INFO [inventory-api]: getProductsByCategory called with category: electronics 
+2025-04-07 14:28:28 DEBUG [inventory-api]: getProductsByCategoryService called with category: electronics 
+2025-04-07 14:28:28 ERROR [inventory-api]: Products in category not found - GET /products/category/electronics 
+2025-04-07 14:28:35 DEBUG [inventory-api]: Session: 
+2025-04-07 14:28:35 INFO [inventory-api]: getProductsByCategory called with category: electronics 
+2025-04-07 14:28:35 DEBUG [inventory-api]: getProductsByCategoryService called with category: electronics 
+2025-04-07 14:28:36 ERROR [inventory-api]: Products in category not found - GET /products/category/electronics 
+2025-04-07 14:30:32 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-07 14:30:34 INFO [inventory-api]: MongoDB Connected... 
+2025-04-07 14:30:39 DEBUG [inventory-api]: Session: 
+2025-04-07 14:30:40 INFO [inventory-api]: getProductsByCategory called with category: electronics 
+2025-04-07 14:30:40 DEBUG [inventory-api]: getProductsByCategoryService called with category: electronics 
+2025-04-07 14:30:40 ERROR [inventory-api]: Products in category not found - GET /products/category/electronics 
+2025-04-07 14:30:44 DEBUG [inventory-api]: Session: 
+2025-04-07 14:30:44 INFO [inventory-api]: getProductsByCategory called with category: electronics 
+2025-04-07 14:30:44 DEBUG [inventory-api]: getProductsByCategoryService called with category: electronics 
+2025-04-07 14:30:44 ERROR [inventory-api]: Products in category not found - GET /products/category/electronics 
+2025-04-07 14:30:46 DEBUG [inventory-api]: Session: 
+2025-04-07 14:30:46 INFO [inventory-api]: getProductsByCategory called with category: electronics 
+2025-04-07 14:30:46 DEBUG [inventory-api]: getProductsByCategoryService called with category: electronics 
+2025-04-07 14:30:46 ERROR [inventory-api]: Products in category not found - GET /products/category/electronics 
+2025-04-07 14:32:42 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-07 14:32:45 INFO [inventory-api]: MongoDB Connected... 
+2025-04-07 14:32:55 DEBUG [inventory-api]: Session: 
+2025-04-07 14:32:55 INFO [inventory-api]: getProductsByCategory called with category: electronics 
+2025-04-07 14:32:55 DEBUG [inventory-api]: getProductsByCategoryService called with category: electronics 
+2025-04-07 14:32:55 ERROR [inventory-api]: Products in category not found - GET /products/category/electronics 
+2025-04-07 14:33:38 DEBUG [inventory-api]: Session: 
+2025-04-07 14:33:38 WARN [inventory-api]: Validation failed 
+2025-04-07 14:33:50 DEBUG [inventory-api]: Session: 
+2025-04-07 14:33:50 INFO [inventory-api]: getProductByProductID called with product ID: PR-00000 
+2025-04-07 14:33:50 DEBUG [inventory-api]: getProductByProductIDService called with product ID: PR-00000 
+2025-04-07 14:33:50 ERROR [inventory-api]: Product not found - GET /products/productID/PR-00000 
+2025-04-07 14:34:26 DEBUG [inventory-api]: Session: 
+2025-04-07 14:34:26 INFO [inventory-api]: getProductByProductID called with product ID: PR-00000 
+2025-04-07 14:34:26 DEBUG [inventory-api]: getProductByProductIDService called with product ID: PR-00000 
+2025-04-07 14:34:26 ERROR [inventory-api]: Product not found - GET /products/productID/PR-00000 
+2025-04-07 14:34:35 DEBUG [inventory-api]: Session: 
+2025-04-07 14:34:35 INFO [inventory-api]: getProductsByCategory called with category: electronics 
+2025-04-07 14:34:35 DEBUG [inventory-api]: getProductsByCategoryService called with category: electronics 
+2025-04-07 14:34:35 ERROR [inventory-api]: Products in category not found - GET /products/category/electronics 
+2025-04-07 14:38:20 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-07 14:38:23 INFO [inventory-api]: MongoDB Connected... 
+2025-04-07 14:38:25 DEBUG [inventory-api]: Session: 
+2025-04-07 14:38:25 INFO [inventory-api]: getProductsByCategory called with category: electronics 
+2025-04-07 14:38:25 DEBUG [inventory-api]: getProductsByCategoryService called with category: electronics 
+2025-04-07 14:38:25 ERROR [inventory-api]: Products in category not found - GET /products/category/electronics 
+2025-04-07 14:43:42 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-07 14:43:45 INFO [inventory-api]: MongoDB Connected... 
+2025-04-07 14:43:46 DEBUG [inventory-api]: Session: 
+2025-04-07 14:43:46 INFO [inventory-api]: getProductsByCategory called with category: Electronics 
+2025-04-07 14:43:46 DEBUG [inventory-api]: getProductsByCategoryService called with category: Electronics 
+2025-04-07 14:44:00 DEBUG [inventory-api]: Session: 
+2025-04-07 14:44:00 WARN [inventory-api]: Validation failed 

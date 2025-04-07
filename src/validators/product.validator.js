@@ -16,6 +16,15 @@ const product_IdValidationRules = () => {
   return [isMongoIdParam("_id", "Invalid Product ID format")];
 };
 
+const categoryValidationRules = () => {
+  return [
+    param("category")
+      .trim()
+      .isIn(["Electronics", "Clothing", "Food", "Furniture", "Other"])
+      .withMessage("Invalid category. Must be one of: Electronics, Clothing, Food, Furniture, Other"),
+  ];
+};
+
 const productCreateValidationRules = () => {
   return [
     check("productID")
@@ -90,6 +99,7 @@ const productUpdateValidationRules = () => {
 module.exports = {
   productIDValidationRules,
   product_IdValidationRules,
+  categoryValidationRules,
   productCreateValidationRules,
   productUpdateValidationRules,
 };

@@ -89,16 +89,16 @@ GET http://localhost:3000/products?category=Electronics&minPrice=100&maxPrice=10
 GET http://localhost:3000/products/search?term=laptop
 
 ### Get Product by MongoDB ID
-GET http://localhost:3000/products/67f2e07fbf6d04573678e7f0
+GET http://localhost:3000/products/67f2
 
 ### Get Product by Product ID
-GET http://localhost:3000/products/productID/PR-00001
+GET http://localhost:3000/products/productID/PR-00000
 
 ### Get Products by Category
-GET http://localhost:3000/products/category/Electronics
+GET http://localhost:3000/products/category/Electronic
 
 ### Get Products by Supplier
-GET http://localhost:3000/products/supplier/65fb123abc456d789e012345
+GET http://localhost:3000/products/supplier/34554
 
 ### Create New Product (Requires Authentication)
 POST http://localhost:3000/products
