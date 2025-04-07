@@ -59,3 +59,20 @@ CastError: Cast to ObjectId failed for value "34554" (type string) at path "supp
 2025-04-07 14:34:26 ERROR [inventory-api]: Product not found - GET /products/productID/PR-00000 
 2025-04-07 14:34:35 ERROR [inventory-api]: Products in category not found - GET /products/category/electronics 
 2025-04-07 14:38:25 ERROR [inventory-api]: Products in category not found - GET /products/category/electronics 
+2025-04-07 14:47:02 ERROR [inventory-api]: Product not found - GET /products/productID/PR-00000 
+2025-04-07 14:47:15 ERROR [inventory-api]: Product not found - GET /products/productID/PR-00000 
+2025-04-07 14:48:23 ERROR [inventory-api]: Product not found - GET /products/65fb123abc456d789e012345 
+2025-04-07 15:38:58 ERROR [inventory-api]: Error retrieving products for supplier: 34554 Cast to ObjectId failed for value "34554" (type string) at path "supplier" for model "Product" 
+CastError: Cast to ObjectId failed for value "34554" (type string) at path "supplier" for model "Product"
+    at SchemaObjectId.cast (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schema\objectId.js:251:11)
+    at SchemaType.applySetters (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schemaType.js:1255:12)
+    at SchemaType.castForQuery (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schemaType.js:1673:17)
+    at cast (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\cast.js:390:32)
+    at Query.cast (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:4907:12)
+    at Query._castConditions (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2325:10)
+    at model.Query._find (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2352:8)
+    at model.Query.exec (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:4456:80)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async getProductsBySupplierService (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\products.service.js:50:10)
+2025-04-07 15:38:58 ERROR [inventory-api]: Invalid ID Format - GET /products/supplier/34554 
+2025-04-07 16:00:23 ERROR [inventory-api]: Products for supplier not found - GET /products/supplier/67f2e07fbf6d04573678e7f0 

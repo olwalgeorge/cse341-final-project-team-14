@@ -173,8 +173,7 @@ const getProductsBySupplier = asyncHandler(async (req, res, next) => {
         transformedProducts
       );
     } else {
-      // Return empty array instead of 404 for empty results
-      sendResponse(res, 200, "No products found for this supplier", []);
+      return next(DatabaseError.notFound("Products for supplier"));
     }
   } catch (error) {
     logger.error(

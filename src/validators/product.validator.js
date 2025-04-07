@@ -16,6 +16,10 @@ const product_IdValidationRules = () => {
   return [isMongoIdParam("_id", "Invalid Product ID format")];
 };
 
+const supplierIdValidationRules = () => {
+  return [isMongoIdParam("supplierId", "Invalid Supplier ID format")];
+};
+
 const categoryValidationRules = () => {
   return [
     param("category")
@@ -99,6 +103,7 @@ const productUpdateValidationRules = () => {
 module.exports = {
   productIDValidationRules,
   product_IdValidationRules,
+  supplierIdValidationRules,
   categoryValidationRules,
   productCreateValidationRules,
   productUpdateValidationRules,

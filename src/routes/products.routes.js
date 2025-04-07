@@ -20,6 +20,7 @@ const {
   productCreateValidationRules,
   productUpdateValidationRules,
   categoryValidationRules,
+  supplierIdValidationRules,
 } = require("../validators/product.validator.js");
 
 // Public routes
@@ -31,7 +32,7 @@ router.get(
   getProductByProductID
 );
 router.get("/category/:category", validate(categoryValidationRules()), getProductsByCategory);
-router.get("/supplier/:supplierId", getProductsBySupplier);
+router.get("/supplier/:supplierId", validate(supplierIdValidationRules()), getProductsBySupplier);
 router.get("/:_id", validate(product_IdValidationRules()), getProductById);
 
 // Protected routes - require authentication
