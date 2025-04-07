@@ -155,4 +155,7 @@ module.exports = {
   updatePurchaseService,
   deletePurchaseService,
   deleteAllPurchasesService,
+  getPurchaseByPurchaseIDService,
+  getPurchasesBySupplierService,
+  getPurchasesByStatusService,
 };

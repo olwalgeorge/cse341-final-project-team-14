@@ -19,6 +19,12 @@ const getSupplierByNameService = async (name) => {
   return await Supplier.findOne({ name: new RegExp(name, "i") });
 };
 
+// Get supplier by supplier ID (SP-XXXXX format)
+const getSupplierBySupplierIDService = async (supplierID) => {
+  logger.debug(`getSupplierBySupplierIDService called with supplier ID: ${supplierID}`);
+  return await Supplier.findOne({ supplierID: supplierID });
+};
+
 // Create a new supplier
 const createSupplierService = async (supplierData) => {
   logger.debug("createSupplierService called with data:", supplierData);
@@ -48,8 +54,9 @@ module.exports = {
   getAllSuppliersService,
   getSupplierByIdService,
   getSupplierByNameService,
+  getSupplierBySupplierIDService,
   createSupplierService,
   updateSupplierService,
   deleteSupplierService,
-  deleteAllSuppliersService,
+  deleteAllSuppliersService,  
 };
