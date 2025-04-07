@@ -1,4 +1,5 @@
 // src/config/passport.js
+// eslint-disable-next-line no-unused-vars
 const passport = require("passport");
 const { Strategy: LocalStrategy } = require("passport-local");
 const User = require("../models/user.model.js");

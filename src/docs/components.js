@@ -392,6 +392,38 @@ module.exports = {
         },
       },
     },
+    PurchaseUpdate: {
+      type: "object",
+      properties: {
+        supplier: { type: "string", example: "65fb123abc456d789e012346" },
+        items: {
+          type: "array",
+          items: {
+            type: "object",
+            properties: {
+              product: { type: "string", example: "65fb123abc456d789e012345" },
+              quantity: { type: "integer", example: 5 },
+              price: { type: "number", example: 1800.0 },
+            },
+          },
+        },
+        totalAmount: { type: "number", example: 9000.0 },
+        purchaseDate: { type: "string", format: "date-time" },
+        status: {
+          type: "string",
+          enum: ["pending", "ordered", "received", "cancelled", "returned"],
+        },
+        paymentStatus: {
+          type: "string",
+          enum: ["unpaid", "partially_paid", "paid"],
+        },
+        paymentDue: { type: "string", format: "date-time" },
+        notes: {
+          type: "string",
+          example: "Bulk purchase of laptops for inventory",
+        },
+      },
+    },
     Pagination: {
       type: "object",
       properties: {
