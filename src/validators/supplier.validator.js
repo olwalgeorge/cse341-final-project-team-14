@@ -52,8 +52,67 @@ const supplierCreateValidationRules = () => {
     ];
 };
 
+const supplierUpdateValidationRules = () => {
+    return [
+        check("name")
+            .optional()
+            .trim()
+            .notEmpty()
+            .withMessage("Supplier name cannot be empty")
+            .isLength({ max: 100 })
+            .withMessage("Supplier name cannot exceed 100 characters"),
+        check("contact")
+            .optional()
+            .isObject()
+            .withMessage("Contact should be an object"),
+        check("contact.name")
+            .optional()
+            .trim()
+            .notEmpty()
+            .withMessage("Contact name cannot be empty"),
+        check("contact.email")
+            .optional()
+            .isEmail()
+            .withMessage("Invalid email format"),
+        check("contact.phone")
+            .optional()
+            .matches(/^[0-9+\-\s()]{10,15}$/)
+            .withMessage("Invalid phone number"),
+        check("address")
+            .optional()
+            .isObject()
+            .withMessage("Address should be an object"),
+        check("address.street")
+            .optional()
+            .trim()
+            .notEmpty()
+            .withMessage("Street address cannot be empty"),
+        check("address.city")
+            .optional()
+            .trim()
+            .notEmpty()
+            .withMessage("City cannot be empty"),
+        check("address.state")
+            .optional()
+            .trim()
+            .notEmpty()
+            .withMessage("State cannot be empty"),
+        check("address.postalCode")
+            .optional()
+            .trim()
+            .notEmpty()
+            .withMessage("Postal code cannot be empty"),
+        check("address.country")
+            .optional()
+            .trim()
+            .notEmpty()
+            .withMessage("Country cannot be empty")
+    ];
+};
+
 module.exports = {
     supplierIDValidationRules,
     supplier_IdValidationRules,
-    supplierCreateValidationRules
+    supplierCreateValidationRules,
+    supplierUpdateValidationRules
 };

@@ -1,11 +1,10 @@
-const { check } = require('express-validator');
+const { check, param } = require('express-validator');
 const mongoose = require('mongoose');
 
 const customerIDValidationRules = () => {
     return [
-        check("customerID")
+        param("customerID", "Customer ID should be in the format CU-xxxxx")
             .matches(/^CU-\d{5}$/)
-            .withMessage("Invalid customer ID format. Must be CU-XXXXX where X is a digit")
     ];
 };
 

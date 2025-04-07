@@ -19,6 +19,31 @@ const getProductsByCategoryService = async (category) => {
     return await Product.find({ category: category });
 };
 
+// Get product by product ID (PR-XXXXX format)
+const getProductByProductIDService = async (productID) => {
+    logger.debug(`getProductByProductIDService called with product ID: ${productID}`);
+    return await Product.findOne({ productID: productID });
+};
+
+/**
+ * Search products by text (searches name, description, category)
+ */
+const searchProductsService = async (term) => {
+    logger.debug(`searchProductsService called with term: ${term}`);
+    return await Product.find(
+        { $text: { $search: term } },
+        { score: { $meta: "textScore" } }
+    ).sort({ score: { $meta: "textScore" } });
+};
+
+/**
+ * Get products by supplier ID
+ */
+const getProductsBySupplierService = async (supplierId) => {
+    logger.debug(`getProductsBySupplierService called with supplier ID: ${supplierId}`);
+    return await Product.find({ supplier: supplierId });
+};
+
 // Create a new product
 const createProductService = async (productData) => {
     logger.debug('createProductService called with data:', productData);
@@ -48,6 +73,9 @@ module.exports = {
     getAllProductsService,
     getProductByIdService,
     getProductsByCategoryService,
+    getProductByProductIDService,
+    getProductsBySupplierService,
+    searchProductsService,
     createProductService,
     updateProductService,
     deleteProductService,

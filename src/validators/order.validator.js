@@ -1,11 +1,10 @@
-const { check } = require('express-validator');
+const { check, param } = require('express-validator');
 const mongoose = require('mongoose');
 
 const orderIDValidationRules = () => {
     return [
-        check("orderID")
+        param("orderID", "Order ID should be in the format OR-xxxxx")
             .matches(/^OR-\d{5}$/)
-            .withMessage("Invalid order ID format. Must be OR-XXXXX where X is a digit")
     ];
 };
 

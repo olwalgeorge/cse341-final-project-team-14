@@ -8,7 +8,10 @@ const {
     createPurchaseService,
     updatePurchaseService,
     deletePurchaseService,
-    deleteAllPurchasesService
+    deleteAllPurchasesService,
+    getPurchaseByPurchaseIDService,
+    getPurchasesBySupplierService,
+    getPurchasesByStatusService
 } = require("../services/purchases.service");
 const { transformPurchase } = require("../utils/purchase.utils");
 
@@ -46,6 +49,27 @@ const getPurchaseById = asyncHandler(async (req, res, next) => {
         }
     } catch (error) {
         logger.error(`Error retrieving purchase with ID: ${req.params._id}`, error);
+        next(error);
+    }
+});
+
+/**
+ * @desc    Get purchase by purchase ID (PU-XXXXX format)
+ * @route   GET /purchases/purchaseID/:purchaseID
+ * @access  Private
+ */
+const getPurchaseByPurchaseID = asyncHandler(async (req, res, next) => {
+    logger.info(`getPurchaseByPurchaseID called with purchase ID: ${req.params.purchaseID}`);
+    try {
+        const purchase = await getPurchaseByPurchaseIDService(req.params.purchaseID);
+        if (purchase) {
+            const transformedPurchase = transformPurchase(purchase);
+            sendResponse(res, 200, "Purchase retrieved successfully", transformedPurchase);
+        } else {
+            return next(DatabaseError.notFound("Purchase"));
+        }
+    } catch (error) {
+        logger.error(`Error retrieving purchase with purchase ID: ${req.params.purchaseID}`, error);
         next(error);
     }
 });
@@ -126,11 +150,58 @@ const deleteAllPurchases = asyncHandler(async (req, res, next) => {
     }
 });
 
+/**
+ * @desc    Get purchases by supplier
+ * @route   GET /purchases/supplier/:supplierId
+ * @access  Public
+ */
+const getPurchasesBySupplier = asyncHandler(async (req, res, next) => {
+    logger.info(`getPurchasesBySupplier called with supplier ID: ${req.params.supplierId}`);
+    try {
+        const purchases = await getPurchasesBySupplierService(req.params.supplierId);
+        if (purchases && purchases.length > 0) {
+            const transformedPurchases = purchases.map(transformPurchase);
+            sendResponse(res, 200, "Purchases retrieved successfully", transformedPurchases);
+        } else {
+            // Return empty array instead of 404 for empty results
+            sendResponse(res, 200, "No purchases found for this supplier", []);
+        }
+    } catch (error) {
+        logger.error(`Error retrieving purchases for supplier: ${req.params.supplierId}`, error);
+        next(error);
+    }
+});
+
+/**
+ * @desc    Get purchases by status
+ * @route   GET /purchases/status/:status
+ * @access  Public
+ */
+const getPurchasesByStatus = asyncHandler(async (req, res, next) => {
+    logger.info(`getPurchasesByStatus called with status: ${req.params.status}`);
+    try {
+        const purchases = await getPurchasesByStatusService(req.params.status);
+        if (purchases && purchases.length > 0) {
+            const transformedPurchases = purchases.map(transformPurchase);
+            sendResponse(res, 200, "Purchases retrieved successfully", transformedPurchases);
+        } else {
+            // Return empty array instead of 404 for empty results
+            sendResponse(res, 200, "No purchases found with this status", []);
+        }
+    } catch (error) {
+        logger.error(`Error retrieving purchases with status: ${req.params.status}`, error);
+        next(error);
+    }
+});
+
 module.exports = {
     getAllPurchases,
     getPurchaseById,
+    getPurchaseByPurchaseID,
     createPurchase,
     updatePurchaseById,
     deletePurchaseById,
-    deleteAllPurchases
+    deleteAllPurchases,
+    getPurchasesBySupplier,
+    getPurchasesByStatus
 };

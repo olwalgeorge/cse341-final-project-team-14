@@ -6,10 +6,12 @@ const {
     getAllOrdersService, 
     getOrderByIdService,
     getOrdersByCustomerIdService,
+    getOrderByOrderIDService,
     createOrderService,
     updateOrderService,
     deleteOrderService,
-    deleteAllOrdersService
+    deleteAllOrdersService,
+    getOrdersByStatusService
 } = require("../services/orders.service");
 const { transformOrder } = require("../utils/order.utils");
 
@@ -68,6 +70,27 @@ const getOrdersByCustomerId = asyncHandler(async (req, res, next) => {
         }
     } catch (error) {
         logger.error(`Error retrieving orders for customer: ${req.params.customerId}`, error);
+        next(error);
+    }
+});
+
+/**
+ * @desc    Get order by order ID (OR-XXXXX format)
+ * @route   GET /orders/orderID/:orderID
+ * @access  Private
+ */
+const getOrderByOrderID = asyncHandler(async (req, res, next) => {
+    logger.info(`getOrderByOrderID called with order ID: ${req.params.orderID}`);
+    try {
+        const order = await getOrderByOrderIDService(req.params.orderID);
+        if (order) {
+            const transformedOrder = transformOrder(order);
+            sendResponse(res, 200, "Order retrieved successfully", transformedOrder);
+        } else {
+            return next(DatabaseError.notFound("Order"));
+        }
+    } catch (error) {
+        logger.error(`Error retrieving order with order ID: ${req.params.orderID}`, error);
         next(error);
     }
 });
@@ -148,12 +171,36 @@ const deleteAllOrders = asyncHandler(async (req, res, next) => {
     }
 });
 
+/**
+ * @desc    Get orders by status
+ * @route   GET /orders/status/:status
+ * @access  Public
+ */
+const getOrdersByStatus = asyncHandler(async (req, res, next) => {
+    logger.info(`getOrdersByStatus called with status: ${req.params.status}`);
+    try {
+        const orders = await getOrdersByStatusService(req.params.status);
+        if (orders && orders.length > 0) {
+            const transformedOrders = orders.map(transformOrder);
+            sendResponse(res, 200, "Orders retrieved successfully", transformedOrders);
+        } else {
+            // Return empty array instead of 404 for empty results
+            sendResponse(res, 200, "No orders found with this status", []);
+        }
+    } catch (error) {
+        logger.error(`Error retrieving orders with status: ${req.params.status}`, error);
+        next(error);
+    }
+});
+
 module.exports = {
     getAllOrders,
     getOrderById,
     getOrdersByCustomerId,
+    getOrderByOrderID,
     createOrder,
     updateOrderById,
     deleteOrderById,
-    deleteAllOrders
+    deleteAllOrders,
+    getOrdersByStatus
 };

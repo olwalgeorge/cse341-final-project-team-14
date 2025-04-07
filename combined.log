@@ -4394,3 +4394,42 @@ Use mongoose.model(name, schema) - GET /products/productID/PR-00001
 2025-04-07 11:12:52 WARN [inventory-api]: Validation failed 
 2025-04-07 11:14:46 DEBUG [inventory-api]: Session: 
 2025-04-07 11:14:46 WARN [inventory-api]: Validation failed 
+2025-04-07 12:46:03 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-07 12:46:06 INFO [inventory-api]: MongoDB Connected... 
+2025-04-07 12:46:12 DEBUG [inventory-api]: Session: 
+2025-04-07 12:46:12 DEBUG [inventory-api]: Session: 
+2025-04-07 12:46:15 DEBUG [inventory-api]: Session: 
+2025-04-07 12:46:15 DEBUG [inventory-api]: Session: 
+2025-04-07 12:46:15 DEBUG [inventory-api]: Session: 
+2025-04-07 12:46:16 DEBUG [inventory-api]: Session: 
+2025-04-07 12:46:16 DEBUG [inventory-api]: Session: 
+2025-04-07 12:47:01 DEBUG [inventory-api]: Session: 
+2025-04-07 12:47:01 INFO [inventory-api]: getProductByProductID called with product ID: PR-00001 
+2025-04-07 12:47:01 DEBUG [inventory-api]: getProductByProductIDService called with product ID: PR-00001 
+2025-04-07 12:47:35 DEBUG [inventory-api]: Session: 
+2025-04-07 12:47:35 INFO [inventory-api]: getProductById called with ID: 67f2e07fbf6d04573678e7f0 
+2025-04-07 12:47:35 DEBUG [inventory-api]: getProductByIdService called with ID: 67f2e07fbf6d04573678e7f0 
+2025-04-07 12:48:11 DEBUG [inventory-api]: Session: 
+2025-04-07 12:48:11 INFO [inventory-api]: getProductsByCategory called with category: Electronics 
+2025-04-07 12:48:11 DEBUG [inventory-api]: getProductsByCategoryService called with category: Electronics 
+2025-04-07 12:49:01 DEBUG [inventory-api]: Session: 
+2025-04-07 12:49:01 INFO [inventory-api]: getProductsBySupplier called with supplier ID: 65fb123abc456d789e012345 
+2025-04-07 12:49:01 DEBUG [inventory-api]: getProductsBySupplierService called with supplier ID: 65fb123abc456d789e012345 
+2025-04-07 13:00:25 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-07 13:00:28 INFO [inventory-api]: MongoDB Connected... 
+2025-04-07 13:00:43 DEBUG [inventory-api]: Session: 
+2025-04-07 13:00:43 DEBUG [inventory-api]: Session: 
+2025-04-07 13:00:46 DEBUG [inventory-api]: Session: 
+2025-04-07 13:00:46 DEBUG [inventory-api]: Session: 
+2025-04-07 13:00:47 DEBUG [inventory-api]: Session: 
+2025-04-07 13:00:48 DEBUG [inventory-api]: Session: 
+2025-04-07 13:00:48 DEBUG [inventory-api]: Session: 
+2025-04-07 13:11:57 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-07 13:12:00 INFO [inventory-api]: MongoDB Connected... 
+2025-04-07 13:12:09 DEBUG [inventory-api]: Session: 
+2025-04-07 13:12:09 DEBUG [inventory-api]: Session: 
+2025-04-07 13:12:12 DEBUG [inventory-api]: Session: 
+2025-04-07 13:12:12 DEBUG [inventory-api]: Session: 
+2025-04-07 13:12:13 DEBUG [inventory-api]: Session: 
+2025-04-07 13:12:13 DEBUG [inventory-api]: Session: 
+2025-04-07 13:12:13 DEBUG [inventory-api]: Session: 

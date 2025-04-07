@@ -1,11 +1,10 @@
-const { check } = require('express-validator');
+const { check, param } = require('express-validator');
 const mongoose = require('mongoose');
 
 const purchaseIDValidationRules = () => {
     return [
-        check("purchaseID")
+        param("purchaseID", "Purchase ID should be in the format PU-xxxxx")
             .matches(/^PU-\d{5}$/)
-            .withMessage("Invalid purchase ID format. Must be PU-XXXXX where X is a digit")
     ];
 };
 
@@ -19,7 +18,7 @@ const purchase_IdValidationRules = () => {
 
 const supplierIdValidationRules = () => {
     return [
-        check("supplierId")
+        param("supplierId")
             .custom(value => mongoose.Types.ObjectId.isValid(value))
             .withMessage("Invalid supplier ID format")
     ];
@@ -27,7 +26,7 @@ const supplierIdValidationRules = () => {
 
 const purchaseStatusValidationRules = () => {
     return [
-        check("status")
+        param("status")
             .isIn(['pending', 'ordered', 'received', 'cancelled', 'returned'])
             .withMessage("Invalid purchase status")
     ];

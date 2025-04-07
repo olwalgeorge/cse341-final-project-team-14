@@ -6,6 +6,7 @@ const {
     getAllCustomersService, 
     getCustomerByEmailService,
     getCustomerByIdService,
+    getCustomerByCustomerIDService,
     createCustomerService,
     updateCustomerService,
     deleteCustomerService,
@@ -68,6 +69,27 @@ const getCustomerById = asyncHandler(async (req, res, next) => {
         }
     } catch (error) {
         logger.error(`Error retrieving customer with ID: ${req.params._id}`, error);
+        next(error);
+    }
+});
+
+/**
+ * @desc    Get customer by customer ID (CU-XXXXX format)
+ * @route   GET /customers/customerID/:customerID
+ * @access  Private
+ */
+const getCustomerByCustomerID = asyncHandler(async (req, res, next) => {
+    logger.info(`getCustomerByCustomerID called with customer ID: ${req.params.customerID}`);
+    try {
+        const customer = await getCustomerByCustomerIDService(req.params.customerID);
+        if (customer) {
+            const transformedCustomer = transformCustomer(customer);
+            sendResponse(res, 200, "Customer retrieved successfully", transformedCustomer);
+        } else {
+            return next(DatabaseError.notFound("Customer"));
+        }
+    } catch (error) {
+        logger.error(`Error retrieving customer with customer ID: ${req.params.customerID}`, error);
         next(error);
     }
 });
@@ -152,6 +174,7 @@ module.exports = {
     getAllCustomers,
     getCustomerByEmail,
     getCustomerById,
+    getCustomerByCustomerID,
     createCustomer,
     updateCustomerById,
     deleteCustomerById,

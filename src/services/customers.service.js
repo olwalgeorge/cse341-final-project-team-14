@@ -13,6 +13,14 @@ const getCustomerByEmailService = async (email) => {
     return await Customer.findOne({ email: email });
 };
 
+/**
+ * Get customer by customer ID (CU-XXXXX format)
+ */
+const getCustomerByCustomerIDService = async (customerID) => {
+    logger.debug(`getCustomerByCustomerIDService called with customer ID: ${customerID}`);
+    return await Customer.findOne({ customerID: customerID });
+};
+
 // Get customer by ID
 const getCustomerByIdService = async (id) => {
     logger.debug(`getCustomerByIdService called with ID: ${id}`);
@@ -47,6 +55,7 @@ const deleteAllCustomersService = async () => {
 module.exports = {
     getAllCustomersService,
     getCustomerByEmailService,
+    getCustomerByCustomerIDService,
     getCustomerByIdService,
     createCustomerService,
     updateCustomerService,

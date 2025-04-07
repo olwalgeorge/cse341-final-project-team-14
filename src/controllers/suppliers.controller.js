@@ -6,6 +6,7 @@ const {
     getAllSuppliersService,
     getSupplierByIdService,
     getSupplierByNameService,
+    getSupplierBySupplierIDService,
     createSupplierService,
     updateSupplierService,
     deleteSupplierService,
@@ -68,6 +69,27 @@ const getSupplierByName = asyncHandler(async (req, res, next) => {
         }
     } catch (error) {
         logger.error(`Error retrieving supplier with name: ${req.params.name}`, error);
+        next(error);
+    }
+});
+
+/**
+ * @desc    Get supplier by supplier ID (SP-XXXXX format)
+ * @route   GET /suppliers/supplierID/:supplierID
+ * @access  Private
+ */
+const getSupplierBySupplierID = asyncHandler(async (req, res, next) => {
+    logger.info(`getSupplierBySupplierID called with supplier ID: ${req.params.supplierID}`);
+    try {
+        const supplier = await getSupplierBySupplierIDService(req.params.supplierID);
+        if (supplier) {
+            const transformedSupplier = transformSupplier(supplier);
+            sendResponse(res, 200, "Supplier retrieved successfully", transformedSupplier);
+        } else {
+            return next(DatabaseError.notFound("Supplier"));
+        }
+    } catch (error) {
+        logger.error(`Error retrieving supplier with supplier ID: ${req.params.supplierID}`, error);
         next(error);
     }
 });
@@ -152,6 +174,7 @@ module.exports = {
     getAllSuppliers,
     getSupplierById,
     getSupplierByName,
+    getSupplierBySupplierID,
     createSupplier,
     updateSupplierById,
     deleteSupplierById,

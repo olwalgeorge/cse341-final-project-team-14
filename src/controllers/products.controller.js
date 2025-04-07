@@ -1,22 +1,25 @@
 const sendResponse = require("../utils/response.js");
 const asyncHandler = require("express-async-handler");
 const logger = require("../utils/logger.js");
-const { DatabaseError } = require("../utils/errors");
+const { DatabaseError, ValidationError } = require("../utils/errors");
 const { 
     getAllProductsService, 
     getProductByIdService, 
     getProductsByCategoryService,
+    getProductByProductIDService,
     createProductService,
     updateProductService,
     deleteProductService,
-    deleteAllProductsService
+    deleteAllProductsService,
+    searchProductsService,
+    getProductsBySupplierService
 } = require("../services/products.service");
 const { transformProduct } = require("../utils/product.utils");
 
 /**
  * @desc    Get all products
  * @route   GET /products
- * @access  Private
+ * @access  Public
  */
 const getAllProducts = asyncHandler(async (req, res, next) => {
     logger.info("getAllProducts called");
@@ -33,7 +36,7 @@ const getAllProducts = asyncHandler(async (req, res, next) => {
 /**
  * @desc    Get product by ID
  * @route   GET /products/:_id
- * @access  Private
+ * @access  Public
  */
 const getProductById = asyncHandler(async (req, res, next) => {
     logger.info(`getProductById called with ID: ${req.params._id}`);
@@ -54,7 +57,7 @@ const getProductById = asyncHandler(async (req, res, next) => {
 /**
  * @desc    Get products by category
  * @route   GET /products/category/:category
- * @access  Private
+ * @access  Public
  */
 const getProductsByCategory = asyncHandler(async (req, res, next) => {
     logger.info(`getProductsByCategory called with category: ${req.params.category}`);
@@ -68,6 +71,71 @@ const getProductsByCategory = asyncHandler(async (req, res, next) => {
         }
     } catch (error) {
         logger.error(`Error retrieving products in category: ${req.params.category}`, error);
+        next(error);
+    }
+});
+
+/**
+ * @desc    Get product by product ID (PR-XXXXX format)
+ * @route   GET /products/productID/:productID
+ * @access  Public
+ */
+const getProductByProductID = asyncHandler(async (req, res, next) => {
+    logger.info(`getProductByProductID called with product ID: ${req.params.productID}`);
+    try {
+        const product = await getProductByProductIDService(req.params.productID);
+        if (product) {
+            const transformedProduct = transformProduct(product);
+            sendResponse(res, 200, "Product retrieved successfully", transformedProduct);
+        } else {
+            return next(DatabaseError.notFound("Product"));
+        }
+    } catch (error) {
+        logger.error(`Error retrieving product with product ID: ${req.params.productID}`, error);
+        next(error);
+    }
+});
+
+/**
+ * @desc    Search products by text
+ * @route   GET /products/search
+ * @access  Public
+ */
+const searchProducts = asyncHandler(async (req, res, next) => {
+    logger.info("searchProducts called");
+    try {
+        const term = req.query.term;
+        if (!term) {
+            return next(ValidationError.badRequest("Search term is required"));
+        }
+        
+        const products = await searchProductsService(term);
+        const transformedProducts = products.map(transformProduct);
+        sendResponse(res, 200, "Products retrieved successfully", transformedProducts);
+    } catch (error) {
+        logger.error("Error searching products:", error);
+        next(error);
+    }
+});
+
+/**
+ * @desc    Get products by supplier
+ * @route   GET /products/supplier/:supplierId
+ * @access  Public
+ */
+const getProductsBySupplier = asyncHandler(async (req, res, next) => {
+    logger.info(`getProductsBySupplier called with supplier ID: ${req.params.supplierId}`);
+    try {
+        const products = await getProductsBySupplierService(req.params.supplierId);
+        if (products && products.length > 0) {
+            const transformedProducts = products.map(transformProduct);
+            sendResponse(res, 200, "Products retrieved successfully", transformedProducts);
+        } else {
+            // Return empty array instead of 404 for empty results
+            sendResponse(res, 200, "No products found for this supplier", []);
+        }
+    } catch (error) {
+        logger.error(`Error retrieving products for supplier: ${req.params.supplierId}`, error);
         next(error);
     }
 });
@@ -151,7 +219,10 @@ const deleteAllProducts = asyncHandler(async (req, res, next) => {
 module.exports = {
     getAllProducts,
     getProductById,
+    getProductByProductID,
     getProductsByCategory,
+    getProductsBySupplier,
+    searchProducts,
     createProduct,
     updateProductById,
     deleteProductById,

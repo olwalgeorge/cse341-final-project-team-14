@@ -4,6 +4,7 @@ const supplierRoutes = {
             tags: ['Suppliers'],
             summary: 'Get all suppliers',
             description: 'Retrieve a list of all suppliers with optional filtering and pagination',
+            security: [{ bearerAuth: [] }],
             parameters: [
                 {
                     in: 'query',
@@ -129,6 +130,7 @@ const supplierRoutes = {
             tags: ['Suppliers'],
             summary: 'Search suppliers',
             description: 'Search suppliers by name',
+            security: [{ bearerAuth: [] }],
             parameters: [
                 {
                     in: 'query',
@@ -167,6 +169,7 @@ const supplierRoutes = {
             tags: ['Suppliers'],
             summary: 'Get supplier by supplier ID',
             description: 'Retrieve supplier details by supplier ID (SP-XXXXX format)',
+            security: [{ bearerAuth: [] }],
             parameters: [
                 {
                     in: 'path',
@@ -202,6 +205,7 @@ const supplierRoutes = {
             tags: ['Suppliers'],
             summary: 'Get supplier by ID',
             description: 'Retrieve supplier details by MongoDB ID',
+            security: [{ bearerAuth: [] }],
             parameters: [
                 {
                     in: 'path',
