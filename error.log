@@ -31,3 +31,4 @@ Use mongoose.model(name, schema)
     at Document.$init (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:667:42)
 2025-04-06 23:19:51 ERROR [inventory-api]: Schema hasn't been registered for model "Supplier".
 Use mongoose.model(name, schema) - GET /products/productID/PR-00001 
+2025-04-07 11:12:44 ERROR [inventory-api]: Expected double-quoted property name in JSON at position 37 (line 4 column 1) - POST /auth/register 

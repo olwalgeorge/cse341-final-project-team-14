@@ -1,37 +1,21 @@
 const express = require('express');
 const router = express.Router();
+const isAuthenticated = require('../middlewares/auth.middleware');
 const {
-  getAllPurchases,
-  getPurchaseById,
-  getPurchaseByPurchaseID,
-  createPurchase,
-  updatePurchaseById,
-  deletePurchaseById,
-  getPurchasesBySupplier,
-  getPurchasesByStatus,
-  deleteAllPurchases
-} = require('../controllers/purchases.controller.js');
-const validate = require('../middlewares/validation.middleware.js');
-const isAuthenticated = require('../middlewares/auth.middleware.js');
-const {
-  purchaseIDValidationRules,
-  purchase_IdValidationRules,
-  purchaseCreateValidationRules,
-  purchaseUpdateValidationRules,
-  supplierIdValidationRules,
-  purchaseStatusValidationRules
-} = require('../validators/purchase.validator.js');
+    getAllPurchases,
+    getPurchaseById,
+    createPurchase,
+    updatePurchaseById,
+    deletePurchaseById,
+    deleteAllPurchases
+} = require('../controllers/purchases.controller');
 
-// All purchase routes require authentication
+// Routes
 router.get('/', isAuthenticated, getAllPurchases);
-router.get('/purchaseID/:purchaseID', isAuthenticated, validate(purchaseIDValidationRules()), getPurchaseByPurchaseID);
-router.get('/supplier/:supplierId', isAuthenticated, validate(supplierIdValidationRules()), getPurchasesBySupplier);
-router.get('/status/:status', isAuthenticated, validate(purchaseStatusValidationRules()), getPurchasesByStatus);
-router.get('/:_id', isAuthenticated, validate(purchase_IdValidationRules()), getPurchaseById);
-
-router.post('/', isAuthenticated, validate(purchaseCreateValidationRules()), createPurchase);
-router.put('/:_id', isAuthenticated, validate(purchase_IdValidationRules()), validate(purchaseUpdateValidationRules()), updatePurchaseById);
-router.delete('/:_id', isAuthenticated, validate(purchase_IdValidationRules()), deletePurchaseById);
+router.get('/:_id', isAuthenticated, getPurchaseById);
+router.post('/', isAuthenticated, createPurchase);
+router.put('/:_id', isAuthenticated, updatePurchaseById);
+router.delete('/:_id', isAuthenticated, deletePurchaseById);
 router.delete('/', isAuthenticated, deleteAllPurchases);
 
 module.exports = router;

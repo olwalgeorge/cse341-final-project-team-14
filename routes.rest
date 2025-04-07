@@ -48,7 +48,7 @@ GET http://localhost:3000/users/SM-00001
 Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
 
 ### Delete User By ID (Requires Authentication)
-DELETE http://localhost:3000/users/67ed48c7bc4cde6b1c5e7add
+DELETE http://localhost:3000/users/67ed48c7bc4cde6b1
 Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
 
 ### Get User By Username (Requires Authentication)

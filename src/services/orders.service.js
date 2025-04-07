@@ -1,5 +1,6 @@
 const Order = require("../models/order.model.js");
 const { generateOrderId } = require("../utils/order.utils.js");
+const logger = require("../utils/logger.js");
 
 /**
  * Get all orders with optional filtering and pagination
@@ -128,6 +129,14 @@ const getOrdersByCustomerService = async (customerId) => {
 };
 
 /**
+ * Get orders by customer ID (alternative implementation)
+ */
+const getOrdersByCustomerIdService = async (customerId) => {
+    logger.debug(`getOrdersByCustomerIdService called with customer ID: ${customerId}`);
+    return await Order.find({ customerId: customerId });
+};
+
+/**
  * Get orders by status
  */
 const getOrdersByStatusService = async (status) => {
@@ -147,6 +156,7 @@ module.exports = {
     getAllOrdersService,
     getOrderByOrderIDService,
     getOrderByIdService,
+    getOrdersByCustomerIdService,
     createOrderService,
     updateOrderService,
     deleteOrderService,

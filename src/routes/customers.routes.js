@@ -1,36 +1,23 @@
 const express = require('express');
 const router = express.Router();
+const isAuthenticated = require('../middlewares/auth.middleware');
 const {
-  getAllCustomers,
-  getCustomerById,
-  getCustomerByCustomerID,
-  getCustomerByEmail,
-  createCustomer,
-  updateCustomerById,
-  deleteCustomerById,
-  searchCustomers,
-  deleteAllCustomers
-} = require('../controllers/customers.controller.js');
-const validate = require('../middlewares/validation.middleware.js');
-const isAuthenticated = require('../middlewares/auth.middleware.js');
-const {
-  customerIDValidationRules,
-  customer_IdValidationRules,
-  customerCreateValidationRules,
-  customerUpdateValidationRules,
-  emailValidationRules
-} = require('../validators/customer.validator.js');
+    getAllCustomers,
+    getCustomerByEmail,
+    getCustomerById,
+    createCustomer,
+    updateCustomerById,
+    deleteCustomerById,
+    deleteAllCustomers
+} = require('../controllers/customers.controller');
 
-// All customer routes require authentication
+// Make sure specific routes come before generic routes with path parameters
 router.get('/', isAuthenticated, getAllCustomers);
-router.get('/search', isAuthenticated, searchCustomers);
-router.get('/customerID/:customerID', isAuthenticated, validate(customerIDValidationRules()), getCustomerByCustomerID);
-router.get('/email/:email', isAuthenticated, validate(emailValidationRules()), getCustomerByEmail);
-router.get('/:_id', isAuthenticated, validate(customer_IdValidationRules()), getCustomerById);
-
-router.post('/', isAuthenticated, validate(customerCreateValidationRules()), createCustomer);
-router.put('/:_id', isAuthenticated, validate(customer_IdValidationRules()), validate(customerUpdateValidationRules()), updateCustomerById);
-router.delete('/:_id', isAuthenticated, validate(customer_IdValidationRules()), deleteCustomerById);
+router.get('/email/:email', isAuthenticated, getCustomerByEmail);
+router.get('/:_id', isAuthenticated, getCustomerById);
+router.post('/', isAuthenticated, createCustomer);
+router.put('/:_id', isAuthenticated, updateCustomerById);
+router.delete('/:_id', isAuthenticated, deleteCustomerById);
 router.delete('/', isAuthenticated, deleteAllCustomers);
 
 module.exports = router;

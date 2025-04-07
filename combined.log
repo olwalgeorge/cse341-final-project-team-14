@@ -4378,3 +4378,19 @@ Use mongoose.model(name, schema) - GET /products/productID/PR-00001
 2025-04-07 01:06:52 DEBUG [inventory-api]: Session: 
 2025-04-07 01:06:54 DEBUG [inventory-api]: Session: 
 2025-04-07 01:06:54 DEBUG [inventory-api]: Session: 
+2025-04-07 11:10:25 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-07 11:10:28 INFO [inventory-api]: MongoDB Connected... 
+2025-04-07 11:10:53 DEBUG [inventory-api]: Session: 
+2025-04-07 11:10:53 DEBUG [inventory-api]: Auth check: 
+2025-04-07 11:10:53 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-07 11:10:53 INFO [inventory-api]: getAllProducts called 
+2025-04-07 11:10:53 DEBUG [inventory-api]: getAllProductsService called 
+2025-04-07 11:11:28 DEBUG [inventory-api]: Session: 
+2025-04-07 11:11:28 DEBUG [inventory-api]: Auth check: 
+2025-04-07 11:11:28 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-07 11:11:29 WARN [inventory-api]: Validation failed 
+2025-04-07 11:12:44 ERROR [inventory-api]: Expected double-quoted property name in JSON at position 37 (line 4 column 1) - POST /auth/register 
+2025-04-07 11:12:52 DEBUG [inventory-api]: Session: 
+2025-04-07 11:12:52 WARN [inventory-api]: Validation failed 
+2025-04-07 11:14:46 DEBUG [inventory-api]: Session: 
+2025-04-07 11:14:46 WARN [inventory-api]: Validation failed 

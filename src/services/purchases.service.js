@@ -150,12 +150,9 @@ const deleteAllPurchasesService = async () => {
 
 module.exports = {
     getAllPurchasesService,
-    getPurchaseByPurchaseIDService,
     getPurchaseByIdService,
     createPurchaseService,
     updatePurchaseService,
     deletePurchaseService,
-    getPurchasesBySupplierService,
-    getPurchasesByStatusService,
     deleteAllPurchasesService
 };

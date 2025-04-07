@@ -1,38 +1,23 @@
 const express = require('express');
 const router = express.Router();
+const isAuthenticated = require('../middlewares/auth.middleware');
 const {
-  getAllProducts,
-  getProductById,
-  getProductByProductID,
-  createProduct,
-  updateProductById,
-  deleteProductById,
-  getProductsByCategory,
-  getProductsBySupplier,
-  searchProducts,
-  deleteAllProducts
-} = require('../controllers/products.controller.js');
-const validate = require('../middlewares/validation.middleware.js');
-const isAuthenticated = require('../middlewares/auth.middleware.js');
-const {
-  productIDValidationRules,
-  product_IdValidationRules,
-  productCreateValidationRules,
-  productUpdateValidationRules
-} = require('../validators/product.validator.js');
+    getAllProducts,
+    getProductById,
+    getProductsByCategory,
+    createProduct,
+    updateProductById,
+    deleteProductById,
+    deleteAllProducts
+} = require('../controllers/products.controller');
 
-// Public routes
-router.get('/', getAllProducts);
-router.get('/search', searchProducts);
-router.get('/productID/:productID', validate(productIDValidationRules()), getProductByProductID);
-router.get('/category/:category', getProductsByCategory);
-router.get('/supplier/:supplierId', getProductsBySupplier);
-router.get('/:_id', validate(product_IdValidationRules()), getProductById);
-
-// Protected routes - require authentication 
-router.post('/', isAuthenticated, validate(productCreateValidationRules()), createProduct);
-router.put('/:_id', isAuthenticated, validate(product_IdValidationRules()), validate(productUpdateValidationRules()), updateProductById);
-router.delete('/:_id', isAuthenticated , validate(product_IdValidationRules()), deleteProductById);
+// Product routes
+router.get('/', isAuthenticated, getAllProducts);
+router.get('/category/:category', isAuthenticated, getProductsByCategory);  // Must come before :_id route
+router.get('/:_id', isAuthenticated, getProductById);
+router.post('/', isAuthenticated, createProduct);
+router.put('/:_id', isAuthenticated, updateProductById);
+router.delete('/:_id', isAuthenticated, deleteProductById);
 router.delete('/', isAuthenticated, deleteAllProducts);
 
 module.exports = router;

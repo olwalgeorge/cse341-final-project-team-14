@@ -1,7 +1,7 @@
 const sendResponse = require("../utils/response.js");
 const asyncHandler = require("express-async-handler");
 const logger = require("../utils/logger.js");
-const createHttpError = require("http-errors");
+const { AuthError, ApiError } = require("../utils/errors");
 const { transformUser } = require("../utils/user.utils.js");
 const authService = require("../services/auth.service.js");
 
@@ -20,18 +20,15 @@ const register = asyncHandler(async (req, res, next) => {
         req.login(user, (err) => {
             if (err) {
                 logger.error("Error logging in after registration:", err);
-                return next(createHttpError(500, "Registration successful but login failed"));
+                return next(ApiError.serverError("Registration successful but login failed"));
             }
             const transformedUser = transformUser(user);
             sendResponse(res, 201, "Registration successful", { user: transformedUser });
         });
     } catch (error) {
         logger.error("Error during registration:", error);
-        if (error.name === "ValidationError") {
-            const errors = Object.values(error.errors).map((val) => val.message);
-            return next(createHttpError(400, "Validation error", { message: errors.join(". ") }));
-        }
-        next(createHttpError(500, "Failed to register user", { message: error.message }));
+        // Pass raw validation errors to middleware
+        next(error);
     }
 });
 
@@ -51,12 +48,11 @@ const loginSuccess = (req, res) => {
  * @route   POST /auth/logout
  * @access  Private
  */
-const logout = (req, res) => {
+const logout = (req, res, next) => {
     req.logout((err) => {
         if (err) {
             logger.error("Error during logout:", err);
-            // eslint-disable-next-line
-            return next(createHttpError(500, "Internal server error during logout", { message: err.message }));
+            return next(AuthError.loginError());
         }
         logger.info(`User logged out successfully.`);
         sendResponse(res, 200, "Logged out successfully");
