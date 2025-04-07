@@ -4632,3 +4632,7 @@ CastError: Cast to ObjectId failed for value "34554" (type string) at path "supp
 2025-04-07 16:00:23 ERROR [inventory-api]: Products for supplier not found - GET /products/supplier/67f2e07fbf6d04573678e7f0 
 2025-04-07 16:02:46 DEBUG [inventory-api]: Session: 
 2025-04-07 16:02:46 WARN [inventory-api]: Validation failed 
+2025-04-07 17:15:53 DEBUG [inventory-api]: Session: 
+2025-04-07 17:15:53 DEBUG [inventory-api]: Auth check: 
+2025-04-07 17:15:53 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-07 17:15:53 INFO [inventory-api]: getUserProfile called for user ID: 67f2dd0039ca31d92f2b921a 

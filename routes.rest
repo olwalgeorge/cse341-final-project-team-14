@@ -23,7 +23,7 @@ Content-Type: application/json
 GET http://localhost:3000/users/profile
 Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
 
-### Update User Profile (Requires Authentication) not working
+### Update User Profile (Requires Authentication)
 PUT http://localhost:3000/users/profile 
 Content-Type: application/json
 Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
