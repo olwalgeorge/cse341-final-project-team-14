@@ -18,15 +18,15 @@ const getCustomerByEmailService = async (email) => {
  */
 const getCustomerByCustomerIDService = async (customerID) => {
   logger.debug(
-    `getCustomerByCustomerIDService called with customer ID: ${customerID}`
+    `getCustomerByCustomerIDService called with customerID: ${customerID}`
   );
   return await Customer.findOne({ customerID: customerID });
 };
 
-// Get customer by ID
-const getCustomerByIdService = async (id) => {
-  logger.debug(`getCustomerByIdService called with ID: ${id}`);
-  return await Customer.findById(id);
+// Get customer by customer's MongoDB ID
+const getCustomerByIdService = async (customer_Id) => {
+  logger.debug(`getCustomerByIdService called with customer_Id: ${customer_Id}`);
+  return await Customer.findById(customer_Id);
 };
 
 // Create a new customer
@@ -36,16 +36,16 @@ const createCustomerService = async (customerData) => {
   return await customer.save();
 };
 
-// Update customer by ID
-const updateCustomerService = async (id, updateData) => {
-  logger.debug(`updateCustomerService called with ID: ${id}`, updateData);
-  return await Customer.findByIdAndUpdate(id, updateData, { new: true });
+// Update customer by customer's MongoDB ID
+const updateCustomerService = async (customer_Id, updateData) => {
+  logger.debug(`updateCustomerService called with customer_Id: ${customer_Id}`, updateData);
+  return await Customer.findByIdAndUpdate(customer_Id, updateData, { new: true });
 };
 
-// Delete customer by ID
-const deleteCustomerService = async (id) => {
-  logger.debug(`deleteCustomerService called with ID: ${id}`);
-  return await Customer.deleteOne({ _id: id });
+// Delete customer by customer's MongoDB ID
+const deleteCustomerService = async (customer_Id) => {
+  logger.debug(`deleteCustomerService called with customer_Id: ${customer_Id}`);
+  return await Customer.deleteOne({ _id: customer_Id });
 };
 
 // Delete all customers

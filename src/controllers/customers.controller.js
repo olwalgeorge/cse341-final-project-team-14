@@ -12,7 +12,7 @@ const {
   deleteCustomerService,
   deleteAllCustomersService,
 } = require("../services/customers.service");
-const { transformCustomer } = require("../utils/customer.utils");
+const { transformCustomer, generateCustomerId } = require("../utils/customer.utils");
 
 /**
  * @desc    Get all customers
@@ -66,14 +66,14 @@ const getCustomerByEmail = asyncHandler(async (req, res, next) => {
 });
 
 /**
- * @desc    Get customer by MongoDB ID
- * @route   GET /customers/:_id
+ * @desc    Get customer by customer's MongoDB ID
+ * @route   GET /customers/:customer_Id
  * @access  Private
  */
 const getCustomerById = asyncHandler(async (req, res, next) => {
-  logger.info(`getCustomerById called with ID: ${req.params._id}`);
+  logger.info(`getCustomerById called with customer_Id: ${req.params.customer_Id}`);
   try {
-    const customer = await getCustomerByIdService(req.params._id);
+    const customer = await getCustomerByIdService(req.params.customer_Id);
     if (customer) {
       const transformedCustomer = transformCustomer(customer);
       sendResponse(
@@ -86,7 +86,7 @@ const getCustomerById = asyncHandler(async (req, res, next) => {
       return next(DatabaseError.notFound("Customer"));
     }
   } catch (error) {
-    logger.error(`Error retrieving customer with ID: ${req.params._id}`, error);
+    logger.error(`Error retrieving customer with customer_Id: ${req.params.customer_Id}`, error);
     next(error);
   }
 });
@@ -98,7 +98,7 @@ const getCustomerById = asyncHandler(async (req, res, next) => {
  */
 const getCustomerByCustomerID = asyncHandler(async (req, res, next) => {
   logger.info(
-    `getCustomerByCustomerID called with customer ID: ${req.params.customerID}`
+    `getCustomerByCustomerID called with customerID: ${req.params.customerID}`
   );
   try {
     const customer = await getCustomerByCustomerIDService(
@@ -117,7 +117,7 @@ const getCustomerByCustomerID = asyncHandler(async (req, res, next) => {
     }
   } catch (error) {
     logger.error(
-      `Error retrieving customer with customer ID: ${req.params.customerID}`,
+      `Error retrieving customer with customerID: ${req.params.customerID}`,
       error
     );
     next(error);
@@ -133,7 +133,15 @@ const createCustomer = asyncHandler(async (req, res, next) => {
   logger.info("createCustomer called");
   logger.debug("Request body:", req.body);
   try {
-    const customer = await createCustomerService(req.body);
+    // Generate a unique customerID before saving
+    const customerID = await generateCustomerId();
+    const customerData = {
+      ...req.body,
+      customerID: customerID
+    };
+    
+    logger.debug(`Generated customerID: ${customerID}`);
+    const customer = await createCustomerService(customerData);
     const transformedCustomer = transformCustomer(customer);
     sendResponse(
       res,
@@ -148,15 +156,15 @@ const createCustomer = asyncHandler(async (req, res, next) => {
 });
 
 /**
- * @desc    Update customer by ID
- * @route   PUT /customers/:_id
+ * @desc    Update customer by customer's MongoDB ID
+ * @route   PUT /customers/:customer_Id
  * @access  Private
  */
 const updateCustomerById = asyncHandler(async (req, res, next) => {
-  logger.info(`updateCustomerById called with ID: ${req.params._id}`);
+  logger.info(`updateCustomerById called with customer_Id: ${req.params.customer_Id}`);
   logger.debug("Update data:", req.body);
   try {
-    const customer = await updateCustomerService(req.params._id, req.body);
+    const customer = await updateCustomerService(req.params.customer_Id, req.body);
     if (customer) {
       const transformedCustomer = transformCustomer(customer);
       sendResponse(
@@ -169,27 +177,27 @@ const updateCustomerById = asyncHandler(async (req, res, next) => {
       return next(DatabaseError.notFound("Customer"));
     }
   } catch (error) {
-    logger.error(`Error updating customer with ID: ${req.params._id}`, error);
+    logger.error(`Error updating customer with customer_Id: ${req.params.customer_Id}`, error);
     next(error);
   }
 });
 
 /**
- * @desc    Delete customer by ID
- * @route   DELETE /customers/:_id
+ * @desc    Delete customer by customer's MongoDB ID
+ * @route   DELETE /customers/:customer_Id
  * @access  Private
  */
 const deleteCustomerById = asyncHandler(async (req, res, next) => {
-  logger.info(`deleteCustomerById called with ID: ${req.params._id}`);
+  logger.info(`deleteCustomerById called with customer_Id: ${req.params.customer_Id}`);
   try {
-    const result = await deleteCustomerService(req.params._id);
+    const result = await deleteCustomerService(req.params.customer_Id);
     if (result.deletedCount > 0) {
       sendResponse(res, 200, "Customer deleted successfully");
     } else {
       return next(DatabaseError.notFound("Customer"));
     }
   } catch (error) {
-    logger.error(`Error deleting customer with ID: ${req.params._id}`, error);
+    logger.error(`Error deleting customer with customer_Id: ${req.params.customer_Id}`, error);
     next(error);
   }
 });

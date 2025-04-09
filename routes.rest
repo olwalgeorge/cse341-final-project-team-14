@@ -227,16 +227,16 @@ Content-Type: application/json
 Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
 
 {
-  "name": "Clothing Co",
+  "name": "Electronics Inc.",
   "contact": {
-    "phone": "1234567890",
-    "email": "info@clothingco.com"
+    "phone": "1112223333",
+    "email": "contact@electronicsinc.com"
   },
   "address": {
-    "street": "123 Clothing Street",
-    "city": "San Francisco",
-    "state": "CA",
-    "postalCode": "94107",
+    "street": "456 Electronics Drive",
+    "city": "New York",
+    "state": "NY",
+    "postalCode": "10001",
     "country": "USA"
   }
 }
@@ -276,7 +276,7 @@ GET http://localhost:3000/customers/search?term=john
 Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
 
 ### Get Customer by MongoDB ID (Requires Authentication)
-GET http://localhost:3000/customers/65fb123abc456d789e012349
+GET http://localhost:3000/customers/67f67b829d34cfbe039e94be
 Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
 
 ### Get Customer by Customer ID (Requires Authentication)
@@ -293,14 +293,14 @@ Content-Type: application/json
 Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
 
 {
-  "name": "John Doe",
-  "email": "john.doe@example.com",
-  "phone": "1234567890",
+  "name": "George Doe",
+  "email": "george.doe@example.com",
+  "phone": "1112223333",
   "address": {
-    "street": "123 Main St",
-    "city": "Anytown",
-    "state": "CA",
-    "postalCode": "12345",
+    "street": "456 Elm St",
+    "city": "Othertown",
+    "state": "TX",
+    "postalCode": "67890",
     "country": "USA"
   }
 }

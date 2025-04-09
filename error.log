@@ -106,3 +106,62 @@ MongoServerError: E11000 duplicate key error collection: team_14_final_project.s
     at async executeOperation (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongodb\lib\operations\execute_operation.js:75:16)
     at async Collection.insertOne (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongodb\lib\collection.js:157:16)
 2025-04-09 15:37:26 ERROR [inventory-api]: Duplicate Entry - POST /suppliers 
+2025-04-09 16:16:54 ERROR [inventory-api]: Customer not found - DELETE /customers/65fb123abc456d789e012349 
+2025-04-09 16:17:33 ERROR [inventory-api]: Error creating customer: E11000 duplicate key error collection: team_14_final_project.customers index: email_1 dup key: { email: "john.doe@example.com" } 
+MongoServerError: E11000 duplicate key error collection: team_14_final_project.customers index: email_1 dup key: { email: "john.doe@example.com" }
+    at InsertOneOperation.execute (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongodb\lib\operations\insert.js:51:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async tryOperation (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongodb\lib\operations\execute_operation.js:207:20)
+    at async executeOperation (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongodb\lib\operations\execute_operation.js:75:16)
+    at async Collection.insertOne (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongodb\lib\collection.js:157:16)
+2025-04-09 16:17:33 ERROR [inventory-api]: Duplicate Entry - POST /customers 
+2025-04-09 16:33:41 ERROR [inventory-api]: Error creating customer: E11000 duplicate key error collection: team_14_final_project.customers index: email_1 dup key: { email: "george.doe@example.com" } 
+MongoServerError: E11000 duplicate key error collection: team_14_final_project.customers index: email_1 dup key: { email: "george.doe@example.com" }
+    at InsertOneOperation.execute (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongodb\lib\operations\insert.js:51:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async tryOperation (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongodb\lib\operations\execute_operation.js:207:20)
+    at async executeOperation (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongodb\lib\operations\execute_operation.js:75:16)
+    at async Collection.insertOne (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongodb\lib\collection.js:157:16)
+2025-04-09 16:33:41 ERROR [inventory-api]: Duplicate Entry - POST /customers 
+2025-04-09 16:52:05 ERROR [inventory-api]: Error creating customer: Customer validation failed: email: Email address already exists 
+ValidationError: Customer validation failed: email: Email address already exists
+    at Document.invalidate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3329:32)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3090:17
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+2025-04-09 16:52:05 ERROR [inventory-api]: Validation Error - POST /customers 
+2025-04-09 17:15:33 ERROR [inventory-api]: Error creating customer: Customer validation failed: email: Email address already exists 
+ValidationError: Customer validation failed: email: Email address already exists
+    at Document.invalidate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3329:32)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3090:17
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+2025-04-09 17:15:33 ERROR [inventory-api]: Validation Error - POST /customers 
+2025-04-09 17:24:26 ERROR [inventory-api]: Error creating customer: Customer validation failed: email: Email address already exists 
+ValidationError: Customer validation failed: email: Email address already exists
+    at Document.invalidate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3329:32)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3090:17
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+2025-04-09 17:24:26 ERROR [inventory-api]: Validation Error - POST /customers 
+2025-04-09 17:30:58 ERROR [inventory-api]: Error creating supplier: Supplier validation failed: contact.email: Email already exists. 
+ValidationError: Supplier validation failed: contact.email: Email already exists.
+    at Document.invalidate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3329:32)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3090:17
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+2025-04-09 17:30:58 ERROR [inventory-api]: Validation Error - POST /suppliers 
+2025-04-09 17:33:19 ERROR [inventory-api]: Error creating supplier: Supplier validation failed: contact.email: Email already exists. 
+ValidationError: Supplier validation failed: contact.email: Email already exists.
+    at Document.invalidate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3329:32)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3090:17
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+2025-04-09 17:33:19 ERROR [inventory-api]: Validation Error - POST /suppliers 
+2025-04-09 17:34:15 ERROR [inventory-api]: Error creating product: Product validation failed: productID: Path `productID` is required. 
+ValidationError: Product validation failed: productID: Path `productID` is required.
+    at Document.invalidate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3329:32)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3090:17
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+2025-04-09 17:34:15 ERROR [inventory-api]: Validation Error - POST /products 

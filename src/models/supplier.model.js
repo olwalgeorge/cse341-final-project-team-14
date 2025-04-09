@@ -26,11 +26,15 @@ const supplierSchema = new Schema({
       type: String,
       trim: true,
       lowercase: true,
+      unique: true,
       validate: {
-        validator: function (v) {
-          return /^[\w.-]+@[\w.-]+\.\w{2,3}$/.test(v);
+        validator: async function (v) {
+          const supplier = await this.constructor.findOne({ "contact.email": v });
+          if (supplier) {
+            return false;
+          }
         },
-        message: "Please enter a valid email",
+        message: "Email already exists.",
       },
     },
   },

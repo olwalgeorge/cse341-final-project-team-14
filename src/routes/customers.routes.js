@@ -14,9 +14,9 @@ const validate = require("../middlewares/validation.middleware.js");
 const isAuthenticated = require("../middlewares/auth.middleware.js");
 const {
   customerIDValidationRules,
-  customer_IdValidationRules,
   customerCreateValidationRules,
   customerUpdateValidationRules,
+  customer_IdValidationRules,
 } = require("../validators/customer.validator.js");
 
 // all routes are protected and require authentication
@@ -28,8 +28,10 @@ router.get(
   getCustomerByCustomerID
 );
 router.get("/email/:email", isAuthenticated, getCustomerByEmail);
+
+// Route to get customer by customer's MongoDB ID
 router.get(
-  "/:_id",
+  "/:customer_Id",
   isAuthenticated,
   validate(customer_IdValidationRules()),
   getCustomerById
@@ -40,15 +42,19 @@ router.post(
   validate(customerCreateValidationRules()),
   createCustomer
 );
+
+// Route to update customer by customer's MongoDB ID
 router.put(
-  "/:_id",
+  "/:customer_Id",
   isAuthenticated,
   validate(customer_IdValidationRules()),
   validate(customerUpdateValidationRules()),
   updateCustomerById
 );
+
+// Route to delete customer by customer's MongoDB ID
 router.delete(
-  "/:_id",
+  "/:customer_Id",
   isAuthenticated,
   validate(customer_IdValidationRules()),
   deleteCustomerById

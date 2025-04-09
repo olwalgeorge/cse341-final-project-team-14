@@ -4738,3 +4738,281 @@ MongoServerError: E11000 duplicate key error collection: team_14_final_project.s
 2025-04-09 15:50:43 DEBUG [inventory-api]: Request body: 
 2025-04-09 15:50:43 DEBUG [inventory-api]: Supplier data with generated ID: 
 2025-04-09 15:50:43 DEBUG [inventory-api]: createSupplierService called with data: 
+2025-04-09 15:55:45 DEBUG [inventory-api]: Session: 
+2025-04-09 15:55:45 DEBUG [inventory-api]: Auth check: 
+2025-04-09 15:55:45 INFO [inventory-api]: User johndoe2 is authenticated 
+2025-04-09 15:55:45 INFO [inventory-api]: createSupplier called 
+2025-04-09 15:55:45 DEBUG [inventory-api]: Request body: 
+2025-04-09 15:55:45 DEBUG [inventory-api]: Supplier data with generated ID: 
+2025-04-09 15:55:45 DEBUG [inventory-api]: createSupplierService called with data: 
+2025-04-09 15:56:42 DEBUG [inventory-api]: Session: 
+2025-04-09 15:56:42 DEBUG [inventory-api]: Auth check: 
+2025-04-09 15:56:42 INFO [inventory-api]: User johndoe2 is authenticated 
+2025-04-09 15:56:42 INFO [inventory-api]: createSupplier called 
+2025-04-09 15:56:42 DEBUG [inventory-api]: Request body: 
+2025-04-09 15:56:43 DEBUG [inventory-api]: Supplier data with generated ID: 
+2025-04-09 15:56:43 DEBUG [inventory-api]: createSupplierService called with data: 
+2025-04-09 16:16:54 DEBUG [inventory-api]: Session: 
+2025-04-09 16:16:54 DEBUG [inventory-api]: Auth check: 
+2025-04-09 16:16:54 INFO [inventory-api]: User johndoe2 is authenticated 
+2025-04-09 16:16:54 INFO [inventory-api]: deleteCustomerById called with ID: 65fb123abc456d789e012349 
+2025-04-09 16:16:54 DEBUG [inventory-api]: deleteCustomerService called with ID: 65fb123abc456d789e012349 
+2025-04-09 16:16:54 ERROR [inventory-api]: Customer not found - DELETE /customers/65fb123abc456d789e012349 
+2025-04-09 16:17:21 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-09 16:17:25 INFO [inventory-api]: MongoDB Connected... 
+2025-04-09 16:17:32 DEBUG [inventory-api]: Session: 
+2025-04-09 16:17:32 DEBUG [inventory-api]: Auth check: 
+2025-04-09 16:17:32 INFO [inventory-api]: User johndoe2 is authenticated 
+2025-04-09 16:17:32 INFO [inventory-api]: createCustomer called 
+2025-04-09 16:17:32 DEBUG [inventory-api]: Request body: 
+2025-04-09 16:17:32 DEBUG [inventory-api]: Generated customerID: CU-00002 
+2025-04-09 16:17:32 DEBUG [inventory-api]: createCustomerService called with data: 
+2025-04-09 16:17:33 ERROR [inventory-api]: Error creating customer: E11000 duplicate key error collection: team_14_final_project.customers index: email_1 dup key: { email: "john.doe@example.com" } 
+MongoServerError: E11000 duplicate key error collection: team_14_final_project.customers index: email_1 dup key: { email: "john.doe@example.com" }
+    at InsertOneOperation.execute (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongodb\lib\operations\insert.js:51:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async tryOperation (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongodb\lib\operations\execute_operation.js:207:20)
+    at async executeOperation (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongodb\lib\operations\execute_operation.js:75:16)
+    at async Collection.insertOne (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongodb\lib\collection.js:157:16)
+2025-04-09 16:17:33 ERROR [inventory-api]: Duplicate Entry - POST /customers 
+2025-04-09 16:20:10 DEBUG [inventory-api]: Session: 
+2025-04-09 16:20:10 DEBUG [inventory-api]: Auth check: 
+2025-04-09 16:20:10 INFO [inventory-api]: User johndoe2 is authenticated 
+2025-04-09 16:20:10 INFO [inventory-api]: createCustomer called 
+2025-04-09 16:20:10 DEBUG [inventory-api]: Request body: 
+2025-04-09 16:20:10 DEBUG [inventory-api]: Generated customerID: CU-00001 
+2025-04-09 16:20:10 DEBUG [inventory-api]: createCustomerService called with data: 
+2025-04-09 16:21:08 DEBUG [inventory-api]: Session: 
+2025-04-09 16:21:08 DEBUG [inventory-api]: Auth check: 
+2025-04-09 16:21:08 INFO [inventory-api]: User johndoe2 is authenticated 
+2025-04-09 16:21:08 INFO [inventory-api]: createCustomer called 
+2025-04-09 16:21:08 DEBUG [inventory-api]: Request body: 
+2025-04-09 16:21:09 DEBUG [inventory-api]: Generated customerID: CU-00002 
+2025-04-09 16:21:09 DEBUG [inventory-api]: createCustomerService called with data: 
+2025-04-09 16:22:26 DEBUG [inventory-api]: Session: 
+2025-04-09 16:22:26 DEBUG [inventory-api]: Auth check: 
+2025-04-09 16:22:26 INFO [inventory-api]: User johndoe2 is authenticated 
+2025-04-09 16:22:26 INFO [inventory-api]: createCustomer called 
+2025-04-09 16:22:26 DEBUG [inventory-api]: Request body: 
+2025-04-09 16:22:27 DEBUG [inventory-api]: Generated customerID: CU-00003 
+2025-04-09 16:22:27 DEBUG [inventory-api]: createCustomerService called with data: 
+2025-04-09 16:27:38 DEBUG [inventory-api]: Session: 
+2025-04-09 16:27:38 DEBUG [inventory-api]: Auth check: 
+2025-04-09 16:27:38 INFO [inventory-api]: User johndoe2 is authenticated 
+2025-04-09 16:27:38 INFO [inventory-api]: createCustomer called 
+2025-04-09 16:27:38 DEBUG [inventory-api]: Request body: 
+2025-04-09 16:27:39 DEBUG [inventory-api]: Generated customerID: CU-00004 
+2025-04-09 16:27:39 DEBUG [inventory-api]: createCustomerService called with data: 
+2025-04-09 16:31:51 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-09 16:31:55 INFO [inventory-api]: MongoDB Connected... 
+2025-04-09 16:33:38 DEBUG [inventory-api]: Session: 
+2025-04-09 16:33:38 DEBUG [inventory-api]: Auth check: 
+2025-04-09 16:33:38 INFO [inventory-api]: User johndoe2 is authenticated 
+2025-04-09 16:33:38 INFO [inventory-api]: createCustomer called 
+2025-04-09 16:33:38 DEBUG [inventory-api]: Request body: 
+2025-04-09 16:33:38 DEBUG [inventory-api]: Generated customerID: CU-00001 
+2025-04-09 16:33:38 DEBUG [inventory-api]: createCustomerService called with data: 
+2025-04-09 16:33:41 DEBUG [inventory-api]: Session: 
+2025-04-09 16:33:41 DEBUG [inventory-api]: Auth check: 
+2025-04-09 16:33:41 INFO [inventory-api]: User johndoe2 is authenticated 
+2025-04-09 16:33:41 INFO [inventory-api]: createCustomer called 
+2025-04-09 16:33:41 DEBUG [inventory-api]: Request body: 
+2025-04-09 16:33:41 DEBUG [inventory-api]: Generated customerID: CU-00002 
+2025-04-09 16:33:41 DEBUG [inventory-api]: createCustomerService called with data: 
+2025-04-09 16:33:41 ERROR [inventory-api]: Error creating customer: E11000 duplicate key error collection: team_14_final_project.customers index: email_1 dup key: { email: "george.doe@example.com" } 
+MongoServerError: E11000 duplicate key error collection: team_14_final_project.customers index: email_1 dup key: { email: "george.doe@example.com" }
+    at InsertOneOperation.execute (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongodb\lib\operations\insert.js:51:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async tryOperation (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongodb\lib\operations\execute_operation.js:207:20)
+    at async executeOperation (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongodb\lib\operations\execute_operation.js:75:16)
+    at async Collection.insertOne (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongodb\lib\collection.js:157:16)
+2025-04-09 16:33:41 ERROR [inventory-api]: Duplicate Entry - POST /customers 
+2025-04-09 16:35:23 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-09 16:35:27 INFO [inventory-api]: MongoDB Connected... 
+2025-04-09 16:36:48 DEBUG [inventory-api]: Session: 
+2025-04-09 16:36:48 DEBUG [inventory-api]: Auth check: 
+2025-04-09 16:36:48 INFO [inventory-api]: User johndoe2 is authenticated 
+2025-04-09 16:36:48 INFO [inventory-api]: createCustomer called 
+2025-04-09 16:36:48 DEBUG [inventory-api]: Request body: 
+2025-04-09 16:36:48 DEBUG [inventory-api]: Generated customerID: CU-00001 
+2025-04-09 16:36:48 DEBUG [inventory-api]: createCustomerService called with data: 
+2025-04-09 16:36:54 DEBUG [inventory-api]: Session: 
+2025-04-09 16:36:54 DEBUG [inventory-api]: Auth check: 
+2025-04-09 16:36:54 INFO [inventory-api]: User johndoe2 is authenticated 
+2025-04-09 16:36:54 INFO [inventory-api]: createCustomer called 
+2025-04-09 16:36:54 DEBUG [inventory-api]: Request body: 
+2025-04-09 16:36:54 DEBUG [inventory-api]: Generated customerID: CU-00002 
+2025-04-09 16:36:54 DEBUG [inventory-api]: createCustomerService called with data: 
+2025-04-09 16:43:39 DEBUG [inventory-api]: Session: 
+2025-04-09 16:43:39 DEBUG [inventory-api]: Auth check: 
+2025-04-09 16:43:39 INFO [inventory-api]: User johndoe2 is authenticated 
+2025-04-09 16:43:39 INFO [inventory-api]: createCustomer called 
+2025-04-09 16:43:39 DEBUG [inventory-api]: Request body: 
+2025-04-09 16:43:40 DEBUG [inventory-api]: Generated customerID: CU-00001 
+2025-04-09 16:43:40 DEBUG [inventory-api]: createCustomerService called with data: 
+2025-04-09 16:43:44 DEBUG [inventory-api]: Session: 
+2025-04-09 16:43:44 DEBUG [inventory-api]: Auth check: 
+2025-04-09 16:43:44 INFO [inventory-api]: User johndoe2 is authenticated 
+2025-04-09 16:43:44 INFO [inventory-api]: createCustomer called 
+2025-04-09 16:43:44 DEBUG [inventory-api]: Request body: 
+2025-04-09 16:43:44 DEBUG [inventory-api]: Generated customerID: CU-00002 
+2025-04-09 16:43:44 DEBUG [inventory-api]: createCustomerService called with data: 
+2025-04-09 16:43:46 DEBUG [inventory-api]: Session: 
+2025-04-09 16:43:46 DEBUG [inventory-api]: Auth check: 
+2025-04-09 16:43:46 INFO [inventory-api]: User johndoe2 is authenticated 
+2025-04-09 16:43:46 INFO [inventory-api]: createCustomer called 
+2025-04-09 16:43:46 DEBUG [inventory-api]: Request body: 
+2025-04-09 16:43:47 DEBUG [inventory-api]: Generated customerID: CU-00003 
+2025-04-09 16:43:47 DEBUG [inventory-api]: createCustomerService called with data: 
+2025-04-09 16:43:49 DEBUG [inventory-api]: Session: 
+2025-04-09 16:43:49 DEBUG [inventory-api]: Auth check: 
+2025-04-09 16:43:49 INFO [inventory-api]: User johndoe2 is authenticated 
+2025-04-09 16:43:49 INFO [inventory-api]: createCustomer called 
+2025-04-09 16:43:49 DEBUG [inventory-api]: Request body: 
+2025-04-09 16:43:49 DEBUG [inventory-api]: Generated customerID: CU-00004 
+2025-04-09 16:43:49 DEBUG [inventory-api]: createCustomerService called with data: 
+2025-04-09 16:43:51 DEBUG [inventory-api]: Session: 
+2025-04-09 16:43:51 DEBUG [inventory-api]: Auth check: 
+2025-04-09 16:43:51 INFO [inventory-api]: User johndoe2 is authenticated 
+2025-04-09 16:43:51 INFO [inventory-api]: createCustomer called 
+2025-04-09 16:43:51 DEBUG [inventory-api]: Request body: 
+2025-04-09 16:43:51 DEBUG [inventory-api]: Generated customerID: CU-00005 
+2025-04-09 16:43:51 DEBUG [inventory-api]: createCustomerService called with data: 
+2025-04-09 16:43:53 DEBUG [inventory-api]: Session: 
+2025-04-09 16:43:53 DEBUG [inventory-api]: Auth check: 
+2025-04-09 16:43:53 INFO [inventory-api]: User johndoe2 is authenticated 
+2025-04-09 16:43:53 INFO [inventory-api]: createCustomer called 
+2025-04-09 16:43:53 DEBUG [inventory-api]: Request body: 
+2025-04-09 16:43:54 DEBUG [inventory-api]: Generated customerID: CU-00006 
+2025-04-09 16:43:54 DEBUG [inventory-api]: createCustomerService called with data: 
+2025-04-09 16:47:48 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-09 16:47:52 INFO [inventory-api]: MongoDB Connected... 
+2025-04-09 16:50:16 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-09 16:50:20 INFO [inventory-api]: MongoDB Connected... 
+2025-04-09 16:52:01 DEBUG [inventory-api]: Session: 
+2025-04-09 16:52:01 DEBUG [inventory-api]: Auth check: 
+2025-04-09 16:52:01 INFO [inventory-api]: User johndoe2 is authenticated 
+2025-04-09 16:52:01 INFO [inventory-api]: createCustomer called 
+2025-04-09 16:52:01 DEBUG [inventory-api]: Request body: 
+2025-04-09 16:52:02 DEBUG [inventory-api]: Generated customerID: CU-00001 
+2025-04-09 16:52:02 DEBUG [inventory-api]: createCustomerService called with data: 
+2025-04-09 16:52:05 DEBUG [inventory-api]: Session: 
+2025-04-09 16:52:05 DEBUG [inventory-api]: Auth check: 
+2025-04-09 16:52:05 INFO [inventory-api]: User johndoe2 is authenticated 
+2025-04-09 16:52:05 INFO [inventory-api]: createCustomer called 
+2025-04-09 16:52:05 DEBUG [inventory-api]: Request body: 
+2025-04-09 16:52:05 DEBUG [inventory-api]: Generated customerID: CU-00002 
+2025-04-09 16:52:05 DEBUG [inventory-api]: createCustomerService called with data: 
+2025-04-09 16:52:05 ERROR [inventory-api]: Error creating customer: Customer validation failed: email: Email address already exists 
+ValidationError: Customer validation failed: email: Email address already exists
+    at Document.invalidate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3329:32)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3090:17
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+2025-04-09 16:52:05 ERROR [inventory-api]: Validation Error - POST /customers 
+2025-04-09 17:15:25 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-09 17:15:30 INFO [inventory-api]: MongoDB Connected... 
+2025-04-09 17:15:32 DEBUG [inventory-api]: Session: 
+2025-04-09 17:15:32 DEBUG [inventory-api]: Auth check: 
+2025-04-09 17:15:32 INFO [inventory-api]: User johndoe2 is authenticated 
+2025-04-09 17:15:32 INFO [inventory-api]: createCustomer called 
+2025-04-09 17:15:32 DEBUG [inventory-api]: Request body: 
+2025-04-09 17:15:33 DEBUG [inventory-api]: Generated customerID: CU-00002 
+2025-04-09 17:15:33 DEBUG [inventory-api]: createCustomerService called with data: 
+2025-04-09 17:15:33 ERROR [inventory-api]: Error creating customer: Customer validation failed: email: Email address already exists 
+ValidationError: Customer validation failed: email: Email address already exists
+    at Document.invalidate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3329:32)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3090:17
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+2025-04-09 17:15:33 ERROR [inventory-api]: Validation Error - POST /customers 
+2025-04-09 17:16:48 DEBUG [inventory-api]: Session: 
+2025-04-09 17:16:48 DEBUG [inventory-api]: Auth check: 
+2025-04-09 17:16:48 INFO [inventory-api]: User johndoe2 is authenticated 
+2025-04-09 17:16:48 INFO [inventory-api]: getAllCustomers called 
+2025-04-09 17:16:48 DEBUG [inventory-api]: getAllCustomersService called 
+2025-04-09 17:17:42 DEBUG [inventory-api]: Session: 
+2025-04-09 17:17:42 DEBUG [inventory-api]: Auth check: 
+2025-04-09 17:17:42 INFO [inventory-api]: User johndoe2 is authenticated 
+2025-04-09 17:17:42 INFO [inventory-api]: getCustomerById called with customer_Id: 67f67b829d34cfbe039e94be 
+2025-04-09 17:17:42 DEBUG [inventory-api]: getCustomerByIdService called with customer_Id: 67f67b829d34cfbe039e94be 
+2025-04-09 17:24:25 DEBUG [inventory-api]: Session: 
+2025-04-09 17:24:25 DEBUG [inventory-api]: Auth check: 
+2025-04-09 17:24:25 INFO [inventory-api]: User johndoe2 is authenticated 
+2025-04-09 17:24:25 INFO [inventory-api]: createCustomer called 
+2025-04-09 17:24:25 DEBUG [inventory-api]: Request body: 
+2025-04-09 17:24:26 DEBUG [inventory-api]: Generated customerID: CU-00002 
+2025-04-09 17:24:26 DEBUG [inventory-api]: createCustomerService called with data: 
+2025-04-09 17:24:26 ERROR [inventory-api]: Error creating customer: Customer validation failed: email: Email address already exists 
+ValidationError: Customer validation failed: email: Email address already exists
+    at Document.invalidate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3329:32)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3090:17
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+2025-04-09 17:24:26 ERROR [inventory-api]: Validation Error - POST /customers 
+2025-04-09 17:24:35 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-09 17:24:40 INFO [inventory-api]: MongoDB Connected... 
+2025-04-09 17:27:04 DEBUG [inventory-api]: Session: 
+2025-04-09 17:27:04 DEBUG [inventory-api]: Auth check: 
+2025-04-09 17:27:04 INFO [inventory-api]: User johndoe2 is authenticated 
+2025-04-09 17:27:04 INFO [inventory-api]: createSupplier called 
+2025-04-09 17:27:04 DEBUG [inventory-api]: Request body: 
+2025-04-09 17:27:04 DEBUG [inventory-api]: Supplier data with generated ID: 
+2025-04-09 17:27:04 DEBUG [inventory-api]: createSupplierService called with data: 
+2025-04-09 17:27:08 DEBUG [inventory-api]: Session: 
+2025-04-09 17:27:08 DEBUG [inventory-api]: Auth check: 
+2025-04-09 17:27:08 INFO [inventory-api]: User johndoe2 is authenticated 
+2025-04-09 17:27:08 INFO [inventory-api]: createSupplier called 
+2025-04-09 17:27:08 DEBUG [inventory-api]: Request body: 
+2025-04-09 17:27:09 DEBUG [inventory-api]: Supplier data with generated ID: 
+2025-04-09 17:27:09 DEBUG [inventory-api]: createSupplierService called with data: 
+2025-04-09 17:30:33 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-09 17:30:37 INFO [inventory-api]: MongoDB Connected... 
+2025-04-09 17:30:58 DEBUG [inventory-api]: Session: 
+2025-04-09 17:30:58 DEBUG [inventory-api]: Auth check: 
+2025-04-09 17:30:58 INFO [inventory-api]: User johndoe2 is authenticated 
+2025-04-09 17:30:58 INFO [inventory-api]: createSupplier called 
+2025-04-09 17:30:58 DEBUG [inventory-api]: Request body: 
+2025-04-09 17:30:58 DEBUG [inventory-api]: Supplier data with generated ID: 
+2025-04-09 17:30:58 DEBUG [inventory-api]: createSupplierService called with data: 
+2025-04-09 17:30:58 ERROR [inventory-api]: Error creating supplier: Supplier validation failed: contact.email: Email already exists. 
+ValidationError: Supplier validation failed: contact.email: Email already exists.
+    at Document.invalidate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3329:32)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3090:17
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+2025-04-09 17:30:58 ERROR [inventory-api]: Validation Error - POST /suppliers 
+2025-04-09 17:33:15 DEBUG [inventory-api]: Session: 
+2025-04-09 17:33:15 DEBUG [inventory-api]: Auth check: 
+2025-04-09 17:33:15 INFO [inventory-api]: User johndoe2 is authenticated 
+2025-04-09 17:33:15 INFO [inventory-api]: createSupplier called 
+2025-04-09 17:33:15 DEBUG [inventory-api]: Request body: 
+2025-04-09 17:33:15 DEBUG [inventory-api]: Supplier data with generated ID: 
+2025-04-09 17:33:15 DEBUG [inventory-api]: createSupplierService called with data: 
+2025-04-09 17:33:18 DEBUG [inventory-api]: Session: 
+2025-04-09 17:33:18 DEBUG [inventory-api]: Auth check: 
+2025-04-09 17:33:18 INFO [inventory-api]: User johndoe2 is authenticated 
+2025-04-09 17:33:18 INFO [inventory-api]: createSupplier called 
+2025-04-09 17:33:18 DEBUG [inventory-api]: Request body: 
+2025-04-09 17:33:18 DEBUG [inventory-api]: Supplier data with generated ID: 
+2025-04-09 17:33:18 DEBUG [inventory-api]: createSupplierService called with data: 
+2025-04-09 17:33:19 ERROR [inventory-api]: Error creating supplier: Supplier validation failed: contact.email: Email already exists. 
+ValidationError: Supplier validation failed: contact.email: Email already exists.
+    at Document.invalidate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3329:32)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3090:17
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+2025-04-09 17:33:19 ERROR [inventory-api]: Validation Error - POST /suppliers 
+2025-04-09 17:34:15 DEBUG [inventory-api]: Session: 
+2025-04-09 17:34:15 DEBUG [inventory-api]: Auth check: 
+2025-04-09 17:34:15 INFO [inventory-api]: User johndoe2 is authenticated 
+2025-04-09 17:34:15 INFO [inventory-api]: createProduct called 
+2025-04-09 17:34:15 DEBUG [inventory-api]: Request body: 
+2025-04-09 17:34:15 DEBUG [inventory-api]: createProductService called with data: 
+2025-04-09 17:34:15 ERROR [inventory-api]: Error creating product: Product validation failed: productID: Path `productID` is required. 
+ValidationError: Product validation failed: productID: Path `productID` is required.
+    at Document.invalidate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3329:32)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3090:17
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+2025-04-09 17:34:15 ERROR [inventory-api]: Validation Error - POST /products 

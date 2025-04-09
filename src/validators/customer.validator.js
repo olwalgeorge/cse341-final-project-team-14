@@ -1,5 +1,4 @@
 const { check, param } = require("express-validator");
-const mongoose = require("mongoose");
 
 const customerIDValidationRules = () => {
   return [
@@ -9,10 +8,11 @@ const customerIDValidationRules = () => {
   ];
 };
 
+// Validation rules for customer's MongoDB ID
 const customer_IdValidationRules = () => {
   return [
-    check("_id")
-      .custom((value) => mongoose.Types.ObjectId.isValid(value))
+    param("customer_Id")
+      .isMongoId()
       .withMessage("Invalid MongoDB ID format"),
   ];
 };

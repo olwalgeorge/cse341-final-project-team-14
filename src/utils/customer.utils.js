@@ -27,7 +27,7 @@ const generateCustomerId = asyncHandler(async () => {
 const transformCustomer = (customer) => {
   if (!customer) return null;
   return {
-    _id: customer._id,
+    customer_Id: customer._id,
     customerID: customer.customerID,
     name: customer.name,
     email: customer.email,

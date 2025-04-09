@@ -22,11 +22,13 @@ const customerSchema = new Schema(
       trim: true,
       lowercase: true,
       unique: true,
+      index: true,
       validate: {
-        validator: function (v) {
-          return /^[\w.-]+@[\w.-]+\.\w{2,3}$/.test(v);
+        validator: async function (v) {
+          const customer = await this.constructor.findOne({ email: v });
+          return !customer;
         },
-        message: "Please enter a valid email",
+        message: "Email address already exists",
       },
     },
     phone: {
