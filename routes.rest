@@ -111,7 +111,7 @@ Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
   "price": 1999.99,
   "quantity": 10,
   "category": "Electronics",
-  "supplier": "65fb123abc456d789e012345",
+  "supplier": "67f66c737ed7ddb60e54af6f",
   "sku": "APPL123456"
 }
 

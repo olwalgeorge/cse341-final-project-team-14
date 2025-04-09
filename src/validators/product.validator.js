@@ -31,10 +31,6 @@ const categoryValidationRules = () => {
 
 const productCreateValidationRules = () => {
   return [
-    check("productID")
-      .optional()
-      .matches(/^PR-\d{5}$/)
-      .withMessage("Product ID should be in the format PR-xxxxx"),
     check("name")
       .trim()
       .notEmpty()
@@ -64,10 +60,7 @@ const productCreateValidationRules = () => {
 
 const productUpdateValidationRules = () => {
   return [
-    check("productID")
-      .optional()
-      .matches(/^PR-\d{5}$/)
-      .withMessage("Product ID should be in the format PR-xxxxx"),
+    
     check("name")
       .optional()
       .trim()

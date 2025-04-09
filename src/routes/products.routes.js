@@ -33,7 +33,7 @@ router.get(
 );
 router.get("/category/:category", validate(categoryValidationRules()), getProductsByCategory);
 router.get("/supplier/:supplierId", validate(supplierIdValidationRules()), getProductsBySupplier);
-router.get("/:_id", validate(product_IdValidationRules()), getProductById);
+router.get("/:product_Id", validate(product_IdValidationRules()), getProductById);
 
 // Protected routes - require authentication
 router.post(
@@ -43,14 +43,14 @@ router.post(
   createProduct
 );
 router.put(
-  "/:_id",
+  "/:product_Id",
   isAuthenticated,
   validate(product_IdValidationRules()),
   validate(productUpdateValidationRules()),
   updateProductById
 );
 router.delete(
-  "/:_id",
+  "/:product_Id",
   isAuthenticated,
   validate(product_IdValidationRules()),
   deleteProductById

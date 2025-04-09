@@ -46,6 +46,10 @@ const productSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "Supplier",
     required: [true, "Supplier reference is required"],
+    validate: {
+      validator: (v) => mongoose.model("Supplier").findOne({ _id: v }).then((supplier) => !!supplier),
+      message: "Supplier does not exist in the database",
+    },
   },
   sku: {
     type: String,
@@ -53,10 +57,8 @@ const productSchema = new Schema({
     trim: true,
     uppercase: true,
     validate: {
-      validator: function (v) {
-        return /^[A-Z0-9]{6,12}$/.test(v);
-      },
-      message: "SKU must be 6-12 alphanumeric characters",
+      validator: (v) => mongoose.model("Product").findOne({ sku: v }).then((product) => !product),
+      message: "Product SKU already exists",
     },
   },
   createdAt: {

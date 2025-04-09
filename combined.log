@@ -5016,3 +5016,143 @@ ValidationError: Product validation failed: productID: Path `productID` is requi
     at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schemaType.js:1407:9
     at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
 2025-04-09 17:34:15 ERROR [inventory-api]: Validation Error - POST /products 
+2025-04-09 17:50:12 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-09 17:50:17 INFO [inventory-api]: MongoDB Connected... 
+2025-04-09 17:50:43 DEBUG [inventory-api]: Session: 
+2025-04-09 17:50:43 DEBUG [inventory-api]: Auth check: 
+2025-04-09 17:50:43 INFO [inventory-api]: User johndoe2 is authenticated 
+2025-04-09 17:50:43 INFO [inventory-api]: getAllSuppliers called 
+2025-04-09 17:50:43 DEBUG [inventory-api]: getAllSuppliersService called 
+2025-04-09 17:51:30 DEBUG [inventory-api]: Session: 
+2025-04-09 17:51:30 DEBUG [inventory-api]: Auth check: 
+2025-04-09 17:51:30 INFO [inventory-api]: User johndoe2 is authenticated 
+2025-04-09 17:51:30 INFO [inventory-api]: createProduct called 
+2025-04-09 17:51:30 DEBUG [inventory-api]: Request body: 
+2025-04-09 17:51:30 DEBUG [inventory-api]: createProductService called with data: 
+2025-04-09 17:51:30 ERROR [inventory-api]: Error creating product: Product validation failed: productID: Path `productID` is required. 
+ValidationError: Product validation failed: productID: Path `productID` is required.
+    at Document.invalidate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3329:32)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3090:17
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+2025-04-09 17:51:30 ERROR [inventory-api]: Validation Error - POST /products 
+2025-04-09 18:02:09 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-09 18:02:13 INFO [inventory-api]: MongoDB Connected... 
+2025-04-09 18:02:20 DEBUG [inventory-api]: Session: 
+2025-04-09 18:02:20 DEBUG [inventory-api]: Auth check: 
+2025-04-09 18:02:20 INFO [inventory-api]: User johndoe2 is authenticated 
+2025-04-09 18:02:20 INFO [inventory-api]: createProduct called 
+2025-04-09 18:02:20 DEBUG [inventory-api]: Request body: 
+2025-04-09 18:02:20 DEBUG [inventory-api]: createProductService called with data: 
+2025-04-09 18:02:20 ERROR [inventory-api]: Error creating product: Product validation failed: productID: Path `productID` is required. 
+ValidationError: Product validation failed: productID: Path `productID` is required.
+    at Document.invalidate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3329:32)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3090:17
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+2025-04-09 18:02:20 ERROR [inventory-api]: Validation Error - POST /products 
+2025-04-09 18:02:28 DEBUG [inventory-api]: Session: 
+2025-04-09 18:02:28 DEBUG [inventory-api]: Auth check: 
+2025-04-09 18:02:28 INFO [inventory-api]: User johndoe2 is authenticated 
+2025-04-09 18:02:28 INFO [inventory-api]: createProduct called 
+2025-04-09 18:02:28 DEBUG [inventory-api]: Request body: 
+2025-04-09 18:02:28 DEBUG [inventory-api]: createProductService called with data: 
+2025-04-09 18:02:28 ERROR [inventory-api]: Error creating product: Product validation failed: productID: Path `productID` is required. 
+ValidationError: Product validation failed: productID: Path `productID` is required.
+    at Document.invalidate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3329:32)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3090:17
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+2025-04-09 18:02:28 ERROR [inventory-api]: Validation Error - POST /products 
+2025-04-09 18:03:43 DEBUG [inventory-api]: Session: 
+2025-04-09 18:03:43 DEBUG [inventory-api]: Auth check: 
+2025-04-09 18:03:43 INFO [inventory-api]: User johndoe2 is authenticated 
+2025-04-09 18:03:43 INFO [inventory-api]: createProduct called 
+2025-04-09 18:03:43 DEBUG [inventory-api]: Request body: 
+2025-04-09 18:03:43 DEBUG [inventory-api]: createProductService called with data: 
+2025-04-09 18:03:43 ERROR [inventory-api]: Error creating product: Product validation failed: productID: Path `productID` is required. 
+ValidationError: Product validation failed: productID: Path `productID` is required.
+    at Document.invalidate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3329:32)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3090:17
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+2025-04-09 18:03:43 ERROR [inventory-api]: Validation Error - POST /products 
+2025-04-09 18:08:33 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-09 18:08:37 INFO [inventory-api]: MongoDB Connected... 
+2025-04-09 18:08:40 DEBUG [inventory-api]: Session: 
+2025-04-09 18:08:40 DEBUG [inventory-api]: Auth check: 
+2025-04-09 18:08:40 INFO [inventory-api]: User johndoe2 is authenticated 
+2025-04-09 18:08:40 INFO [inventory-api]: createProduct called 
+2025-04-09 18:08:40 DEBUG [inventory-api]: Request body: 
+2025-04-09 18:08:40 DEBUG [inventory-api]: createProductService called with data: 
+2025-04-09 18:11:16 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-09 18:11:20 INFO [inventory-api]: MongoDB Connected... 
+2025-04-09 18:12:48 DEBUG [inventory-api]: Session: 
+2025-04-09 18:12:48 DEBUG [inventory-api]: Auth check: 
+2025-04-09 18:12:48 INFO [inventory-api]: User johndoe2 is authenticated 
+2025-04-09 18:12:48 INFO [inventory-api]: createProduct called 
+2025-04-09 18:12:48 DEBUG [inventory-api]: Request body: 
+2025-04-09 18:12:49 DEBUG [inventory-api]: createProductService called with data: 
+2025-04-09 18:12:49 ERROR [inventory-api]: Error creating product: Product validation failed: sku: Product SKU already exists 
+ValidationError: Product validation failed: sku: Product SKU already exists
+    at Document.invalidate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3329:32)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3090:17
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+2025-04-09 18:12:49 ERROR [inventory-api]: Validation Error - POST /products 
+2025-04-09 18:15:47 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-09 18:15:51 INFO [inventory-api]: MongoDB Connected... 
+2025-04-09 18:15:58 DEBUG [inventory-api]: Session: 
+2025-04-09 18:15:58 DEBUG [inventory-api]: Auth check: 
+2025-04-09 18:15:58 INFO [inventory-api]: User johndoe2 is authenticated 
+2025-04-09 18:15:58 INFO [inventory-api]: createProduct called 
+2025-04-09 18:15:58 DEBUG [inventory-api]: Request body: 
+2025-04-09 18:15:58 DEBUG [inventory-api]: createProductService called with data: 
+2025-04-09 18:15:58 ERROR [inventory-api]: Error creating product: Product validation failed: sku: Product SKU already exists, supplier: Supplier does not exist in the database 
+ValidationError: Product validation failed: sku: Product SKU already exists, supplier: Supplier does not exist in the database
+    at Document.invalidate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3329:32)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3090:17
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+2025-04-09 18:15:58 ERROR [inventory-api]: Validation Error - POST /products 
+2025-04-09 18:17:07 DEBUG [inventory-api]: Session: 
+2025-04-09 18:17:07 DEBUG [inventory-api]: Auth check: 
+2025-04-09 18:17:07 INFO [inventory-api]: User johndoe2 is authenticated 
+2025-04-09 18:17:07 INFO [inventory-api]: getAllSuppliers called 
+2025-04-09 18:17:07 DEBUG [inventory-api]: getAllSuppliersService called 
+2025-04-09 18:18:30 DEBUG [inventory-api]: Session: 
+2025-04-09 18:18:30 DEBUG [inventory-api]: Auth check: 
+2025-04-09 18:18:30 INFO [inventory-api]: User johndoe2 is authenticated 
+2025-04-09 18:18:30 INFO [inventory-api]: createProduct called 
+2025-04-09 18:18:30 DEBUG [inventory-api]: Request body: 
+2025-04-09 18:18:31 DEBUG [inventory-api]: createProductService called with data: 
+2025-04-09 18:18:31 ERROR [inventory-api]: Error creating product: Product validation failed: sku: Product SKU already exists 
+ValidationError: Product validation failed: sku: Product SKU already exists
+    at Document.invalidate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3329:32)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3090:17
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+2025-04-09 18:18:31 ERROR [inventory-api]: Validation Error - POST /products 
+2025-04-09 18:20:36 DEBUG [inventory-api]: Session: 
+2025-04-09 18:20:36 DEBUG [inventory-api]: Auth check: 
+2025-04-09 18:20:36 INFO [inventory-api]: User johndoe2 is authenticated 
+2025-04-09 18:20:36 WARN [inventory-api]: Validation failed 
+2025-04-09 18:20:48 DEBUG [inventory-api]: Session: 
+2025-04-09 18:20:48 DEBUG [inventory-api]: Auth check: 
+2025-04-09 18:20:48 INFO [inventory-api]: User johndoe2 is authenticated 
+2025-04-09 18:20:48 INFO [inventory-api]: createProduct called 
+2025-04-09 18:20:48 DEBUG [inventory-api]: Request body: 
+2025-04-09 18:20:48 DEBUG [inventory-api]: createProductService called with data: 
+2025-04-09 18:20:54 DEBUG [inventory-api]: Session: 
+2025-04-09 18:20:54 DEBUG [inventory-api]: Auth check: 
+2025-04-09 18:20:54 INFO [inventory-api]: User johndoe2 is authenticated 
+2025-04-09 18:20:54 INFO [inventory-api]: createProduct called 
+2025-04-09 18:20:54 DEBUG [inventory-api]: Request body: 
+2025-04-09 18:20:54 DEBUG [inventory-api]: createProductService called with data: 
+2025-04-09 18:20:54 ERROR [inventory-api]: Error creating product: Product validation failed: sku: Product SKU already exists 
+ValidationError: Product validation failed: sku: Product SKU already exists
+    at Document.invalidate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3329:32)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3090:17
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+2025-04-09 18:20:54 ERROR [inventory-api]: Validation Error - POST /products 

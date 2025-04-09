@@ -165,3 +165,59 @@ ValidationError: Product validation failed: productID: Path `productID` is requi
     at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schemaType.js:1407:9
     at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
 2025-04-09 17:34:15 ERROR [inventory-api]: Validation Error - POST /products 
+2025-04-09 17:51:30 ERROR [inventory-api]: Error creating product: Product validation failed: productID: Path `productID` is required. 
+ValidationError: Product validation failed: productID: Path `productID` is required.
+    at Document.invalidate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3329:32)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3090:17
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+2025-04-09 17:51:30 ERROR [inventory-api]: Validation Error - POST /products 
+2025-04-09 18:02:20 ERROR [inventory-api]: Error creating product: Product validation failed: productID: Path `productID` is required. 
+ValidationError: Product validation failed: productID: Path `productID` is required.
+    at Document.invalidate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3329:32)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3090:17
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+2025-04-09 18:02:20 ERROR [inventory-api]: Validation Error - POST /products 
+2025-04-09 18:02:28 ERROR [inventory-api]: Error creating product: Product validation failed: productID: Path `productID` is required. 
+ValidationError: Product validation failed: productID: Path `productID` is required.
+    at Document.invalidate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3329:32)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3090:17
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+2025-04-09 18:02:28 ERROR [inventory-api]: Validation Error - POST /products 
+2025-04-09 18:03:43 ERROR [inventory-api]: Error creating product: Product validation failed: productID: Path `productID` is required. 
+ValidationError: Product validation failed: productID: Path `productID` is required.
+    at Document.invalidate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3329:32)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3090:17
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+2025-04-09 18:03:43 ERROR [inventory-api]: Validation Error - POST /products 
+2025-04-09 18:12:49 ERROR [inventory-api]: Error creating product: Product validation failed: sku: Product SKU already exists 
+ValidationError: Product validation failed: sku: Product SKU already exists
+    at Document.invalidate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3329:32)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3090:17
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+2025-04-09 18:12:49 ERROR [inventory-api]: Validation Error - POST /products 
+2025-04-09 18:15:58 ERROR [inventory-api]: Error creating product: Product validation failed: sku: Product SKU already exists, supplier: Supplier does not exist in the database 
+ValidationError: Product validation failed: sku: Product SKU already exists, supplier: Supplier does not exist in the database
+    at Document.invalidate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3329:32)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3090:17
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+2025-04-09 18:15:58 ERROR [inventory-api]: Validation Error - POST /products 
+2025-04-09 18:18:31 ERROR [inventory-api]: Error creating product: Product validation failed: sku: Product SKU already exists 
+ValidationError: Product validation failed: sku: Product SKU already exists
+    at Document.invalidate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3329:32)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3090:17
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+2025-04-09 18:18:31 ERROR [inventory-api]: Validation Error - POST /products 
+2025-04-09 18:20:54 ERROR [inventory-api]: Error creating product: Product validation failed: sku: Product SKU already exists 
+ValidationError: Product validation failed: sku: Product SKU already exists
+    at Document.invalidate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3329:32)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3090:17
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+2025-04-09 18:20:54 ERROR [inventory-api]: Validation Error - POST /products 

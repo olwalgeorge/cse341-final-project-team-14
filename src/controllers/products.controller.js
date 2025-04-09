@@ -14,7 +14,7 @@ const {
   searchProductsService,
   getProductsBySupplierService,
 } = require("../services/products.service");
-const { transformProduct } = require("../utils/product.utils");
+const { transformProduct, generateProductId } = require("../utils/product.utils");
 
 /**
  * @desc    Get all products
@@ -40,13 +40,13 @@ const getAllProducts = asyncHandler(async (req, res, next) => {
 
 /**
  * @desc    Get product by ID
- * @route   GET /products/:_id
+ * @route   GET /products/:product_Id
  * @access  Public
  */
 const getProductById = asyncHandler(async (req, res, next) => {
-  logger.info(`getProductById called with ID: ${req.params._id}`);
+  logger.info(`getProductById called with ID: ${req.params.product_Id}`);
   try {
-    const product = await getProductByIdService(req.params._id);
+    const product = await getProductByIdService(req.params.product_Id);
     if (product) {
       const transformedProduct = transformProduct(product);
       sendResponse(
@@ -59,7 +59,7 @@ const getProductById = asyncHandler(async (req, res, next) => {
       return next(DatabaseError.notFound("Product"));
     }
   } catch (error) {
-    logger.error(`Error retrieving product with ID: ${req.params._id}`, error);
+    logger.error(`Error retrieving product with ID: ${req.params.product_Id}`, error);
     next(error);
   }
 });
@@ -193,7 +193,16 @@ const createProduct = asyncHandler(async (req, res, next) => {
   logger.info("createProduct called");
   logger.debug("Request body:", req.body);
   try {
-    const product = await createProductService(req.body);
+    // Generate productID for the new product
+    const productID = await generateProductId();
+    
+    // Add productID to request body
+    const productData = {
+      ...req.body,
+      productID
+    };
+    
+    const product = await createProductService(productData);
     const transformedProduct = transformProduct(product);
     sendResponse(res, 201, "Product created successfully", transformedProduct);
   } catch (error) {
@@ -204,14 +213,14 @@ const createProduct = asyncHandler(async (req, res, next) => {
 
 /**
  * @desc    Update product by ID
- * @route   PUT /products/:_id
+ * @route   PUT /products/:product_Id
  * @access  Private
  */
 const updateProductById = asyncHandler(async (req, res, next) => {
-  logger.info(`updateProductById called with ID: ${req.params._id}`);
+  logger.info(`updateProductById called with ID: ${req.params.product_Id}`);
   logger.debug("Update data:", req.body);
   try {
-    const product = await updateProductService(req.params._id, req.body);
+    const product = await updateProductService(req.params.product_Id, req.body);
     if (product) {
       const transformedProduct = transformProduct(product);
       sendResponse(
@@ -224,27 +233,27 @@ const updateProductById = asyncHandler(async (req, res, next) => {
       return next(DatabaseError.notFound("Product"));
     }
   } catch (error) {
-    logger.error(`Error updating product with ID: ${req.params._id}`, error);
+    logger.error(`Error updating product with ID: ${req.params.product_Id}`, error);
     next(error);
   }
 });
 
 /**
  * @desc    Delete product by ID
- * @route   DELETE /products/:_id
+ * @route   DELETE /products/:product_Id
  * @access  Private
  */
 const deleteProductById = asyncHandler(async (req, res, next) => {
-  logger.info(`deleteProductById called with ID: ${req.params._id}`);
+  logger.info(`deleteProductById called with ID: ${req.params.product_Id}`);
   try {
-    const result = await deleteProductService(req.params._id);
+    const result = await deleteProductService(req.params.product_Id);
     if (result.deletedCount > 0) {
       sendResponse(res, 200, "Product deleted successfully");
     } else {
       return next(DatabaseError.notFound("Product"));
     }
   } catch (error) {
-    logger.error(`Error deleting product with ID: ${req.params._id}`, error);
+    logger.error(`Error deleting product with ID: ${req.params.product_Id}`, error);
     next(error);
   }
 });
