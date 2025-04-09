@@ -12,7 +12,7 @@ const {
   deleteSupplierService,
   deleteAllSuppliersService,
 } = require("../services/suppliers.service");
-const { transformSupplier } = require("../utils/supplier.utils");
+const { transformSupplier, generateSupplierId } = require("../utils/supplier.utils");
 
 /**
  * @desc    Get all suppliers
@@ -38,13 +38,13 @@ const getAllSuppliers = asyncHandler(async (req, res, next) => {
 
 /**
  * @desc    Get supplier by ID
- * @route   GET /suppliers/:_id
+ * @route   GET /suppliers/:supplier_Id
  * @access  Private
  */
 const getSupplierById = asyncHandler(async (req, res, next) => {
-  logger.info(`getSupplierById called with ID: ${req.params._id}`);
+  logger.info(`getSupplierById called with ID: ${req.params.supplier_Id}`);
   try {
-    const supplier = await getSupplierByIdService(req.params._id);
+    const supplier = await getSupplierByIdService(req.params.supplier_Id);
     if (supplier) {
       const transformedSupplier = transformSupplier(supplier);
       sendResponse(
@@ -57,7 +57,7 @@ const getSupplierById = asyncHandler(async (req, res, next) => {
       return next(DatabaseError.notFound("Supplier"));
     }
   } catch (error) {
-    logger.error(`Error retrieving supplier with ID: ${req.params._id}`, error);
+    logger.error(`Error retrieving supplier with ID: ${req.params.supplier_Id}`, error);
     next(error);
   }
 });
@@ -133,7 +133,12 @@ const createSupplier = asyncHandler(async (req, res, next) => {
   logger.info("createSupplier called");
   logger.debug("Request body:", req.body);
   try {
-    const supplier = await createSupplierService(req.body);
+    // Generate a supplier ID and add it to the request body
+    const supplierID = await generateSupplierId();
+    const supplierData = { ...req.body, supplierID };
+    logger.debug("Supplier data with generated ID:", supplierData);
+
+    const supplier = await createSupplierService(supplierData);
     const transformedSupplier = transformSupplier(supplier);
     sendResponse(
       res,
@@ -149,14 +154,14 @@ const createSupplier = asyncHandler(async (req, res, next) => {
 
 /**
  * @desc    Update supplier by ID
- * @route   PUT /suppliers/:_id
+ * @route   PUT /suppliers/:supplier_Id
  * @access  Private
  */
 const updateSupplierById = asyncHandler(async (req, res, next) => {
-  logger.info(`updateSupplierById called with ID: ${req.params._id}`);
+  logger.info(`updateSupplierById called with ID: ${req.params.supplier_Id}`);
   logger.debug("Update data:", req.body);
   try {
-    const supplier = await updateSupplierService(req.params._id, req.body);
+    const supplier = await updateSupplierService(req.params.supplier_Id, req.body);
     if (supplier) {
       const transformedSupplier = transformSupplier(supplier);
       sendResponse(
@@ -169,27 +174,27 @@ const updateSupplierById = asyncHandler(async (req, res, next) => {
       return next(DatabaseError.notFound("Supplier"));
     }
   } catch (error) {
-    logger.error(`Error updating supplier with ID: ${req.params._id}`, error);
+    logger.error(`Error updating supplier with ID: ${req.params.supplier_Id}`, error);
     next(error);
   }
 });
 
 /**
  * @desc    Delete supplier by ID
- * @route   DELETE /suppliers/:_id
+ * @route   DELETE /suppliers/:supplier_Id
  * @access  Private
  */
 const deleteSupplierById = asyncHandler(async (req, res, next) => {
-  logger.info(`deleteSupplierById called with ID: ${req.params._id}`);
+  logger.info(`deleteSupplierById called with ID: ${req.params.supplier_Id}`);
   try {
-    const result = await deleteSupplierService(req.params._id);
+    const result = await deleteSupplierService(req.params.supplier_Id);
     if (result.deletedCount > 0) {
       sendResponse(res, 200, "Supplier deleted successfully");
     } else {
       return next(DatabaseError.notFound("Supplier"));
     }
   } catch (error) {
-    logger.error(`Error deleting supplier with ID: ${req.params._id}`, error);
+    logger.error(`Error deleting supplier with ID: ${req.params.supplier_Id}`, error);
     next(error);
   }
 });

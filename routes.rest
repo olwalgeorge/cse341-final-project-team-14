@@ -227,13 +227,13 @@ Content-Type: application/json
 Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
 
 {
-  "name": "TechSupply Co",
+  "name": "Clothing Co",
   "contact": {
     "phone": "1234567890",
-    "email": "info@techsupply.com"
+    "email": "info@clothingco.com"
   },
   "address": {
-    "street": "123 Tech Street",
+    "street": "123 Clothing Street",
     "city": "San Francisco",
     "state": "CA",
     "postalCode": "94107",

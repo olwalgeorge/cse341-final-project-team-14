@@ -25,9 +25,19 @@ const getSupplierBySupplierIDService = async (supplierID) => {
   return await Supplier.findOne({ supplierID: supplierID });
 };
 
-// Create a new supplier
+/**
+ * Create a new supplier
+ * @param {Object} supplierData - The supplier data
+ * @returns {Promise<Object>} - The created supplier
+ */
 const createSupplierService = async (supplierData) => {
   logger.debug("createSupplierService called with data:", supplierData);
+  
+  // Ensure we're using the correct field name consistently
+  if (!supplierData.supplierID) {
+    throw new Error("supplierID is required");
+  }
+  
   const supplier = new Supplier(supplierData);
   return await supplier.save();
 };

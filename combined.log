@@ -4650,3 +4650,91 @@ CastError: Cast to ObjectId failed for value "34554" (type string) at path "supp
 2025-04-07 21:05:04 DEBUG [inventory-api]: Session: 
 2025-04-07 21:05:04 DEBUG [inventory-api]: Session: 
 2025-04-07 21:05:04 DEBUG [inventory-api]: Session: 
+2025-04-09 15:07:54 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-09 15:07:58 INFO [inventory-api]: MongoDB Connected... 
+2025-04-09 15:08:25 DEBUG [inventory-api]: Session: 
+2025-04-09 15:08:25 DEBUG [inventory-api]: Auth check: 
+2025-04-09 15:08:25 INFO [inventory-api]: User johndoe2 is authenticated 
+2025-04-09 15:08:25 INFO [inventory-api]: createOrder called 
+2025-04-09 15:08:25 DEBUG [inventory-api]: Request body: 
+2025-04-09 15:08:25 ERROR [inventory-api]: Error creating order: Order validation failed: customer.phone: Customer phone is required, customer.email: Customer email is required, customer.name: Customer name is required, totalAmount: Total amount is required, status: Invalid order status 
+ValidationError: Order validation failed: customer.phone: Customer phone is required, customer.email: Customer email is required, customer.name: Customer name is required, totalAmount: Total amount is required, status: Invalid order status
+    at Document.invalidate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3329:32)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3090:17
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+2025-04-09 15:08:25 ERROR [inventory-api]: Validation Error - POST /orders 
+2025-04-09 15:08:40 DEBUG [inventory-api]: Session: 
+2025-04-09 15:08:40 DEBUG [inventory-api]: Auth check: 
+2025-04-09 15:08:40 INFO [inventory-api]: User johndoe2 is authenticated 
+2025-04-09 15:08:40 INFO [inventory-api]: createSupplier called 
+2025-04-09 15:08:40 DEBUG [inventory-api]: Request body: 
+2025-04-09 15:08:40 DEBUG [inventory-api]: createSupplierService called with data: 
+2025-04-09 15:08:40 ERROR [inventory-api]: Error creating supplier: Supplier validation failed: supplierID: Path `supplierID` is required. 
+ValidationError: Supplier validation failed: supplierID: Path `supplierID` is required.
+    at Document.invalidate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3329:32)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3090:17
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+2025-04-09 15:08:40 ERROR [inventory-api]: Validation Error - POST /suppliers 
+2025-04-09 15:10:44 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-09 15:10:49 INFO [inventory-api]: MongoDB Connected... 
+2025-04-09 15:26:54 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-09 15:26:58 INFO [inventory-api]: MongoDB Connected... 
+2025-04-09 15:27:23 DEBUG [inventory-api]: Session: 
+2025-04-09 15:27:23 DEBUG [inventory-api]: Auth check: 
+2025-04-09 15:27:23 INFO [inventory-api]: User johndoe2 is authenticated 
+2025-04-09 15:27:23 INFO [inventory-api]: createSupplier called 
+2025-04-09 15:27:23 DEBUG [inventory-api]: Request body: 
+2025-04-09 15:27:23 DEBUG [inventory-api]: Supplier data with generated ID: 
+2025-04-09 15:27:23 DEBUG [inventory-api]: createSupplierService called with data: 
+2025-04-09 15:27:24 ERROR [inventory-api]: Error creating supplier: E11000 duplicate key error collection: team_14_final_project.suppliers index: supplierId_1 dup key: { supplierId: null } 
+MongoServerError: E11000 duplicate key error collection: team_14_final_project.suppliers index: supplierId_1 dup key: { supplierId: null }
+    at InsertOneOperation.execute (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongodb\lib\operations\insert.js:51:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async tryOperation (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongodb\lib\operations\execute_operation.js:207:20)
+    at async executeOperation (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongodb\lib\operations\execute_operation.js:75:16)
+    at async Collection.insertOne (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongodb\lib\collection.js:157:16)
+2025-04-09 15:27:24 ERROR [inventory-api]: Duplicate Entry - POST /suppliers 
+2025-04-09 15:34:00 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-09 15:34:04 INFO [inventory-api]: MongoDB Connected... 
+2025-04-09 15:35:24 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-09 15:35:28 INFO [inventory-api]: MongoDB Connected... 
+2025-04-09 15:36:49 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-09 15:36:53 INFO [inventory-api]: MongoDB Connected... 
+2025-04-09 15:37:26 DEBUG [inventory-api]: Session: 
+2025-04-09 15:37:26 DEBUG [inventory-api]: Auth check: 
+2025-04-09 15:37:26 INFO [inventory-api]: User johndoe2 is authenticated 
+2025-04-09 15:37:26 INFO [inventory-api]: createSupplier called 
+2025-04-09 15:37:26 DEBUG [inventory-api]: Request body: 
+2025-04-09 15:37:26 DEBUG [inventory-api]: Supplier data with generated ID: 
+2025-04-09 15:37:26 DEBUG [inventory-api]: createSupplierService called with data: 
+2025-04-09 15:37:26 ERROR [inventory-api]: Error creating supplier: E11000 duplicate key error collection: team_14_final_project.suppliers index: supplierId_1 dup key: { supplierId: null } 
+MongoServerError: E11000 duplicate key error collection: team_14_final_project.suppliers index: supplierId_1 dup key: { supplierId: null }
+    at InsertOneOperation.execute (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongodb\lib\operations\insert.js:51:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async tryOperation (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongodb\lib\operations\execute_operation.js:207:20)
+    at async executeOperation (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongodb\lib\operations\execute_operation.js:75:16)
+    at async Collection.insertOne (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongodb\lib\collection.js:157:16)
+2025-04-09 15:37:26 ERROR [inventory-api]: Duplicate Entry - POST /suppliers 
+2025-04-09 15:44:14 DEBUG [inventory-api]: Session: 
+2025-04-09 15:44:14 DEBUG [inventory-api]: Auth check: 
+2025-04-09 15:44:14 INFO [inventory-api]: User johndoe2 is authenticated 
+2025-04-09 15:44:14 INFO [inventory-api]: getSupplierBySupplierID called with supplier ID: SP-00001 
+2025-04-09 15:44:14 DEBUG [inventory-api]: getSupplierBySupplierIDService called with supplier ID: SP-00001 
+2025-04-09 15:47:47 DEBUG [inventory-api]: Session: 
+2025-04-09 15:47:47 DEBUG [inventory-api]: Auth check: 
+2025-04-09 15:47:47 INFO [inventory-api]: User johndoe2 is authenticated 
+2025-04-09 15:47:47 INFO [inventory-api]: createSupplier called 
+2025-04-09 15:47:47 DEBUG [inventory-api]: Request body: 
+2025-04-09 15:47:47 DEBUG [inventory-api]: Supplier data with generated ID: 
+2025-04-09 15:47:47 DEBUG [inventory-api]: createSupplierService called with data: 
+2025-04-09 15:48:49 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-09 15:48:53 INFO [inventory-api]: MongoDB Connected... 
+2025-04-09 15:50:43 DEBUG [inventory-api]: Session: 
+2025-04-09 15:50:43 DEBUG [inventory-api]: Auth check: 
+2025-04-09 15:50:43 INFO [inventory-api]: User johndoe2 is authenticated 
+2025-04-09 15:50:43 INFO [inventory-api]: createSupplier called 
+2025-04-09 15:50:43 DEBUG [inventory-api]: Request body: 
+2025-04-09 15:50:43 DEBUG [inventory-api]: Supplier data with generated ID: 
+2025-04-09 15:50:43 DEBUG [inventory-api]: createSupplierService called with data: 

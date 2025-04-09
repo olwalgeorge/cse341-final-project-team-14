@@ -12,8 +12,8 @@ const supplierIDValidationRules = () => {
   ];
 };
 
-const supplier_IdValidationRules = () => {
-  return [isMongoIdParam("_id", "Invalid Supplier ID format")];
+const supplierMongoIdValidationRules = () => {
+  return [isMongoIdParam("supplier_Id", "Invalid Supplier ID format")];
 };
 
 const supplierCreateValidationRules = () => {
@@ -105,7 +105,7 @@ const supplierUpdateValidationRules = () => {
 
 module.exports = {
   supplierIDValidationRules,
-  supplier_IdValidationRules,
+  supplierMongoIdValidationRules,
   supplierCreateValidationRules,
   supplierUpdateValidationRules,
 };

@@ -27,7 +27,7 @@ const generateSupplierId = asyncHandler(async () => {
 const transformSupplier = (supplier) => {
   if (!supplier) return null;
   return {
-    _id: supplier._id,
+    supplier_Id: supplier._id,
     supplierID: supplier.supplierID,
     name: supplier.name,
     contact: supplier.contact,

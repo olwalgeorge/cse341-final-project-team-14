@@ -76,3 +76,33 @@ CastError: Cast to ObjectId failed for value "34554" (type string) at path "supp
     at async getProductsBySupplierService (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\products.service.js:50:10)
 2025-04-07 15:38:58 ERROR [inventory-api]: Invalid ID Format - GET /products/supplier/34554 
 2025-04-07 16:00:23 ERROR [inventory-api]: Products for supplier not found - GET /products/supplier/67f2e07fbf6d04573678e7f0 
+2025-04-09 15:08:25 ERROR [inventory-api]: Error creating order: Order validation failed: customer.phone: Customer phone is required, customer.email: Customer email is required, customer.name: Customer name is required, totalAmount: Total amount is required, status: Invalid order status 
+ValidationError: Order validation failed: customer.phone: Customer phone is required, customer.email: Customer email is required, customer.name: Customer name is required, totalAmount: Total amount is required, status: Invalid order status
+    at Document.invalidate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3329:32)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3090:17
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+2025-04-09 15:08:25 ERROR [inventory-api]: Validation Error - POST /orders 
+2025-04-09 15:08:40 ERROR [inventory-api]: Error creating supplier: Supplier validation failed: supplierID: Path `supplierID` is required. 
+ValidationError: Supplier validation failed: supplierID: Path `supplierID` is required.
+    at Document.invalidate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3329:32)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3090:17
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+2025-04-09 15:08:40 ERROR [inventory-api]: Validation Error - POST /suppliers 
+2025-04-09 15:27:24 ERROR [inventory-api]: Error creating supplier: E11000 duplicate key error collection: team_14_final_project.suppliers index: supplierId_1 dup key: { supplierId: null } 
+MongoServerError: E11000 duplicate key error collection: team_14_final_project.suppliers index: supplierId_1 dup key: { supplierId: null }
+    at InsertOneOperation.execute (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongodb\lib\operations\insert.js:51:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async tryOperation (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongodb\lib\operations\execute_operation.js:207:20)
+    at async executeOperation (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongodb\lib\operations\execute_operation.js:75:16)
+    at async Collection.insertOne (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongodb\lib\collection.js:157:16)
+2025-04-09 15:27:24 ERROR [inventory-api]: Duplicate Entry - POST /suppliers 
+2025-04-09 15:37:26 ERROR [inventory-api]: Error creating supplier: E11000 duplicate key error collection: team_14_final_project.suppliers index: supplierId_1 dup key: { supplierId: null } 
+MongoServerError: E11000 duplicate key error collection: team_14_final_project.suppliers index: supplierId_1 dup key: { supplierId: null }
+    at InsertOneOperation.execute (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongodb\lib\operations\insert.js:51:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async tryOperation (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongodb\lib\operations\execute_operation.js:207:20)
+    at async executeOperation (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongodb\lib\operations\execute_operation.js:75:16)
+    at async Collection.insertOne (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongodb\lib\collection.js:157:16)
+2025-04-09 15:37:26 ERROR [inventory-api]: Duplicate Entry - POST /suppliers 

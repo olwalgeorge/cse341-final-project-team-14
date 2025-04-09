@@ -14,7 +14,7 @@ const validate = require("../middlewares/validation.middleware");
 const isAuthenticated = require("../middlewares/auth.middleware");
 const {
   supplierIDValidationRules,
-  supplier_IdValidationRules,
+  supplierMongoIdValidationRules,
   supplierUpdateValidationRules,
 } = require("../validators/supplier.validator");
 
@@ -28,23 +28,23 @@ router.get(
 );
 router.get("/name/:name", isAuthenticated, getSupplierByName);
 router.get(
-  "/:_id",
+  "/:supplier_Id",
   isAuthenticated,
-  validate(supplier_IdValidationRules()),
+  validate(supplierMongoIdValidationRules()),
   getSupplierById
 );
 router.post("/", isAuthenticated, createSupplier);
 router.put(
-  "/:_id",
+  "/:supplier_Id",
   isAuthenticated,
-  validate(supplier_IdValidationRules()),
+  validate(supplierMongoIdValidationRules()),
   validate(supplierUpdateValidationRules()),
   updateSupplierById
 );
 router.delete(
-  "/:_id",
+  "/:supplier_Id",
   isAuthenticated,
-  validate(supplier_IdValidationRules()),
+  validate(supplierMongoIdValidationRules()),
   deleteSupplierById
 );
 router.delete("/", isAuthenticated, deleteAllSuppliers);
