@@ -51,8 +51,8 @@ const getAllOrdersService = async (query = {}) => {
     .sort(sort)
     .skip(skip)
     .limit(limit)
-    .populate("customer", "fullName email")
-    .populate("items.product", "name price");
+    .populate("customer.customerId", "name email phone customerID")
+    .populate("products.product", "name description price category sku productID");
 
   // Get total count for pagination
   const total = await Order.countDocuments(filter);
@@ -73,8 +73,8 @@ const getAllOrdersService = async (query = {}) => {
  */
 const getOrderByOrderIDService = async (orderID) => {
   return await Order.findOne({ orderID: orderID })
-    .populate("customer", "fullName email")
-    .populate("items.product", "name price");
+    .populate("customer.customerId", "name email phone customerID")
+    .populate("products.product", "name description price category sku productID");
 };
 
 /**
@@ -82,8 +82,8 @@ const getOrderByOrderIDService = async (orderID) => {
  */
 const getOrderByIdService = async (id) => {
   return await Order.findById(id)
-    .populate("customer", "fullName email")
-    .populate("items.product", "name price");
+    .populate("customer.customerId", "name email phone customerID")
+    .populate("products.product", "name description price category sku productID");
 };
 
 /**
@@ -95,8 +95,49 @@ const createOrderService = async (orderData) => {
     orderData.orderID = await generateOrderId();
   }
 
+  // If customer is provided as just an ID, fetch customer details
+  if (orderData.customer && typeof orderData.customer === 'string') {
+    const Customer = require('../models/customer.model');
+    const customerData = await Customer.findById(orderData.customer);
+    
+    if (!customerData) {
+      throw new Error('Customer not found');
+    }
+    
+    // Structure customer data according to the order model
+    orderData.customer = {
+      customerId: customerData._id,
+      name: customerData.name,
+      email: customerData.email,
+      phone: customerData.phone || '0000000000' // Fallback if not provided
+    };
+  }
+
+  // Calculate totalAmount if not provided
+  if (!orderData.totalAmount && orderData.items && Array.isArray(orderData.items)) {
+    orderData.totalAmount = orderData.items.reduce((total, item) => {
+      return total + (item.price * item.quantity);
+    }, 0);
+  }
+
+  // Convert items format to products format if needed
+  if (orderData.items && !orderData.products) {
+    orderData.products = orderData.items.map(item => ({
+      product: item.product,
+      quantity: item.quantity,
+      priceAtOrder: item.price
+    }));
+    
+    // Remove items as it's not in the model
+    delete orderData.items;
+  }
+
   const order = new Order(orderData);
-  return await order.save();
+  const savedOrder = await order.save();
+  
+  // Populate the product details before returning
+  return await Order.findById(savedOrder._id)
+    .populate("products.product", "name description price category sku productID");
 };
 
 /**
@@ -108,8 +149,8 @@ const updateOrderService = async (id, updates) => {
     { ...updates, updatedAt: Date.now() },
     { new: true, runValidators: true }
   )
-    .populate("customer", "fullName email")
-    .populate("items.product", "name price");
+    .populate("customer.customerId", "name email phone customerID")
+    .populate("products.product", "name description price category sku productID");
 };
 
 /**
@@ -123,9 +164,9 @@ const deleteOrderService = async (id) => {
  * Get orders by customer ID
  */
 const getOrdersByCustomerService = async (customerId) => {
-  return await Order.find({ customer: customerId })
-    .populate("customer", "fullName email")
-    .populate("items.product", "name price");
+  return await Order.find({ "customer.customerId": customerId })
+    .populate("customer.customerId", "name email phone customerID")
+    .populate("products.product", "name description price category sku productID");
 };
 
 /**
@@ -135,7 +176,8 @@ const getOrdersByCustomerIdService = async (customerId) => {
   logger.debug(
     `getOrdersByCustomerIdService called with customer ID: ${customerId}`
   );
-  return await Order.find({ customerId: customerId });
+  return await Order.find({ "customer.customerId": customerId })
+    .populate("products.product", "name description price category sku productID");
 };
 
 /**
@@ -143,8 +185,8 @@ const getOrdersByCustomerIdService = async (customerId) => {
  */
 const getOrdersByStatusService = async (status) => {
   return await Order.find({ status: status })
-    .populate("customer", "fullName email")
-    .populate("items.product", "name price");
+    .populate("customer.customerId", "name email phone customerID")
+    .populate("products.product", "name description price category sku productID");
 };
 
 /**

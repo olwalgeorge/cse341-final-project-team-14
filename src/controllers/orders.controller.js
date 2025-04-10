@@ -13,7 +13,8 @@ const {
   deleteAllOrdersService,
   getOrdersByStatusService,
 } = require("../services/orders.service");
-const { transformOrder } = require("../utils/order.utils");
+const { transformOrder, generateOrderId } = require("../utils/order.utils");
+const Product = require("../models/product.model");
 
 /**
  * @desc    Get all orders
@@ -34,13 +35,13 @@ const getAllOrders = asyncHandler(async (req, res, next) => {
 
 /**
  * @desc    Get order by ID
- * @route   GET /orders/:_id
+ * @route   GET /orders/:order_Id
  * @access  Private
  */
 const getOrderById = asyncHandler(async (req, res, next) => {
-  logger.info(`getOrderById called with ID: ${req.params._id}`);
+  logger.info(`getOrderById called with ID: ${req.params.order_Id}`);
   try {
-    const order = await getOrderByIdService(req.params._id);
+    const order = await getOrderByIdService(req.params.order_Id);
     if (order) {
       const transformedOrder = transformOrder(order);
       sendResponse(res, 200, "Order retrieved successfully", transformedOrder);
@@ -48,7 +49,7 @@ const getOrderById = asyncHandler(async (req, res, next) => {
       return next(DatabaseError.notFound("Order"));
     }
   } catch (error) {
-    logger.error(`Error retrieving order with ID: ${req.params._id}`, error);
+    logger.error(`Error retrieving order with ID: ${req.params.order_Id}`, error);
     next(error);
   }
 });
@@ -116,7 +117,25 @@ const getOrderByOrderID = asyncHandler(async (req, res, next) => {
 const createOrder = asyncHandler(async (req, res, next) => {
   logger.info("createOrder called");
   logger.debug("Request body:", req.body);
+  
   try {
+    // Generate orderID if not provided
+    if (!req.body.orderID) {
+      const orderID = await generateOrderId();
+      logger.debug(`Generated orderID: ${orderID}`);
+      req.body.orderID = orderID;
+    }
+    
+    // For each product in items, retrieve the full product data to ensure it exists
+    if (req.body.items && Array.isArray(req.body.items)) {
+      for (const item of req.body.items) {
+        const product = await Product.findById(item.product);
+        if (!product) {
+          return next(DatabaseError.notFound(`Product with ID ${item.product}`));
+        }
+      }
+    }
+    
     const order = await createOrderService(req.body);
     const transformedOrder = transformOrder(order);
     sendResponse(res, 201, "Order created successfully", transformedOrder);
@@ -128,14 +147,14 @@ const createOrder = asyncHandler(async (req, res, next) => {
 
 /**
  * @desc    Update order by ID
- * @route   PUT /orders/:_id
+ * @route   PUT /orders/:order_Id
  * @access  Private
  */
 const updateOrderById = asyncHandler(async (req, res, next) => {
-  logger.info(`updateOrderById called with ID: ${req.params._id}`);
+  logger.info(`updateOrderById called with ID: ${req.params.order_Id}`);
   logger.debug("Update data:", req.body);
   try {
-    const order = await updateOrderService(req.params._id, req.body);
+    const order = await updateOrderService(req.params.order_Id, req.body);
     if (order) {
       const transformedOrder = transformOrder(order);
       sendResponse(res, 200, "Order updated successfully", transformedOrder);
@@ -143,27 +162,27 @@ const updateOrderById = asyncHandler(async (req, res, next) => {
       return next(DatabaseError.notFound("Order"));
     }
   } catch (error) {
-    logger.error(`Error updating order with ID: ${req.params._id}`, error);
+    logger.error(`Error updating order with ID: ${req.params.order_Id}`, error);
     next(error);
   }
 });
 
 /**
  * @desc    Delete order by ID
- * @route   DELETE /orders/:_id
+ * @route   DELETE /orders/:order_Id
  * @access  Private
  */
 const deleteOrderById = asyncHandler(async (req, res, next) => {
-  logger.info(`deleteOrderById called with ID: ${req.params._id}`);
+  logger.info(`deleteOrderById called with ID: ${req.params.order_Id}`);
   try {
-    const result = await deleteOrderService(req.params._id);
+    const result = await deleteOrderService(req.params.order_Id);
     if (result.deletedCount > 0) {
       sendResponse(res, 200, "Order deleted successfully");
     } else {
       return next(DatabaseError.notFound("Order"));
     }
   } catch (error) {
-    logger.error(`Error deleting order with ID: ${req.params._id}`, error);
+    logger.error(`Error deleting order with ID: ${req.params.order_Id}`, error);
     next(error);
   }
 });

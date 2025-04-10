@@ -27,7 +27,7 @@ const generatePurchaseId = asyncHandler(async () => {
 const transformPurchase = (purchase) => {
   if (!purchase) return null;
   return {
-    _id: purchase._id,
+    purchase_id: purchase._id,
     purchaseID: purchase.purchaseID,
     supplier: purchase.supplier,
     items: purchase.items,

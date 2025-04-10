@@ -59,6 +59,11 @@ const orderSchema = new Schema({
     required: [true, "Shipping address is required"],
   },
   customer: {
+    customerId: {
+      type: Schema.Types.ObjectId,
+      ref: "Customer", 
+      required: [true, "Customer ID is required"],
+    },
     name: {
       type: String,
       required: [true, "Customer name is required"],
@@ -69,10 +74,15 @@ const orderSchema = new Schema({
       required: [true, "Customer email is required"],
       trim: true,
       lowercase: true,
+      match: [
+        /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
+        'Please enter a valid email address'
+      ],
     },
     phone: {
       type: String,
       required: [true, "Customer phone is required"],
+      match: [/^[0-9]{10,15}$/, 'Please enter a valid phone number']    
     },
   },
   createdAt: {

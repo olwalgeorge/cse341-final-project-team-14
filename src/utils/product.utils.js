@@ -24,7 +24,7 @@ const generateProductId = asyncHandler(async () => {
 const transformProduct = (product) => {
   if (!product) return null;
   return {
-    _id: product._id,
+    product_id: product._id,
     productID: product.productID,
     name: product.name,
     description: product.description,

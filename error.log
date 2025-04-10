@@ -222,3 +222,147 @@ ValidationError: Product validation failed: sku: Product SKU already exists
     at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
 2025-04-09 18:20:54 ERROR [inventory-api]: Validation Error - POST /products 
 2025-04-10 14:24:06 ERROR [inventory-api]: Authentication required - GET /users/userID/SM-00001 
+2025-04-10 16:48:44 ERROR [inventory-api]: Error creating order: Order validation failed: customer.phone: Customer phone is required, customer.email: Customer email is required, customer.name: Customer name is required, totalAmount: Total amount is required, status: Invalid order status 
+ValidationError: Order validation failed: customer.phone: Customer phone is required, customer.email: Customer email is required, customer.name: Customer name is required, totalAmount: Total amount is required, status: Invalid order status
+    at Document.invalidate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3329:32)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3090:17
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+2025-04-10 16:48:44 ERROR [inventory-api]: Validation Error - POST /orders 
+2025-04-10 16:51:24 ERROR [inventory-api]: Customer not found - GET /customers/67f69050d6e4e916c2951868 
+2025-04-10 16:55:51 ERROR [inventory-api]: Error creating order: Order validation failed: customer.phone: Customer phone is required, customer.email: Customer email is required, customer.name: Customer name is required, totalAmount: Total amount is required, status: Invalid order status 
+ValidationError: Order validation failed: customer.phone: Customer phone is required, customer.email: Customer email is required, customer.name: Customer name is required, totalAmount: Total amount is required, status: Invalid order status
+    at Document.invalidate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3329:32)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3090:17
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+2025-04-10 16:55:51 ERROR [inventory-api]: Validation Error - POST /orders 
+2025-04-10 17:29:13 ERROR [inventory-api]: Error creating order: Order validation failed: customer.phone: Customer phone is required, customer.email: Customer email is required, customer.name: Customer name is required, totalAmount: Total amount is required, status: Invalid order status 
+ValidationError: Order validation failed: customer.phone: Customer phone is required, customer.email: Customer email is required, customer.name: Customer name is required, totalAmount: Total amount is required, status: Invalid order status
+    at Document.invalidate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3329:32)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3090:17
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+2025-04-10 17:29:13 ERROR [inventory-api]: Validation Error - POST /orders 
+2025-04-10 17:32:49 ERROR [inventory-api]: Error creating order: Order validation failed: customer.phone: Customer phone is required, customer.email: Customer email is required, customer.name: Customer name is required, customer.customerID: Customer ID is required, totalAmount: Total amount is required 
+ValidationError: Order validation failed: customer.phone: Customer phone is required, customer.email: Customer email is required, customer.name: Customer name is required, customer.customerID: Customer ID is required, totalAmount: Total amount is required
+    at Document.invalidate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3329:32)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3090:17
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+2025-04-10 17:32:49 ERROR [inventory-api]: Validation Error - POST /orders 
+2025-04-10 17:33:37 ERROR [inventory-api]: Error creating order: Order validation failed: customer.phone: Customer phone is required, customer.email: Customer email is required, customer.name: Customer name is required, customer.customerID: Customer ID is required, totalAmount: Total amount is required 
+ValidationError: Order validation failed: customer.phone: Customer phone is required, customer.email: Customer email is required, customer.name: Customer name is required, customer.customerID: Customer ID is required, totalAmount: Total amount is required
+    at Document.invalidate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3329:32)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3090:17
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+2025-04-10 17:33:37 ERROR [inventory-api]: Validation Error - POST /orders 
+2025-04-10 17:36:11 ERROR [inventory-api]: Error creating order: Order validation failed: customer.phone: Customer phone is required, customer.email: Customer email is required, customer.name: Customer name is required, customer.customerId: Customer ID is required, totalAmount: Total amount is required 
+ValidationError: Order validation failed: customer.phone: Customer phone is required, customer.email: Customer email is required, customer.name: Customer name is required, customer.customerId: Customer ID is required, totalAmount: Total amount is required
+    at Document.invalidate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3329:32)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3090:17
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+2025-04-10 17:36:11 ERROR [inventory-api]: Validation Error - POST /orders 
+2025-04-10 17:42:22 ERROR [inventory-api]: Error creating order: Order validation failed: customer.phone: Customer phone is required, customer.email: Customer email is required, customer.name: Customer name is required, customer.customerId: Customer ID is required, totalAmount: Total amount is required 
+ValidationError: Order validation failed: customer.phone: Customer phone is required, customer.email: Customer email is required, customer.name: Customer name is required, customer.customerId: Customer ID is required, totalAmount: Total amount is required
+    at Document.invalidate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3329:32)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3090:17
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+2025-04-10 17:42:22 ERROR [inventory-api]: Validation Error - POST /orders 
+2025-04-10 18:10:00 ERROR [inventory-api]: Error creating order: Order validation failed: customer.phone: Customer phone is required, customer.email: Customer email is required, customer.name: Customer name is required, customer.customerId: Customer ID is required, totalAmount: Total amount is required 
+ValidationError: Order validation failed: customer.phone: Customer phone is required, customer.email: Customer email is required, customer.name: Customer name is required, customer.customerId: Customer ID is required, totalAmount: Total amount is required
+    at Document.invalidate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3329:32)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3090:17
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+2025-04-10 18:10:00 ERROR [inventory-api]: Validation Error - POST /orders 
+2025-04-10 18:37:51 ERROR [inventory-api]: Error creating order: Order validation failed: customer.phone: Customer phone is required, customer.email: Customer email is required, customer.name: Customer name is required, customer.customerId: Customer ID is required, totalAmount: Total amount is required 
+ValidationError: Order validation failed: customer.phone: Customer phone is required, customer.email: Customer email is required, customer.name: Customer name is required, customer.customerId: Customer ID is required, totalAmount: Total amount is required
+    at Document.invalidate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3329:32)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3090:17
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+2025-04-10 18:37:51 ERROR [inventory-api]: Validation Error - POST /orders 
+2025-04-10 18:43:34 ERROR [inventory-api]: Error creating order: Order validation failed: customer.phone: Customer phone is required, customer.email: Customer email is required, customer.name: Customer name is required, customer.customerId: Customer ID is required, totalAmount: Total amount is required 
+ValidationError: Order validation failed: customer.phone: Customer phone is required, customer.email: Customer email is required, customer.name: Customer name is required, customer.customerId: Customer ID is required, totalAmount: Total amount is required
+    at Document.invalidate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3329:32)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3090:17
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+2025-04-10 18:43:34 ERROR [inventory-api]: Validation Error - POST /orders 
+2025-04-10 18:57:55 ERROR [inventory-api]: Error creating order: Order validation failed: totalAmount: Total amount is required 
+ValidationError: Order validation failed: totalAmount: Total amount is required
+    at Document.invalidate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3329:32)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3090:17
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+2025-04-10 18:57:55 ERROR [inventory-api]: Validation Error - POST /orders 
+2025-04-10 19:00:15 ERROR [inventory-api]: Error creating order: E11000 duplicate key error collection: team_14_final_project.orders index: orderId_1 dup key: { orderId: null } 
+MongoServerError: E11000 duplicate key error collection: team_14_final_project.orders index: orderId_1 dup key: { orderId: null }
+    at InsertOneOperation.execute (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongodb\lib\operations\insert.js:51:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async tryOperation (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongodb\lib\operations\execute_operation.js:207:20)
+    at async executeOperation (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongodb\lib\operations\execute_operation.js:75:16)
+    at async Collection.insertOne (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongodb\lib\collection.js:157:16)
+2025-04-10 19:00:15 ERROR [inventory-api]: Duplicate Entry - POST /orders 
+2025-04-10 20:21:31 ERROR [inventory-api]: Error creating order: Cannot read properties of null (reading '_id') 
+TypeError: Cannot read properties of null (reading '_id')
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\utils\order.utils.js:30:29
+    at Array.map (<anonymous>)
+    at methods.<computed> (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\types\array\methods\index.js:1054:24)
+    at transformOrder (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\utils\order.utils.js:29:30)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\orders.controller.js:131:30
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-04-10 20:21:31 ERROR [inventory-api]: Cannot read properties of null (reading '_id') - POST /orders 
+2025-04-10 20:30:42 ERROR [inventory-api]: Error creating order: Cannot read properties of null (reading 'productId') 
+TypeError: Cannot read properties of null (reading 'productId')
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\utils\order.utils.js:30:29
+    at Array.map (<anonymous>)
+    at methods.<computed> (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\types\array\methods\index.js:1054:24)
+    at transformOrder (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\utils\order.utils.js:29:30)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\orders.controller.js:131:30
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-04-10 20:30:42 ERROR [inventory-api]: Cannot read properties of null (reading 'productId') - POST /orders 
+2025-04-10 20:35:14 ERROR [inventory-api]: Error creating order: Cannot read properties of null (reading '_id') 
+TypeError: Cannot read properties of null (reading '_id')
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\utils\order.utils.js:30:29
+    at Array.map (<anonymous>)
+    at methods.<computed> (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\types\array\methods\index.js:1054:24)
+    at transformOrder (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\utils\order.utils.js:29:30)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\orders.controller.js:131:30
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-04-10 20:35:14 ERROR [inventory-api]: Cannot read properties of null (reading '_id') - POST /orders 
+2025-04-10 20:35:18 ERROR [inventory-api]: Error creating order: Cannot read properties of null (reading '_id') 
+TypeError: Cannot read properties of null (reading '_id')
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\utils\order.utils.js:30:29
+    at Array.map (<anonymous>)
+    at methods.<computed> (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\types\array\methods\index.js:1054:24)
+    at transformOrder (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\utils\order.utils.js:29:30)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\orders.controller.js:131:30
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-04-10 20:35:18 ERROR [inventory-api]: Cannot read properties of null (reading '_id') - POST /orders 
+2025-04-10 20:37:07 ERROR [inventory-api]: Error creating order: Cannot read properties of null (reading 'productId') 
+TypeError: Cannot read properties of null (reading 'productId')
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\utils\order.utils.js:30:29
+    at Array.map (<anonymous>)
+    at methods.<computed> (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\types\array\methods\index.js:1054:24)
+    at transformOrder (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\utils\order.utils.js:29:30)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\orders.controller.js:131:30
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-04-10 20:37:07 ERROR [inventory-api]: Cannot read properties of null (reading 'productId') - POST /orders 
+2025-04-10 21:00:39 ERROR [inventory-api]: Error creating order: Order validation failed: customer.phone: Customer phone is required, customer.email: Customer email is required, customer.name: Customer name is required, customer.customerId: Customer ID is required, totalAmount: Total amount is required 
+ValidationError: Order validation failed: customer.phone: Customer phone is required, customer.email: Customer email is required, customer.name: Customer name is required, customer.customerId: Customer ID is required, totalAmount: Total amount is required
+    at Document.invalidate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3329:32)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3090:17
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+2025-04-10 21:00:40 ERROR [inventory-api]: Validation Error - POST /orders 
+2025-04-10 21:02:54 ERROR [inventory-api]: Error creating order: Customer not found 
+Error: Customer not found
+    at createOrderService (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\orders.service.js:104:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\orders.controller.js:130:23
+2025-04-10 21:02:54 ERROR [inventory-api]: Customer not found - POST /orders 

@@ -1,5 +1,4 @@
-const { check, param } = require("express-validator");
-const mongoose = require("mongoose");
+const { check, param, oneOf, body } = require("express-validator");
 
 const orderIDValidationRules = () => {
   return [
@@ -11,8 +10,8 @@ const orderIDValidationRules = () => {
 
 const order_IdValidationRules = () => {
   return [
-    check("_id")
-      .custom((value) => mongoose.Types.ObjectId.isValid(value))
+    check("order_Id")
+      .isMongoId()
       .withMessage("Invalid MongoDB ID format"),
   ];
 };
@@ -20,7 +19,7 @@ const order_IdValidationRules = () => {
 const customerIdValidationRules = () => {
   return [
     check("customerId")
-      .custom((value) => mongoose.Types.ObjectId.isValid(value))
+      .isMongoId()
       .withMessage("Invalid customer ID format"),
   ];
 };
@@ -38,19 +37,38 @@ const orderCreateValidationRules = () => {
     check("customer")
       .notEmpty()
       .withMessage("Customer ID is required")
-      .custom((value) => mongoose.Types.ObjectId.isValid(value))
+      .isMongoId()
       .withMessage("Invalid customer ID format"),
-    check("items")
-      .isArray({ min: 1 })
-      .withMessage("At least one item is required"),
-    check("items.*.product")
-      .notEmpty()
-      .withMessage("Product ID is required")
-      .custom((value) => mongoose.Types.ObjectId.isValid(value))
-      .withMessage("Invalid product ID format"),
-    check("items.*.quantity")
-      .isInt({ min: 1 })
-      .withMessage("Quantity must be at least 1"),
+    oneOf([
+      // Validate items array format
+      [
+        check("items")
+          .isArray({ min: 1 })
+          .withMessage("At least one item is required"),
+        check("items.*.product")
+          .notEmpty()
+          .withMessage("Product ID is required")
+          .isMongoId()
+          .withMessage("Invalid product ID format"),
+        check("items.*.quantity")
+          .isInt({ min: 1 })
+          .withMessage("Quantity must be at least 1"),
+      ],
+      // Validate products array format
+      [
+        check("products")
+          .isArray({ min: 1 })
+          .withMessage("At least one product is required"),
+        check("products.*.product")
+          .notEmpty()
+          .withMessage("Product ID is required")
+          .isMongoId()
+          .withMessage("Invalid product ID format"),
+        check("products.*.quantity")
+          .isInt({ min: 1 })
+          .withMessage("Quantity must be at least 1"),
+      ],
+    ], "Order must contain either 'items' or 'products' array with at least one item"),
     check("shippingAddress.street")
       .notEmpty()
       .withMessage("Shipping street is required"),
@@ -68,25 +86,48 @@ const orderCreateValidationRules = () => {
       .withMessage("Shipping country is required"),
     check("status")
       .optional()
-      .isIn(["pending", "processing", "shipped", "delivered", "cancelled"])
+      .isIn(["Pending", "Processing", "Shipped", "Delivered", "Cancelled"])
       .withMessage("Invalid order status"),
   ];
 };
 
 const orderUpdateValidationRules = () => {
   return [
-    check("items").optional().isArray().withMessage("Items must be an array"),
-    check("items.*.product")
-      .optional()
-      .custom((value) => mongoose.Types.ObjectId.isValid(value))
-      .withMessage("Invalid product ID format"),
-    check("items.*.quantity")
-      .optional()
-      .isInt({ min: 1 })
-      .withMessage("Quantity must be at least 1"),
+    oneOf([
+      // Optional items array
+      [
+        check("items").optional().isArray().withMessage("Items must be an array"),
+        check("items.*.product")
+          .optional()
+          .isMongoId()
+          .withMessage("Invalid product ID format"),
+        check("items.*.quantity")
+          .optional()
+          .isInt({ min: 1 })
+          .withMessage("Quantity must be at least 1"),
+      ],
+      // Optional products array
+      [
+        check("products").optional().isArray().withMessage("Products must be an array"),
+        check("products.*.product")
+          .optional()
+          .isMongoId()
+          .withMessage("Invalid product ID format"),
+        check("products.*.quantity")
+          .optional()
+          .isInt({ min: 1 })
+          .withMessage("Quantity must be at least 1"),
+      ],
+      // Neither is provided (other fields being updated)
+      [
+        body().custom((body) => {
+          return !body.items && !body.products;
+        }),
+      ],
+    ], "If updating items, use either 'items' or 'products' format"),
     check("status")
       .optional()
-      .isIn(["pending", "processing", "shipped", "delivered", "cancelled"])
+      .isIn(["Pending", "Processing", "Shipped", "Delivered", "Cancelled"])
       .withMessage("Invalid order status"),
   ];
 };

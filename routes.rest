@@ -162,10 +162,10 @@ Content-Type: application/json
 Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
 
 {
-  "customer": "65fb123abc456d789e012348",
+  "customer": "67f67b829d34cfbe039e94be",
   "items": [
     {
-      "product": "65fb123abc456d789e012345",
+      "product": "67f69050d6e4e916c2951868",
       "quantity": 2,
       "price": 1999.99
     }
@@ -177,7 +177,7 @@ Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
     "postalCode": "94107",
     "country": "USA"
   },
-  "status": "pending"
+  "status": "Pending"
 }
 
 ### Update Order (Requires Authentication)

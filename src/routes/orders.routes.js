@@ -42,7 +42,7 @@ router.get(
   getOrdersByStatus
 );
 router.get(
-  "/:_id",
+  "/:order_Id",
   isAuthenticated,
   validate(order_IdValidationRules()),
   getOrderById
@@ -54,14 +54,14 @@ router.post(
   createOrder
 );
 router.put(
-  "/:_id",
+  "/:order_Id",
   isAuthenticated,
   validate(order_IdValidationRules()),
   validate(orderUpdateValidationRules()),
   updateOrderById
 );
 router.delete(
-  "/:_id",
+  "/:order_Id",
   isAuthenticated,
   validate(order_IdValidationRules()),
   deleteOrderById
