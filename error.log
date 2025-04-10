@@ -221,3 +221,4 @@ ValidationError: Product validation failed: sku: Product SKU already exists
     at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schemaType.js:1407:9
     at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
 2025-04-09 18:20:54 ERROR [inventory-api]: Validation Error - POST /products 
+2025-04-10 14:24:06 ERROR [inventory-api]: Authentication required - GET /users/userID/SM-00001 

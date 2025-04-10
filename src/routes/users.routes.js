@@ -35,14 +35,14 @@ router.put(
 );
 
 router.get(
-  "/:userID",
+  "/userID/:userID",
   isAuthenticated,
   validate(userIDValidationRules()),
   getUserById
 );
 
 router.delete(
-  "/:_id",
+  "/:user_Id",
   isAuthenticated,
   validate(user_IdValidationRules()),
   deleteUserById
@@ -79,7 +79,7 @@ router.delete(
 );
 
 router.put(
-  "/:_id",
+  "/:useruser_Id",
   isAuthenticated,
   validate(userUpdateValidationRules()),
   updateUserById

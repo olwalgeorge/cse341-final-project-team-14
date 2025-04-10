@@ -3,10 +3,10 @@ POST http://localhost:3000/auth/register
 Content-Type: application/json
 
 {
-  "fullName": "Super Admin",
-  "username": "superadmin",
-  "password": "SuperAdmin1234!",
-  "email": "omondi@example.com"
+  "fullName": "Ben Omondi",
+  "username": "ben",
+  "password": "Ben1234!",
+  "email": "ben@example.com"
 }
 
 
@@ -44,7 +44,7 @@ GET http://localhost:3000/users
 Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
 
 ### Get User By ID (Requires Authentication)
-GET http://localhost:3000/users/SM-00001
+GET http://localhost:3000/users/userID/SM-00001
 Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
 
 ### Delete User By ID (Requires Authentication)

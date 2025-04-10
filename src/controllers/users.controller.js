@@ -21,9 +21,9 @@ const { transformUser, transformUserData } = require("../utils/user.utils.js");
  * @access  Private
  */
 const getUserProfile = asyncHandler(async (req, res, next) => {
-  logger.info(`getUserProfile called for user ID: ${req.user?._id}`);
+  logger.info(`getUserProfile called for user ID: ${req.user?.user_Id}`);
   try {
-    const user = await getUserByIdService(req.user._id);
+    const user = await getUserByIdService(req.user.user_Id);
     if (!user) {
       return next(DatabaseError.notFound("User"));
     }
@@ -36,7 +36,7 @@ const getUserProfile = asyncHandler(async (req, res, next) => {
     );
   } catch (error) {
     logger.error(
-      `Error retrieving user profile for ID: ${req.user?._id}`,
+      `Error retrieving user profile for ID: ${req.user?.user_Id}`,
       error
     );
     next(error);
@@ -49,13 +49,13 @@ const getUserProfile = asyncHandler(async (req, res, next) => {
  * @access  Private
  */
 const updateUserProfile = asyncHandler(async (req, res, next) => {
-  logger.info(`updateUserProfile called for user ID: ${req.user?._id}`);
+  logger.info(`updateUserProfile called for user ID: ${req.user?.user_Id}`);
   logger.debug("Request body:", req.body);
 
   try {
     const updates = transformUserData(req.body);
 
-    const transformedUser = await updateUser(req.user._id, updates, next);
+    const transformedUser = await updateUser(req.user.user_Id, updates, next);
     sendResponse(
       res,
       200,
@@ -63,16 +63,18 @@ const updateUserProfile = asyncHandler(async (req, res, next) => {
       transformedUser
     );
   } catch (error) {
-    logger.error(`Error updating user profile for ID: ${req.user?._id}`, error);
+    logger.error(`Error updating user profile for ID: ${req.user?.user_Id}`, error);
     next(error);
   }
 });
 
-// @desc    Logout user
-// @route   GET /users/logout
-// @access  Private
+/**
+ * @desc    Logout user
+ * @route   GET /users/logout
+ * @access  Private
+ */
 const logoutUser = asyncHandler(async (req, res, next) => {
-  logger.info(`logoutUser called for user ID: ${req.user?._id}`);
+  logger.info(`logoutUser called for user ID: ${req.user?.user_Id}`);
   logger.debug("Request body:", req.body);
   req.logout((err) => {
     if (err) {
@@ -89,7 +91,7 @@ const logoutUser = asyncHandler(async (req, res, next) => {
 
 /**
  * @desc    Get user by ID
- * @route   GET /users/:userID
+ * @route   GET /users/userID/:userID
  * @access  Private
  */
 const getUserById = asyncHandler(async (req, res, next) => {
@@ -108,27 +110,31 @@ const getUserById = asyncHandler(async (req, res, next) => {
   }
 });
 
-// @desc    Delete user by ID
-// @route   DELETE /users/:_id
-// @access  Private
+/**
+ * @desc    Delete user by ID
+ * @route   DELETE /users/:user_Id
+ * @access  Private
+ */
 const deleteUserById = asyncHandler(async (req, res, next) => {
-  logger.info(`deleteUserById called with ID: ${req.params._id}`);
+  logger.info(`deleteUserById called with ID: ${req.params.user_Id}`);
   try {
-    const user = await deleteUserByIdService(req.params._id);
+    const user = await deleteUserByIdService(req.params.user_Id);
     if (user) {
       sendResponse(res, 200, "User deleted successfully");
     } else {
       return next(DatabaseError.notFound("User"));
     }
   } catch (error) {
-    logger.error(`Error deleting user with ID: ${req.params._id}`, error);
+    logger.error(`Error deleting user with ID: ${req.params.user_Id}`, error);
     next(error);
   }
 });
 
-// @desc    Get all users
-// @route   GET /users
-// @access  Private
+/**
+ * @desc    Get all users
+ * @route   GET /users
+ * @access  Private
+ */
 const getAllUsers = asyncHandler(async (req, res, next) => {
   logger.info("getAllUsers called");
   try {
@@ -140,9 +146,11 @@ const getAllUsers = asyncHandler(async (req, res, next) => {
   }
 });
 
-// @desc    Get user by username
-// @route   GET /users/username/:username
-// @access  Private
+/**
+ * @desc    Get user by username
+ * @route   GET /users/username/:username
+ * @access  Private
+ */
 const getUserByUsername = asyncHandler(async (req, res, next) => {
   logger.info(`getUserByUsername called with username: ${req.params.username}`);
   try {
@@ -162,9 +170,11 @@ const getUserByUsername = asyncHandler(async (req, res, next) => {
   }
 });
 
-// @desc    Get user by email
-// @route   GET /users/email/:email
-// @access  Private
+/**
+ * @desc    Get user by email
+ * @route   GET /users/email/:email
+ * @access  Private
+ */
 const getUserByEmail = asyncHandler(async (req, res, next) => {
   logger.info(`getUserByEmail called with email: ${req.params.email}`);
   try {
@@ -184,9 +194,11 @@ const getUserByEmail = asyncHandler(async (req, res, next) => {
   }
 });
 
-// @desc    Get users by role
-// @route   GET /users/role/:role
-// @access  Private
+/**
+ * @desc    Get users by role
+ * @route   GET /users/role/:role
+ * @access  Private
+ */
 const getUsersByRole = asyncHandler(async (req, res, next) => {
   logger.info(`getUsersByRole called with role: ${req.params.role}`);
   try {
@@ -202,9 +214,11 @@ const getUsersByRole = asyncHandler(async (req, res, next) => {
   }
 });
 
-// @desc    Delete all users
-// @route   DELETE /users
-// @access  Private
+/**
+ * @desc    Delete all users
+ * @route   DELETE /users
+ * @access  Private
+ */
 const deleteAllUsers = asyncHandler(async (req, res, next) => {
   logger.warn("deleteAllUsers called - USE WITH CAUTION!");
   try {
@@ -234,18 +248,20 @@ const updateUser = async (userId, updates, next) => {
   }
 };
 
-// @desc    Update user by ID
-// @route   PUT /users/:_id
-// @access  Private
+/**
+ * @desc    Update user by ID
+ * @route   PUT /users/:user_Id
+ * @access  Private
+ */
 const updateUserById = asyncHandler(async (req, res, next) => {
-  logger.info(`updateUserById called with ID: ${req.params._id}`);
+  logger.info(`updateUserById called with ID: ${req.params.user_Id}`);
   try {
     const updates = transformUserData(req.body);
 
-    const transformedUser = await updateUser(req.params._id, updates, next);
+    const transformedUser = await updateUser(req.params.user_Id, updates, next);
     sendResponse(res, 200, "User updated successfully", transformedUser);
   } catch (error) {
-    logger.error(`Error updating user with ID: ${req.params._id}`, error);
+    logger.error(`Error updating user with ID: ${req.params.user_Id}`, error);
     next(error);
   }
 });
@@ -263,3 +279,4 @@ module.exports = {
   deleteAllUsers,
   updateUserById,
 };
+
