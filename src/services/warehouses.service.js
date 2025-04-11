@@ -1,6 +1,5 @@
 const Warehouse = require("../models/warehouse.model.js");
 const logger = require("../utils/logger.js");
-const APIFeatures = require("../utils/apiFeatures.js");
 
 /**
  * Get all warehouses with optional filtering and pagination
