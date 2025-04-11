@@ -6,7 +6,6 @@ const inventoryTransactionSchema = new Schema(
     transactionID: {
       type: String,
       required: [true, "Transaction ID is required"],
-      unique: true,
       trim: true,
       match: [/^IT-\d{5}$/, "Transaction ID must be in format IT-XXXXX"],
     },

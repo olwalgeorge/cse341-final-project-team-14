@@ -9,6 +9,7 @@ const customerRoutes = require("./customers.routes.js");
 const purchaseRoutes = require("./purchases.routes.js");
 const warehouseRoutes = require("./warehouses.routes.js");
 const inventoryRoutes = require("./inventory.routes.js");
+const inventoryTransactionRoutes = require("./inventoryTransactions.routes.js");
 
 const path = require("path");
 
@@ -27,5 +28,6 @@ router.use("/customers", customerRoutes);
 router.use("/purchases", purchaseRoutes);
 router.use("/warehouses", warehouseRoutes);
 router.use("/inventory", inventoryRoutes);
+router.use("/inventory-transactions", inventoryTransactionRoutes);
 
 module.exports = router;

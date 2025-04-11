@@ -608,3 +608,109 @@ Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
 DELETE http://localhost:3000/inventory
 Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
 
+### INVENTORY TRANSACTION ROUTES ###
+
+### Get All Inventory Transactions (Requires Authentication)
+GET http://localhost:3000/inventory-transactions
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+### Get Inventory Transactions with Filtering (Requires Authentication)
+GET http://localhost:3000/inventory-transactions?transactionType=Adjustment&product=67f8ec8aaf6bfc397a056b7f&fromDate=2023-01-01&toDate=2023-12-31&page=1&limit=10
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+### Get Inventory Transaction by MongoDB ID (Requires Authentication)
+GET http://localhost:3000/inventory-transactions/67f8f859e9967a65f1ad29e1
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+### Get Inventory Transaction by Transaction ID (Requires Authentication)
+GET http://localhost:3000/inventory-transactions/transactionID/IT-00001
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+### Get Inventory Transactions by Product (Requires Authentication)
+GET http://localhost:3000/inventory-transactions/product/67f8ec8aaf6bfc397a056b7f
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+### Get Inventory Transactions by Warehouse (Requires Authentication)
+GET http://localhost:3000/inventory-transactions/warehouse/67f8e3c85b1777f2f72ac8e9
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+### Create New Inventory Transaction - Adjustment (Requires Authentication)
+POST http://localhost:3000/inventory-transactions
+Content-Type: application/json
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+{
+  "inventory": "67f8f19c967f8b21cb2ae9c5",
+  "product": "67f8ec8aaf6bfc397a056b7f",
+  "warehouse": "67f8e3c85b1777f2f72ac8e9",
+  "transactionType": "Adjustment",
+  "quantityBefore": 10,
+  "quantityChange": 9,
+  "notes": "Adjustment due to physical count"
+}
+
+### Create New Inventory Transaction - Purchase (Requires Authentication)
+POST http://localhost:3000/inventory-transactions
+Content-Type: application/json
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+{
+  "inventory": "67f8cdc8f72a040e609a5ca8",
+  "product": "67f8ec8aaf6bfc397a056b7f",
+  "warehouse": "67f8e3c85b1777f2f72ac8e9",
+  "transactionType": "Purchase",
+  "quantityBefore": 15,
+  "quantityChange": 10,
+  "reference": {
+    "documentType": "Purchase",
+    "documentId": "67f66c737ed7ddb60e54af70",
+    "documentCode": "PU-00003"
+  },
+  "notes": "Stock received from supplier"
+}
+
+### Create New Inventory Transaction - Sale (Requires Authentication)
+POST http://localhost:3000/inventory-transactions
+Content-Type: application/json
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+{
+  "inventory": "67f8cdc8f72a040e609a5ca8",
+  "product": "67f8ec8aaf6bfc397a056b7f",
+  "warehouse": "67f8e3c85b1777f2f72ac8e9",
+  "transactionType": "Sale",
+  "quantityBefore": 25,
+  "quantityChange": -2,
+  "reference": {
+    "documentType": "Order",
+    "documentId": "67f67b829d34cfbe039e94bd",
+    "documentCode": "OR-00002"
+  },
+  "notes": "Order fulfillment"
+}
+
+### Create New Inventory Transaction - Transfer (Requires Authentication)
+POST http://localhost:3000/inventory-transactions
+Content-Type: application/json
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+{
+  "inventory": "67f8cdc8f72a040e609a5ca8",
+  "product": "67f8ec8aaf6bfc397a056b7f",
+  "warehouse": "67f8e3c85b1777f2f72ac8e9",
+  "transactionType": "Transfer Out",
+  "quantityBefore": 23,
+  "quantityChange": -5,
+  "fromWarehouse": "67f8e3c85b1777f2f72ac8e9",
+  "toWarehouse": "67f8e3c85b1777f2f72ac8ea",
+  "notes": "Stock transfer to North warehouse"
+}
+
+### Delete Inventory Transaction (Requires Authentication)
+DELETE http://localhost:3000/inventory-transactions/67f8cdc8f72a040e609a5ca8
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+### Delete All Inventory Transactions (Requires Authentication)
+DELETE http://localhost:3000/inventory-transactions
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+

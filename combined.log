@@ -5935,3 +5935,33 @@ TypeError: warehouses.map is not a function
 2025-04-11 13:42:45 INFO [inventory-api]: getInventoryByWarehouse called with warehouse ID: 67f8e3c85b1777f2f72ac8e9 
 2025-04-11 13:43:20 DEBUG [inventory-api]: Session: 
 2025-04-11 13:43:20 INFO [inventory-api]: getInventoryByProduct called with product ID: 67f8ec8aaf6bfc397a056b7f 
+2025-04-11 13:57:06 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-11 13:57:09 INFO [inventory-api]: MongoDB Connected... 
+2025-04-11 14:01:12 DEBUG [inventory-api]: Session: 
+2025-04-11 14:01:12 INFO [inventory-api]: getAllInventory called 
+2025-04-11 14:03:10 DEBUG [inventory-api]: Session: 
+2025-04-11 14:03:19 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-11 14:03:23 INFO [inventory-api]: MongoDB Connected... 
+2025-04-11 14:03:28 DEBUG [inventory-api]: Session: 
+2025-04-11 14:08:03 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-11 14:08:06 INFO [inventory-api]: MongoDB Connected... 
+2025-04-11 14:09:02 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-11 14:09:05 INFO [inventory-api]: MongoDB Connected... 
+2025-04-11 14:09:13 DEBUG [inventory-api]: Session: 
+2025-04-11 14:09:13 DEBUG [inventory-api]: Auth check: 
+2025-04-11 14:09:13 INFO [inventory-api]: User ben is authenticated 
+2025-04-11 14:09:13 INFO [inventory-api]: createInventoryTransaction called 
+2025-04-11 14:09:13 DEBUG [inventory-api]: Request body: 
+2025-04-11 14:09:13 DEBUG [inventory-api]: Generated transactionID: IT-00001 
+2025-04-11 14:11:01 DEBUG [inventory-api]: Session: 
+2025-04-11 14:11:01 DEBUG [inventory-api]: Auth check: 
+2025-04-11 14:11:01 INFO [inventory-api]: User ben is authenticated 
+2025-04-11 14:11:01 INFO [inventory-api]: getAllInventoryTransactions called 
+2025-04-11 14:11:56 DEBUG [inventory-api]: Session: 
+2025-04-11 14:11:56 DEBUG [inventory-api]: Auth check: 
+2025-04-11 14:11:56 INFO [inventory-api]: User ben is authenticated 
+2025-04-11 14:11:56 INFO [inventory-api]: getInventoryTransactionById called with ID: 67f8f859e9967a65f1ad29e1 
+2025-04-11 14:12:06 DEBUG [inventory-api]: Session: 
+2025-04-11 14:12:06 DEBUG [inventory-api]: Auth check: 
+2025-04-11 14:12:06 INFO [inventory-api]: User ben is authenticated 
+2025-04-11 14:12:06 WARN [inventory-api]: Validation failed 
