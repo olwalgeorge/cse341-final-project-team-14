@@ -13,7 +13,7 @@ const {
   getPurchasesBySupplierService,
   getPurchasesByStatusService,
 } = require("../services/purchases.service");
-const { transformPurchase } = require("../utils/purchase.utils");
+const { transformPurchase, generatePurchaseId } = require("../utils/purchase.utils");
 
 /**
  * @desc    Get all purchases
@@ -105,6 +105,24 @@ const createPurchase = asyncHandler(async (req, res, next) => {
   logger.info("createPurchase called");
   logger.debug("Request body:", req.body);
   try {
+    // Generate purchaseID if not provided
+    if (!req.body.purchaseID) {
+      const purchaseID = await generatePurchaseId();
+      logger.debug(`Generated purchaseID: ${purchaseID}`);
+      req.body.purchaseID = purchaseID;
+    }
+    
+    // For each product in items, verify it exists
+    if (req.body.items && Array.isArray(req.body.items)) {
+      const Product = require("../models/product.model");
+      for (const item of req.body.items) {
+        const product = await Product.findById(item.product);
+        if (!product) {
+          return next(DatabaseError.notFound(`Product with ID ${item.product}`));
+        }
+      }
+    }
+    
     const purchase = await createPurchaseService(req.body);
     const transformedPurchase = transformPurchase(purchase);
     sendResponse(
@@ -128,6 +146,17 @@ const updatePurchaseById = asyncHandler(async (req, res, next) => {
   logger.info(`updatePurchaseById called with ID: ${req.params._id}`);
   logger.debug("Update data:", req.body);
   try {
+    // Verify products exist if they're being updated
+    if (req.body.items && Array.isArray(req.body.items)) {
+      const Product = require("../models/product.model");
+      for (const item of req.body.items) {
+        const product = await Product.findById(item.product);
+        if (!product) {
+          return next(DatabaseError.notFound(`Product with ID ${item.product}`));
+        }
+      }
+    }
+    
     const purchase = await updatePurchaseService(req.params._id, req.body);
     if (purchase) {
       const transformedPurchase = transformPurchase(purchase);

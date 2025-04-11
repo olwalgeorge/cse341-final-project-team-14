@@ -45,13 +45,13 @@ const purchaseSchema = new Schema(
     },
     status: {
       type: String,
-      enum: ["pending", "ordered", "received", "cancelled", "returned"],
-      default: "pending",
+      enum: ["Pending", "Ordered", "Received", "Cancelled", "Returned"],
+      default: "Pending",
     },
     paymentStatus: {
       type: String,
-      enum: ["unpaid", "partially_paid", "paid"],
-      default: "unpaid",
+      enum: ["Unpaid", "Partially_paid", "Paid"],
+      default: "Unpaid",
     },
     paymentDue: {
       type: Date,

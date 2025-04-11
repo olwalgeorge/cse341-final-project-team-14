@@ -98,7 +98,7 @@ GET http://localhost:3000/products/productID/PR-00001
 GET http://localhost:3000/products/category/Electronics
 
 ### Get Products by Supplier
-GET http://localhost:3000/products/supplier/67f2e07fbf6d0457367
+GET http://localhost:3000/products/supplier/67f66c737ed7ddb60e54af6f
 
 ### Create New Product (Requires Authentication)
 POST http://localhost:3000/products
@@ -167,7 +167,12 @@ Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
     {
       "product": "67f69050d6e4e916c2951868",
       "quantity": 2,
-      "price": 1999.99
+      "price": 2000.00
+    },
+    {
+      "product": "67f81bee138b712a7b2c13d1",
+      "quantity": 1,
+      "price": 1700.00
     }
   ],
   "shippingAddress": {
@@ -330,7 +335,7 @@ GET http://localhost:3000/purchases
 Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
 
 ### Get Purchases with Filtering (Requires Authentication)
-GET http://localhost:3000/purchases?status=ordered&fromDate=2023-01-01&toDate=2023-12-31&page=1&limit=10
+GET http://localhost:3000/purchases?status=Ordered&paymentStatus=Unpaid&fromDate=2023-01-01&toDate=2023-12-31&page=1&limit=10
 Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
 
 ### Get Purchase by MongoDB ID (Requires Authentication)
@@ -345,8 +350,16 @@ Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
 GET http://localhost:3000/purchases/supplier/65fb123abc456d789e012346
 Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
 
-### Get Purchases by Status (Requires Authentication)
-GET http://localhost:3000/purchases/status/ordered
+### Get Purchases by Status - Pending (Requires Authentication)
+GET http://localhost:3000/purchases/status/Pending
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+### Get Purchases by Status - Ordered (Requires Authentication)
+GET http://localhost:3000/purchases/status/Ordered
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+### Get Purchases by Status - Received (Requires Authentication)
+GET http://localhost:3000/purchases/status/Received
 Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
 
 ### Create New Purchase (Requires Authentication)
@@ -365,20 +378,69 @@ Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
   ],
   "totalAmount": 9000.00,
   "purchaseDate": "2023-05-15T10:00:00Z",
-  "status": "ordered",
-  "paymentStatus": "unpaid",
+  "status": "Ordered",
+  "paymentStatus": "Unpaid",
   "paymentDue": "2023-06-15T10:00:00Z",
   "notes": "Bulk purchase of laptops for inventory"
 }
 
-### Update Purchase (Requires Authentication)
+### Create New Purchase with Multiple Items (Requires Authentication)
+POST http://localhost:3000/purchases
+Content-Type: application/json
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+{
+  "supplier": "67f66c737ed7ddb60e54af6f",
+  "items": [
+    {
+      "product": "67f69050d6e4e916c2951868",
+      "quantity": 5,
+      "price": 1800.00
+    },
+    {
+      "product": "67f81bee138b712a7b2c13d1",
+      "quantity": 3,
+      "price": 1200.00
+    }
+  ],
+  "status": "Pending",
+  "paymentStatus": "Unpaid",
+  "paymentDue": "2023-06-30T10:00:00Z"
+}
+
+### Update Purchase Status (Requires Authentication)
 PUT http://localhost:3000/purchases/65fb123abc456d789e012350
 Content-Type: application/json
 Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
 
 {
-  "status": "received",
-  "paymentStatus": "paid"
+  "status": "Received",
+  "paymentStatus": "Paid"
+}
+
+### Update Purchase Items (Requires Authentication)
+PUT http://localhost:3000/purchases/65fb123abc456d789e012350
+Content-Type: application/json
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+{
+  "items": [
+    {
+      "product": "65fb123abc456d789e012345",
+      "quantity": 8,
+      "price": 1750.00
+    }
+  ],
+  "totalAmount": 14000.00
+}
+
+### Update Purchase Notes (Requires Authentication)
+PUT http://localhost:3000/purchases/65fb123abc456d789e012350
+Content-Type: application/json
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+{
+  "notes": "Bulk order with priority shipping. Contact supplier for expedited processing."
 }
 
 ### Delete Purchase (Requires Authentication)

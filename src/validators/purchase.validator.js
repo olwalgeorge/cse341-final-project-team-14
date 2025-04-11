@@ -1,5 +1,4 @@
-const { check, param } = require("express-validator");
-const mongoose = require("mongoose");
+const { check, param, oneOf, body } = require("express-validator");
 
 const purchaseIDValidationRules = () => {
   return [
@@ -12,7 +11,7 @@ const purchaseIDValidationRules = () => {
 const purchase_IdValidationRules = () => {
   return [
     check("_id")
-      .custom((value) => mongoose.Types.ObjectId.isValid(value))
+      .isMongoId()
       .withMessage("Invalid MongoDB ID format"),
   ];
 };
@@ -20,7 +19,7 @@ const purchase_IdValidationRules = () => {
 const supplierIdValidationRules = () => {
   return [
     param("supplierId")
-      .custom((value) => mongoose.Types.ObjectId.isValid(value))
+      .isMongoId()
       .withMessage("Invalid supplier ID format"),
   ];
 };
@@ -28,7 +27,7 @@ const supplierIdValidationRules = () => {
 const purchaseStatusValidationRules = () => {
   return [
     param("status")
-      .isIn(["pending", "ordered", "received", "cancelled", "returned"])
+      .isIn(["Pending", "Ordered", "Received", "Cancelled", "Returned"])
       .withMessage("Invalid purchase status"),
   ];
 };
@@ -38,83 +37,138 @@ const purchaseCreateValidationRules = () => {
     check("supplier")
       .notEmpty()
       .withMessage("Supplier ID is required")
-      .custom((value) => mongoose.Types.ObjectId.isValid(value))
+      .isMongoId()
       .withMessage("Invalid supplier ID format"),
-    check("items")
-      .isArray({ min: 1 })
-      .withMessage("At least one item is required"),
-    check("items.*.product")
-      .notEmpty()
-      .withMessage("Product ID is required")
-      .custom((value) => mongoose.Types.ObjectId.isValid(value))
-      .withMessage("Invalid product ID format"),
-    check("items.*.quantity")
-      .isInt({ min: 1 })
-      .withMessage("Quantity must be at least 1"),
-    check("items.*.price")
-      .isFloat({ min: 0 })
-      .withMessage("Price must be a positive number"),
+    
+    oneOf([
+      // Validate items array format
+      [
+        check("items")
+          .isArray({ min: 1 })
+          .withMessage("At least one item is required"),
+        check("items.*.product")
+          .notEmpty()
+          .withMessage("Product ID is required")
+          .isMongoId()
+          .withMessage("Invalid product ID format"),
+        check("items.*.quantity")
+          .isInt({ min: 1 })
+          .withMessage("Quantity must be at least 1"),
+        check("items.*.price")
+          .isFloat({ min: 0 })
+          .withMessage("Price must be a positive number"),
+      ],
+    ], "Purchase must contain 'items' array with at least one item"),
+
     check("totalAmount")
+      .optional()
       .isFloat({ min: 0 })
       .withMessage("Total amount must be a positive number"),
+    
+    check("purchaseDate")
+      .optional()
+      .isISO8601()
+      .toDate()
+      .withMessage("Purchase date must be a valid date"),
+    
     check("status")
       .optional()
-      .isIn(["pending", "ordered", "received", "cancelled", "returned"])
+      .isIn(["Pending", "Ordered", "Received", "Cancelled", "Returned"])
       .withMessage("Invalid purchase status"),
+    
     check("paymentStatus")
       .optional()
-      .isIn(["unpaid", "partially_paid", "paid"])
+      .isIn(["Unpaid", "Partially_paid", "Paid"])
       .withMessage("Invalid payment status"),
+    
     check("paymentDue")
       .optional()
       .isISO8601()
-      .withMessage("Invalid date format for payment due date"),
+      .toDate()
+      .withMessage("Payment due date must be a valid date"),
+    
+    check("notes")
+      .optional()
+      .isString()
+      .withMessage("Notes must be a string")
+      .isLength({ max: 1000 })
+      .withMessage("Notes cannot exceed 1000 characters"),
   ];
 };
 
 const purchaseUpdateValidationRules = () => {
   return [
+    oneOf([
+      // Optional items array
+      [
+        check("items").optional().isArray().withMessage("Items must be an array"),
+        check("items.*.product")
+          .optional()
+          .isMongoId()
+          .withMessage("Invalid product ID format"),
+        check("items.*.quantity")
+          .optional()
+          .isInt({ min: 1 })
+          .withMessage("Quantity must be at least 1"),
+        check("items.*.price")
+          .optional()
+          .isFloat({ min: 0 })
+          .withMessage("Price must be a positive number"),
+      ],
+      // Neither is provided (other fields being updated)
+      [
+        body().custom((body) => {
+          return !body.items;
+        }),
+      ],
+    ], "If updating items, use valid format"),
+    
     check("supplier")
       .optional()
-      .custom((value) => mongoose.Types.ObjectId.isValid(value))
+      .isMongoId()
       .withMessage("Invalid supplier ID format"),
-    check("items").optional().isArray().withMessage("Items must be an array"),
-    check("items.*.product")
-      .optional()
-      .custom((value) => mongoose.Types.ObjectId.isValid(value))
-      .withMessage("Invalid product ID format"),
-    check("items.*.quantity")
-      .optional()
-      .isInt({ min: 1 })
-      .withMessage("Quantity must be at least 1"),
-    check("items.*.price")
-      .optional()
-      .isFloat({ min: 0 })
-      .withMessage("Price must be a positive number"),
+    
     check("totalAmount")
       .optional()
       .isFloat({ min: 0 })
       .withMessage("Total amount must be a positive number"),
+    
+    check("purchaseDate")
+      .optional()
+      .isISO8601()
+      .toDate()
+      .withMessage("Purchase date must be a valid date"),
+    
     check("status")
       .optional()
-      .isIn(["pending", "ordered", "received", "cancelled", "returned"])
+      .isIn(["Pending", "Ordered", "Received", "Cancelled", "Returned"])
       .withMessage("Invalid purchase status"),
+    
     check("paymentStatus")
       .optional()
-      .isIn(["unpaid", "partially_paid", "paid"])
+      .isIn(["Unpaid", "Partially_paid", "Paid"])
       .withMessage("Invalid payment status"),
+    
     check("paymentDue")
       .optional()
       .isISO8601()
-      .withMessage("Invalid date format for payment due date"),
+      .toDate()
+      .withMessage("Payment due date must be a valid date"),
+    
+    check("notes")
+      .optional()
+      .isString()
+      .withMessage("Notes must be a string")
+      .isLength({ max: 1000 })
+      .withMessage("Notes cannot exceed 1000 characters"),
   ];
 };
 
 module.exports = {
   purchaseIDValidationRules,
   purchase_IdValidationRules,
-  purchaseCreateValidationRules,
-  purchaseUpdateValidationRules,
   supplierIdValidationRules,
   purchaseStatusValidationRules,
+  purchaseCreateValidationRules,
+  purchaseUpdateValidationRules,
 };

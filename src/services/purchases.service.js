@@ -1,5 +1,6 @@
 const Purchase = require("../models/purchase.model.js");
 const { generatePurchaseId } = require("../utils/purchase.utils.js");
+const logger = require("../utils/logger.js");
 
 /**
  * Get all purchases with optional filtering and pagination
@@ -55,8 +56,8 @@ const getAllPurchasesService = async (query = {}) => {
     .sort(sort)
     .skip(skip)
     .limit(limit)
-    .populate("supplier", "name")
-    .populate("items.product", "name");
+    .populate("supplier", "name supplierID contact")
+    .populate("items.product", "name description price category sku productID");
 
   // Get total count for pagination
   const total = await Purchase.countDocuments(filter);
@@ -77,8 +78,8 @@ const getAllPurchasesService = async (query = {}) => {
  */
 const getPurchaseByPurchaseIDService = async (purchaseID) => {
   return await Purchase.findOne({ purchaseID: purchaseID })
-    .populate("supplier", "name")
-    .populate("items.product", "name");
+    .populate("supplier", "name supplierID contact")
+    .populate("items.product", "name description price category sku productID");
 };
 
 /**
@@ -86,8 +87,8 @@ const getPurchaseByPurchaseIDService = async (purchaseID) => {
  */
 const getPurchaseByIdService = async (id) => {
   return await Purchase.findById(id)
-    .populate("supplier", "name")
-    .populate("items.product", "name");
+    .populate("supplier", "name supplierID contact")
+    .populate("items.product", "name description price category sku productID");
 };
 
 /**
@@ -99,8 +100,30 @@ const createPurchaseService = async (purchaseData) => {
     purchaseData.purchaseID = await generatePurchaseId();
   }
 
+  // If supplier is provided as just an ID, fetch supplier details
+  if (purchaseData.supplier && typeof purchaseData.supplier === 'string') {
+    const Supplier = require('../models/supplier.model');
+    const supplierData = await Supplier.findById(purchaseData.supplier);
+    
+    if (!supplierData) {
+      throw new Error('Supplier not found');
+    }
+  }
+
+  // Calculate totalAmount if not provided
+  if (!purchaseData.totalAmount && purchaseData.items && Array.isArray(purchaseData.items)) {
+    purchaseData.totalAmount = purchaseData.items.reduce((total, item) => {
+      return total + (item.price * item.quantity);
+    }, 0);
+  }
+
   const purchase = new Purchase(purchaseData);
-  return await purchase.save();
+  const savedPurchase = await purchase.save();
+  
+  // Populate the product details before returning
+  return await Purchase.findById(savedPurchase._id)
+    .populate("supplier", "name supplierID contact")
+    .populate("items.product", "name description price category sku productID");
 };
 
 /**
@@ -112,8 +135,8 @@ const updatePurchaseService = async (id, updates) => {
     { ...updates, updatedAt: Date.now() },
     { new: true, runValidators: true }
   )
-    .populate("supplier", "name")
-    .populate("items.product", "name");
+    .populate("supplier", "name supplierID contact")
+    .populate("items.product", "name description price category sku productID");
 };
 
 /**
@@ -127,18 +150,24 @@ const deletePurchaseService = async (id) => {
  * Get purchases by supplier ID
  */
 const getPurchasesBySupplierService = async (supplierId) => {
+  logger.debug(
+    `getPurchasesBySupplierService called with supplier ID: ${supplierId}`
+  );
   return await Purchase.find({ supplier: supplierId })
-    .populate("supplier", "name")
-    .populate("items.product", "name");
+    .populate("supplier", "name supplierID contact")
+    .populate("items.product", "name description price category sku productID");
 };
 
 /**
  * Get purchases by status
  */
 const getPurchasesByStatusService = async (status) => {
+  logger.debug(
+    `getPurchasesByStatusService called with status: ${status}`
+  );
   return await Purchase.find({ status: status })
-    .populate("supplier", "name")
-    .populate("items.product", "name");
+    .populate("supplier", "name supplierID contact")
+    .populate("items.product", "name description price category sku productID");
 };
 
 /**
