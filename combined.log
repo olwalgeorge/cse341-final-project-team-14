@@ -5914,3 +5914,24 @@ TypeError: warehouses.map is not a function
 2025-04-11 13:38:23 DEBUG [inventory-api]: Auth check: 
 2025-04-11 13:38:23 INFO [inventory-api]: User ben is authenticated 
 2025-04-11 13:38:23 INFO [inventory-api]: getWarehouseByWarehouseID called with warehouse ID: WH-00001 
+2025-04-11 13:40:28 DEBUG [inventory-api]: Session: 
+2025-04-11 13:40:28 DEBUG [inventory-api]: Auth check: 
+2025-04-11 13:40:28 INFO [inventory-api]: User ben is authenticated 
+2025-04-11 13:40:28 INFO [inventory-api]: createInventory called 
+2025-04-11 13:40:28 DEBUG [inventory-api]: Request body: 
+2025-04-11 13:40:28 DEBUG [inventory-api]: Generated inventory ID: IN-00001 
+2025-04-11 13:40:28 DEBUG [inventory-api]: Generated inventoryID: IN-00001 
+2025-04-11 13:40:43 DEBUG [inventory-api]: Session: 
+2025-04-11 13:40:43 INFO [inventory-api]: getAllInventory called 
+2025-04-11 13:41:39 DEBUG [inventory-api]: Session: 
+2025-04-11 13:41:39 INFO [inventory-api]: getInventoryById called with ID: 67f8f19c967f8b21cb2ae9c5 
+2025-04-11 13:41:44 DEBUG [inventory-api]: Session: 
+2025-04-11 13:41:44 INFO [inventory-api]: getInventoryByInventoryID called with inventory ID: IN-00001 
+2025-04-11 13:42:16 DEBUG [inventory-api]: Session: 
+2025-04-11 13:42:16 INFO [inventory-api]: getInventoryByWarehouse called with warehouse ID: 67f8e3c85b1777f2f72ac8e9 
+2025-04-11 13:42:26 DEBUG [inventory-api]: Session: 
+2025-04-11 13:42:26 WARN [inventory-api]: Validation failed 
+2025-04-11 13:42:45 DEBUG [inventory-api]: Session: 
+2025-04-11 13:42:45 INFO [inventory-api]: getInventoryByWarehouse called with warehouse ID: 67f8e3c85b1777f2f72ac8e9 
+2025-04-11 13:43:20 DEBUG [inventory-api]: Session: 
+2025-04-11 13:43:20 INFO [inventory-api]: getInventoryByProduct called with product ID: 67f8ec8aaf6bfc397a056b7f 
