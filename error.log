@@ -382,3 +382,4 @@ ValidationError: Order validation failed: totalAmount: Cast to Number failed for
     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
     at async C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\orders.controller.js:139:19
 2025-04-11 12:19:02 ERROR [inventory-api]: Validation Error - POST /orders 
+2025-04-11 13:15:39 ERROR [inventory-api]: Products for supplier not found - GET /products/supplier/67f66c737ed7ddb60e54af6f 

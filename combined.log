@@ -5818,3 +5818,28 @@ ValidationError: Order validation failed: totalAmount: Cast to Number failed for
 2025-04-11 12:41:28 DEBUG [inventory-api]: Request body: 
 2025-04-11 12:41:28 DEBUG [inventory-api]: Generated warehouse ID: WH-00001 
 2025-04-11 12:41:28 DEBUG [inventory-api]: Warehouse data with generated ID: 
+2025-04-11 13:15:39 DEBUG [inventory-api]: Session: 
+2025-04-11 13:15:39 INFO [inventory-api]: getProductsBySupplier called with supplier ID: 67f66c737ed7ddb60e54af6f 
+2025-04-11 13:15:39 DEBUG [inventory-api]: getProductsBySupplierService called with supplier ID: 67f66c737ed7ddb60e54af6f 
+2025-04-11 13:15:39 ERROR [inventory-api]: Products for supplier not found - GET /products/supplier/67f66c737ed7ddb60e54af6f 
+2025-04-11 13:16:25 DEBUG [inventory-api]: Session: 
+2025-04-11 13:16:25 DEBUG [inventory-api]: Auth check: 
+2025-04-11 13:16:25 INFO [inventory-api]: User ben is authenticated 
+2025-04-11 13:16:25 INFO [inventory-api]: getSupplierBySupplierID called with supplier ID: SP-00001 
+2025-04-11 13:16:25 DEBUG [inventory-api]: getSupplierBySupplierIDService called with supplier ID: SP-00001 
+2025-04-11 13:17:09 DEBUG [inventory-api]: Session: 
+2025-04-11 13:17:09 DEBUG [inventory-api]: Auth check: 
+2025-04-11 13:17:09 INFO [inventory-api]: User ben is authenticated 
+2025-04-11 13:17:09 WARN [inventory-api]: Validation failed 
+2025-04-11 13:18:32 DEBUG [inventory-api]: Session: 
+2025-04-11 13:18:32 DEBUG [inventory-api]: Auth check: 
+2025-04-11 13:18:32 INFO [inventory-api]: User ben is authenticated 
+2025-04-11 13:18:32 WARN [inventory-api]: Validation failed 
+2025-04-11 13:18:43 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-11 13:18:46 INFO [inventory-api]: MongoDB Connected... 
+2025-04-11 13:18:48 DEBUG [inventory-api]: Session: 
+2025-04-11 13:18:48 DEBUG [inventory-api]: Auth check: 
+2025-04-11 13:18:48 INFO [inventory-api]: User ben is authenticated 
+2025-04-11 13:18:48 INFO [inventory-api]: createProduct called 
+2025-04-11 13:18:48 DEBUG [inventory-api]: Request body: 
+2025-04-11 13:18:50 DEBUG [inventory-api]: createProductService called with data: 

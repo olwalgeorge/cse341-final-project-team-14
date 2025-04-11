@@ -48,9 +48,6 @@ const productCreateValidationRules = () => {
     check("costPrice")
       .isFloat({ min: 0 })
       .withMessage("Cost price must be a positive number"),
-    check("quantity")
-      .isInt({ min: 0 })
-      .withMessage("Quantity must be a non-negative integer"),
     check("category")
       .isIn(["Electronics", "Clothing", "Food", "Furniture", "Other"])
       .withMessage("Invalid category"),
@@ -103,10 +100,6 @@ const productUpdateValidationRules = () => {
       .optional()
       .isFloat({ min: 0 })
       .withMessage("Cost price must be a positive number"),
-    check("quantity")
-      .optional()
-      .isInt({ min: 0 })
-      .withMessage("Quantity must be a non-negative integer"),
     check("category")
       .optional()
       .isIn(["Electronics", "Clothing", "Food", "Furniture", "Other"])

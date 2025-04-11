@@ -111,7 +111,7 @@ Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
   "sellingPrice": 1999.99,
   "costPrice": 1700.00,
   "category": "Electronics",
-  "supplier": "67f8cdaef72a040e609a5ca7",
+  "supplier": "67f66c737ed7ddb60e54af6f",
   "sku": "APPL123456",
   "tags": ["laptop", "apple", "macbook"],
   "unit": "pcs"
