@@ -34,12 +34,6 @@ const productSchema = new Schema({
     min: [0, "Cost price cannot be negative"],
     set: (v) => parseFloat(v.toFixed(2)), // Ensure 2 decimal places
   },
-  quantity: {
-    type: Number,
-    required: [true, "Quantity is required"],
-    min: [0, "Quantity cannot be negative"],
-    default: 0,
-  },
   category: {
     type: String,
     required: [true, "Category is required"],

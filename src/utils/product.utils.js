@@ -30,7 +30,6 @@ const transformProduct = (product) => {
     description: product.description,
     sellingPrice: product.sellingPrice,
     costPrice: product.costPrice,
-    quantity: product.quantity,
     category: product.category,
     supplier: product.supplier,
     sku: product.sku,
