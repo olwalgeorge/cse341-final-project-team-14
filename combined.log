@@ -5806,3 +5806,15 @@ ValidationError: Order validation failed: totalAmount: Cast to Number failed for
 2025-04-11 12:20:46 INFO [inventory-api]: createOrder called 
 2025-04-11 12:20:46 DEBUG [inventory-api]: Request body: 
 2025-04-11 12:20:46 DEBUG [inventory-api]: Generated orderID: OR-00005 
+2025-04-11 12:39:51 DEBUG [inventory-api]: Session: 
+2025-04-11 12:40:12 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-11 12:40:15 INFO [inventory-api]: MongoDB Connected... 
+2025-04-11 12:41:17 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-11 12:41:20 INFO [inventory-api]: MongoDB Connected... 
+2025-04-11 12:41:28 DEBUG [inventory-api]: Session: 
+2025-04-11 12:41:28 DEBUG [inventory-api]: Auth check: 
+2025-04-11 12:41:28 INFO [inventory-api]: User ben is authenticated 
+2025-04-11 12:41:28 INFO [inventory-api]: createWarehouse called 
+2025-04-11 12:41:28 DEBUG [inventory-api]: Request body: 
+2025-04-11 12:41:28 DEBUG [inventory-api]: Generated warehouse ID: WH-00001 
+2025-04-11 12:41:28 DEBUG [inventory-api]: Warehouse data with generated ID: 

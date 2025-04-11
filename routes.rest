@@ -471,3 +471,135 @@ Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
 DELETE http://localhost:3000/purchases
 Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
 
+### WAREHOUSE ROUTES ###
+
+### Get All Warehouses (Requires Authentication)
+GET http://localhost:3000/warehouses
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+### Get Warehouses with Filtering (Requires Authentication)
+GET http://localhost:3000/warehouses?name=Main&status=Active&page=1&limit=10
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+### Get Warehouse by MongoDB ID (Requires Authentication)
+GET http://localhost:3000/warehouses/67f67b829d34cfbe039e94bf
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+### Get Warehouse by Warehouse ID (Requires Authentication)
+GET http://localhost:3000/warehouses/warehouseID/WH-00001
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+### Get Warehouse by Name (Requires Authentication)
+GET http://localhost:3000/warehouses/name/Main%20Warehouse
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+### Create New Warehouse (Requires Authentication)
+POST http://localhost:3000/warehouses
+Content-Type: application/json
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+{
+  "name": "East Distribution Center",
+  "description": "Primary warehouse for eastern distribution",
+  "capacity": 50000,
+  "capacityUnit": "sqft",
+  "status": "Active",
+  "contact": {
+    "name": "John Manager",
+    "phone": "5551234567",
+    "email": "john.manager@example.com"
+  },
+  "address": {
+    "street": "123 Warehouse Blvd",
+    "city": "Atlanta",
+    "state": "GA",
+    "postalCode": "30301",
+    "country": "USA"
+  }
+}
+
+### Update Warehouse (Requires Authentication)
+PUT http://localhost:3000/warehouses/67f67b829d34cfbe039e94bf
+Content-Type: application/json
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+{
+  "status": "Maintenance",
+  "contact": {
+    "phone": "5559876543",
+    "email": "new.manager@example.com"
+  }
+}
+
+### Delete Warehouse (Requires Authentication)
+DELETE http://localhost:3000/warehouses/67f67b829d34cfbe039e94bf
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+### Delete All Warehouses (Requires Authentication)
+DELETE http://localhost:3000/warehouses
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+### INVENTORY ROUTES ###
+
+### Get All Inventory Items
+GET http://localhost:3000/inventory
+
+### Get Inventory with Filtering
+GET http://localhost:3000/inventory?warehouse=67f67b829d34cfbe039e94bf&stockStatus=Low%20Stock&page=1&limit=10
+
+### Get Inventory Item by MongoDB ID
+GET http://localhost:3000/inventory/67f8cdc8f72a040e609a5ca8
+
+### Get Inventory Item by Inventory ID
+GET http://localhost:3000/inventory/inventoryID/IN-00001
+
+### Get Inventory Items by Warehouse
+GET http://localhost:3000/inventory/warehouse/67f67b829d34cfbe039e94bf
+
+### Get Inventory Items by Product
+GET http://localhost:3000/inventory/product/67f8cdc8f72a040e609a5ca9
+
+### Get Inventory Items by Stock Status
+GET http://localhost:3000/inventory/status/Low%20Stock
+
+### Create New Inventory Item (Requires Authentication)
+POST http://localhost:3000/inventory
+Content-Type: application/json
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+{
+  "product": "67f8cdc8f72a040e609a5ca9",
+  "warehouse": "67f67b829d34cfbe039e94bf",
+  "quantity": 25,
+  "minStockLevel": 10,
+  "maxStockLevel": 100,
+  "location": {
+    "aisle": "A5",
+    "rack": "R3",
+    "bin": "B12"
+  },
+  "notes": "Main stock location for laptops"
+}
+
+### Update Inventory Item (Requires Authentication)
+PUT http://localhost:3000/inventory/67f8cdc8f72a040e609a5ca8
+Content-Type: application/json
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+{
+  "quantity": 45,
+  "location": {
+    "aisle": "A6",
+    "rack": "R2"
+  },
+  "lastStockCheck": "2023-07-15T10:00:00Z"
+}
+
+### Delete Inventory Item (Requires Authentication)
+DELETE http://localhost:3000/inventory/67f8cdc8f72a040e609a5ca8
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+### Delete All Inventory Items (Requires Authentication)
+DELETE http://localhost:3000/inventory
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
