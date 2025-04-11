@@ -42,9 +42,12 @@ const productCreateValidationRules = () => {
       .trim()
       .isLength({ max: 500 })
       .withMessage("Product description cannot exceed 500 characters"),
-    check("price")
+    check("sellingPrice")
       .isFloat({ min: 0 })
-      .withMessage("Price must be a positive number"),
+      .withMessage("Selling price must be a positive number"),
+    check("costPrice")
+      .isFloat({ min: 0 })
+      .withMessage("Cost price must be a positive number"),
     check("quantity")
       .isInt({ min: 0 })
       .withMessage("Quantity must be a non-negative integer"),
@@ -55,12 +58,31 @@ const productCreateValidationRules = () => {
     check("sku")
       .matches(/^[A-Z0-9]{6,12}$/)
       .withMessage("SKU must be 6-12 alphanumeric characters"),
+    check("tags")
+      .optional()
+      .isArray()
+      .withMessage("Tags must be an array"),
+    check("tags.*")
+      .optional()
+      .isString()
+      .withMessage("Each tag must be a string"),
+    check("images")
+      .optional()
+      .isArray()
+      .withMessage("Images must be an array"),
+    check("images.*")
+      .optional()
+      .isString()
+      .withMessage("Each image must be a valid string URL"),
+    check("unit")
+      .optional()
+      .isIn(["kg", "g", "l", "ml", "pcs"])
+      .withMessage("Invalid unit. Must be one of: kg, g, l, ml, pcs"),
   ];
 };
 
 const productUpdateValidationRules = () => {
   return [
-    
     check("name")
       .optional()
       .trim()
@@ -73,10 +95,14 @@ const productUpdateValidationRules = () => {
       .trim()
       .isLength({ max: 500 })
       .withMessage("Description cannot exceed 500 characters"),
-    check("price")
+    check("sellingPrice")
       .optional()
       .isFloat({ min: 0 })
-      .withMessage("Price must be a positive number"),
+      .withMessage("Selling price must be a positive number"),
+    check("costPrice")
+      .optional()
+      .isFloat({ min: 0 })
+      .withMessage("Cost price must be a positive number"),
     check("quantity")
       .optional()
       .isInt({ min: 0 })
@@ -90,6 +116,26 @@ const productUpdateValidationRules = () => {
       .optional()
       .matches(/^[A-Z0-9]{6,12}$/)
       .withMessage("SKU must be 6-12 alphanumeric characters"),
+    check("tags")
+      .optional()
+      .isArray()
+      .withMessage("Tags must be an array"),
+    check("tags.*")
+      .optional()
+      .isString()
+      .withMessage("Each tag must be a string"),
+    check("images")
+      .optional()
+      .isArray()
+      .withMessage("Images must be an array"),
+    check("images.*")
+      .optional()
+      .isString()
+      .withMessage("Each image must be a valid string URL"),
+    check("unit")
+      .optional()
+      .isIn(["kg", "g", "l", "ml", "pcs"])
+      .withMessage("Invalid unit. Must be one of: kg, g, l, ml, pcs"),
   ];
 };
 

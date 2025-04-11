@@ -106,13 +106,17 @@ Content-Type: application/json
 Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
 
 {
-  "name": "MacBook Pro M3",
-  "description": "Latest MacBook Pro with M3 chip",
-  "price": 1999.99,
-  "quantity": 10,
+  "name": "iPhone 13",
+  "description": "Latest iPhone 13 with Apple A15 Bionic chip",
+  "sellingPrice": 799.99,
+  "costPrice": 500.00,
+  "quantity": 20,
   "category": "Electronics",
   "supplier": "67f66c737ed7ddb60e54af6f",
-  "sku": "APPL123456"
+  "sku": "APPL789012",
+  "tags": ["Apple", "iPhone", "A15"],
+  "images": ["https://example.com/iphone-13.jpg", "https://example.com/iphone-13-side.jpg"],
+  "unit": "pcs"
 }
 
 ### Update Product (Requires Authentication)
@@ -122,8 +126,11 @@ Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
 
 {
   "name": "MacBook Pro M3 Pro",
-  "price": 2199.99,
-  "quantity": 8
+  "sellingPrice": 2199.99,
+  "costPrice": 1700.00,
+  "quantity": 8,
+  "tags": ["Apple", "Laptop", "M3", "Pro"],
+  "unit": "pcs"
 }
 
 ### Delete Product (Requires Authentication)

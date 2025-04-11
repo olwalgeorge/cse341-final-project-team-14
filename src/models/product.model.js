@@ -21,10 +21,17 @@ const productSchema = new Schema({
     trim: true,
     maxlength: [500, "Description cannot exceed 500 characters"],
   },
-  price: {
+  sellingPrice: {
     type: Number,
     required: [true, "Price is required"],
     min: [0, "Price cannot be negative"],
+    set: (v) => parseFloat(v.toFixed(2)), // Ensure 2 decimal places
+  },
+
+  costPrice: {
+    type: Number,
+    required: [true, "Cost price is required"],
+    min: [0, "Cost price cannot be negative"],
     set: (v) => parseFloat(v.toFixed(2)), // Ensure 2 decimal places
   },
   quantity: {
@@ -60,6 +67,26 @@ const productSchema = new Schema({
       validator: (v) => mongoose.model("Product").findOne({ sku: v }).then((product) => !product),
       message: "Product SKU already exists",
     },
+  },
+  tags: {
+    type: [String],
+    trim: true,
+  },
+  images: {
+    type: [String],
+    validate: {
+      validator: (v) => Array.isArray(v) && v.every((url) => typeof url === "string"),
+      message: "Images must be an array of strings",
+    },
+    default: ["https://prd.place/400"], // Default image URL
+  },
+  unit: {
+    type: String,
+    enum: {
+      values: ["kg", "g", "l", "ml", "pcs"],
+      message: "Invalid unit",
+    },
+    default: "pcs",
   },
   createdAt: {
     type: Date,
