@@ -5843,3 +5843,74 @@ ValidationError: Order validation failed: totalAmount: Cast to Number failed for
 2025-04-11 13:18:48 INFO [inventory-api]: createProduct called 
 2025-04-11 13:18:48 DEBUG [inventory-api]: Request body: 
 2025-04-11 13:18:50 DEBUG [inventory-api]: createProductService called with data: 
+2025-04-11 13:25:34 DEBUG [inventory-api]: Session: 
+2025-04-11 13:25:34 DEBUG [inventory-api]: Auth check: 
+2025-04-11 13:25:34 INFO [inventory-api]: User ben is authenticated 
+2025-04-11 13:25:34 INFO [inventory-api]: createProduct called 
+2025-04-11 13:25:34 DEBUG [inventory-api]: Request body: 
+2025-04-11 13:25:34 DEBUG [inventory-api]: createProductService called with data: 
+2025-04-11 13:26:13 DEBUG [inventory-api]: Session: 
+2025-04-11 13:26:13 INFO [inventory-api]: getAllProducts called 
+2025-04-11 13:26:13 DEBUG [inventory-api]: getAllProductsService called 
+2025-04-11 13:28:31 DEBUG [inventory-api]: Session: 
+2025-04-11 13:28:31 DEBUG [inventory-api]: Auth check: 
+2025-04-11 13:28:31 INFO [inventory-api]: User ben is authenticated 
+2025-04-11 13:28:31 INFO [inventory-api]: getAllWarehouses called 
+2025-04-11 13:28:32 ERROR [inventory-api]: Error retrieving all warehouses: warehouses.map is not a function 
+TypeError: warehouses.map is not a function
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\warehouses.controller.js:26:46
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-04-11 13:28:32 ERROR [inventory-api]: warehouses.map is not a function - GET /warehouses 
+2025-04-11 13:28:40 DEBUG [inventory-api]: Session: 
+2025-04-11 13:28:40 DEBUG [inventory-api]: Auth check: 
+2025-04-11 13:28:40 INFO [inventory-api]: User ben is authenticated 
+2025-04-11 13:28:40 INFO [inventory-api]: getAllWarehouses called 
+2025-04-11 13:28:41 ERROR [inventory-api]: Error retrieving all warehouses: warehouses.map is not a function 
+TypeError: warehouses.map is not a function
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\warehouses.controller.js:26:46
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-04-11 13:28:41 ERROR [inventory-api]: warehouses.map is not a function - GET /warehouses 
+2025-04-11 13:30:16 DEBUG [inventory-api]: Session: 
+2025-04-11 13:30:16 DEBUG [inventory-api]: Auth check: 
+2025-04-11 13:30:16 INFO [inventory-api]: User ben is authenticated 
+2025-04-11 13:30:16 INFO [inventory-api]: getAllWarehouses called 
+2025-04-11 13:30:17 ERROR [inventory-api]: Error retrieving all warehouses: warehouses.map is not a function 
+TypeError: warehouses.map is not a function
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\warehouses.controller.js:26:46
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-04-11 13:30:17 ERROR [inventory-api]: warehouses.map is not a function - GET /warehouses 
+2025-04-11 13:30:28 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-11 13:30:31 INFO [inventory-api]: MongoDB Connected... 
+2025-04-11 13:30:31 DEBUG [inventory-api]: Session: 
+2025-04-11 13:30:31 DEBUG [inventory-api]: Auth check: 
+2025-04-11 13:30:31 INFO [inventory-api]: User ben is authenticated 
+2025-04-11 13:30:31 INFO [inventory-api]: getAllWarehouses called 
+2025-04-11 13:31:09 DEBUG [inventory-api]: Session: 
+2025-04-11 13:31:09 DEBUG [inventory-api]: Auth check: 
+2025-04-11 13:31:09 INFO [inventory-api]: User ben is authenticated 
+2025-04-11 13:31:09 INFO [inventory-api]: getWarehouseById called with ID: 67f8e3c85b1777f2f72ac8e9 
+2025-04-11 13:31:15 DEBUG [inventory-api]: Session: 
+2025-04-11 13:31:15 DEBUG [inventory-api]: Auth check: 
+2025-04-11 13:31:15 INFO [inventory-api]: User ben is authenticated 
+2025-04-11 13:31:15 INFO [inventory-api]: getWarehouseByWarehouseID called with warehouse ID: WH-00001 
+2025-04-11 13:32:14 DEBUG [inventory-api]: Session: 
+2025-04-11 13:32:14 DEBUG [inventory-api]: Auth check: 
+2025-04-11 13:32:14 INFO [inventory-api]: User ben is authenticated 
+2025-04-11 13:32:14 INFO [inventory-api]: getWarehouseByName called with name: East Distribution Center Warehouse 
+2025-04-11 13:32:15 ERROR [inventory-api]: Warehouse not found - GET /warehouses/name/East%20Distribution%20Center%20Warehouse 
+2025-04-11 13:32:48 DEBUG [inventory-api]: Session: 
+2025-04-11 13:32:48 DEBUG [inventory-api]: Auth check: 
+2025-04-11 13:32:48 INFO [inventory-api]: User ben is authenticated 
+2025-04-11 13:32:48 INFO [inventory-api]: getWarehouseByWarehouseID called with warehouse ID: WH-00001 
+2025-04-11 13:35:02 DEBUG [inventory-api]: Session: 
+2025-04-11 13:35:02 DEBUG [inventory-api]: Auth check: 
+2025-04-11 13:35:02 INFO [inventory-api]: User ben is authenticated 
+2025-04-11 13:35:02 INFO [inventory-api]: getWarehouseByName called with name: East Distribution Center 
+2025-04-11 13:36:49 DEBUG [inventory-api]: Session: 
+2025-04-11 13:36:49 DEBUG [inventory-api]: Auth check: 
+2025-04-11 13:36:49 INFO [inventory-api]: User ben is authenticated 
+2025-04-11 13:36:49 INFO [inventory-api]: getAllWarehouses called 
+2025-04-11 13:38:23 DEBUG [inventory-api]: Session: 
+2025-04-11 13:38:23 DEBUG [inventory-api]: Auth check: 
+2025-04-11 13:38:23 INFO [inventory-api]: User ben is authenticated 
+2025-04-11 13:38:23 INFO [inventory-api]: getWarehouseByWarehouseID called with warehouse ID: WH-00001 

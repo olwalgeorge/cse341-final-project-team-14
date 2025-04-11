@@ -22,13 +22,16 @@ const { transformWarehouse, generateWarehouseId } = require("../utils/warehouse.
 const getAllWarehouses = asyncHandler(async (req, res, next) => {
   logger.info("getAllWarehouses called");
   try {
-    const warehouses = await getAllWarehousesService();
-    const transformedWarehouses = warehouses.map(transformWarehouse);
+    const result = await getAllWarehousesService(req.query);
+    const transformedWarehouses = result.warehouses.map(transformWarehouse);
     sendResponse(
       res,
       200,
       "Warehouses retrieved successfully",
-      transformedWarehouses
+      {
+        warehouses: transformedWarehouses,
+        pagination: result.pagination
+      }
     );
   } catch (error) {
     logger.error("Error retrieving all warehouses:", error);

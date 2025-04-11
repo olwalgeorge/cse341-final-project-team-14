@@ -106,14 +106,14 @@ Content-Type: application/json
 Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
 
 {
-  "name": "MacBook Pro M3",
-  "description": "Latest MacBook Pro with M3 chip",
-  "sellingPrice": 1999.99,
-  "costPrice": 1700.00,
+  "name": "MacBook Air M3",
+  "description": "Latest MacBook Air with M3 chip",
+  "sellingPrice": 1699.99,
+  "costPrice": 1400.00,
   "category": "Electronics",
   "supplier": "67f66c737ed7ddb60e54af6f",
-  "sku": "APPL123456",
-  "tags": ["laptop", "apple", "macbook"],
+  "sku": "APPL789012",
+  "tags": ["laptop", "apple", "macbook air"],
   "unit": "pcs"
 }
 
@@ -474,12 +474,20 @@ Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
 GET http://localhost:3000/warehouses
 Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
 
-### Get Warehouses with Filtering (Requires Authentication)
+### Get Warehouses with Basic Filtering (Requires Authentication)
 GET http://localhost:3000/warehouses?name=Main&status=Active&page=1&limit=10
 Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
 
+### Get Warehouses with Address Filtering (Requires Authentication)
+GET http://localhost:3000/warehouses?city=Atlanta&state=GA&country=USA&page=1&limit=10
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
+### Get Warehouses with Advanced Filtering and Sorting (Requires Authentication)
+GET http://localhost:3000/warehouses?name=Distribution&status=Active&city=Atlanta&sort=capacity,-createdAt&page=1&limit=10
+Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+
 ### Get Warehouse by MongoDB ID (Requires Authentication)
-GET http://localhost:3000/warehouses/67f67b829d34cfbe039e94bf
+GET http://localhost:3000/warehouses/67f8e3c85b1777f2f72ac8e9
 Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
 
 ### Get Warehouse by Warehouse ID (Requires Authentication)
@@ -487,7 +495,7 @@ GET http://localhost:3000/warehouses/warehouseID/WH-00001
 Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
 
 ### Get Warehouse by Name (Requires Authentication)
-GET http://localhost:3000/warehouses/name/Main%20Warehouse
+GET http://localhost:3000/warehouses/name/East%20Distribution%20Center
 Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
 
 ### Create New Warehouse (Requires Authentication)
@@ -565,7 +573,7 @@ Content-Type: application/json
 Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
 
 {
-  "product": "67f8cdc8f72a040e609a5ca9",
+  "product": "67f8ec8aaf6bfc397a056b7f",
   "warehouse": "67f67b829d34cfbe039e94bf",
   "quantity": 25,
   "minStockLevel": 10,
