@@ -368,3 +368,4 @@ Error: Customer not found
 2025-04-10 21:02:54 ERROR [inventory-api]: Customer not found - POST /orders 
 2025-04-11 10:11:31 ERROR [inventory-api]: Product with ID 65fb123abc456d789e012345 not found - POST /purchases 
 2025-04-11 10:13:24 ERROR [inventory-api]: Product with ID 65fb123abc456d789e012345 not found - POST /purchases 
+2025-04-11 11:41:37 ERROR [inventory-api]: Expected double-quoted property name in JSON at position 147 (line 8 column 5) - POST /purchases 

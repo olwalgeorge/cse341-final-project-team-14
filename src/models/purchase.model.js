@@ -29,7 +29,7 @@ const purchaseSchema = new Schema(
         },
         price: {
           type: Number,
-          required: [true, "Unit price is required"],
+          required: false, // Changed from required to false
           min: [0, "Price cannot be negative"],
         },
       },
@@ -73,6 +73,43 @@ const purchaseSchema = new Schema(
     timestamps: true,
   }
 );
+
+// Pre-save hook to ensure item prices match product costPrice
+purchaseSchema.pre("save", async function(next) {
+  // Update the updatedAt field
+  this.updatedAt = Date.now();
+  
+  // If items array is modified, ensure prices are set correctly
+  if (this.isModified('items')) {
+    const Product = mongoose.model('Product');
+    
+    // Process each item to set price if not explicitly provided
+    for (let i = 0; i < this.items.length; i++) {
+      const item = this.items[i];
+      
+      // If price is not set or is 0, get it from the product's costPrice
+      if (!item.price || item.price === 0) {
+        try {
+          const product = await Product.findById(item.product);
+          if (product) {
+            this.items[i].price = product.costPrice;
+          } else {
+            return next(new Error(`Product with ID ${item.product} not found`));
+          }
+        } catch (error) {
+          return next(error);
+        }
+      }
+    }
+    
+    // Recalculate total amount based on updated prices
+    this.totalAmount = this.items.reduce((total, item) => {
+      return total + (item.price * item.quantity);
+    }, 0);
+  }
+  
+  next();
+});
 
 // Add a text index for searching
 purchaseSchema.index({ purchaseID: "text", notes: "text" });

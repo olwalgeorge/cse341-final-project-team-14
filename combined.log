@@ -5690,3 +5690,65 @@ Error: Customer not found
 2025-04-11 11:08:45 INFO [inventory-api]: createProduct called 
 2025-04-11 11:08:45 DEBUG [inventory-api]: Request body: 
 2025-04-11 11:08:45 DEBUG [inventory-api]: createProductService called with data: 
+2025-04-11 11:19:44 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-11 11:19:47 INFO [inventory-api]: MongoDB Connected... 
+2025-04-11 11:21:18 DEBUG [inventory-api]: Session: 
+2025-04-11 11:21:18 INFO [inventory-api]: getProductsBySupplier called with supplier ID: 67f66c737ed7ddb60e54af6f 
+2025-04-11 11:21:18 DEBUG [inventory-api]: getProductsBySupplierService called with supplier ID: 67f66c737ed7ddb60e54af6f 
+2025-04-11 11:32:56 DEBUG [inventory-api]: Session: 
+2025-04-11 11:32:56 DEBUG [inventory-api]: Auth check: 
+2025-04-11 11:32:56 INFO [inventory-api]: User ben is authenticated 
+2025-04-11 11:32:56 WARN [inventory-api]: Validation failed 
+2025-04-11 11:34:56 DEBUG [inventory-api]: Session: 
+2025-04-11 11:34:56 DEBUG [inventory-api]: Auth check: 
+2025-04-11 11:34:56 INFO [inventory-api]: User ben is authenticated 
+2025-04-11 11:34:56 INFO [inventory-api]: createPurchase called 
+2025-04-11 11:34:56 DEBUG [inventory-api]: Request body: 
+2025-04-11 11:34:56 DEBUG [inventory-api]: Generated purchaseID: PU-00001 
+2025-04-11 11:37:36 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-11 11:37:39 INFO [inventory-api]: MongoDB Connected... 
+2025-04-11 11:37:41 DEBUG [inventory-api]: Session: 
+2025-04-11 11:37:41 DEBUG [inventory-api]: Auth check: 
+2025-04-11 11:37:41 INFO [inventory-api]: User ben is authenticated 
+2025-04-11 11:37:41 INFO [inventory-api]: createPurchase called 
+2025-04-11 11:37:41 DEBUG [inventory-api]: Request body: 
+2025-04-11 11:37:41 DEBUG [inventory-api]: Generated purchaseID: PU-00002 
+2025-04-11 11:41:37 ERROR [inventory-api]: Expected double-quoted property name in JSON at position 147 (line 8 column 5) - POST /purchases 
+2025-04-11 11:41:48 DEBUG [inventory-api]: Session: 
+2025-04-11 11:41:48 DEBUG [inventory-api]: Auth check: 
+2025-04-11 11:41:48 INFO [inventory-api]: User ben is authenticated 
+2025-04-11 11:41:48 WARN [inventory-api]: Validation failed 
+2025-04-11 11:45:15 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-11 11:45:18 INFO [inventory-api]: MongoDB Connected... 
+2025-04-11 11:45:20 DEBUG [inventory-api]: Session: 
+2025-04-11 11:45:20 DEBUG [inventory-api]: Auth check: 
+2025-04-11 11:45:20 INFO [inventory-api]: User ben is authenticated 
+2025-04-11 11:45:20 WARN [inventory-api]: Validation failed 
+2025-04-11 11:47:09 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-11 11:47:12 INFO [inventory-api]: MongoDB Connected... 
+2025-04-11 11:47:18 DEBUG [inventory-api]: Session: 
+2025-04-11 11:47:18 DEBUG [inventory-api]: Auth check: 
+2025-04-11 11:47:18 INFO [inventory-api]: User ben is authenticated 
+2025-04-11 11:47:18 WARN [inventory-api]: Validation failed 
+2025-04-11 11:50:32 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-11 11:50:35 INFO [inventory-api]: MongoDB Connected... 
+2025-04-11 11:51:24 DEBUG [inventory-api]: Session: 
+2025-04-11 11:51:24 DEBUG [inventory-api]: Auth check: 
+2025-04-11 11:51:24 INFO [inventory-api]: User ben is authenticated 
+2025-04-11 11:51:24 INFO [inventory-api]: createPurchase called 
+2025-04-11 11:51:24 DEBUG [inventory-api]: Request body: 
+2025-04-11 11:51:24 DEBUG [inventory-api]: Generated purchaseID: PU-00003 
+2025-04-11 11:53:20 DEBUG [inventory-api]: Session: 
+2025-04-11 11:53:20 DEBUG [inventory-api]: Auth check: 
+2025-04-11 11:53:20 INFO [inventory-api]: User ben is authenticated 
+2025-04-11 11:53:20 INFO [inventory-api]: createPurchase called 
+2025-04-11 11:53:20 DEBUG [inventory-api]: Request body: 
+2025-04-11 11:53:20 DEBUG [inventory-api]: Generated purchaseID: PU-00004 
+2025-04-11 12:00:40 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-11 12:00:43 INFO [inventory-api]: MongoDB Connected... 
+2025-04-11 12:00:49 DEBUG [inventory-api]: Session: 
+2025-04-11 12:00:49 DEBUG [inventory-api]: Auth check: 
+2025-04-11 12:00:49 INFO [inventory-api]: User ben is authenticated 
+2025-04-11 12:00:49 INFO [inventory-api]: createPurchase called 
+2025-04-11 12:00:49 DEBUG [inventory-api]: Request body: 
+2025-04-11 12:00:49 DEBUG [inventory-api]: Generated purchaseID: PU-00005 

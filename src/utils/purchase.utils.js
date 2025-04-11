@@ -62,7 +62,7 @@ const transformPurchase = (purchase) => {
             productID: item.product.productID || '',
             name: item.product.name || '',
             description: item.product.description || '',
-            price: item.product.price || 0,
+            costPrice: item.product.costPrice || 0,
             category: item.product.category || '',
             sku: item.product.sku || ''
           };

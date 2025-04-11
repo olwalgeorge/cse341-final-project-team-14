@@ -1,4 +1,5 @@
 const Purchase = require("../models/purchase.model.js");
+const Product = require("../models/product.model.js");
 const { generatePurchaseId } = require("../utils/purchase.utils.js");
 const logger = require("../utils/logger.js");
 
@@ -57,7 +58,7 @@ const getAllPurchasesService = async (query = {}) => {
     .skip(skip)
     .limit(limit)
     .populate("supplier", "name supplierID contact")
-    .populate("items.product", "name description price category sku productID");
+    .populate("items.product", "name description costPrice category sku productID");
 
   // Get total count for pagination
   const total = await Purchase.countDocuments(filter);
@@ -79,7 +80,7 @@ const getAllPurchasesService = async (query = {}) => {
 const getPurchaseByPurchaseIDService = async (purchaseID) => {
   return await Purchase.findOne({ purchaseID: purchaseID })
     .populate("supplier", "name supplierID contact")
-    .populate("items.product", "name description price category sku productID");
+    .populate("items.product", "name description costPrice category sku productID");
 };
 
 /**
@@ -88,7 +89,7 @@ const getPurchaseByPurchaseIDService = async (purchaseID) => {
 const getPurchaseByIdService = async (id) => {
   return await Purchase.findById(id)
     .populate("supplier", "name supplierID contact")
-    .populate("items.product", "name description price category sku productID");
+    .populate("items.product", "name description costPrice category sku productID");
 };
 
 /**
@@ -110,6 +111,27 @@ const createPurchaseService = async (purchaseData) => {
     }
   }
 
+  // Set prices from product costPrice if not provided
+  if (purchaseData.items && Array.isArray(purchaseData.items)) {
+    for (let i = 0; i < purchaseData.items.length; i++) {
+      const item = purchaseData.items[i];
+      
+      // If price is not specified, fetch it from product costPrice
+      if (!item.price || item.price === 0) {
+        try {
+          const product = await Product.findById(item.product);
+          if (product) {
+            purchaseData.items[i].price = product.costPrice;
+          } else {
+            throw new Error(`Product with ID ${item.product} not found`);
+          }
+        } catch (error) {
+          throw new Error(`Error setting product price: ${error.message}`);
+        }
+      }
+    }
+  }
+
   // Calculate totalAmount if not provided
   if (!purchaseData.totalAmount && purchaseData.items && Array.isArray(purchaseData.items)) {
     purchaseData.totalAmount = purchaseData.items.reduce((total, item) => {
@@ -123,7 +145,7 @@ const createPurchaseService = async (purchaseData) => {
   // Populate the product details before returning
   return await Purchase.findById(savedPurchase._id)
     .populate("supplier", "name supplierID contact")
-    .populate("items.product", "name description price category sku productID");
+    .populate("items.product", "name description costPrice category sku productID");
 };
 
 /**
@@ -136,7 +158,7 @@ const updatePurchaseService = async (id, updates) => {
     { new: true, runValidators: true }
   )
     .populate("supplier", "name supplierID contact")
-    .populate("items.product", "name description price category sku productID");
+    .populate("items.product", "name description costPrice category sku productID");
 };
 
 /**
@@ -155,7 +177,7 @@ const getPurchasesBySupplierService = async (supplierId) => {
   );
   return await Purchase.find({ supplier: supplierId })
     .populate("supplier", "name supplierID contact")
-    .populate("items.product", "name description price category sku productID");
+    .populate("items.product", "name description costPrice category sku productID");
 };
 
 /**
@@ -167,7 +189,7 @@ const getPurchasesByStatusService = async (status) => {
   );
   return await Purchase.find({ status: status })
     .populate("supplier", "name supplierID contact")
-    .populate("items.product", "name description price category sku productID");
+    .populate("items.product", "name description costPrice category sku productID");
 };
 
 /**
