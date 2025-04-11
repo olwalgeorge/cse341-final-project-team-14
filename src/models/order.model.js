@@ -24,7 +24,7 @@ const orderSchema = new Schema({
       },
       priceAtOrder: {
         type: Number,
-        required: [true, "Price at order time is required"],
+        required: false, // Changed from required to false
         min: [0, "Price cannot be negative"],
       },
     },
@@ -96,10 +96,33 @@ const orderSchema = new Schema({
 });
 
 // Calculate total amount before saving
-orderSchema.pre("save", function (next) {
+orderSchema.pre("save", async function (next) {
+  // Update the updatedAt field
   this.updatedAt = Date.now();
-
-  if (this.isModified("products")) {
+  
+  // Process each product to set price if not explicitly provided
+  if (this.products && Array.isArray(this.products)) {
+    const Product = mongoose.model('Product');
+    
+    for (let i = 0; i < this.products.length; i++) {
+      const item = this.products[i];
+      
+      // If priceAtOrder is not set, get it from the product's sellingPrice
+      if (!item.priceAtOrder || item.priceAtOrder === 0) {
+        try {
+          const product = await Product.findById(item.product);
+          if (product) {
+            this.products[i].priceAtOrder = product.sellingPrice;
+          } else {
+            return next(new Error(`Product with ID ${item.product} not found`));
+          }
+        } catch (error) {
+          return next(error);
+        }
+      }
+    }
+    
+    // Calculate totalAmount based on updated prices
     this.totalAmount = this.products.reduce((total, item) => {
       return total + item.priceAtOrder * item.quantity;
     }, 0);

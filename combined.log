@@ -5752,3 +5752,57 @@ Error: Customer not found
 2025-04-11 12:00:49 INFO [inventory-api]: createPurchase called 
 2025-04-11 12:00:49 DEBUG [inventory-api]: Request body: 
 2025-04-11 12:00:49 DEBUG [inventory-api]: Generated purchaseID: PU-00005 
+2025-04-11 12:14:15 DEBUG [inventory-api]: Session: 
+2025-04-11 12:14:15 DEBUG [inventory-api]: Auth check: 
+2025-04-11 12:14:15 INFO [inventory-api]: User ben is authenticated 
+2025-04-11 12:14:15 INFO [inventory-api]: createOrder called 
+2025-04-11 12:14:15 DEBUG [inventory-api]: Request body: 
+2025-04-11 12:14:15 DEBUG [inventory-api]: Generated orderID: OR-00003 
+2025-04-11 12:14:15 ERROR [inventory-api]: Product with ID 67f69050d6e4e916c2951868 not found - POST /orders 
+2025-04-11 12:15:10 DEBUG [inventory-api]: Session: 
+2025-04-11 12:15:10 INFO [inventory-api]: getProductsBySupplier called with supplier ID: 67f66c737ed7ddb60e54af6f 
+2025-04-11 12:15:10 DEBUG [inventory-api]: getProductsBySupplierService called with supplier ID: 67f66c737ed7ddb60e54af6f 
+2025-04-11 12:18:10 DEBUG [inventory-api]: Session: 
+2025-04-11 12:18:10 DEBUG [inventory-api]: Auth check: 
+2025-04-11 12:18:10 INFO [inventory-api]: User ben is authenticated 
+2025-04-11 12:18:10 INFO [inventory-api]: createPurchase called 
+2025-04-11 12:18:10 DEBUG [inventory-api]: Request body: 
+2025-04-11 12:18:10 DEBUG [inventory-api]: Generated purchaseID: PU-00006 
+2025-04-11 12:19:01 DEBUG [inventory-api]: Session: 
+2025-04-11 12:19:01 DEBUG [inventory-api]: Auth check: 
+2025-04-11 12:19:01 INFO [inventory-api]: User ben is authenticated 
+2025-04-11 12:19:01 INFO [inventory-api]: createOrder called 
+2025-04-11 12:19:01 DEBUG [inventory-api]: Request body: 
+2025-04-11 12:19:01 DEBUG [inventory-api]: Generated orderID: OR-00003 
+2025-04-11 12:19:02 ERROR [inventory-api]: Error creating order: Order validation failed: totalAmount: Cast to Number failed for value "NaN" (type number) at path "totalAmount", products.0.priceAtOrder: Price at order time is required, products.1.priceAtOrder: Price at order time is required 
+ValidationError: Order validation failed: totalAmount: Cast to Number failed for value "NaN" (type number) at path "totalAmount", products.0.priceAtOrder: Price at order time is required, products.1.priceAtOrder: Price at order time is required
+    at Document.invalidate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3329:32)
+    at model.$set (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:1480:12)
+    at model.$set (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:1132:16)
+    at model.Document (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:178:12)
+    at model.Model (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:128:12)
+    at new model (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4800:15)
+    at createOrderService (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\orders.service.js:135:17)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\orders.controller.js:139:19
+2025-04-11 12:19:02 ERROR [inventory-api]: Validation Error - POST /orders 
+2025-04-11 12:19:38 DEBUG [inventory-api]: Session: 
+2025-04-11 12:19:38 DEBUG [inventory-api]: Auth check: 
+2025-04-11 12:19:38 INFO [inventory-api]: User ben is authenticated 
+2025-04-11 12:19:38 INFO [inventory-api]: createOrder called 
+2025-04-11 12:19:38 DEBUG [inventory-api]: Request body: 
+2025-04-11 12:19:38 DEBUG [inventory-api]: Generated orderID: OR-00003 
+2025-04-11 12:20:19 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-11 12:20:22 INFO [inventory-api]: MongoDB Connected... 
+2025-04-11 12:20:34 DEBUG [inventory-api]: Session: 
+2025-04-11 12:20:34 DEBUG [inventory-api]: Auth check: 
+2025-04-11 12:20:34 INFO [inventory-api]: User ben is authenticated 
+2025-04-11 12:20:34 INFO [inventory-api]: createOrder called 
+2025-04-11 12:20:34 DEBUG [inventory-api]: Request body: 
+2025-04-11 12:20:34 DEBUG [inventory-api]: Generated orderID: OR-00004 
+2025-04-11 12:20:46 DEBUG [inventory-api]: Session: 
+2025-04-11 12:20:46 DEBUG [inventory-api]: Auth check: 
+2025-04-11 12:20:46 INFO [inventory-api]: User ben is authenticated 
+2025-04-11 12:20:46 INFO [inventory-api]: createOrder called 
+2025-04-11 12:20:46 DEBUG [inventory-api]: Request body: 
+2025-04-11 12:20:46 DEBUG [inventory-api]: Generated orderID: OR-00005 

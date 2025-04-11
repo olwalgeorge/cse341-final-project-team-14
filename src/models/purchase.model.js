@@ -29,7 +29,7 @@ const purchaseSchema = new Schema(
         },
         price: {
           type: Number,
-          required: false, // Changed from required to false
+          required: false,
           min: [0, "Price cannot be negative"],
         },
       },

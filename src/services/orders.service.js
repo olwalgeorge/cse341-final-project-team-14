@@ -1,4 +1,5 @@
 const Order = require("../models/order.model.js");
+const Product = require("../models/product.model.js"); // Added Product import
 const { generateOrderId } = require("../utils/order.utils.js");
 const logger = require("../utils/logger.js");
 
@@ -52,7 +53,7 @@ const getAllOrdersService = async (query = {}) => {
     .skip(skip)
     .limit(limit)
     .populate("customer.customerId", "name email phone customerID")
-    .populate("products.product", "name description price category sku productID");
+    .populate("products.product", "name description sellingPrice category sku productID");
 
   // Get total count for pagination
   const total = await Order.countDocuments(filter);
@@ -74,7 +75,7 @@ const getAllOrdersService = async (query = {}) => {
 const getOrderByOrderIDService = async (orderID) => {
   return await Order.findOne({ orderID: orderID })
     .populate("customer.customerId", "name email phone customerID")
-    .populate("products.product", "name description price category sku productID");
+    .populate("products.product", "name description sellingPrice category sku productID");
 };
 
 /**
@@ -83,7 +84,7 @@ const getOrderByOrderIDService = async (orderID) => {
 const getOrderByIdService = async (id) => {
   return await Order.findById(id)
     .populate("customer.customerId", "name email phone customerID")
-    .populate("products.product", "name description price category sku productID");
+    .populate("products.product", "name description sellingPrice category sku productID");
 };
 
 /**
@@ -113,23 +114,48 @@ const createOrderService = async (orderData) => {
     };
   }
 
-  // Calculate totalAmount if not provided
-  if (!orderData.totalAmount && orderData.items && Array.isArray(orderData.items)) {
-    orderData.totalAmount = orderData.items.reduce((total, item) => {
-      return total + (item.price * item.quantity);
-    }, 0);
-  }
-
   // Convert items format to products format if needed
   if (orderData.items && !orderData.products) {
-    orderData.products = orderData.items.map(item => ({
-      product: item.product,
-      quantity: item.quantity,
-      priceAtOrder: item.price
-    }));
+    // Set prices from product sellingPrice if not provided
+    const productsArray = [];
+    
+    for (let i = 0; i < orderData.items.length; i++) {
+      const item = orderData.items[i];
+      const orderItem = {
+        product: item.product,
+        quantity: item.quantity
+      };
+      
+      // If price is not specified, fetch it from product sellingPrice
+      if (!item.price || item.price === 0) {
+        try {
+          const product = await Product.findById(item.product);
+          if (product) {
+            orderItem.priceAtOrder = product.sellingPrice;
+          } else {
+            throw new Error(`Product with ID ${item.product} not found`);
+          }
+        } catch (error) {
+          throw new Error(`Error setting product price: ${error.message}`);
+        }
+      } else {
+        orderItem.priceAtOrder = item.price;
+      }
+      
+      productsArray.push(orderItem);
+    }
+    
+    orderData.products = productsArray;
     
     // Remove items as it's not in the model
     delete orderData.items;
+  }
+
+  // Calculate totalAmount if not provided
+  if (!orderData.totalAmount && orderData.products && Array.isArray(orderData.products)) {
+    orderData.totalAmount = orderData.products.reduce((total, item) => {
+      return total + (item.priceAtOrder * item.quantity);
+    }, 0);
   }
 
   const order = new Order(orderData);
@@ -137,7 +163,8 @@ const createOrderService = async (orderData) => {
   
   // Populate the product details before returning
   return await Order.findById(savedOrder._id)
-    .populate("products.product", "name description price category sku productID");
+    .populate("customer.customerId", "name email phone customerID")
+    .populate("products.product", "name description sellingPrice category sku productID");
 };
 
 /**
@@ -150,7 +177,7 @@ const updateOrderService = async (id, updates) => {
     { new: true, runValidators: true }
   )
     .populate("customer.customerId", "name email phone customerID")
-    .populate("products.product", "name description price category sku productID");
+    .populate("products.product", "name description sellingPrice category sku productID");
 };
 
 /**
@@ -166,7 +193,7 @@ const deleteOrderService = async (id) => {
 const getOrdersByCustomerService = async (customerId) => {
   return await Order.find({ "customer.customerId": customerId })
     .populate("customer.customerId", "name email phone customerID")
-    .populate("products.product", "name description price category sku productID");
+    .populate("products.product", "name description sellingPrice category sku productID");
 };
 
 /**
@@ -177,7 +204,7 @@ const getOrdersByCustomerIdService = async (customerId) => {
     `getOrdersByCustomerIdService called with customer ID: ${customerId}`
   );
   return await Order.find({ "customer.customerId": customerId })
-    .populate("products.product", "name description price category sku productID");
+    .populate("products.product", "name description sellingPrice category sku productID");
 };
 
 /**
@@ -186,7 +213,7 @@ const getOrdersByCustomerIdService = async (customerId) => {
 const getOrdersByStatusService = async (status) => {
   return await Order.find({ status: status })
     .populate("customer.customerId", "name email phone customerID")
-    .populate("products.product", "name description price category sku productID");
+    .populate("products.product", "name description sellingPrice category sku productID");
 };
 
 /**

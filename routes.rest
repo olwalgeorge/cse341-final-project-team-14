@@ -172,12 +172,12 @@ Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
   "customer": "67f67b829d34cfbe039e94be",
   "items": [
     {
-      "product": "67f69050d6e4e916c2951868",
+      "product": "67f8cdc8f72a040e609a5ca9",
       "quantity": 2,
       "price": 2000.00
     },
     {
-      "product": "67f81bee138b712a7b2c13d1",
+      "product": "67f8ce0df72a040e609a5caf",
       "quantity": 1,
       "price": 1700.00
     }
@@ -192,20 +192,31 @@ Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
   "status": "Pending"
 }
 
-### Update Order (Requires Authentication)
-PUT http://localhost:3000/orders/65fb123abc456d789e012347
+### Create New Order Using Product sellingPrice (Requires Authentication)
+POST http://localhost:3000/orders
 Content-Type: application/json
 Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
 
 {
-  "status": "shipped",
+  "customer": "67f67b829d34cfbe039e94be",
   "items": [
     {
-      "product": "65fb123abc456d789e012345",
-      "quantity": 3,
-      "price": 1999.99
+      "product": "67f8cdc8f72a040e609a5ca9",
+      "quantity": 2
+    },
+    {
+      "product": "67f8ce0df72a040e609a5caf",
+      "quantity": 1
     }
-  ]
+  ],
+  "shippingAddress": {
+    "street": "123 Main St",
+    "city": "San Francisco",
+    "state": "CA",
+    "postalCode": "94107",
+    "country": "USA"
+  },
+  "status": "Pending"
 }
 
 ### Delete Order (Requires Authentication)
@@ -375,15 +386,19 @@ Content-Type: application/json
 Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
 
 {
-  "supplier": "65fb123abc456d789e012346",
+  "supplier": "67f66c737ed7ddb60e54af6f",
   "items": [
     {
-      "product": "65fb123abc456d789e012345",
+      "product": "67f8cdc8f72a040e609a5ca9",
       "quantity": 5,
       "price": 1800.00
+    },
+    {
+      "product": "67f8ce0df72a040e609a5caf",
+      "quantity": 3,
+      "price": 550.00
     }
   ],
-  "totalAmount": 9000.00,
   "purchaseDate": "2023-05-15T10:00:00Z",
   "status": "Ordered",
   "paymentStatus": "Unpaid",
@@ -401,13 +416,11 @@ Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
   "items": [
     {
       "product": "67f8cdc8f72a040e609a5ca9",
-      "quantity": 5,
-      "price": 1450.00
+      "quantity": 5
     },
     {
       "product": "67f8ce0df72a040e609a5caf",
-      "quantity": 3,
-      "price": 550.00
+      "quantity": 3
     }
   ],
   "status": "Pending",

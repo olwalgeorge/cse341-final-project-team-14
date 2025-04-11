@@ -53,6 +53,10 @@ const orderCreateValidationRules = () => {
         check("items.*.quantity")
           .isInt({ min: 1 })
           .withMessage("Quantity must be at least 1"),
+        check("items.*.price")
+          .optional()
+          .isFloat({ min: 0 })
+          .withMessage("Price must be a non-negative number"),
       ],
       // Validate products array format
       [
@@ -67,6 +71,10 @@ const orderCreateValidationRules = () => {
         check("products.*.quantity")
           .isInt({ min: 1 })
           .withMessage("Quantity must be at least 1"),
+        check("products.*.priceAtOrder")
+          .optional()
+          .isFloat({ min: 0 })
+          .withMessage("Price must be a non-negative number"),
       ],
     ], "Order must contain either 'items' or 'products' array with at least one item"),
     check("shippingAddress.street")
@@ -88,6 +96,10 @@ const orderCreateValidationRules = () => {
       .optional()
       .isIn(["Pending", "Processing", "Shipped", "Delivered", "Cancelled"])
       .withMessage("Invalid order status"),
+    check("totalAmount")
+      .optional()
+      .isFloat({ min: 0 })
+      .withMessage("Total amount must be a non-negative number"),
   ];
 };
 
@@ -105,6 +117,10 @@ const orderUpdateValidationRules = () => {
           .optional()
           .isInt({ min: 1 })
           .withMessage("Quantity must be at least 1"),
+        check("items.*.price")
+          .optional()
+          .isFloat({ min: 0 })
+          .withMessage("Price must be a non-negative number"),
       ],
       // Optional products array
       [
@@ -117,6 +133,10 @@ const orderUpdateValidationRules = () => {
           .optional()
           .isInt({ min: 1 })
           .withMessage("Quantity must be at least 1"),
+        check("products.*.priceAtOrder")
+          .optional()
+          .isFloat({ min: 0 })
+          .withMessage("Price must be a non-negative number"),
       ],
       // Neither is provided (other fields being updated)
       [
