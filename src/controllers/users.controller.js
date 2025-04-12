@@ -158,9 +158,17 @@ const deleteUserById = asyncHandler(async (req, res, next) => {
  */
 const getAllUsers = asyncHandler(async (req, res, next) => {
   logger.info("getAllUsers called");
+  logger.debug("Query parameters:", req.query);
   try {
-    const users = await getAllUsersService();
-    sendResponse(res, 200, "Users retrieved successfully", users);
+    const result = await getAllUsersService(req.query);
+    
+    // Transform users for API response
+    const transformedUsers = result.users.map(transformUser);
+    
+    sendResponse(res, 200, "Users retrieved successfully", {
+      users: transformedUsers,
+      pagination: result.pagination
+    });
   } catch (error) {
     logger.error("Error retrieving all users:", error);
     next(error);
@@ -223,12 +231,27 @@ const getUserByEmail = asyncHandler(async (req, res, next) => {
 const getUsersByRole = asyncHandler(async (req, res, next) => {
   logger.info(`getUsersByRole called with role: ${req.params.role}`);
   try {
-    const users = await getUsersByRoleService(req.params.role);
-    if (users && users.length > 0) {
-      sendResponse(res, 200, "Users retrieved successfully", users);
-    } else {
-      return next(DatabaseError.notFound("Users"));
+    const result = await getUsersByRoleService(req.params.role, req.query);
+    
+    if (!result || !result.users) {
+      logger.error("Role search returned invalid result structure");
+      return next(DatabaseError.dataError("Result is not in expected format"));
     }
+    
+    if (result.users.length === 0) {
+      return sendResponse(res, 200, `No users found with role: ${req.params.role}`, {
+        users: [],
+        pagination: result.pagination
+      });
+    }
+    
+    // Transform users for API response
+    const transformedUsers = result.users.map(transformUser);
+    
+    sendResponse(res, 200, "Users retrieved successfully", {
+      users: transformedUsers,
+      pagination: result.pagination
+    });
   } catch (error) {
     logger.error(`Error retrieving users with role: ${req.params.role}`, error);
     next(error);
@@ -291,26 +314,32 @@ const searchUsers = asyncHandler(async (req, res, next) => {
   logger.info(`searchUsers called with term: ${term}`);
   
   try {
-    const users = await searchUsersService(term);
+    const result = await searchUsersService(term, req.query);
     
-    if (!users || !Array.isArray(users)) {
+    if (!result || !result.users) {
       logger.error("Search returned invalid result");
       return next(DatabaseError.dataError("Search result is not in expected format"));
     }
     
-    if (users.length === 0) {
+    if (result.users.length === 0) {
       logger.info(`No users found for search term: ${term}`);
-      return sendResponse(res, 200, "No users found matching your search", []);
+      return sendResponse(res, 200, "No users found matching your search", {
+        users: [],
+        pagination: result.pagination
+      });
     }
     
     // Transform each user to protect sensitive data
-    const transformedUsers = users.map(transformUser);
+    const transformedUsers = result.users.map(transformUser);
     
     sendResponse(
       res,
       200,
       `Found ${transformedUsers.length} users matching "${term}"`,
-      transformedUsers
+      {
+        users: transformedUsers,
+        pagination: result.pagination
+      }
     );
   } catch (error) {
     logger.error(`Error searching users for term: ${term}`, error);

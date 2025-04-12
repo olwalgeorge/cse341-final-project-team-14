@@ -1,0 +1,125 @@
+@baseUrl = http://localhost:3000
+@token = your_auth_token_here
+
+### Register User
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "fullName": "Super Admin",
+  "username": "superadmin",
+  "password": "SuperAdmin1234!",
+  "email": "superadmin@example.com"
+}
+
+### Login User
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "password": "SuperAdmin1234!",
+  "email": "superadmin@example.com"
+}
+
+### Get all users
+GET {{baseUrl}}/users
+# No need for Authorization Bearer token with cookie-based auth
+
+### Get all users with pagination
+GET {{baseUrl}}/users?page=1&limit=10
+# No need for Authorization Bearer token with cookie-based auth
+
+### Get all users with sorting (ascending by username)
+GET {{baseUrl}}/users?sort=userID
+# No need for Authorization Bearer token with cookie-based auth
+
+### Get all users with sorting (descending by createdAt)
+GET {{baseUrl}}/users?sort=-createdAt
+# No need for Authorization Bearer token with cookie-based auth
+
+### Get all users with multiple sorting criteria
+GET {{baseUrl}}/users?sort=-role,username
+# No need for Authorization Bearer token with cookie-based auth
+
+### Filter users by username (partial match)
+GET {{baseUrl}}/users?username=admin
+# No need for Authorization Bearer token with cookie-based auth
+
+### Filter users by email domain
+GET {{baseUrl}}/users?email=example.com
+# No need for Authorization Bearer token with cookie-based auth
+
+### Filter users by role
+GET {{baseUrl}}/users?role=ADMIN
+# No need for Authorization Bearer token with cookie-based auth
+
+### Filter users by verification status
+GET {{baseUrl}}/users?isVerified=true
+# No need for Authorization Bearer token with cookie-based auth
+
+### Combined filtering, sorting and pagination
+GET {{baseUrl}}/users?role=ADMIN&sort=-createdAt&page=1&limit=5
+# No need for Authorization Bearer token with cookie-based auth
+
+### Search Users
+GET {{baseUrl}}/users/search?term=admin
+# No need for Authorization Bearer token with cookie-based auth
+
+### Search Users with Pagination
+GET {{baseUrl}}/users/search?term=admin&page=1&limit=5
+# No need for Authorization Bearer token with cookie-based auth
+
+### Search Users with Sorting
+GET {{baseUrl}}/users/search?term=admin&sort=username
+# No need for Authorization Bearer token with cookie-based auth
+
+### Get User Profile
+GET {{baseUrl}}/users/profile
+# No need for Authorization Bearer token with cookie-based auth
+
+### Update User Profile
+PUT {{baseUrl}}/users/profile 
+Content-Type: application/json
+# No need for Authorization Bearer token with cookie-based auth
+
+{
+  "fullName": "Updated Admin Name"
+}
+
+### Get User By ID (userID format)
+GET {{baseUrl}}/users/userID/SM-00001
+# No need for Authorization Bearer token with cookie-based auth
+
+### Get User By Username
+GET {{baseUrl}}/users/username/superadmin
+# No need for Authorization Bearer token with cookie-based auth
+
+### Get User By Email
+GET {{baseUrl}}/users/email/superadmin@example.com
+# No need for Authorization Bearer token with cookie-based auth
+
+### Get Users By Role
+GET {{baseUrl}}/users/role/ADMIN
+# No need for Authorization Bearer token with cookie-based auth
+
+### Update User By ID (Using MongoDB ObjectId)
+PUT {{baseUrl}}/users/67fa30bd8a88a8c6fa0014d1
+Content-Type: application/json
+# No need for Authorization Bearer token with cookie-based auth
+
+{
+  "fullName": "Updated Admin Name",
+  "role": "SUPERADMIN"
+}
+
+### Delete User By ID
+DELETE {{baseUrl}}/users/67fa30bd8a88a8c6fa0014d1
+# No need for Authorization Bearer token with cookie-based auth
+
+### Delete All Users (Requires SUPERADMIN)
+DELETE {{baseUrl}}/users
+# No need for Authorization Bearer token with cookie-based auth
+
+### Logout User
+POST {{baseUrl}}/auth/logout
+# No need for Authorization Bearer token with cookie-based auth

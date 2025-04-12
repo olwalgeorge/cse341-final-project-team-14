@@ -511,3 +511,4 @@ TypeError: products.map is not a function
 2025-04-12 12:50:15 ERROR [inventory-api]: products.map is not a function - GET /products/search?term=Laptop 
 2025-04-12 14:58:16 ERROR [inventory-api]: Products for supplier not found - GET /products/supplier/67f66c737ed7ddb60e54af6f 
 2025-04-12 14:58:59 ERROR [inventory-api]: Products for supplier not found - GET /products/supplier/67f66c737ed7ddb60e54af6f 
+2025-04-12 15:09:21 ERROR [inventory-api]: Expected double-quoted property name in JSON at position 39 (line 5 column 1) - PUT /products/67f8ee1eaf6bfc397a056b86 
