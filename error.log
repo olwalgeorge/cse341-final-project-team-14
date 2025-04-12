@@ -519,3 +519,7 @@ Error: Customer not found
     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
     at async C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\orders.controller.js:158:19
 2025-04-12 15:42:13 ERROR [inventory-api]: Customer not found - POST /orders 
+2025-04-12 19:44:20 ERROR [inventory-api]: Expected double-quoted property name in JSON at position 388 (line 15 column 1) - POST /inventory-transfers 
+2025-04-12 19:45:33 ERROR [inventory-api]: Expected double-quoted property name in JSON at position 386 (line 15 column 1) - POST /inventory-transfers 
+2025-04-12 19:47:35 ERROR [inventory-api]: Expected double-quoted property name in JSON at position 383 (line 14 column 1) - POST /inventory-transfers 
+2025-04-12 19:47:38 ERROR [inventory-api]: Expected double-quoted property name in JSON at position 383 (line 14 column 1) - POST /inventory-transfers 

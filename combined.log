@@ -7361,3 +7361,65 @@ Error: Customer not found
 2025-04-12 19:24:02 DEBUG [inventory-api]: Generated warehouse ID: WH-00003 
 2025-04-12 19:24:02 DEBUG [inventory-api]: Warehouse data with generated ID: 
 2025-04-12 19:24:02 DEBUG [inventory-api]: createWarehouseService called with data: 
+2025-04-12 19:33:25 DEBUG [inventory-api]: Deserialized user: superadmin (67fa5b9be15046592d0ce2d7) 
+2025-04-12 19:33:25 DEBUG [inventory-api]: Session: 
+2025-04-12 19:33:25 INFO [inventory-api]: getAllProducts called 
+2025-04-12 19:33:25 DEBUG [inventory-api]: Filters applied: 
+2025-04-12 19:33:25 DEBUG [inventory-api]: getAllProductsService called with query: 
+2025-04-12 19:33:25 DEBUG [inventory-api]: Built filter: 
+2025-04-12 19:33:46 DEBUG [inventory-api]: Deserialized user: superadmin (67fa5b9be15046592d0ce2d7) 
+2025-04-12 19:33:46 DEBUG [inventory-api]: Session: 
+2025-04-12 19:33:46 INFO [inventory-api]: getAllInventory called 
+2025-04-12 19:33:46 DEBUG [inventory-api]: Query parameters: 
+2025-04-12 19:33:46 DEBUG [inventory-api]: getAllInventoryService called with query: 
+2025-04-12 19:33:46 DEBUG [inventory-api]: Built filter: 
+2025-04-12 19:36:49 DEBUG [inventory-api]: Deserialized user: superadmin (67fa5b9be15046592d0ce2d7) 
+2025-04-12 19:36:49 DEBUG [inventory-api]: Session: 
+2025-04-12 19:36:49 INFO [inventory-api]: getAllInventory called 
+2025-04-12 19:36:49 DEBUG [inventory-api]: Query parameters: 
+2025-04-12 19:36:49 DEBUG [inventory-api]: getAllInventoryService called with query: 
+2025-04-12 19:36:49 DEBUG [inventory-api]: Built filter: 
+2025-04-12 19:38:03 DEBUG [inventory-api]: Deserialized user: superadmin (67fa5b9be15046592d0ce2d7) 
+2025-04-12 19:38:03 DEBUG [inventory-api]: Session: 
+2025-04-12 19:38:03 DEBUG [inventory-api]: Auth check: 
+2025-04-12 19:38:03 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 19:38:03 INFO [inventory-api]: getAllInventoryTransactions called 
+2025-04-12 19:38:03 DEBUG [inventory-api]: Query parameters: 
+2025-04-12 19:38:03 DEBUG [inventory-api]: Built filter: 
+2025-04-12 19:38:38 DEBUG [inventory-api]: Deserialized user: superadmin (67fa5b9be15046592d0ce2d7) 
+2025-04-12 19:38:38 DEBUG [inventory-api]: Session: 
+2025-04-12 19:38:38 DEBUG [inventory-api]: Auth check: 
+2025-04-12 19:38:38 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 19:38:38 INFO [inventory-api]: getAllInventoryTransfers called 
+2025-04-12 19:38:38 DEBUG [inventory-api]: Query parameters: 
+2025-04-12 19:38:38 DEBUG [inventory-api]: Built filter: 
+2025-04-12 19:39:12 DEBUG [inventory-api]: Deserialized user: superadmin (67fa5b9be15046592d0ce2d7) 
+2025-04-12 19:39:12 DEBUG [inventory-api]: Session: 
+2025-04-12 19:39:12 INFO [inventory-api]: getAllInventory called 
+2025-04-12 19:39:12 DEBUG [inventory-api]: Query parameters: 
+2025-04-12 19:39:12 DEBUG [inventory-api]: getAllInventoryService called with query: 
+2025-04-12 19:39:12 DEBUG [inventory-api]: Built filter: 
+2025-04-12 19:40:14 DEBUG [inventory-api]: Deserialized user: superadmin (67fa5b9be15046592d0ce2d7) 
+2025-04-12 19:40:14 DEBUG [inventory-api]: Session: 
+2025-04-12 19:40:14 DEBUG [inventory-api]: Auth check: 
+2025-04-12 19:40:14 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 19:40:14 INFO [inventory-api]: getAllWarehouses called 
+2025-04-12 19:40:14 DEBUG [inventory-api]: getAllWarehousesService called with query: 
+2025-04-12 19:40:14 DEBUG [inventory-api]: Built filter: 
+2025-04-12 19:41:13 DEBUG [inventory-api]: Deserialized user: superadmin (67fa5b9be15046592d0ce2d7) 
+2025-04-12 19:41:13 DEBUG [inventory-api]: Session: 
+2025-04-12 19:41:13 INFO [inventory-api]: getAllInventory called 
+2025-04-12 19:41:13 DEBUG [inventory-api]: Query parameters: 
+2025-04-12 19:41:13 DEBUG [inventory-api]: getAllInventoryService called with query: 
+2025-04-12 19:41:13 DEBUG [inventory-api]: Built filter: 
+2025-04-12 19:44:20 ERROR [inventory-api]: Expected double-quoted property name in JSON at position 388 (line 15 column 1) - POST /inventory-transfers 
+2025-04-12 19:45:33 ERROR [inventory-api]: Expected double-quoted property name in JSON at position 386 (line 15 column 1) - POST /inventory-transfers 
+2025-04-12 19:47:35 ERROR [inventory-api]: Expected double-quoted property name in JSON at position 383 (line 14 column 1) - POST /inventory-transfers 
+2025-04-12 19:47:38 ERROR [inventory-api]: Expected double-quoted property name in JSON at position 383 (line 14 column 1) - POST /inventory-transfers 
+2025-04-12 19:47:58 DEBUG [inventory-api]: Deserialized user: superadmin (67fa5b9be15046592d0ce2d7) 
+2025-04-12 19:47:58 DEBUG [inventory-api]: Session: 
+2025-04-12 19:47:58 DEBUG [inventory-api]: Auth check: 
+2025-04-12 19:47:58 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 19:47:58 INFO [inventory-api]: createInventoryTransfer called 
+2025-04-12 19:47:58 DEBUG [inventory-api]: Request body: 
+2025-04-12 19:47:59 DEBUG [inventory-api]: Generated transferID: TR-00001 
