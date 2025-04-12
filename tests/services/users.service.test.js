@@ -17,11 +17,10 @@ describe('Users Service Tests', () => {
   const userData = {
     userID: 'SM-00001',
     username: 'testuser',
-    fullName: 'Test User', // Using fullName instead of firstName/lastName
-    email: 'test@example.com',
-    // Password with at least one lowercase, uppercase, number, and special character
+    fullName: 'Test User', 
+    email: 'test@example.com',    
     password: 'Test@123!',
-    role: 'ADMIN' // Valid role from enum
+    role: 'ADMIN'
   };
 
   // Helper function to create test users directly with the model
@@ -105,9 +104,8 @@ describe('Users Service Tests', () => {
         ...userData,
         username: 'updateuser',
         email: 'update@example.com'
-      });
+      });     
       
-      // Update data - using fullName instead of firstName/lastName
       const updateData = {
         fullName: 'Updated Name',
         email: 'updated@example.com'
@@ -199,13 +197,12 @@ describe('Users Service Tests', () => {
           userID: 'SM-00007',
           username: 'useruser',
           email: 'user@example.com',
-          role: 'USER' // Changed from CUSTOMER to USER which is valid
+          role: 'USER'
         })
       ]);
       
       // Query with role filter
-      const result = await getUsersByRoleService('ADMIN');
-      
+      const result = await getUsersByRoleService('ADMIN');      
       expect(result).toBeDefined();
       expect(Array.isArray(result)).toBe(true);
       expect(result.length).toBeGreaterThanOrEqual(1);
