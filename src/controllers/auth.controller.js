@@ -24,6 +24,8 @@ const register = asyncHandler(async (req, res, next) => {
           ApiError.serverError("Registration successful but login failed")
         );
       }
+      // Log the user ID being used
+      logger.info(`User ${user.username} (ID: ${user._id}, userID: ${user.userID}) logged in after registration`);
       const transformedUser = transformUser(user);
       sendResponse(res, 201, "Registration successful", {
         user: transformedUser,
@@ -42,7 +44,8 @@ const register = asyncHandler(async (req, res, next) => {
  * @access  Public
  */
 const loginSuccess = (req, res) => {
-  logger.info(`User ${req.user.username} logged in successfully.`);
+  // Log the user ID being returned
+  logger.info(`User ${req.user.username} (ID: ${req.user._id}, userID: ${req.user.userID}) login success response`);
   const transformedUser = transformUser(req.user);
   sendResponse(res, 200, "Login successful", { user: transformedUser });
 };

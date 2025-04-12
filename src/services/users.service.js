@@ -1,19 +1,38 @@
 // src/services/user.service.js
 const User = require("../models/user.model.js");
+const logger = require("../utils/logger.js");
 
 const getUserByIdService = async (id) => {
-  return await User.findById(id);
+  logger.debug(`getUserByIdService called with ID: ${id}`);
+  try {
+    return await User.findById(id);
+  } catch (error) {
+    logger.error(`Error in getUserByIdService for ID ${id}:`, error);
+    throw error;
+  }
 };
 
 const getUserByUserIdService = async (userId) => {
-  return await User.findOne({ userID: userId });
+  logger.debug(`getUserByUserIdService called with userID: ${userId}`);
+  try {
+    return await User.findOne({ userID: userId });
+  } catch (error) {
+    logger.error(`Error in getUserByUserIdService for userID ${userId}:`, error);
+    throw error;
+  }
 };
 
 const updateUserProfileService = async (id, updates) => {
-  return await User.findByIdAndUpdate(id, updates, {
-    new: true,
-    runValidators: true,
-  });
+  logger.debug(`updateUserProfileService called with ID: ${id}`);
+  try {
+    return await User.findByIdAndUpdate(id, updates, {
+      new: true,
+      runValidators: true,
+    });
+  } catch (error) {
+    logger.error(`Error in updateUserProfileService for ID ${id}:`, error);
+    throw error;
+  }
 };
 
 const deleteUserByIdService = async (id) => {

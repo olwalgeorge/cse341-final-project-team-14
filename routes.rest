@@ -9,7 +9,6 @@ Content-Type: application/json
   "email": "ben@example.com"
 }
 
-
 ### Login User
 POST http://localhost:3000/auth/login
 Content-Type: application/json
@@ -21,59 +20,67 @@ Content-Type: application/json
 
 ### Get User Profile (Requires Authentication)
 GET http://localhost:3000/users/profile
-Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+# No need for Authorization Bearer token with cookie-based auth
+# The session cookie will be automatically sent by the browser
 
 ### Update User Profile (Requires Authentication)
 PUT http://localhost:3000/users/profile 
 Content-Type: application/json
-Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+# No need for Authorization Bearer token with cookie-based auth
 
 {
-  "fullName": "Super Admin",
-  
-  "password": "SuperAdmin1234!",
-  "email": "superadmin@example.com" 
+  "fullName": "George Olwal"
 }
 
 ### Logout User (Requires Authentication)
 POST http://localhost:3000/auth/logout
-Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+# No need for Authorization Bearer token with cookie-based auth
 
 ### Get All Users (Requires Authentication)
 GET http://localhost:3000/users
-Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+# No need for Authorization Bearer token with cookie-based auth
 
 ### Get User By ID (Requires Authentication)
 GET http://localhost:3000/users/userID/SM-00001
-Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+# No need for Authorization Bearer token with cookie-based auth
 
 ### Delete User By ID (Requires Authentication)
-DELETE http://localhost:3000/users/67ed48c7bc4cde6b1
-Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+DELETE http://localhost:3000/users/67f617982c3fee8a407c807c
+# No need for Authorization Bearer token with cookie-based auth
 
 ### Get User By Username (Requires Authentication)
-GET http://localhost:3000/users/username/
-Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+GET http://localhost:3000/users/username/superadmin
+# No need for Authorization Bearer token with cookie-based auth
 
 ### Get User By Email (Requires Authentication)
-GET http://localhost:3000/users/email/superadmin@example.com
-Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+GET http://localhost:3000/users/email/ben@example.com
+# No need for Authorization Bearer token with cookie-based auth
 
 ### Get Users By Role (Requires Authentication)
-GET http://localhost:3000/users/role/ADMIN
-Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+GET http://localhost:3000/users/role/SUPERADMIN
+# No need for Authorization Bearer token with cookie-based auth
 
 ### Delete All Users (Requires Authentication)
 DELETE http://localhost:3000/users
-Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+# No need for Authorization Bearer token with cookie-based auth
 
-### Update User By ID (Requires Authentication)
-PUT http://localhost:3000/users/67ed48c7b
+### Update User By ID (Requires Authentication) - Using MongoDB ObjectId
+PUT http://localhost:3000/users/67f617982c3fee8a407c807c
 Content-Type: application/json
-Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
+# No need for Authorization Bearer token with cookie-based auth
 
 {
- "fullName": "Super Admin",
+ "fullName": "Super Admin Updated",
+ "role": "SUPERADMIN"
+}
+
+### Update User By ID (Requires Authentication) - Using userID format
+PUT http://localhost:3000/users/SM-00001
+Content-Type: application/json
+# No need for Authorization Bearer token with cookie-based auth
+
+{
+ "fullName": "Super Admin Updated via UserID",
  "role": "SUPERADMIN"
 }
 
@@ -141,7 +148,7 @@ GET http://localhost:3000/orders
 Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
 
 ### Get Orders with Filtering (Requires Authentication)
-GET http://localhost:3000/orders?status=pending&fromDate=2023-01-01&toDate=2023-12-31&page=1&limit=10
+GET http://localhost:3000/orders?status=Pending
 Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
 
 ### Get Order by MongoDB ID (Requires Authentication)

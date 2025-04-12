@@ -78,7 +78,7 @@ const isValidEmail = (fieldName, errorMessage) => {
 };
 
 const user_IdValidationRules = () => {
-  return [isMongoIdParam("_id", "Invalid internal User ID format")];
+  return [isMongoIdParam("user_Id", "Invalid internal User ID format")];
 };
 
 // For /users/:userID (now using SM-xxxxx format)

@@ -79,7 +79,7 @@ router.delete(
 );
 
 router.put(
-  "/:useruser_Id",
+  "/:user_Id",
   isAuthenticated,
   validate(userUpdateValidationRules()),
   updateUserById

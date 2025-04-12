@@ -6000,3 +6000,325 @@ TypeError: orders.map is not a function
 2025-04-12 09:04:26 INFO [inventory-api]: User superadmin is authenticated 
 2025-04-12 09:04:26 INFO [inventory-api]: getAllOrders called 
 2025-04-12 09:04:26 DEBUG [inventory-api]: Built filter: 
+2025-04-12 09:05:56 DEBUG [inventory-api]: Session: 
+2025-04-12 09:05:56 DEBUG [inventory-api]: Auth check: 
+2025-04-12 09:05:56 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 09:05:56 INFO [inventory-api]: getAllOrders called 
+2025-04-12 09:05:56 DEBUG [inventory-api]: Built filter: 
+2025-04-12 09:06:34 DEBUG [inventory-api]: Session: 
+2025-04-12 09:06:34 DEBUG [inventory-api]: Auth check: 
+2025-04-12 09:06:34 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 09:06:34 INFO [inventory-api]: getAllOrders called 
+2025-04-12 09:06:34 DEBUG [inventory-api]: Built filter: 
+2025-04-12 09:07:24 DEBUG [inventory-api]: Session: 
+2025-04-12 09:07:24 DEBUG [inventory-api]: Auth check: 
+2025-04-12 09:07:24 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 09:07:24 INFO [inventory-api]: getAllOrders called 
+2025-04-12 09:07:24 DEBUG [inventory-api]: Built filter: 
+2025-04-12 09:09:49 DEBUG [inventory-api]: Session: 
+2025-04-12 09:09:49 DEBUG [inventory-api]: Auth check: 
+2025-04-12 09:09:49 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 09:09:49 INFO [inventory-api]: getUserProfile called for user ID: undefined 
+2025-04-12 09:09:50 ERROR [inventory-api]: User not found - GET /users/profile 
+2025-04-12 09:10:04 DEBUG [inventory-api]: Session: 
+2025-04-12 09:10:04 DEBUG [inventory-api]: Auth check: 
+2025-04-12 09:10:04 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 09:10:04 INFO [inventory-api]: getUserProfile called for user ID: undefined 
+2025-04-12 09:10:05 ERROR [inventory-api]: User not found - GET /users/profile 
+2025-04-12 09:11:44 DEBUG [inventory-api]: Session: 
+2025-04-12 09:11:44 DEBUG [inventory-api]: Auth check: 
+2025-04-12 09:11:44 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 09:11:44 INFO [inventory-api]: getAllUsers called 
+2025-04-12 09:13:30 ERROR [inventory-api]: Expected double-quoted property name in JSON at position 42 (line 5 column 1) - PUT /users/profile 
+2025-04-12 09:13:37 DEBUG [inventory-api]: Session: 
+2025-04-12 09:13:37 DEBUG [inventory-api]: Auth check: 
+2025-04-12 09:13:37 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 09:13:37 INFO [inventory-api]: updateUserProfile called for user ID: undefined 
+2025-04-12 09:13:37 DEBUG [inventory-api]: Request body: 
+2025-04-12 09:13:37 ERROR [inventory-api]: User not found - PUT /users/profile 
+2025-04-12 09:13:37 ERROR [inventory-api]: Error updating user profile for ID: undefined Cannot set headers after they are sent to the client 
+Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+    at ServerResponse.setHeader (node:_http_outgoing:699:11)
+    at ServerResponse.header (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\express\lib\response.js:794:10)
+    at ServerResponse.send (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\express\lib\response.js:174:12)
+    at ServerResponse.json (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\express\lib\response.js:278:15)
+    at sendResponse (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\utils\response.js:11:33)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\users.controller.js:59:5
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-04-12 09:20:29 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-12 09:20:32 INFO [inventory-api]: MongoDB Connected: cluster0-shard-00-00.wncfx.mongodb.net 
+2025-04-12 09:20:46 DEBUG [inventory-api]: Session: 
+2025-04-12 09:20:47 INFO [inventory-api]: User superadmin logged in successfully 
+2025-04-12 09:20:47 INFO [inventory-api]: User superadmin logged in successfully. 
+2025-04-12 09:21:18 DEBUG [inventory-api]: Session: 
+2025-04-12 09:21:18 DEBUG [inventory-api]: Auth check: 
+2025-04-12 09:21:18 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 09:21:18 INFO [inventory-api]: getUserProfile called for user ID: undefined 
+2025-04-12 09:21:18 ERROR [inventory-api]: User not found - GET /users/profile 
+2025-04-12 09:27:55 DEBUG [inventory-api]: Session: 
+2025-04-12 09:27:55 DEBUG [inventory-api]: Auth check: 
+2025-04-12 09:27:55 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 09:27:55 INFO [inventory-api]: getAllUsers called 
+2025-04-12 09:32:19 DEBUG [inventory-api]: Session: 
+2025-04-12 09:32:19 DEBUG [inventory-api]: Auth check: 
+2025-04-12 09:32:19 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 09:32:19 INFO [inventory-api]: User logged out successfully. 
+2025-04-12 09:32:32 DEBUG [inventory-api]: Session: 
+2025-04-12 09:32:32 DEBUG [inventory-api]: Auth check: 
+2025-04-12 09:32:32 WARN [inventory-api]: Authentication failed - no session 
+2025-04-12 09:32:32 ERROR [inventory-api]: Authentication required - GET /users/profile 
+2025-04-12 09:32:40 DEBUG [inventory-api]: Session: 
+2025-04-12 09:32:41 INFO [inventory-api]: User superadmin logged in successfully 
+2025-04-12 09:32:41 INFO [inventory-api]: User superadmin logged in successfully. 
+2025-04-12 09:32:47 DEBUG [inventory-api]: Session: 
+2025-04-12 09:32:47 DEBUG [inventory-api]: Auth check: 
+2025-04-12 09:32:47 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 09:32:47 INFO [inventory-api]: getUserProfile called for user ID: undefined 
+2025-04-12 09:32:48 ERROR [inventory-api]: User not found - GET /users/profile 
+2025-04-12 09:42:22 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-12 09:42:26 INFO [inventory-api]: MongoDB Connected: cluster0-shard-00-02.wncfx.mongodb.net 
+2025-04-12 09:42:33 DEBUG [inventory-api]: Session: 
+2025-04-12 09:42:33 DEBUG [inventory-api]: Auth check: 
+2025-04-12 09:42:33 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 09:42:34 INFO [inventory-api]: User logged out successfully. 
+2025-04-12 09:42:43 DEBUG [inventory-api]: Session: 
+2025-04-12 09:42:44 INFO [inventory-api]: User superadmin logged in successfully 
+2025-04-12 09:42:44 INFO [inventory-api]: User superadmin logged in successfully. 
+2025-04-12 09:42:46 DEBUG [inventory-api]: Session: 
+2025-04-12 09:42:46 DEBUG [inventory-api]: Auth check: 
+2025-04-12 09:42:46 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 09:42:46 ERROR [inventory-api]: User not authenticated - GET /users/profile 
+2025-04-12 09:42:54 DEBUG [inventory-api]: Session: 
+2025-04-12 09:42:54 DEBUG [inventory-api]: Auth check: 
+2025-04-12 09:42:54 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 09:42:54 ERROR [inventory-api]: User not authenticated - GET /users/profile 
+2025-04-12 09:44:48 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-12 09:44:51 INFO [inventory-api]: MongoDB Connected: cluster0-shard-00-01.wncfx.mongodb.net 
+2025-04-12 09:45:02 DEBUG [inventory-api]: Session: 
+2025-04-12 09:45:02 INFO [inventory-api]: User superadmin logged in successfully 
+2025-04-12 09:45:02 INFO [inventory-api]: User superadmin logged in successfully. 
+2025-04-12 09:45:06 DEBUG [inventory-api]: Session: 
+2025-04-12 09:45:06 DEBUG [inventory-api]: Auth check: 
+2025-04-12 09:45:06 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 09:45:06 ERROR [inventory-api]: User not authenticated - GET /users/profile 
+2025-04-12 09:51:12 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-12 09:51:15 INFO [inventory-api]: MongoDB Connected: cluster0-shard-00-00.wncfx.mongodb.net 
+2025-04-12 09:51:18 DEBUG [inventory-api]: Deserialized user: superadmin (67f2dd0039ca31d92f2b921a) 
+2025-04-12 09:51:18 DEBUG [inventory-api]: Session: 
+2025-04-12 09:51:18 DEBUG [inventory-api]: Auth check: 
+2025-04-12 09:51:18 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 09:51:18 INFO [inventory-api]: getUserProfile called for user superadmin (ID: 67f2dd0039ca31d92f2b921a, userID: SM-00006) 
+2025-04-12 09:51:18 DEBUG [inventory-api]: getUserByIdService called with ID: 67f2dd0039ca31d92f2b921a 
+2025-04-12 09:53:41 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-12 09:53:44 INFO [inventory-api]: MongoDB Connected: cluster0-shard-00-01.wncfx.mongodb.net 
+2025-04-12 09:53:58 DEBUG [inventory-api]: Deserialized user: superadmin (67f2dd0039ca31d92f2b921a) 
+2025-04-12 09:53:58 DEBUG [inventory-api]: Session: 
+2025-04-12 09:53:58 DEBUG [inventory-api]: Auth check: 
+2025-04-12 09:53:58 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 09:53:58 INFO [inventory-api]: User logged out successfully. 
+2025-04-12 09:54:04 DEBUG [inventory-api]: Session: 
+2025-04-12 09:54:04 DEBUG [inventory-api]: Auth check: 
+2025-04-12 09:54:04 WARN [inventory-api]: Authentication failed - no session 
+2025-04-12 09:54:04 ERROR [inventory-api]: Authentication required - GET /users/profile 
+2025-04-12 09:54:07 DEBUG [inventory-api]: Session: 
+2025-04-12 09:54:07 INFO [inventory-api]: User superadmin (ID: 67f2dd0039ca31d92f2b921a, userID: SM-00006) logged in successfully 
+2025-04-12 09:54:08 DEBUG [inventory-api]: Serializing user: 67f2dd0039ca31d92f2b921a 
+2025-04-12 09:54:08 INFO [inventory-api]: User superadmin (ID: 67f2dd0039ca31d92f2b921a, userID: SM-00006) login success response 
+2025-04-12 09:54:17 DEBUG [inventory-api]: Deserialized user: superadmin (67f2dd0039ca31d92f2b921a) 
+2025-04-12 09:54:17 DEBUG [inventory-api]: Session: 
+2025-04-12 09:54:17 DEBUG [inventory-api]: Auth check: 
+2025-04-12 09:54:17 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 09:54:17 INFO [inventory-api]: updateUserProfile called for user superadmin (ID: 67f2dd0039ca31d92f2b921a, userID: SM-00006) 
+2025-04-12 09:54:17 DEBUG [inventory-api]: Request body: 
+2025-04-12 09:54:17 DEBUG [inventory-api]: updateUserProfileService called with ID: 67f2dd0039ca31d92f2b921a 
+2025-04-12 09:54:41 DEBUG [inventory-api]: Deserialized user: superadmin (67f2dd0039ca31d92f2b921a) 
+2025-04-12 09:54:41 DEBUG [inventory-api]: Session: 
+2025-04-12 09:54:41 DEBUG [inventory-api]: Auth check: 
+2025-04-12 09:54:41 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 09:54:41 INFO [inventory-api]: getAllUsers called 
+2025-04-12 09:54:50 DEBUG [inventory-api]: Deserialized user: superadmin (67f2dd0039ca31d92f2b921a) 
+2025-04-12 09:54:50 DEBUG [inventory-api]: Session: 
+2025-04-12 09:54:50 DEBUG [inventory-api]: Auth check: 
+2025-04-12 09:54:50 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 09:54:50 INFO [inventory-api]: getUserById called with ID: SM-00001 
+2025-04-12 09:54:50 DEBUG [inventory-api]: Request body: 
+2025-04-12 09:54:50 DEBUG [inventory-api]: getUserByUserIdService called with userID: SM-00001 
+2025-04-12 09:55:02 DEBUG [inventory-api]: Deserialized user: superadmin (67f2dd0039ca31d92f2b921a) 
+2025-04-12 09:55:02 DEBUG [inventory-api]: Session: 
+2025-04-12 09:55:02 DEBUG [inventory-api]: Auth check: 
+2025-04-12 09:55:02 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 09:55:02 INFO [inventory-api]: getAllUsers called 
+2025-04-12 09:56:02 DEBUG [inventory-api]: Deserialized user: superadmin (67f2dd0039ca31d92f2b921a) 
+2025-04-12 09:56:02 DEBUG [inventory-api]: Session: 
+2025-04-12 09:56:02 DEBUG [inventory-api]: Auth check: 
+2025-04-12 09:56:02 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 09:56:02 WARN [inventory-api]: Validation failed 
+2025-04-12 09:56:18 DEBUG [inventory-api]: Deserialized user: superadmin (67f2dd0039ca31d92f2b921a) 
+2025-04-12 09:56:18 DEBUG [inventory-api]: Session: 
+2025-04-12 09:56:18 DEBUG [inventory-api]: Auth check: 
+2025-04-12 09:56:18 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 09:56:18 WARN [inventory-api]: Validation failed 
+2025-04-12 09:56:26 DEBUG [inventory-api]: Deserialized user: superadmin (67f2dd0039ca31d92f2b921a) 
+2025-04-12 09:56:26 DEBUG [inventory-api]: Session: 
+2025-04-12 09:56:26 DEBUG [inventory-api]: Auth check: 
+2025-04-12 09:56:26 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 09:56:26 WARN [inventory-api]: Validation failed 
+2025-04-12 09:56:39 DEBUG [inventory-api]: Deserialized user: superadmin (67f2dd0039ca31d92f2b921a) 
+2025-04-12 09:56:39 DEBUG [inventory-api]: Session: 
+2025-04-12 09:56:39 DEBUG [inventory-api]: Auth check: 
+2025-04-12 09:56:39 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 09:56:39 WARN [inventory-api]: Validation failed 
+2025-04-12 09:56:57 DEBUG [inventory-api]: Deserialized user: superadmin (67f2dd0039ca31d92f2b921a) 
+2025-04-12 09:56:57 DEBUG [inventory-api]: Session: 
+2025-04-12 09:56:57 DEBUG [inventory-api]: Auth check: 
+2025-04-12 09:56:57 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 09:56:57 INFO [inventory-api]: getAllUsers called 
+2025-04-12 09:57:29 DEBUG [inventory-api]: Deserialized user: superadmin (67f2dd0039ca31d92f2b921a) 
+2025-04-12 09:57:29 DEBUG [inventory-api]: Session: 
+2025-04-12 09:57:29 DEBUG [inventory-api]: Auth check: 
+2025-04-12 09:57:29 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 09:57:29 WARN [inventory-api]: Validation failed 
+2025-04-12 10:00:05 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-12 10:00:09 INFO [inventory-api]: MongoDB Connected: cluster0-shard-00-02.wncfx.mongodb.net 
+2025-04-12 10:00:12 DEBUG [inventory-api]: Deserialized user: superadmin (67f2dd0039ca31d92f2b921a) 
+2025-04-12 10:00:12 DEBUG [inventory-api]: Session: 
+2025-04-12 10:00:12 DEBUG [inventory-api]: Auth check: 
+2025-04-12 10:00:12 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 10:00:12 INFO [inventory-api]: getUserByUsername called with username: superadmin 
+2025-04-12 10:00:21 DEBUG [inventory-api]: Deserialized user: superadmin (67f2dd0039ca31d92f2b921a) 
+2025-04-12 10:00:21 DEBUG [inventory-api]: Session: 
+2025-04-12 10:00:21 DEBUG [inventory-api]: Auth check: 
+2025-04-12 10:00:21 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 10:00:21 INFO [inventory-api]: getUserByEmail called with email: superadmin@example.com 
+2025-04-12 10:00:21 ERROR [inventory-api]: User not found - GET /users/email/superadmin@example.com 
+2025-04-12 10:00:36 DEBUG [inventory-api]: Deserialized user: superadmin (67f2dd0039ca31d92f2b921a) 
+2025-04-12 10:00:36 DEBUG [inventory-api]: Session: 
+2025-04-12 10:00:36 DEBUG [inventory-api]: Auth check: 
+2025-04-12 10:00:36 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 10:00:36 INFO [inventory-api]: getUsersByRole called with role: ADMIN 
+2025-04-12 10:00:36 ERROR [inventory-api]: Users not found - GET /users/role/ADMIN 
+2025-04-12 10:01:19 DEBUG [inventory-api]: Deserialized user: superadmin (67f2dd0039ca31d92f2b921a) 
+2025-04-12 10:01:19 DEBUG [inventory-api]: Session: 
+2025-04-12 10:01:19 DEBUG [inventory-api]: Auth check: 
+2025-04-12 10:01:19 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 10:01:19 INFO [inventory-api]: getUsersByRole called with role: ADMIN 
+2025-04-12 10:01:19 ERROR [inventory-api]: Users not found - GET /users/role/Admin 
+2025-04-12 10:01:51 DEBUG [inventory-api]: Deserialized user: superadmin (67f2dd0039ca31d92f2b921a) 
+2025-04-12 10:01:51 DEBUG [inventory-api]: Session: 
+2025-04-12 10:01:51 DEBUG [inventory-api]: Auth check: 
+2025-04-12 10:01:51 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 10:01:51 INFO [inventory-api]: getUsersByRole called with role: USER 
+2025-04-12 10:02:15 DEBUG [inventory-api]: Deserialized user: superadmin (67f2dd0039ca31d92f2b921a) 
+2025-04-12 10:02:15 DEBUG [inventory-api]: Session: 
+2025-04-12 10:02:15 DEBUG [inventory-api]: Auth check: 
+2025-04-12 10:02:15 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 10:02:15 INFO [inventory-api]: updateUserById called with ID: 67ed48c7b 
+2025-04-12 10:02:15 ERROR [inventory-api]: Error updating user with ID: 67ed48c7b Cast to ObjectId failed for value "67ed48c7b" (type string) at path "_id" for model "User" 
+CastError: Cast to ObjectId failed for value "67ed48c7b" (type string) at path "_id" for model "User"
+    at SchemaObjectId.cast (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schema\objectId.js:251:11)
+    at SchemaType.applySetters (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schemaType.js:1255:12)
+    at SchemaType.castForQuery (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schemaType.js:1673:17)
+    at cast (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\cast.js:390:32)
+    at Query.cast (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:4907:12)
+    at Query._castConditions (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2325:10)
+    at model.Query._findOneAndUpdate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:3421:8)
+    at model.Query.exec (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:4456:80)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async updateUserByIdService (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\users.service.js:63:10)
+2025-04-12 10:02:15 ERROR [inventory-api]: Invalid ID Format - PUT /users/67ed48c7b 
+2025-04-12 10:25:35 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-12 10:25:38 INFO [inventory-api]: MongoDB Connected: cluster0-shard-00-00.wncfx.mongodb.net 
+2025-04-12 10:25:41 DEBUG [inventory-api]: Deserialized user: superadmin (67f2dd0039ca31d92f2b921a) 
+2025-04-12 10:25:41 DEBUG [inventory-api]: Session: 
+2025-04-12 10:25:41 DEBUG [inventory-api]: Auth check: 
+2025-04-12 10:25:41 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 10:25:41 INFO [inventory-api]: updateUserById called with ID: undefined 
+2025-04-12 10:25:41 ERROR [inventory-api]: User not found - PUT /users/67ed48c7b 
+2025-04-12 10:30:53 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-12 10:30:57 INFO [inventory-api]: MongoDB Connected: cluster0-shard-00-01.wncfx.mongodb.net 
+2025-04-12 10:31:00 DEBUG [inventory-api]: Deserialized user: superadmin (67f2dd0039ca31d92f2b921a) 
+2025-04-12 10:31:00 DEBUG [inventory-api]: Session: 
+2025-04-12 10:31:00 DEBUG [inventory-api]: Auth check: 
+2025-04-12 10:31:00 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 10:31:00 INFO [inventory-api]: updateUserById called with ID: undefined 
+2025-04-12 10:31:00 ERROR [inventory-api]: User not found - PUT /users/67ed48c7b 
+2025-04-12 10:36:44 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-12 10:36:47 INFO [inventory-api]: MongoDB Connected: cluster0-shard-00-00.wncfx.mongodb.net 
+2025-04-12 10:37:01 DEBUG [inventory-api]: Deserialized user: superadmin (67f2dd0039ca31d92f2b921a) 
+2025-04-12 10:37:01 DEBUG [inventory-api]: Session: 
+2025-04-12 10:37:01 DEBUG [inventory-api]: Auth check: 
+2025-04-12 10:37:01 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 10:37:01 INFO [inventory-api]: updateUserById called with ID: undefined 
+2025-04-12 10:37:01 ERROR [inventory-api]: User - Missing ID parameter not found - PUT /users/67f617982c3fee8a407c80 
+2025-04-12 10:43:38 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-12 10:43:41 INFO [inventory-api]: MongoDB Connected: cluster0-shard-00-01.wncfx.mongodb.net 
+2025-04-12 10:43:51 DEBUG [inventory-api]: Deserialized user: superadmin (67f2dd0039ca31d92f2b921a) 
+2025-04-12 10:43:51 DEBUG [inventory-api]: Session: 
+2025-04-12 10:43:51 DEBUG [inventory-api]: Auth check: 
+2025-04-12 10:43:51 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 10:43:51 INFO [inventory-api]: updateUserById called with ID: undefined 
+2025-04-12 10:43:51 ERROR [inventory-api]: User - Missing ID parameter not found - PUT /users/67f617982c3fee8a407c80 
+2025-04-12 10:47:11 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-12 10:47:15 INFO [inventory-api]: MongoDB Connected: cluster0-shard-00-02.wncfx.mongodb.net 
+2025-04-12 10:47:45 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-12 10:47:48 INFO [inventory-api]: MongoDB Connected: cluster0-shard-00-00.wncfx.mongodb.net 
+2025-04-12 10:48:00 DEBUG [inventory-api]: Deserialized user: superadmin (67f2dd0039ca31d92f2b921a) 
+2025-04-12 10:48:00 DEBUG [inventory-api]: Session: 
+2025-04-12 10:48:00 DEBUG [inventory-api]: Auth check: 
+2025-04-12 10:48:00 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 10:48:00 INFO [inventory-api]: updateUserById called with ID: 67f617982c3fee8a407c80 
+2025-04-12 10:48:00 DEBUG [inventory-api]: Update data: {"fullName":"Super Admin Updated","role":"SUPERADMIN"} 
+2025-04-12 10:48:00 DEBUG [inventory-api]: updateUser helper called with userId: 67f617982c3fee8a407c80 
+2025-04-12 10:48:00 ERROR [inventory-api]: Error updating user with ID: 67f617982c3fee8a407c80 Cast to ObjectId failed for value "67f617982c3fee8a407c80" (type string) at path "_id" for model "User" 
+CastError: Cast to ObjectId failed for value "67f617982c3fee8a407c80" (type string) at path "_id" for model "User"
+    at SchemaObjectId.cast (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schema\objectId.js:251:11)
+    at SchemaType.applySetters (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schemaType.js:1255:12)
+    at SchemaType.castForQuery (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schemaType.js:1673:17)
+    at cast (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\cast.js:390:32)
+    at Query.cast (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:4907:12)
+    at Query._castConditions (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2325:10)
+    at model.Query._findOneAndUpdate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:3421:8)
+    at model.Query.exec (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:4456:80)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async updateUserByIdService (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\users.service.js:63:10)
+2025-04-12 10:48:00 ERROR [inventory-api]: Error updating user with ID: 67f617982c3fee8a407c80 Cast to ObjectId failed for value "67f617982c3fee8a407c80" (type string) at path "_id" for model "User" 
+CastError: Cast to ObjectId failed for value "67f617982c3fee8a407c80" (type string) at path "_id" for model "User"
+    at SchemaObjectId.cast (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schema\objectId.js:251:11)
+    at SchemaType.applySetters (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schemaType.js:1255:12)
+    at SchemaType.castForQuery (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schemaType.js:1673:17)
+    at cast (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\cast.js:390:32)
+    at Query.cast (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:4907:12)
+    at Query._castConditions (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2325:10)
+    at model.Query._findOneAndUpdate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:3421:8)
+    at model.Query.exec (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:4456:80)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async updateUserByIdService (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\users.service.js:63:10)
+2025-04-12 10:48:00 ERROR [inventory-api]: Invalid ID Format - PUT /users/67f617982c3fee8a407c80 
+2025-04-12 10:50:56 DEBUG [inventory-api]: Deserialized user: superadmin (67f2dd0039ca31d92f2b921a) 
+2025-04-12 10:50:56 DEBUG [inventory-api]: Session: 
+2025-04-12 10:50:56 DEBUG [inventory-api]: Auth check: 
+2025-04-12 10:50:56 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 10:50:56 INFO [inventory-api]: updateUserById called with ID: 67f617982c3fee8a407c807c 
+2025-04-12 10:50:56 DEBUG [inventory-api]: Update data: {"fullName":"Super Admin Updated","role":"SUPERADMIN"} 
+2025-04-12 10:50:56 DEBUG [inventory-api]: updateUser helper called with userId: 67f617982c3fee8a407c807c 
+2025-04-12 10:51:40 DEBUG [inventory-api]: Deserialized user: superadmin (67f2dd0039ca31d92f2b921a) 
+2025-04-12 10:51:40 DEBUG [inventory-api]: Session: 
+2025-04-12 10:51:40 DEBUG [inventory-api]: Auth check: 
+2025-04-12 10:51:40 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 10:51:40 INFO [inventory-api]: getUsersByRole called with role: SUPERADMIN 
+2025-04-12 10:51:47 DEBUG [inventory-api]: Deserialized user: superadmin (67f2dd0039ca31d92f2b921a) 
+2025-04-12 10:51:47 DEBUG [inventory-api]: Session: 
+2025-04-12 10:51:47 DEBUG [inventory-api]: Auth check: 
+2025-04-12 10:51:47 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 10:51:47 INFO [inventory-api]: getUserByEmail called with email: superadmin@example.com 
+2025-04-12 10:51:48 ERROR [inventory-api]: User not found - GET /users/email/superadmin@example.com 
+2025-04-12 10:52:36 DEBUG [inventory-api]: Deserialized user: superadmin (67f2dd0039ca31d92f2b921a) 
+2025-04-12 10:52:36 DEBUG [inventory-api]: Session: 
+2025-04-12 10:52:36 DEBUG [inventory-api]: Auth check: 
+2025-04-12 10:52:36 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 10:52:36 INFO [inventory-api]: getUserByEmail called with email: ben@example.com 
+2025-04-12 10:52:45 DEBUG [inventory-api]: Deserialized user: superadmin (67f2dd0039ca31d92f2b921a) 
+2025-04-12 10:52:45 DEBUG [inventory-api]: Session: 
+2025-04-12 10:52:45 DEBUG [inventory-api]: Auth check: 
+2025-04-12 10:52:45 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 10:52:45 INFO [inventory-api]: deleteUserById called with ID: 67f617982c3fee8a407c807c 

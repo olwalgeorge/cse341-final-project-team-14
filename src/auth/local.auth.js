@@ -22,6 +22,7 @@ const localStrategy = new LocalStrategy(
         );
       }
 
+      // Make sure to include password in the query
       const user = await User.findOne({ email: email.toLowerCase() }).select(
         "+password"
       );
@@ -39,7 +40,8 @@ const localStrategy = new LocalStrategy(
         return done(AuthError.invalidCredentials("Incorrect password"));
       }
 
-      logger.info(`User ${user.username} logged in successfully`);
+      // Log more info about the user being authenticated
+      logger.info(`User ${user.username} (ID: ${user._id}, userID: ${user.userID}) logged in successfully`);
       return done(null, user);
     } catch (error) {
       logger.error("Login error:", { error: error.message, email });

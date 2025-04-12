@@ -1,7 +1,7 @@
 const sendResponse = require("../utils/response.js");
 const asyncHandler = require("express-async-handler");
 const logger = require("../utils/logger.js");
-const { ApiError, DatabaseError } = require("../utils/errors");
+const { ApiError, DatabaseError} = require("../utils/errors");
 const {
   getUserByIdService,
   getUserByUserIdService,
@@ -12,6 +12,7 @@ const {
   getUsersByRoleService,
   deleteAllUsersService,
   updateUserByIdService,
+  updateUserProfileService,
 } = require("../services/users.service");
 const { transformUser, transformUserData } = require("../utils/user.utils.js");
 
@@ -21,24 +22,31 @@ const { transformUser, transformUserData } = require("../utils/user.utils.js");
  * @access  Private
  */
 const getUserProfile = asyncHandler(async (req, res, next) => {
-  logger.info(`getUserProfile called for user ID: ${req.user?.user_Id}`);
+  // Verify we have the req.user object with a valid ID
+  if (!req.user || !req.user._id) {
+    logger.error("getUserProfile called but no user in session");
+    return next(DatabaseError.notFound("User session"));
+  }
+
+  logger.info(`getUserProfile called for user ${req.user.username} (ID: ${req.user._id}, userID: ${req.user.userID})`);
+  
   try {
-    const user = await getUserByIdService(req.user.user_Id);
+    // Use the Mongoose ObjectId from the authenticated user
+    const user = await getUserByIdService(req.user._id);
     if (!user) {
+      logger.warn(`User found in session but not in database: ${req.user._id}`);
       return next(DatabaseError.notFound("User"));
     }
+    
     const transformedUser = transformUser(user);
     sendResponse(
-      res,
+      res, 
       200,
       "User profile retrieved successfully",
       transformedUser
     );
   } catch (error) {
-    logger.error(
-      `Error retrieving user profile for ID: ${req.user?.user_Id}`,
-      error
-    );
+    logger.error(`Error retrieving user profile for ID: ${req.user._id}`, error);
     next(error);
   }
 });
@@ -49,13 +57,26 @@ const getUserProfile = asyncHandler(async (req, res, next) => {
  * @access  Private
  */
 const updateUserProfile = asyncHandler(async (req, res, next) => {
-  logger.info(`updateUserProfile called for user ID: ${req.user?.user_Id}`);
+  // Verify we have the req.user object with a valid ID
+  if (!req.user || !req.user._id) {
+    logger.error("updateUserProfile called but no user in session");
+    return next(DatabaseError.notFound("User session"));
+  }
+
+  logger.info(`updateUserProfile called for user ${req.user.username} (ID: ${req.user._id}, userID: ${req.user.userID})`);
   logger.debug("Request body:", req.body);
 
   try {
     const updates = transformUserData(req.body);
-
-    const transformedUser = await updateUser(req.user.user_Id, updates, next);
+    
+    // Make sure we're using the Mongoose ObjectId from the authenticated user
+    const user = await updateUserProfileService(req.user._id, updates);
+    if (!user) {
+      logger.warn(`User found in session but not in database: ${req.user._id}`);
+      return next(DatabaseError.notFound("User"));
+    }
+    
+    const transformedUser = transformUser(user);
     sendResponse(
       res,
       200,
@@ -63,7 +84,7 @@ const updateUserProfile = asyncHandler(async (req, res, next) => {
       transformedUser
     );
   } catch (error) {
-    logger.error(`Error updating user profile for ID: ${req.user?.user_Id}`, error);
+    logger.error(`Error updating user profile for ID: ${req.user._id}`, error);
     next(error);
   }
 });
@@ -234,9 +255,18 @@ const deleteAllUsers = asyncHandler(async (req, res, next) => {
 
 const updateUser = async (userId, updates, next) => {
   try {
+    // Log the userId being passed to help with debugging
+    logger.debug(`updateUser helper called with userId: ${userId}`);
+    
+    if (!userId) {
+      logger.error("updateUser called with undefined or null userId");
+      return next(DatabaseError.notFound("User - Invalid ID provided"));
+    }
+    
     const user = await updateUserByIdService(userId, updates);
 
     if (!user) {
+      logger.error(`User with ID ${userId} not found in database`);
       return next(DatabaseError.notFound("User"));
     }
 
@@ -244,7 +274,7 @@ const updateUser = async (userId, updates, next) => {
     return transformedUser;
   } catch (error) {
     logger.error(`Error updating user with ID: ${userId}`, error);
-    next(error);
+    throw error; // Rethrow the error instead of calling next
   }
 };
 
@@ -254,14 +284,25 @@ const updateUser = async (userId, updates, next) => {
  * @access  Private
  */
 const updateUserById = asyncHandler(async (req, res, next) => {
-  logger.info(`updateUserById called with ID: ${req.params.user_Id}`);
+  const userId = req.params.user_Id;
+  logger.info(`updateUserById called with ID: ${userId}`);
+  
+  if (!userId) {
+    return next(DatabaseError.notFound("User - Missing ID parameter"));
+  }
+  
   try {
     const updates = transformUserData(req.body);
+    logger.debug(`Update data: ${JSON.stringify(updates)}`);
 
-    const transformedUser = await updateUser(req.params.user_Id, updates, next);
-    sendResponse(res, 200, "User updated successfully", transformedUser);
+    const transformedUser = await updateUser(userId, updates, next);
+    
+    // Only send a response if one hasn't been sent already (by the next handler)
+    if (transformedUser) {
+      sendResponse(res, 200, "User updated successfully", transformedUser);
+    }
   } catch (error) {
-    logger.error(`Error updating user with ID: ${req.params.user_Id}`, error);
+    logger.error(`Error updating user with ID: ${userId}`, error);
     next(error);
   }
 });
