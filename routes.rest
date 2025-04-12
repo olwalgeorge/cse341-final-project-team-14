@@ -3,10 +3,10 @@ POST http://localhost:3000/auth/register
 Content-Type: application/json
 
 {
-  "fullName": "Ben Omondi",
-  "username": "ben",
-  "password": "Ben1234!",
-  "email": "ben@example.com"
+  "fullName": "Super Admin",
+  "username": "superadmin",
+  "password": "SuperAdmin1234!",
+  "email": "superadmin@example.com"
 }
 
 ### Login User
@@ -45,7 +45,7 @@ GET http://localhost:3000/users/userID/SM-00001
 # No need for Authorization Bearer token with cookie-based auth
 
 ### Delete User By ID (Requires Authentication)
-DELETE http://localhost:3000/users/67f617982c3fee8a407c807c
+DELETE http://localhost:3000/users/67fa30bd8a88a8c6fa0014d1
 # No need for Authorization Bearer token with cookie-based auth
 
 ### Get User By Username (Requires Authentication)
@@ -65,7 +65,7 @@ DELETE http://localhost:3000/users
 # No need for Authorization Bearer token with cookie-based auth
 
 ### Update User By ID (Requires Authentication) - Using MongoDB ObjectId
-PUT http://localhost:3000/users/67f617982c3fee8a407c807c
+PUT http://localhost:3000/users/67fa30bd8a88a8c6fa0014d1
 Content-Type: application/json
 # No need for Authorization Bearer token with cookie-based auth
 
@@ -96,7 +96,7 @@ GET http://localhost:3000/products?category=Electronics&minPrice=100&maxPrice=10
 GET http://localhost:3000/products/search?term=laptop
 
 ### Get Product by MongoDB ID
-GET http://localhost:3000/products/65fb123abc456d789e
+GET http://localhost:3000/products/67f8ec8aaf6bfc397a056b7f
 
 ### Get Product by Product ID
 GET http://localhost:3000/products/productID/PR-00001

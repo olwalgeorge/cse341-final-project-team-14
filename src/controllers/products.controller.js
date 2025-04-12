@@ -6,15 +6,15 @@ const {
   getAllProductsService,
   getProductByIdService,
   getProductsByCategoryService,
-  getProductByProductIDService,
+  getProductByProductIDService,  
   createProductService,
   updateProductService,
   deleteProductService,
   deleteAllProductsService,
   searchProductsService,
   getProductsBySupplierService,
-} = require("../services/products.service");
-const { transformProduct, generateProductId } = require("../utils/product.utils");
+} = require("../services/products.service.js");
+const { transformProduct, generateProductId } = require("../utils/product.utils.js");
 
 /**
  * @desc    Get all products
@@ -24,14 +24,26 @@ const { transformProduct, generateProductId } = require("../utils/product.utils"
 const getAllProducts = asyncHandler(async (req, res, next) => {
   logger.info("getAllProducts called");
   try {
-    const products = await getAllProductsService();
-    const transformedProducts = products.map(transformProduct);
-    sendResponse(
-      res,
-      200,
-      "Products retrieved successfully",
-      transformedProducts
-    );
+    // Get query parameters for filtering
+    const filters = req.query;
+    logger.debug("Filters applied:", filters);
+
+    // Call the service to get products
+    const result = await getAllProductsService(filters);
+    
+    // Ensure result is properly structured with an array of products
+    if (!result || !result.products || !Array.isArray(result.products)) {
+      logger.error("Products data is not in expected format:", result);
+      return next(DatabaseError.dataError("Products data is not in expected format"));
+    }
+    
+    // Transform each product in the array
+    const transformedProducts = result.products.map(transformProduct);
+
+    sendResponse(res, 200, "Products retrieved successfully", {
+      products: transformedProducts,
+      pagination: result.pagination
+    });
   } catch (error) {
     logger.error("Error retrieving all products:", error);
     next(error);
@@ -70,25 +82,33 @@ const getProductById = asyncHandler(async (req, res, next) => {
  * @access  Public
  */
 const getProductsByCategory = asyncHandler(async (req, res, next) => {
-  logger.info(
-    `getProductsByCategory called with category: ${req.params.category}`
-  );
+  const category = req.params.category;
+  logger.info(`getProductsByCategory called with category: ${category}`);
+  
   try {
-    const products = await getProductsByCategoryService(req.params.category);
-    if (products && products.length > 0) {
-      const transformedProducts = products.map(transformProduct);
-      sendResponse(
-        res,
-        200,
-        "Products retrieved successfully",
-        transformedProducts
-      );
-    } else {
-      return next(DatabaseError.notFound("Products in category"));
+    // Pass query parameters for pagination and sorting
+    const result = await getProductsByCategoryService(category, req.query);
+    
+    if (!result || !result.products || result.products.length === 0) {
+      logger.warn(`No products found in category: ${category}`);
+      return next(DatabaseError.notFound(`Products in category '${category}'`));
     }
+    
+    // Transform each product
+    const transformedProducts = result.products.map(transformProduct);
+    
+    sendResponse(
+      res,
+      200,
+      `Found ${transformedProducts.length} products in category '${category}'`,
+      {
+        products: transformedProducts,
+        pagination: result.pagination
+      }
+    );
   } catch (error) {
     logger.error(
-      `Error retrieving products in category: ${req.params.category}`,
+      `Error retrieving products in category: ${category}`,
       error
     );
     next(error);
@@ -102,7 +122,7 @@ const getProductsByCategory = asyncHandler(async (req, res, next) => {
  */
 const getProductByProductID = asyncHandler(async (req, res, next) => {
   logger.info(
-    `getProductByProductID called with product ID: ${req.params.productID}`
+    `getProductByProductId called with product ID: ${req.params.productID}`
   );
   try {
     const product = await getProductByProductIDService(req.params.productID);
@@ -132,23 +152,45 @@ const getProductByProductID = asyncHandler(async (req, res, next) => {
  * @access  Public
  */
 const searchProducts = asyncHandler(async (req, res, next) => {
-  logger.info("searchProducts called");
-  try {
-    const term = req.query.term;
-    if (!term) {
-      return next(ValidationError.badRequest("Search term is required"));
-    }
+  const term = req.query.term;
+  logger.info(`searchProducts called with term: ${term}`);
+  
+  if (!term) {
+    logger.warn("Search attempted without search term");
+    return next(ValidationError.badRequest("Search term is required"));
+  }
 
-    const products = await searchProductsService(term);
-    const transformedProducts = products.map(transformProduct);
+  try {
+    // Pass both search term and query parameters for pagination
+    const result = await searchProductsService(term, req.query);
+    
+    if (!result || !result.products) {
+      logger.error("Search returned invalid result structure");
+      return next(DatabaseError.dataError("Search result is not in expected format"));
+    }
+    
+    if (result.products.length === 0) {
+      logger.info(`No products found for search term: ${term}`);
+      return sendResponse(res, 200, "No products found matching your search", {
+        products: [],
+        pagination: result.pagination
+      });
+    }
+    
+    // Transform each product
+    const transformedProducts = result.products.map(transformProduct);
+    
     sendResponse(
       res,
       200,
-      "Products retrieved successfully",
-      transformedProducts
+      `Found ${transformedProducts.length} products matching "${term}"`,
+      {
+        products: transformedProducts,
+        pagination: result.pagination
+      }
     );
   } catch (error) {
-    logger.error("Error searching products:", error);
+    logger.error(`Error searching products for term: ${term}`, error);
     next(error);
   }
 });
@@ -217,7 +259,7 @@ const createProduct = asyncHandler(async (req, res, next) => {
  * @access  Private
  */
 const updateProductById = asyncHandler(async (req, res, next) => {
-  logger.info(`updateProductById called with ID: ${req.params.product_Id}`);
+  logger.info(`updateProduct called with ID: ${req.params.product_Id}`);
   logger.debug("Update data:", req.body);
   try {
     const product = await updateProductService(req.params.product_Id, req.body);
@@ -244,7 +286,7 @@ const updateProductById = asyncHandler(async (req, res, next) => {
  * @access  Private
  */
 const deleteProductById = asyncHandler(async (req, res, next) => {
-  logger.info(`deleteProductById called with ID: ${req.params.product_Id}`);
+  logger.info(`deleteProduct called with ID: ${req.params.product_Id}`);
   try {
     const result = await deleteProductService(req.params.product_Id);
     if (result.deletedCount > 0) {

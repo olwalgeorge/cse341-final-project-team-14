@@ -13,7 +13,7 @@ const productIDValidationRules = () => {
 };
 
 const product_IdValidationRules = () => {
-  return [isMongoIdParam("_id", "Invalid Product ID format")];
+  return [isMongoIdParam("product_Id", "Invalid Product ID format")];
 };
 
 const supplierIdValidationRules = () => {

@@ -1,54 +1,65 @@
-const Product = require("../models/product.model");
-const logger = require("../utils/logger");
+const Product = require("../models/product.model.js");
+const logger = require("../utils/logger.js");
 const APIFeatures = require("../utils/apiFeatures.js");
 
 /**
- * Get all products with optional filtering, pagination, and sorting
+ * Get all products with optional filtering and pagination
+ * @param {Object} filters - Query filters like category, minPrice, maxPrice, etc.
+ * @returns {Promise<Object>} - Object containing products array and pagination info
  */
-const getAllProductsService = async (query = {}) => {
+const getAllProductsService = async (filters = {}) => {
+  logger.debug("getAllProductsService called with filters:", filters);
+  
   try {
-    // Define custom filters mapping
-    const customFilters = {
-      category: 'category',
-      supplier: 'supplier',
-      minPrice: {
-        field: 'sellingPrice',
-        transform: (value) => ({ $gte: parseFloat(value) })
-      },
-      maxPrice: {
-        field: 'sellingPrice',
-        transform: (value) => ({ $lte: parseFloat(value) })
-      },
-      inStock: {
-        field: 'inStock',
-        transform: (value) => value === 'true'
-      }
-    };
-
-    // Build filter using APIFeatures utility
-    const filter = APIFeatures.buildFilter(query, customFilters);
-
-    // Get pagination parameters
-    const pagination = APIFeatures.getPagination(query);
+    const page = parseInt(filters.page) || 1;
+    const limit = parseInt(filters.limit) || 10;
+    const skip = (page - 1) * limit;
     
-    // Get sort parameters with default sort by name
-    const sort = APIFeatures.getSort(query, 'name');
-
-    // Execute query
-    const products = await Product.find(filter)
-      .sort(sort)
-      .skip(pagination.skip)
-      .limit(pagination.limit);
-
+    // Build query based on filters
+    const query = {};
+    
+    // Add category filter if provided
+    if (filters.category) {
+      query.category = filters.category;
+    }
+    
+    // Add price range filters if provided
+    if (filters.minPrice || filters.maxPrice) {
+      query.sellingPrice = {};
+      if (filters.minPrice) query.sellingPrice.$gte = parseFloat(filters.minPrice);
+      if (filters.maxPrice) query.sellingPrice.$lte = parseFloat(filters.maxPrice);
+    }
+    
+    // Add stock filter if provided
+    if (filters.inStock === 'true') {
+      query.stockQuantity = { $gt: 0 };
+    } else if (filters.inStock === 'false') {
+      query.stockQuantity = { $lte: 0 };
+    }
+    
+    // Execute query with pagination
+    const products = await Product.find(query)
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit)
+      .lean();
+    
     // Get total count for pagination
-    const total = await Product.countDocuments(filter);
-
+    const total = await Product.countDocuments(query);
+    
+    // Return structured result with products array and pagination info
     return {
-      products,
-      pagination: APIFeatures.paginationResult(total, pagination)
+      products: products || [], // Ensure we always return an array, even if empty
+      pagination: {
+        total,
+        page,
+        limit,
+        pages: Math.ceil(total / limit)
+      }
     };
   } catch (error) {
     logger.error("Error in getAllProductsService:", error);
+    // Rethrow to be handled by the controller
     throw error;
   }
 };
@@ -68,20 +79,25 @@ const getProductsByCategoryService = async (category, query = {}) => {
   try {
     logger.debug(`getProductsByCategoryService called with category: ${category}`);
     
+    // Create case-insensitive query to handle different capitalizations
+    const categoryRegex = new RegExp(`^${category}$`, 'i');
+    
     // Get pagination parameters
     const pagination = APIFeatures.getPagination(query);
     
     // Get sort parameters with default sort by name
     const sort = APIFeatures.getSort(query, 'name');
 
-    // Execute query
-    const products = await Product.find({ category: category })
+    // Execute query with case-insensitive matching
+    const products = await Product.find({ category: categoryRegex })
       .sort(sort)
       .skip(pagination.skip)
       .limit(pagination.limit);
 
+    logger.debug(`Found ${products.length} products in category: ${category}`);
+    
     // Get total count for pagination
-    const total = await Product.countDocuments({ category: category });
+    const total = await Product.countDocuments({ category: categoryRegex });
 
     return {
       products,
@@ -95,38 +111,85 @@ const getProductsByCategoryService = async (category, query = {}) => {
 
 /**
  * Get product by product ID (PR-XXXXX format)
+ * @param {string} productID - The product ID in PR-XXXXX format
+ * @returns {Promise<Object|null>} - The product object or null if not found
  */
 const getProductByProductIDService = async (productID) => {
-  logger.debug(`getProductByProductIDService called with product ID: ${productID}`);
-  return await Product.findOne({ productID: productID });
+  logger.debug(`getProductByProductIDService called with productID: ${productID}`);
+  
+  try {
+    // Check if the productID matches the expected format (PR-XXXXX)
+    if (!productID || !productID.match(/^PR-\d{5}$/)) {
+      logger.warn(`Invalid productID format: ${productID}`);
+      return null;
+    }
+
+    // Find the product by productID
+    const product = await Product.findOne({ productID });
+    
+    if (!product) {
+      logger.warn(`No product found with productID: ${productID}`);
+      return null;
+    }
+    
+    logger.debug(`Product found with productID: ${productID}`);
+    return product;
+  } catch (error) {
+    logger.error(`Error in getProductByProductIdService for productID ${productID}:`, error);
+    throw error;
+  }
 };
 
 /**
- * Search products by text (searches name, description, category)
- * with pagination and sorting
+ * Search products by text (searches name, description, category, and tags)
  */
 const searchProductsService = async (term, query = {}) => {
   try {
     logger.debug(`searchProductsService called with term: ${term}`);
     
+    if (!term) {
+      logger.warn("Search called with empty term");
+      return { products: [], pagination: { total: 0, page: 1, limit: 10, pages: 0 } };
+    }
+    
     // Get pagination parameters
-    const pagination = APIFeatures.getPagination(query);
+    const page = parseInt(query.page) || 1;
+    const limit = parseInt(query.limit) || 10;
+    const skip = (page - 1) * limit;
 
-    // Execute text search query with text score sorting
-    const products = await Product.find(
-      { $text: { $search: term } },
-      { score: { $meta: "textScore" } }
-    )
-    .sort({ score: { $meta: "textScore" } })
-    .skip(pagination.skip)
-    .limit(pagination.limit);
-
+    // Create a case-insensitive regex for the search term
+    const regex = new RegExp(term, "i");
+    
+    // Create a query that searches in name, description, category, and tags
+    const searchQuery = {
+      $or: [
+        { name: regex },
+        { description: regex },
+        { category: regex },
+        { tags: regex }  // This will match if any tag in the array matches the regex
+      ]
+    };
+    
+    // Execute the search query with pagination
+    const products = await Product.find(searchQuery)
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit)
+      .lean();
+    
     // Get total count for pagination
-    const total = await Product.countDocuments({ $text: { $search: term } });
-
+    const total = await Product.countDocuments(searchQuery);
+    
+    logger.debug(`Found ${products.length} products matching "${term}"`);
+    
     return {
       products,
-      pagination: APIFeatures.paginationResult(total, pagination)
+      pagination: {
+        total,
+        page,
+        limit,
+        pages: Math.ceil(total / limit)
+      }
     };
   } catch (error) {
     logger.error(`Error in searchProductsService for term ${term}:`, error);
@@ -205,7 +268,7 @@ const deleteAllProductsService = async () => {
 
 module.exports = {
   getAllProductsService,
-  getProductByIdService,
+  getProductByIdService,  
   getProductsByCategoryService,
   getProductByProductIDService,
   getProductsBySupplierService,

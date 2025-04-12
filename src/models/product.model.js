@@ -98,8 +98,11 @@ productSchema.pre("save", function (next) {
   next();
 });
 
-// Add text index for search functionality
-productSchema.index({ name: "text", description: "text", category: "text" });
+// Make sure a text index exists on relevant fields for search
+productSchema.index(
+  { name: 'text', description: 'text', category: 'text', tags: 'text' },
+  { weights: { name: 10, description: 5, category: 3, tags: 2 } }
+);
 
 const Product = mongoose.model("Product", productSchema);
 

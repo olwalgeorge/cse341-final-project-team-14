@@ -22,7 +22,7 @@ const getUserByUserIdService = async (userId) => {
   }
 };
 
-const updateUserProfileService = async (id, updates) => {
+const updateUserService = async (id, updates) => {
   logger.debug(`updateUserProfileService called with ID: ${id}`);
   try {
     return await User.findByIdAndUpdate(id, updates, {
@@ -59,22 +59,15 @@ const deleteAllUsersService = async () => {
   return await User.deleteMany({});
 };
 
-const updateUserByIdService = async (id, updates) => {
-  return await User.findByIdAndUpdate(id, updates, {
-    new: true,
-    runValidators: true,
-  });
-};
-
 module.exports = {
   getUserByIdService,
   getUserByUserIdService,
-  updateUserProfileService,
+ 
   deleteUserByIdService,
   getAllUsersService,
   getUserByUsernameService,
   getUserByEmailService,
   getUsersByRoleService,
   deleteAllUsersService,
-  updateUserByIdService,
+  updateUserService,
 };

@@ -11,8 +11,8 @@ const {
   getUserByEmailService,
   getUsersByRoleService,
   deleteAllUsersService,
-  updateUserByIdService,
-  updateUserProfileService,
+  updateUserService,
+ 
 } = require("../services/users.service");
 const { transformUser, transformUserData } = require("../utils/user.utils.js");
 
@@ -70,7 +70,7 @@ const updateUserProfile = asyncHandler(async (req, res, next) => {
     const updates = transformUserData(req.body);
     
     // Make sure we're using the Mongoose ObjectId from the authenticated user
-    const user = await updateUserProfileService(req.user._id, updates);
+    const user = await updateUserService(req.user._id, updates);
     if (!user) {
       logger.warn(`User found in session but not in database: ${req.user._id}`);
       return next(DatabaseError.notFound("User"));
@@ -253,30 +253,6 @@ const deleteAllUsers = asyncHandler(async (req, res, next) => {
   }
 });
 
-const updateUser = async (userId, updates, next) => {
-  try {
-    // Log the userId being passed to help with debugging
-    logger.debug(`updateUser helper called with userId: ${userId}`);
-    
-    if (!userId) {
-      logger.error("updateUser called with undefined or null userId");
-      return next(DatabaseError.notFound("User - Invalid ID provided"));
-    }
-    
-    const user = await updateUserByIdService(userId, updates);
-
-    if (!user) {
-      logger.error(`User with ID ${userId} not found in database`);
-      return next(DatabaseError.notFound("User"));
-    }
-
-    const transformedUser = transformUser(user);
-    return transformedUser;
-  } catch (error) {
-    logger.error(`Error updating user with ID: ${userId}`, error);
-    throw error; // Rethrow the error instead of calling next
-  }
-};
 
 /**
  * @desc    Update user by ID
@@ -284,25 +260,24 @@ const updateUser = async (userId, updates, next) => {
  * @access  Private
  */
 const updateUserById = asyncHandler(async (req, res, next) => {
-  const userId = req.params.user_Id;
-  logger.info(`updateUserById called with ID: ${userId}`);
-  
-  if (!userId) {
-    return next(DatabaseError.notFound("User - Missing ID parameter"));
-  }
-  
+  logger.info(`updateUserById called with ID: ${req.params.user_Id}`);
+  logger.debug("Update data:", req.body);
   try {
     const updates = transformUserData(req.body);
-    logger.debug(`Update data: ${JSON.stringify(updates)}`);
-
-    const transformedUser = await updateUser(userId, updates, next);
-    
-    // Only send a response if one hasn't been sent already (by the next handler)
-    if (transformedUser) {
-      sendResponse(res, 200, "User updated successfully", transformedUser);
+    const user = await updateUserService(req.params.user_Id, updates);
+    if (user) {
+      const transformedUser = transformUser(user);
+      sendResponse(
+        res,
+        200,
+        "User updated successfully",
+        transformedUser
+      );
+    } else {
+      return next(DatabaseError.notFound("User"));
     }
   } catch (error) {
-    logger.error(`Error updating user with ID: ${userId}`, error);
+    logger.error(`Error updating user with ID: ${req.params.user_Id}`, error);
     next(error);
   }
 });

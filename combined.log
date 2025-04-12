@@ -6322,3 +6322,345 @@ CastError: Cast to ObjectId failed for value "67f617982c3fee8a407c80" (type stri
 2025-04-12 10:52:45 DEBUG [inventory-api]: Auth check: 
 2025-04-12 10:52:45 INFO [inventory-api]: User superadmin is authenticated 
 2025-04-12 10:52:45 INFO [inventory-api]: deleteUserById called with ID: 67f617982c3fee8a407c807c 
+2025-04-12 10:54:07 DEBUG [inventory-api]: Deserialized user: superadmin (67f2dd0039ca31d92f2b921a) 
+2025-04-12 10:54:07 DEBUG [inventory-api]: Session: 
+2025-04-12 10:54:07 INFO [inventory-api]: getAllProducts called 
+2025-04-12 10:54:07 DEBUG [inventory-api]: Built filter: 
+2025-04-12 10:54:08 ERROR [inventory-api]: Error retrieving all products: products.map is not a function 
+TypeError: products.map is not a function
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\products.controller.js:28:42
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-04-12 10:54:08 ERROR [inventory-api]: products.map is not a function - GET /products 
+2025-04-12 11:21:22 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-12 11:21:25 INFO [inventory-api]: MongoDB Connected: cluster0-shard-00-00.wncfx.mongodb.net 
+2025-04-12 11:21:48 DEBUG [inventory-api]: Deserialized user: superadmin (67f2dd0039ca31d92f2b921a) 
+2025-04-12 11:21:48 DEBUG [inventory-api]: Session: 
+2025-04-12 11:21:48 INFO [inventory-api]: searchProducts called 
+2025-04-12 11:21:48 DEBUG [inventory-api]: searchProductsService called with term: laptop 
+2025-04-12 11:21:49 ERROR [inventory-api]: Error searching products: products.map is not a function 
+TypeError: products.map is not a function
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\products.controller.js:155:42
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-04-12 11:21:49 ERROR [inventory-api]: products.map is not a function - GET /products/search?term=laptop 
+2025-04-12 11:22:03 DEBUG [inventory-api]: Deserialized user: superadmin (67f2dd0039ca31d92f2b921a) 
+2025-04-12 11:22:03 DEBUG [inventory-api]: Session: 
+2025-04-12 11:22:03 WARN [inventory-api]: Validation failed 
+2025-04-12 11:22:32 DEBUG [inventory-api]: Deserialized user: superadmin (67f2dd0039ca31d92f2b921a) 
+2025-04-12 11:22:32 DEBUG [inventory-api]: Session: 
+2025-04-12 11:22:32 INFO [inventory-api]: getAllProducts called 
+2025-04-12 11:22:32 DEBUG [inventory-api]: Filters applied: 
+2025-04-12 11:22:32 DEBUG [inventory-api]: getAllProductsService called with filters: 
+2025-04-12 11:23:18 DEBUG [inventory-api]: Deserialized user: superadmin (67f2dd0039ca31d92f2b921a) 
+2025-04-12 11:23:18 DEBUG [inventory-api]: Session: 
+2025-04-12 11:23:18 INFO [inventory-api]: searchProducts called 
+2025-04-12 11:23:18 DEBUG [inventory-api]: searchProductsService called with term: laptop 
+2025-04-12 11:23:18 ERROR [inventory-api]: Error searching products: products.map is not a function 
+TypeError: products.map is not a function
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\products.controller.js:155:42
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-04-12 11:23:18 ERROR [inventory-api]: products.map is not a function - GET /products/search?term=laptop 
+2025-04-12 11:23:24 DEBUG [inventory-api]: Deserialized user: superadmin (67f2dd0039ca31d92f2b921a) 
+2025-04-12 11:23:24 DEBUG [inventory-api]: Session: 
+2025-04-12 11:23:24 WARN [inventory-api]: Validation failed 
+2025-04-12 11:23:28 DEBUG [inventory-api]: Deserialized user: superadmin (67f2dd0039ca31d92f2b921a) 
+2025-04-12 11:23:28 DEBUG [inventory-api]: Session: 
+2025-04-12 11:23:28 WARN [inventory-api]: Validation failed 
+2025-04-12 11:24:03 DEBUG [inventory-api]: Deserialized user: superadmin (67f2dd0039ca31d92f2b921a) 
+2025-04-12 11:24:03 DEBUG [inventory-api]: Session: 
+2025-04-12 11:24:03 INFO [inventory-api]: getAllProducts called 
+2025-04-12 11:24:03 DEBUG [inventory-api]: Filters applied: 
+2025-04-12 11:24:03 DEBUG [inventory-api]: getAllProductsService called with filters: 
+2025-04-12 11:24:13 DEBUG [inventory-api]: Deserialized user: superadmin (67f2dd0039ca31d92f2b921a) 
+2025-04-12 11:24:13 DEBUG [inventory-api]: Session: 
+2025-04-12 11:24:13 INFO [inventory-api]: getProductByProductId called with product ID: PR-00001 
+2025-04-12 11:24:13 DEBUG [inventory-api]: getProductByProductIDService called with productID: PR-00001 
+2025-04-12 11:24:13 DEBUG [inventory-api]: Product found with productID: PR-00001 
+2025-04-12 11:24:19 DEBUG [inventory-api]: Deserialized user: superadmin (67f2dd0039ca31d92f2b921a) 
+2025-04-12 11:24:19 DEBUG [inventory-api]: Session: 
+2025-04-12 11:24:19 INFO [inventory-api]: getProductsByCategory called with category: Electronics 
+2025-04-12 11:24:19 DEBUG [inventory-api]: getProductsByCategoryService called with category: Electronics 
+2025-04-12 11:24:20 ERROR [inventory-api]: Products in category not found - GET /products/category/Electronics 
+2025-04-12 11:25:01 DEBUG [inventory-api]: Deserialized user: superadmin (67f2dd0039ca31d92f2b921a) 
+2025-04-12 11:25:01 DEBUG [inventory-api]: Session: 
+2025-04-12 11:25:01 INFO [inventory-api]: getAllProducts called 
+2025-04-12 11:25:01 DEBUG [inventory-api]: Filters applied: 
+2025-04-12 11:25:01 DEBUG [inventory-api]: getAllProductsService called with filters: 
+2025-04-12 11:25:12 DEBUG [inventory-api]: Deserialized user: superadmin (67f2dd0039ca31d92f2b921a) 
+2025-04-12 11:25:12 DEBUG [inventory-api]: Session: 
+2025-04-12 11:25:12 INFO [inventory-api]: searchProducts called 
+2025-04-12 11:25:12 DEBUG [inventory-api]: searchProductsService called with term: laptop 
+2025-04-12 11:25:12 ERROR [inventory-api]: Error searching products: products.map is not a function 
+TypeError: products.map is not a function
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\products.controller.js:155:42
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-04-12 11:25:12 ERROR [inventory-api]: products.map is not a function - GET /products/search?term=laptop 
+2025-04-12 11:25:27 DEBUG [inventory-api]: Deserialized user: superadmin (67f2dd0039ca31d92f2b921a) 
+2025-04-12 11:25:27 DEBUG [inventory-api]: Session: 
+2025-04-12 11:25:27 INFO [inventory-api]: getProductsBySupplier called with supplier ID: 67f66c737ed7ddb60e54af6f 
+2025-04-12 11:25:27 DEBUG [inventory-api]: getProductsBySupplierService called with supplier ID: 67f66c737ed7ddb60e54af6f 
+2025-04-12 11:25:27 ERROR [inventory-api]: Products for supplier not found - GET /products/supplier/67f66c737ed7ddb60e54af6f 
+2025-04-12 11:26:12 DEBUG [inventory-api]: Deserialized user: superadmin (67f2dd0039ca31d92f2b921a) 
+2025-04-12 11:26:12 DEBUG [inventory-api]: Session: 
+2025-04-12 11:26:12 WARN [inventory-api]: Validation failed 
+2025-04-12 11:30:38 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-12 11:30:42 INFO [inventory-api]: MongoDB Connected: cluster0-shard-00-01.wncfx.mongodb.net 
+2025-04-12 11:30:42 DEBUG [inventory-api]: Deserialized user: superadmin (67f2dd0039ca31d92f2b921a) 
+2025-04-12 11:30:42 DEBUG [inventory-api]: Session: 
+2025-04-12 11:30:42 INFO [inventory-api]: getAllProducts called 
+2025-04-12 11:30:42 DEBUG [inventory-api]: Filters applied: 
+2025-04-12 11:30:42 DEBUG [inventory-api]: getAllProductsService called with filters: 
+2025-04-12 11:30:56 DEBUG [inventory-api]: Deserialized user: superadmin (67f2dd0039ca31d92f2b921a) 
+2025-04-12 11:30:56 DEBUG [inventory-api]: Session: 
+2025-04-12 11:30:56 WARN [inventory-api]: Validation failed 
+2025-04-12 11:34:16 DEBUG [inventory-api]: Deserialized user: superadmin (67f2dd0039ca31d92f2b921a) 
+2025-04-12 11:34:16 DEBUG [inventory-api]: Session: 
+2025-04-12 11:34:16 INFO [inventory-api]: getProductByProductId called with product ID: PR-00001 
+2025-04-12 11:34:16 DEBUG [inventory-api]: getProductByProductIDService called with productID: PR-00001 
+2025-04-12 11:34:16 DEBUG [inventory-api]: Product found with productID: PR-00001 
+2025-04-12 11:34:31 DEBUG [inventory-api]: Deserialized user: superadmin (67f2dd0039ca31d92f2b921a) 
+2025-04-12 11:34:31 DEBUG [inventory-api]: Session: 
+2025-04-12 11:34:31 INFO [inventory-api]: getAllProducts called 
+2025-04-12 11:34:31 DEBUG [inventory-api]: Filters applied: 
+2025-04-12 11:34:31 DEBUG [inventory-api]: getAllProductsService called with filters: 
+2025-04-12 11:34:48 DEBUG [inventory-api]: Deserialized user: superadmin (67f2dd0039ca31d92f2b921a) 
+2025-04-12 11:34:48 DEBUG [inventory-api]: Session: 
+2025-04-12 11:34:48 WARN [inventory-api]: Validation failed 
+2025-04-12 11:35:26 DEBUG [inventory-api]: Deserialized user: superadmin (67f2dd0039ca31d92f2b921a) 
+2025-04-12 11:35:26 DEBUG [inventory-api]: Session: 
+2025-04-12 11:35:26 INFO [inventory-api]: getProductByProductId called with product ID: PR-00001 
+2025-04-12 11:35:26 DEBUG [inventory-api]: getProductByProductIDService called with productID: PR-00001 
+2025-04-12 11:35:26 DEBUG [inventory-api]: Product found with productID: PR-00001 
+2025-04-12 11:35:44 DEBUG [inventory-api]: Deserialized user: superadmin (67f2dd0039ca31d92f2b921a) 
+2025-04-12 11:35:44 DEBUG [inventory-api]: Session: 
+2025-04-12 11:35:44 WARN [inventory-api]: Validation failed 
+2025-04-12 11:42:48 DEBUG [inventory-api]: Deserialized user: superadmin (67f2dd0039ca31d92f2b921a) 
+2025-04-12 11:42:48 DEBUG [inventory-api]: Session: 
+2025-04-12 11:42:48 DEBUG [inventory-api]: Auth check: 
+2025-04-12 11:42:48 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 11:42:48 INFO [inventory-api]: getUserProfile called for user superadmin (ID: 67f2dd0039ca31d92f2b921a, userID: SM-00006) 
+2025-04-12 11:42:48 DEBUG [inventory-api]: getUserByIdService called with ID: 67f2dd0039ca31d92f2b921a 
+2025-04-12 11:42:53 DEBUG [inventory-api]: Deserialized user: superadmin (67f2dd0039ca31d92f2b921a) 
+2025-04-12 11:42:53 DEBUG [inventory-api]: Session: 
+2025-04-12 11:42:53 DEBUG [inventory-api]: Auth check: 
+2025-04-12 11:42:53 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 11:42:53 INFO [inventory-api]: updateUserProfile called for user superadmin (ID: 67f2dd0039ca31d92f2b921a, userID: SM-00006) 
+2025-04-12 11:42:53 DEBUG [inventory-api]: Request body: 
+2025-04-12 11:42:53 DEBUG [inventory-api]: updateUserProfileService called with ID: 67f2dd0039ca31d92f2b921a 
+2025-04-12 11:43:16 DEBUG [inventory-api]: Deserialized user: superadmin (67f2dd0039ca31d92f2b921a) 
+2025-04-12 11:43:16 DEBUG [inventory-api]: Session: 
+2025-04-12 11:43:16 DEBUG [inventory-api]: Auth check: 
+2025-04-12 11:43:16 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 11:43:16 INFO [inventory-api]: updateUserById called with ID: 67f617982c3fee8a407c807c 
+2025-04-12 11:43:16 DEBUG [inventory-api]: Update data: {"fullName":"Super Admin Updated","role":"SUPERADMIN"} 
+2025-04-12 11:43:16 DEBUG [inventory-api]: updateUser helper called with userId: 67f617982c3fee8a407c807c 
+2025-04-12 11:43:16 ERROR [inventory-api]: User with ID 67f617982c3fee8a407c807c not found in database 
+2025-04-12 11:43:16 ERROR [inventory-api]: User not found - PUT /users/67f617982c3fee8a407c807c 
+2025-04-12 11:43:26 DEBUG [inventory-api]: Deserialized user: superadmin (67f2dd0039ca31d92f2b921a) 
+2025-04-12 11:43:26 DEBUG [inventory-api]: Session: 
+2025-04-12 11:43:26 DEBUG [inventory-api]: Auth check: 
+2025-04-12 11:43:26 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 11:43:26 INFO [inventory-api]: updateUserById called with ID: 67f617982c3fee8a407c807c 
+2025-04-12 11:43:26 DEBUG [inventory-api]: Update data: {"fullName":"Super Admin Updated","role":"SUPERADMIN"} 
+2025-04-12 11:43:26 DEBUG [inventory-api]: updateUser helper called with userId: 67f617982c3fee8a407c807c 
+2025-04-12 11:43:26 ERROR [inventory-api]: User with ID 67f617982c3fee8a407c807c not found in database 
+2025-04-12 11:43:26 ERROR [inventory-api]: User not found - PUT /users/67f617982c3fee8a407c807c 
+2025-04-12 11:56:44 DEBUG [inventory-api]: Deserialized user: superadmin (67f2dd0039ca31d92f2b921a) 
+2025-04-12 11:56:44 DEBUG [inventory-api]: Session: 
+2025-04-12 11:56:44 INFO [inventory-api]: getAllInventory called 
+2025-04-12 11:57:04 DEBUG [inventory-api]: Deserialized user: superadmin (67f2dd0039ca31d92f2b921a) 
+2025-04-12 11:57:04 DEBUG [inventory-api]: Session: 
+2025-04-12 11:57:04 INFO [inventory-api]: getInventoryByInventoryID called with inventory ID: IN-00001 
+2025-04-12 11:57:18 DEBUG [inventory-api]: Deserialized user: superadmin (67f2dd0039ca31d92f2b921a) 
+2025-04-12 11:57:18 DEBUG [inventory-api]: Session: 
+2025-04-12 11:57:18 INFO [inventory-api]: getInventoryByWarehouse called with warehouse ID: 67f8e3c85b1777f2f72ac8e9 
+2025-04-12 11:57:24 DEBUG [inventory-api]: Deserialized user: superadmin (67f2dd0039ca31d92f2b921a) 
+2025-04-12 11:57:24 DEBUG [inventory-api]: Session: 
+2025-04-12 11:57:24 INFO [inventory-api]: getInventoryByProduct called with product ID: 67f8ec8aaf6bfc397a056b7f 
+2025-04-12 11:57:39 DEBUG [inventory-api]: Deserialized user: superadmin (67f2dd0039ca31d92f2b921a) 
+2025-04-12 11:57:39 DEBUG [inventory-api]: Session: 
+2025-04-12 11:57:39 INFO [inventory-api]: getInventoryByStockStatus called with status: Low Stock 
+2025-04-12 12:01:59 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-12 12:02:02 INFO [inventory-api]: MongoDB Connected: cluster0-shard-00-00.wncfx.mongodb.net 
+2025-04-12 12:02:26 DEBUG [inventory-api]: Deserialized user: superadmin (67f2dd0039ca31d92f2b921a) 
+2025-04-12 12:02:26 DEBUG [inventory-api]: Session: 
+2025-04-12 12:02:26 DEBUG [inventory-api]: Auth check: 
+2025-04-12 12:02:26 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 12:02:26 INFO [inventory-api]: getUserById called with ID: SM-00001 
+2025-04-12 12:02:26 DEBUG [inventory-api]: Request body: 
+2025-04-12 12:02:26 DEBUG [inventory-api]: getUserByUserIdService called with userID: SM-00001 
+2025-04-12 12:02:49 DEBUG [inventory-api]: Deserialized user: superadmin (67f2dd0039ca31d92f2b921a) 
+2025-04-12 12:02:49 DEBUG [inventory-api]: Session: 
+2025-04-12 12:02:49 DEBUG [inventory-api]: Auth check: 
+2025-04-12 12:02:49 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 12:02:49 INFO [inventory-api]: updateUserById called with ID: 67f617982c3fee8a407c807c 
+2025-04-12 12:02:49 DEBUG [inventory-api]: Update data: 
+2025-04-12 12:02:50 ERROR [inventory-api]: User not found - PUT /users/67f617982c3fee8a407c807c 
+2025-04-12 12:12:26 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-12 12:12:29 INFO [inventory-api]: MongoDB Connected: cluster0-shard-00-01.wncfx.mongodb.net 
+2025-04-12 12:14:32 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-12 12:14:35 INFO [inventory-api]: MongoDB Connected: cluster0-shard-00-00.wncfx.mongodb.net 
+2025-04-12 12:14:48 DEBUG [inventory-api]: Deserialized user: superadmin (67f2dd0039ca31d92f2b921a) 
+2025-04-12 12:14:48 DEBUG [inventory-api]: Session: 
+2025-04-12 12:14:48 DEBUG [inventory-api]: Auth check: 
+2025-04-12 12:14:48 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 12:14:48 INFO [inventory-api]: updateUserById called with ID: 67f617982c3fee8a407c807c 
+2025-04-12 12:14:48 DEBUG [inventory-api]: Update data: 
+2025-04-12 12:14:48 ERROR [inventory-api]: User not found - PUT /users/67f617982c3fee8a407c807c 
+2025-04-12 12:18:49 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-12 12:18:53 INFO [inventory-api]: MongoDB Connected: cluster0-shard-00-02.wncfx.mongodb.net 
+2025-04-12 12:19:54 DEBUG [inventory-api]: Deserialized user: superadmin (67f2dd0039ca31d92f2b921a) 
+2025-04-12 12:19:54 DEBUG [inventory-api]: Session: 
+2025-04-12 12:19:54 DEBUG [inventory-api]: Auth check: 
+2025-04-12 12:19:54 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 12:19:54 INFO [inventory-api]: getUserProfile called for user superadmin (ID: 67f2dd0039ca31d92f2b921a, userID: SM-00006) 
+2025-04-12 12:19:54 DEBUG [inventory-api]: getUserByIdService called with ID: 67f2dd0039ca31d92f2b921a 
+2025-04-12 12:20:22 DEBUG [inventory-api]: Deserialized user: superadmin (67f2dd0039ca31d92f2b921a) 
+2025-04-12 12:20:22 DEBUG [inventory-api]: Session: 
+2025-04-12 12:20:22 DEBUG [inventory-api]: Auth check: 
+2025-04-12 12:20:22 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 12:20:22 INFO [inventory-api]: deleteUserById called with ID: 67f2dd0039ca31d92f2b921a 
+2025-04-12 12:21:03 WARN [inventory-api]: Failed to deserialize user: User with ID 67f2dd0039ca31d92f2b921a not found 
+2025-04-12 12:21:03 DEBUG [inventory-api]: Session: 
+2025-04-12 12:21:03 WARN [inventory-api]: Login failed: No account found for email - omondi@example.com 
+2025-04-12 12:21:03 ERROR [inventory-api]: No account found with this email - POST /auth/login 
+2025-04-12 12:21:32 DEBUG [inventory-api]: Session: 
+2025-04-12 12:21:32 DEBUG [inventory-api]: Auth check: 
+2025-04-12 12:21:32 WARN [inventory-api]: Authentication failed - no session 
+2025-04-12 12:21:32 ERROR [inventory-api]: Authentication required - PUT /users/profile 
+2025-04-12 12:22:04 DEBUG [inventory-api]: Session: 
+2025-04-12 12:22:04 INFO [inventory-api]: Register endpoint called 
+2025-04-12 12:22:04 DEBUG [inventory-api]: Request body: 
+2025-04-12 12:22:05 INFO [inventory-api]: User registered successfully: superadmin 
+2025-04-12 12:22:05 DEBUG [inventory-api]: Serializing user: 67fa30bd8a88a8c6fa0014d1 
+2025-04-12 12:22:06 INFO [inventory-api]: User superadmin (ID: 67fa30bd8a88a8c6fa0014d1, userID: SM-00011) logged in after registration 
+2025-04-12 12:22:55 DEBUG [inventory-api]: Deserialized user: superadmin (67fa30bd8a88a8c6fa0014d1) 
+2025-04-12 12:22:55 DEBUG [inventory-api]: Session: 
+2025-04-12 12:22:55 DEBUG [inventory-api]: Auth check: 
+2025-04-12 12:22:55 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 12:22:55 INFO [inventory-api]: getUserById called with ID: SM-00001 
+2025-04-12 12:22:55 DEBUG [inventory-api]: Request body: 
+2025-04-12 12:22:55 DEBUG [inventory-api]: getUserByUserIdService called with userID: SM-00001 
+2025-04-12 12:23:10 DEBUG [inventory-api]: Deserialized user: superadmin (67fa30bd8a88a8c6fa0014d1) 
+2025-04-12 12:23:10 DEBUG [inventory-api]: Session: 
+2025-04-12 12:23:10 DEBUG [inventory-api]: Auth check: 
+2025-04-12 12:23:10 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 12:23:10 INFO [inventory-api]: updateUserById called with ID: 67fa30bd8a88a8c6fa0014d1 
+2025-04-12 12:23:10 DEBUG [inventory-api]: Update data: 
+2025-04-12 12:24:37 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-12 12:24:40 INFO [inventory-api]: MongoDB Connected: cluster0-shard-00-01.wncfx.mongodb.net 
+2025-04-12 12:24:51 DEBUG [inventory-api]: Deserialized user: superadmin (67fa30bd8a88a8c6fa0014d1) 
+2025-04-12 12:24:51 DEBUG [inventory-api]: Session: 
+2025-04-12 12:24:51 DEBUG [inventory-api]: Auth check: 
+2025-04-12 12:24:51 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 12:24:51 INFO [inventory-api]: updateUserById called with ID: 67fa30bd8a88a8c6fa0014d1 
+2025-04-12 12:24:51 DEBUG [inventory-api]: Update data: 
+2025-04-12 12:24:51 ERROR [inventory-api]: User not found - PUT /users/67fa30bd8a88a8c6fa0014d1 
+2025-04-12 12:25:28 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-12 12:25:31 INFO [inventory-api]: MongoDB Connected: cluster0-shard-00-01.wncfx.mongodb.net 
+2025-04-12 12:25:33 DEBUG [inventory-api]: Deserialized user: superadmin (67fa30bd8a88a8c6fa0014d1) 
+2025-04-12 12:25:33 DEBUG [inventory-api]: Session: 
+2025-04-12 12:25:33 DEBUG [inventory-api]: Auth check: 
+2025-04-12 12:25:33 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 12:25:33 INFO [inventory-api]: updateUserById called with ID: 67fa30bd8a88a8c6fa0014d1 
+2025-04-12 12:25:33 DEBUG [inventory-api]: Update data: 
+2025-04-12 12:29:48 DEBUG [inventory-api]: Deserialized user: superadmin (67fa30bd8a88a8c6fa0014d1) 
+2025-04-12 12:29:48 DEBUG [inventory-api]: Session: 
+2025-04-12 12:29:48 DEBUG [inventory-api]: Auth check: 
+2025-04-12 12:29:48 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 12:29:48 INFO [inventory-api]: updateUserById called with ID: 67fa30bd8a88a8c6fa0014d1 
+2025-04-12 12:29:48 DEBUG [inventory-api]: Update data: 
+2025-04-12 12:30:00 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-12 12:30:03 INFO [inventory-api]: MongoDB Connected: cluster0-shard-00-01.wncfx.mongodb.net 
+2025-04-12 12:30:06 DEBUG [inventory-api]: Deserialized user: superadmin (67fa30bd8a88a8c6fa0014d1) 
+2025-04-12 12:30:06 DEBUG [inventory-api]: Session: 
+2025-04-12 12:30:06 DEBUG [inventory-api]: Auth check: 
+2025-04-12 12:30:06 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 12:30:06 INFO [inventory-api]: updateUserById called with ID: 67fa30bd8a88a8c6fa0014d1 
+2025-04-12 12:30:06 DEBUG [inventory-api]: Update data: 
+2025-04-12 12:30:06 DEBUG [inventory-api]: updateUserProfileService called with ID: 67fa30bd8a88a8c6fa0014d1 
+2025-04-12 12:30:24 DEBUG [inventory-api]: Deserialized user: superadmin (67fa30bd8a88a8c6fa0014d1) 
+2025-04-12 12:30:24 DEBUG [inventory-api]: Session: 
+2025-04-12 12:30:24 DEBUG [inventory-api]: Auth check: 
+2025-04-12 12:30:24 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 12:30:24 INFO [inventory-api]: updateUserProfile called for user superadmin (ID: 67fa30bd8a88a8c6fa0014d1, userID: SM-00011) 
+2025-04-12 12:30:24 DEBUG [inventory-api]: Request body: 
+2025-04-12 12:30:24 DEBUG [inventory-api]: updateUserProfileService called with ID: 67fa30bd8a88a8c6fa0014d1 
+2025-04-12 12:31:47 DEBUG [inventory-api]: Deserialized user: superadmin (67fa30bd8a88a8c6fa0014d1) 
+2025-04-12 12:31:47 DEBUG [inventory-api]: Session: 
+2025-04-12 12:31:47 WARN [inventory-api]: Validation failed 
+2025-04-12 12:42:16 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-12 12:42:20 INFO [inventory-api]: MongoDB Connected: cluster0-shard-00-02.wncfx.mongodb.net 
+2025-04-12 12:42:23 DEBUG [inventory-api]: Deserialized user: superadmin (67fa30bd8a88a8c6fa0014d1) 
+2025-04-12 12:42:23 DEBUG [inventory-api]: Session: 
+2025-04-12 12:42:23 WARN [inventory-api]: Validation failed 
+2025-04-12 12:43:31 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-12 12:43:34 INFO [inventory-api]: MongoDB Connected: cluster0-shard-00-02.wncfx.mongodb.net 
+2025-04-12 12:43:41 DEBUG [inventory-api]: Deserialized user: superadmin (67fa30bd8a88a8c6fa0014d1) 
+2025-04-12 12:43:41 DEBUG [inventory-api]: Session: 
+2025-04-12 12:43:41 INFO [inventory-api]: getProductById called with ID: 67f8ec8aaf6bfc397a056b7f 
+2025-04-12 12:43:41 DEBUG [inventory-api]: getProductByIdService called with ID: 67f8ec8aaf6bfc397a056b7f 
+2025-04-12 12:43:47 DEBUG [inventory-api]: Deserialized user: superadmin (67fa30bd8a88a8c6fa0014d1) 
+2025-04-12 12:43:47 DEBUG [inventory-api]: Session: 
+2025-04-12 12:43:47 INFO [inventory-api]: getProductByProductId called with product ID: PR-00001 
+2025-04-12 12:43:47 DEBUG [inventory-api]: getProductByProductIDService called with productID: PR-00001 
+2025-04-12 12:43:47 DEBUG [inventory-api]: Product found with productID: PR-00001 
+2025-04-12 12:43:52 DEBUG [inventory-api]: Deserialized user: superadmin (67fa30bd8a88a8c6fa0014d1) 
+2025-04-12 12:43:52 DEBUG [inventory-api]: Session: 
+2025-04-12 12:43:52 INFO [inventory-api]: getProductsByCategory called with category: Electronics 
+2025-04-12 12:43:52 DEBUG [inventory-api]: getProductsByCategoryService called with category: Electronics 
+2025-04-12 12:43:52 ERROR [inventory-api]: Products in category not found - GET /products/category/Electronics 
+2025-04-12 12:45:46 DEBUG [inventory-api]: Deserialized user: superadmin (67fa30bd8a88a8c6fa0014d1) 
+2025-04-12 12:45:46 DEBUG [inventory-api]: Session: 
+2025-04-12 12:45:46 INFO [inventory-api]: getProductByProductId called with product ID: PR-00001 
+2025-04-12 12:45:46 DEBUG [inventory-api]: getProductByProductIDService called with productID: PR-00001 
+2025-04-12 12:45:46 DEBUG [inventory-api]: Product found with productID: PR-00001 
+2025-04-12 12:45:54 DEBUG [inventory-api]: Deserialized user: superadmin (67fa30bd8a88a8c6fa0014d1) 
+2025-04-12 12:45:54 DEBUG [inventory-api]: Session: 
+2025-04-12 12:45:54 INFO [inventory-api]: getProductsByCategory called with category: Electronics 
+2025-04-12 12:45:54 DEBUG [inventory-api]: getProductsByCategoryService called with category: Electronics 
+2025-04-12 12:45:54 ERROR [inventory-api]: Products in category not found - GET /products/category/Electronics 
+2025-04-12 12:48:54 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-12 12:48:57 INFO [inventory-api]: MongoDB Connected: cluster0-shard-00-01.wncfx.mongodb.net 
+2025-04-12 12:49:04 DEBUG [inventory-api]: Deserialized user: superadmin (67fa30bd8a88a8c6fa0014d1) 
+2025-04-12 12:49:04 DEBUG [inventory-api]: Session: 
+2025-04-12 12:49:04 INFO [inventory-api]: getProductsByCategory called with category: Electronics 
+2025-04-12 12:49:04 DEBUG [inventory-api]: getProductsByCategoryService called with category: Electronics 
+2025-04-12 12:49:04 DEBUG [inventory-api]: Found 2 products in category: Electronics 
+2025-04-12 12:49:51 DEBUG [inventory-api]: Deserialized user: superadmin (67fa30bd8a88a8c6fa0014d1) 
+2025-04-12 12:49:51 DEBUG [inventory-api]: Session: 
+2025-04-12 12:49:51 INFO [inventory-api]: searchProducts called 
+2025-04-12 12:49:51 DEBUG [inventory-api]: searchProductsService called with term: laptop 
+2025-04-12 12:49:51 ERROR [inventory-api]: Error searching products: products.map is not a function 
+TypeError: products.map is not a function
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\products.controller.js:163:42
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-04-12 12:49:51 ERROR [inventory-api]: products.map is not a function - GET /products/search?term=laptop 
+2025-04-12 12:50:14 DEBUG [inventory-api]: Deserialized user: superadmin (67fa30bd8a88a8c6fa0014d1) 
+2025-04-12 12:50:14 DEBUG [inventory-api]: Session: 
+2025-04-12 12:50:14 INFO [inventory-api]: searchProducts called 
+2025-04-12 12:50:14 DEBUG [inventory-api]: searchProductsService called with term: Laptop 
+2025-04-12 12:50:15 ERROR [inventory-api]: Error searching products: products.map is not a function 
+TypeError: products.map is not a function
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\products.controller.js:163:42
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-04-12 12:50:15 ERROR [inventory-api]: products.map is not a function - GET /products/search?term=Laptop 
+2025-04-12 12:51:57 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-12 12:52:00 INFO [inventory-api]: MongoDB Connected: cluster0-shard-00-01.wncfx.mongodb.net 
+2025-04-12 12:52:23 DEBUG [inventory-api]: Deserialized user: superadmin (67fa30bd8a88a8c6fa0014d1) 
+2025-04-12 12:52:23 DEBUG [inventory-api]: Session: 
+2025-04-12 12:52:23 INFO [inventory-api]: searchProducts called with term: laptop 
+2025-04-12 12:52:23 DEBUG [inventory-api]: searchProductsService called with term: laptop 
+2025-04-12 12:52:24 DEBUG [inventory-api]: Found 0 products using text search for: laptop 
+2025-04-12 12:52:24 INFO [inventory-api]: No products found for search term: laptop 
+2025-04-12 12:52:49 DEBUG [inventory-api]: Deserialized user: superadmin (67fa30bd8a88a8c6fa0014d1) 
+2025-04-12 12:52:49 DEBUG [inventory-api]: Session: 
+2025-04-12 12:52:49 INFO [inventory-api]: searchProducts called with term: MacBook 
+2025-04-12 12:52:49 DEBUG [inventory-api]: searchProductsService called with term: MacBook 
+2025-04-12 12:52:49 DEBUG [inventory-api]: Found 2 products using text search for: MacBook 
+2025-04-12 12:54:23 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-12 12:54:26 INFO [inventory-api]: MongoDB Connected: cluster0-shard-00-02.wncfx.mongodb.net 
+2025-04-12 12:54:29 DEBUG [inventory-api]: Deserialized user: superadmin (67fa30bd8a88a8c6fa0014d1) 
+2025-04-12 12:54:29 DEBUG [inventory-api]: Session: 
+2025-04-12 12:54:29 INFO [inventory-api]: searchProducts called with term: laptop 
+2025-04-12 12:54:29 DEBUG [inventory-api]: searchProductsService called with term: laptop 
+2025-04-12 12:54:29 DEBUG [inventory-api]: Found 2 products matching "laptop" 
