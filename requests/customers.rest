@@ -22,7 +22,7 @@ GET {{baseUrl}}/customers?sort=-createdAt,name
 Authorization: Bearer {{token}}
 
 ### Filter customers by name (partial match)
-GET {{baseUrl}}/customers?name=Joh
+GET {{baseUrl}}/customers?name=Geo
 Authorization: Bearer {{token}}
 
 ### Filter customers by email domain
@@ -30,7 +30,7 @@ GET {{baseUrl}}/customers?email=gmail.com
 Authorization: Bearer {{token}}
 
 ### Filter customers by location
-GET {{baseUrl}}/customers?city=Kisumu
+GET {{baseUrl}}/customers?city=Nairobi
 Authorization: Bearer {{token}}
 
 ### Combined filtering, sorting and pagination
@@ -46,11 +46,23 @@ GET {{baseUrl}}/customers/customerID/CU-00001
 Authorization: Bearer {{token}}
 
 ### Get Customer by Email (Requires Authentication)
-GET {{baseUrl}}/customers/email/john.doe@example.com
+GET {{baseUrl}}/customers/email/george.doe@example.com
 Authorization: Bearer {{token}}
 
 ### Search Customers (Requires Authentication)
 GET {{baseUrl}}/customers/search?term=john
+Authorization: Bearer {{token}}
+
+### Search Customers
+GET {{baseUrl}}/customers/search?term=doe
+Authorization: Bearer {{token}}
+
+### Search Customers with Pagination
+GET {{baseUrl}}/customers/search?term=doe&page=1&limit=5
+Authorization: Bearer {{token}}
+
+### Search Customers with Sorting
+GET {{baseUrl}}/customers/search?term=doe&sort=name
 Authorization: Bearer {{token}}
 
 ### Create New Customer (Requires Authentication)
@@ -72,7 +84,7 @@ Authorization: Bearer {{token}}
 }
 
 ### Update Customer (Requires Authentication)
-PUT {{baseUrl}}/customers/65fb123abc456d789e012349
+PUT {{baseUrl}}/customers/67f67b829d34cfbe039e94be
 Content-Type: application/json
 Authorization: Bearer {{token}}
 

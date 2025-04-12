@@ -7,7 +7,6 @@ const customerSchema = new Schema(
       type: String,
       unique: true,
       match: [/^CU-\d{5}$/],
-      index: true,
       required: true,
     },
     name: {
@@ -22,7 +21,6 @@ const customerSchema = new Schema(
       trim: true,
       lowercase: true,
       unique: true,
-      index: true,
       validate: {
         validator: async function (v) {
           const customer = await this.constructor.findOne({ email: v });
@@ -67,24 +65,14 @@ const customerSchema = new Schema(
         maxlength: [50, "Country name cannot exceed 50 characters"],
       },
     },
-    createdAt: {
-      type: Date,
-      default: Date.now,
-    },
-    updatedAt: {
-      type: Date,
-      default: Date.now,
-    },
   },
   {
     timestamps: true,
   }
 );
 
-// Add indexes for commonly filtered fields
+// Define all indexes in one place
 customerSchema.index({ name: 1 });
-customerSchema.index({ email: 1 });
-customerSchema.index({ customerID: 1 });
 customerSchema.index({ "address.city": 1 });
 customerSchema.index({ "address.state": 1 });
 customerSchema.index({ "address.country": 1 });
@@ -100,6 +88,4 @@ customerSchema.index(
   }
 );
 
-const Customer = mongoose.model("Customer", customerSchema);
-
-module.exports = Customer;
+module.exports = mongoose.model("Customer", customerSchema);

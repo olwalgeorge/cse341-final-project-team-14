@@ -11,6 +11,7 @@ const {
   updateCustomerService,
   deleteCustomerService,
   deleteAllCustomersService,
+  searchCustomersService, // Add the new service import
 } = require("../services/customers.service");
 const { transformCustomer, generateCustomerId } = require("../utils/customer.utils");
 
@@ -228,6 +229,37 @@ const deleteAllCustomers = asyncHandler(async (req, res, next) => {
   }
 });
 
+/**
+ * @desc    Search customers by term
+ * @route   GET /customers/search
+ * @access  Private
+ */
+const searchCustomers = asyncHandler(async (req, res, next) => {
+  logger.info("searchCustomers called");
+  logger.debug("Search term:", req.query.term);
+  try {
+    if (!req.query.term) {
+      return next(new Error("Search term is required"));
+    }
+    
+    const result = await searchCustomersService(req.query.term, req.query);
+    const transformedCustomers = result.customers.map(transformCustomer);
+    
+    sendResponse(
+      res,
+      200,
+      "Customers search results",
+      {
+        customers: transformedCustomers,
+        pagination: result.pagination
+      }
+    );
+  } catch (error) {
+    logger.error("Error searching customers:", error);
+    next(error);
+  }
+});
+
 module.exports = {
   getAllCustomers,
   getCustomerByEmail,
@@ -235,6 +267,7 @@ module.exports = {
   getCustomerByCustomerID,
   createCustomer,
   updateCustomerById,
-  deleteCustomerById,
+  deleteCustomerById, 
   deleteAllCustomers,
+  searchCustomers, // Add the new controller to exports
 };

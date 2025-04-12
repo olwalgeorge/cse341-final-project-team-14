@@ -134,6 +134,33 @@ const customerQueryValidationRules = () => {
   ];
 };
 
+/**
+ * Validation rules for customer search
+ */
+const customerSearchValidationRules = () => {
+  return [
+    query("term")
+      .notEmpty()
+      .withMessage("Search term is required")
+      .isString()
+      .withMessage("Search term must be a string")
+      .isLength({ min: 2 })
+      .withMessage("Search term must be at least 2 characters"),
+    query("page")
+      .optional()
+      .isInt({ min: 1 })
+      .withMessage("Page must be a positive integer"),
+    query("limit")
+      .optional()
+      .isInt({ min: 1, max: 100 })
+      .withMessage("Limit must be between 1 and 100"),
+    query("sort")
+      .optional()
+      .isString()
+      .withMessage("Sort must be a string"),
+  ];
+};
+
 module.exports = {
   customerIDValidationRules,
   customer_IdValidationRules,
@@ -141,4 +168,5 @@ module.exports = {
   customerCreateValidationRules,
   customerUpdateValidationRules,
   customerQueryValidationRules,
+  customerSearchValidationRules,
 };

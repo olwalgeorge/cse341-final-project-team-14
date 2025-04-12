@@ -107,6 +107,47 @@ const deleteAllCustomersService = async () => {
   return await Customer.deleteMany({});
 };
 
+// Search customers by term
+const searchCustomersService = async (searchTerm, query = {}) => {
+  logger.debug(`searchCustomersService called with term: ${searchTerm}`);
+  
+  try {
+    // Get pagination parameters
+    const pagination = APIFeatures.getPagination(query);
+    
+    // Get sort parameters with default sort by name
+    const sort = APIFeatures.getSort(query, 'name');
+
+    // Create text search criteria
+    const searchCriteria = {
+      $or: [
+        { name: { $regex: searchTerm, $options: 'i' } },
+        { email: { $regex: searchTerm, $options: 'i' } },
+        { 'address.city': { $regex: searchTerm, $options: 'i' } },
+        { 'address.state': { $regex: searchTerm, $options: 'i' } },
+        { 'address.country': { $regex: searchTerm, $options: 'i' } }
+      ]
+    };
+
+    // Execute search query with pagination and sorting
+    const customers = await Customer.find(searchCriteria)
+      .sort(sort)
+      .skip(pagination.skip)
+      .limit(pagination.limit);
+    
+    // Get total count for pagination
+    const total = await Customer.countDocuments(searchCriteria);
+    
+    return {
+      customers,
+      pagination: APIFeatures.paginationResult(total, pagination)
+    };
+  } catch (error) {
+    logger.error("Error in searchCustomersService:", error);
+    throw error;
+  }
+};
+
 module.exports = {
   getAllCustomersService,
   getCustomerByEmailService,
@@ -116,4 +157,5 @@ module.exports = {
   updateCustomerService,
   deleteCustomerService,
   deleteAllCustomersService,
+  searchCustomersService, // Add the new service to exports
 };

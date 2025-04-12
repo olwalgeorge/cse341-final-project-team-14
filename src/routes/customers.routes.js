@@ -9,6 +9,7 @@ const {
   updateCustomerById,
   deleteCustomerById,
   deleteAllCustomers,
+  searchCustomers, // Add the new controller import
 } = require("../controllers/customers.controller.js");
 const validate = require("../middlewares/validation.middleware.js");
 const isAuthenticated = require("../middlewares/auth.middleware.js");
@@ -18,7 +19,16 @@ const {
   customerUpdateValidationRules,
   customer_IdValidationRules,
   customerQueryValidationRules,
+  customerSearchValidationRules, // Add the new validation import
 } = require("../validators/customer.validator.js");
+
+// Add the search route
+router.get(
+  "/search", 
+  isAuthenticated,
+  validate(customerSearchValidationRules()),
+  searchCustomers
+);
 
 // all routes are protected and require authentication
 router.get(
