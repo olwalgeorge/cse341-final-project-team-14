@@ -1,0 +1,100 @@
+@baseUrl = http://localhost:3000
+@token = your_auth_token_here
+
+### Get all products
+GET {{baseUrl}}/products
+
+### Get all products with pagination
+GET {{baseUrl}}/products?page=1&limit=10
+
+### Get all products with sorting (ascending by name)
+GET {{baseUrl}}/products?sort=name
+
+### Get all products with sorting (descending by price)
+GET {{baseUrl}}/products?sort=-sellingPrice
+
+### Get all products with multiple sorting criteria
+GET {{baseUrl}}/products?sort=-sellingPrice,name
+
+### Filter products by name (partial match)
+GET {{baseUrl}}/products?name=MacBook
+
+### Filter products by category
+GET {{baseUrl}}/products?category=Electronics
+
+### Filter products by price range
+GET {{baseUrl}}/products?minPrice=500&maxPrice=2000
+
+### Filter products by tags
+GET {{baseUrl}}/products?tag=laptop
+
+### Filter products by in-stock status
+GET {{baseUrl}}/products?inStock=true
+
+### Combined filtering, sorting and pagination
+GET {{baseUrl}}/products?category=Electronics&minPrice=800&sort=-sellingPrice&page=1&limit=5
+
+### Search Products
+GET {{baseUrl}}/products/search?term=laptop
+
+### Search Products with Pagination
+GET {{baseUrl}}/products/search?term=apple&page=1&limit=5
+
+### Search Products with Sorting
+GET {{baseUrl}}/products/search?term=laptop&sort=-sellingPrice
+
+### Get Product by MongoDB ID
+GET {{baseUrl}}/products/67f8ec8aaf6bfc397a056b7f
+
+### Get Product by Product ID
+GET {{baseUrl}}/products/productID/PR-00001
+
+### Get Products by Category
+GET {{baseUrl}}/products/category/Electronics
+
+### Get Products by Category with Filtering
+GET {{baseUrl}}/products/category/Electronics?minPrice=1000&inStock=true
+
+### Get Products by Supplier
+GET {{baseUrl}}/products/supplier/67f66c737ed7ddb60e54af6f
+
+### Get Products by Supplier with Filtering
+GET {{baseUrl}}/products/supplier/67f66c737ed7ddb60e54af6f?category=Electronics&maxPrice=2000
+
+### Create New Product (Requires Authentication)
+POST {{baseUrl}}/products
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "HP Pavilion 15",
+  "description": "15-inch laptop with Intel Core i7, 16GB RAM, 512GB SSD",
+  "sellingPrice": 999.99,
+  "costPrice": 750.00,
+  "category": "Electronics",
+  "supplier": "67f66c737ed7ddb60e54af6f",
+  "sku": "HP123456",
+  "tags": ["laptop", "hp", "windows"],
+  "unit": "pcs",
+  "productID": "PR-00010",
+  "inStock": true
+}
+
+### Update Product (Requires Authentication)
+PUT {{baseUrl}}/products/67f8ee1eaf6bfc397a056b86
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  
+  "sellingPrice": 1700.00
+  
+}
+
+### Delete Product (Requires Authentication)
+DELETE {{baseUrl}}/products/67f8cdc8f72a040e609a5ca9
+Authorization: Bearer {{token}}
+
+### Delete All Products (Requires Authentication)
+DELETE {{baseUrl}}/products
+Authorization: Bearer {{token}}

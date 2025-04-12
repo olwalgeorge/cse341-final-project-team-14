@@ -1,65 +1,68 @@
-const Product = require("../models/product.model.js");
-const logger = require("../utils/logger.js");
+const Product = require("../models/product.model");
+const logger = require("../utils/logger");
 const APIFeatures = require("../utils/apiFeatures.js");
 
 /**
- * Get all products with optional filtering and pagination
- * @param {Object} filters - Query filters like category, minPrice, maxPrice, etc.
- * @returns {Promise<Object>} - Object containing products array and pagination info
+ * Get all products with optional filtering, pagination, and sorting
  */
-const getAllProductsService = async (filters = {}) => {
-  logger.debug("getAllProductsService called with filters:", filters);
+const getAllProductsService = async (query = {}) => {
+  logger.debug("getAllProductsService called with query:", query);
   
   try {
-    const page = parseInt(filters.page) || 1;
-    const limit = parseInt(filters.limit) || 10;
-    const skip = (page - 1) * limit;
+    // Define custom filters mapping
+    const customFilters = {
+      name: {
+        field: 'name',
+        transform: (value) => ({ $regex: value, $options: 'i' })
+      },
+      category: {
+        field: 'category',
+        transform: (value) => ({ $regex: value, $options: 'i' })
+      },
+      supplier: 'supplier',
+      sku: 'sku',
+      tag: {
+        field: 'tags',
+        transform: (value) => ({ $in: [new RegExp(value, 'i')] })
+      },
+      minPrice: {
+        field: 'sellingPrice',
+        transform: (value) => ({ $gte: parseFloat(value) })
+      },
+      maxPrice: {
+        field: 'sellingPrice',
+        transform: (value) => ({ $lte: parseFloat(value) })
+      },
+      inStock: {
+        field: 'inStock',
+        transform: (value) => value === 'true'
+      }
+    };
     
-    // Build query based on filters
-    const query = {};
+    // Build filter using APIFeatures utility
+    const filter = APIFeatures.buildFilter(query, customFilters);
     
-    // Add category filter if provided
-    if (filters.category) {
-      query.category = filters.category;
-    }
+    // Get pagination parameters
+    const pagination = APIFeatures.getPagination(query);
     
-    // Add price range filters if provided
-    if (filters.minPrice || filters.maxPrice) {
-      query.sellingPrice = {};
-      if (filters.minPrice) query.sellingPrice.$gte = parseFloat(filters.minPrice);
-      if (filters.maxPrice) query.sellingPrice.$lte = parseFloat(filters.maxPrice);
-    }
-    
-    // Add stock filter if provided
-    if (filters.inStock === 'true') {
-      query.stockQuantity = { $gt: 0 };
-    } else if (filters.inStock === 'false') {
-      query.stockQuantity = { $lte: 0 };
-    }
-    
-    // Execute query with pagination
-    const products = await Product.find(query)
-      .sort({ createdAt: -1 })
-      .skip(skip)
-      .limit(limit)
-      .lean();
+    // Get sort parameters with default sort by name
+    const sort = APIFeatures.getSort(query, 'name');
+
+    // Execute query with pagination and sorting
+    const products = await Product.find(filter)
+      .sort(sort)
+      .skip(pagination.skip)
+      .limit(pagination.limit);
     
     // Get total count for pagination
-    const total = await Product.countDocuments(query);
+    const total = await Product.countDocuments(filter);
     
-    // Return structured result with products array and pagination info
     return {
-      products: products || [], // Ensure we always return an array, even if empty
-      pagination: {
-        total,
-        page,
-        limit,
-        pages: Math.ceil(total / limit)
-      }
+      products,
+      pagination: APIFeatures.paginationResult(total, pagination)
     };
   } catch (error) {
     logger.error("Error in getAllProductsService:", error);
-    // Rethrow to be handled by the controller
     throw error;
   }
 };
@@ -76,29 +79,47 @@ const getProductByIdService = async (id) => {
  * Get products by category with pagination and sorting
  */
 const getProductsByCategoryService = async (category, query = {}) => {
+  logger.debug(`getProductsByCategoryService called for category: ${category}`);
+  
   try {
-    logger.debug(`getProductsByCategoryService called with category: ${category}`);
-    
-    // Create case-insensitive query to handle different capitalizations
-    const categoryRegex = new RegExp(`^${category}$`, 'i');
-    
     // Get pagination parameters
     const pagination = APIFeatures.getPagination(query);
     
     // Get sort parameters with default sort by name
     const sort = APIFeatures.getSort(query, 'name');
 
-    // Execute query with case-insensitive matching
-    const products = await Product.find({ category: categoryRegex })
+    const filter = { 
+      category: { $regex: category, $options: 'i' } 
+    };
+    
+    // Apply any additional filters from query
+    const customFilters = {
+      minPrice: {
+        field: 'sellingPrice',
+        transform: (value) => ({ $gte: parseFloat(value) })
+      },
+      maxPrice: {
+        field: 'sellingPrice',
+        transform: (value) => ({ $lte: parseFloat(value) })
+      },
+      inStock: {
+        field: 'inStock',
+        transform: (value) => value === 'true'
+      }
+    };
+    
+    const additionalFilters = APIFeatures.buildFilter(query, customFilters);
+    Object.assign(filter, additionalFilters);
+
+    // Execute query with pagination and sorting
+    const products = await Product.find(filter)
       .sort(sort)
       .skip(pagination.skip)
       .limit(pagination.limit);
-
-    logger.debug(`Found ${products.length} products in category: ${category}`);
     
     // Get total count for pagination
-    const total = await Product.countDocuments({ category: categoryRegex });
-
+    const total = await Product.countDocuments(filter);
+    
     return {
       products,
       pagination: APIFeatures.paginationResult(total, pagination)
@@ -141,84 +162,96 @@ const getProductByProductIDService = async (productID) => {
 };
 
 /**
- * Search products by text (searches name, description, category, and tags)
+ * Search products by term
  */
-const searchProductsService = async (term, query = {}) => {
+const searchProductsService = async (searchTerm, query = {}) => {
+  logger.debug(`searchProductsService called with term: ${searchTerm}`);
+  
   try {
-    logger.debug(`searchProductsService called with term: ${term}`);
-    
-    if (!term) {
-      logger.warn("Search called with empty term");
-      return { products: [], pagination: { total: 0, page: 1, limit: 10, pages: 0 } };
-    }
-    
-    // Get pagination parameters
-    const page = parseInt(query.page) || 1;
-    const limit = parseInt(query.limit) || 10;
-    const skip = (page - 1) * limit;
-
-    // Create a case-insensitive regex for the search term
-    const regex = new RegExp(term, "i");
-    
-    // Create a query that searches in name, description, category, and tags
-    const searchQuery = {
-      $or: [
-        { name: regex },
-        { description: regex },
-        { category: regex },
-        { tags: regex }  
-      ]
-    };
-    
-    // Execute the search query with pagination
-    const products = await Product.find(searchQuery)
-      .sort({ createdAt: -1 })
-      .skip(skip)
-      .limit(limit)
-      .lean();
-    
-    // Get total count for pagination
-    const total = await Product.countDocuments(searchQuery);
-    
-    logger.debug(`Found ${products.length} products matching "${term}"`);
-    
-    return {
-      products,
-      pagination: {
-        total,
-        page,
-        limit,
-        pages: Math.ceil(total / limit)
-      }
-    };
-  } catch (error) {
-    logger.error(`Error in searchProductsService for term ${term}:`, error);
-    throw error;
-  }
-};
-
-/**
- * Get products by supplier ID with pagination and sorting
- */
-const getProductsBySupplierService = async (supplierId, query = {}) => {
-  try {
-    logger.debug(`getProductsBySupplierService called with supplier ID: ${supplierId}`);
-    
     // Get pagination parameters
     const pagination = APIFeatures.getPagination(query);
     
     // Get sort parameters with default sort by name
     const sort = APIFeatures.getSort(query, 'name');
 
-    // Execute query
-    const products = await Product.find({ supplier: supplierId })
+    // Create text search criteria
+    const searchCriteria = {
+      $or: [
+        { name: { $regex: searchTerm, $options: 'i' } },
+        { description: { $regex: searchTerm, $options: 'i' } },
+        { category: { $regex: searchTerm, $options: 'i' } },
+        { sku: { $regex: searchTerm, $options: 'i' } },
+        { tags: { $in: [new RegExp(searchTerm, 'i')] } }
+      ]
+    };
+
+    // Execute search query with pagination and sorting
+    const products = await Product.find(searchCriteria)
       .sort(sort)
       .skip(pagination.skip)
       .limit(pagination.limit);
-
+    
     // Get total count for pagination
-    const total = await Product.countDocuments({ supplier: supplierId });
+    const total = await Product.countDocuments(searchCriteria);
+    
+    return {
+      products,
+      pagination: APIFeatures.paginationResult(total, pagination)
+    };
+  } catch (error) {
+    logger.error("Error in searchProductsService:", error);
+    throw error;
+  }
+};
 
+/**
+ * Get products by supplier with pagination and sorting
+ */
+const getProductsBySupplierService = async (supplierId, query = {}) => {
+  logger.debug(`getProductsBySupplierService called for supplier: ${supplierId}`);
+  
+  try {
+    // Get pagination parameters
+    const pagination = APIFeatures.getPagination(query);
+    
+    // Get sort parameters with default sort by name
+    const sort = APIFeatures.getSort(query, 'name');
+
+    const filter = { supplier: supplierId };
+    
+    // Apply any additional filters from query
+    const customFilters = {
+      category: {
+        field: 'category',
+        transform: (value) => ({ $regex: value, $options: 'i' })
+      },
+      minPrice: {
+        field: 'sellingPrice',
+        transform: (value) => ({ $gte: parseFloat(value) })
+      },
+      maxPrice: {
+        field: 'sellingPrice',
+        transform: (value) => ({ $lte: parseFloat(value) })
+      },
+      inStock: {
+        field: 'inStock',
+        transform: (value) => value === 'true'
+      }
+    };
+    
+    const additionalFilters = APIFeatures.buildFilter(query, customFilters);
+    Object.assign(filter, additionalFilters);
+
+    // Execute query with pagination and sorting
+    const products = await Product.find(filter)
+      .sort(sort)
+      .skip(pagination.skip)
+      .limit(pagination.limit)
+      .populate('supplier', 'name contact.email');
+    
+    // Get total count for pagination
+    const total = await Product.countDocuments(filter);
+    
     return {
       products,
       pagination: APIFeatures.paginationResult(total, pagination)
@@ -268,9 +301,9 @@ const deleteAllProductsService = async () => {
 
 module.exports = {
   getAllProductsService,
-  getProductByIdService,  
-  getProductsByCategoryService,
+  getProductByIdService,
   getProductByProductIDService,
+  getProductsByCategoryService,
   getProductsBySupplierService,
   searchProductsService,
   createProductService,

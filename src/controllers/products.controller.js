@@ -205,18 +205,31 @@ const getProductsBySupplier = asyncHandler(async (req, res, next) => {
     `getProductsBySupplier called with supplier ID: ${req.params.supplierId}`
   );
   try {
-    const products = await getProductsBySupplierService(req.params.supplierId);
-    if (products && products.length > 0) {
-      const transformedProducts = products.map(transformProduct);
-      sendResponse(
-        res,
-        200,
-        "Products retrieved successfully",
-        transformedProducts
-      );
-    } else {
-      return next(DatabaseError.notFound("Products for supplier"));
+    // Pass both supplierId and query parameters for filtering/pagination
+    const result = await getProductsBySupplierService(req.params.supplierId, req.query);
+    
+    // The service now returns a structured object with products and pagination
+    if (!result || !result.products) {
+      logger.error("Supplier products returned invalid result structure");
+      return next(DatabaseError.dataError("Result is not in expected format"));
     }
+    
+    // Even if no products are found, return a 200 OK with empty array
+    const transformedProducts = result.products.map(transformProduct);
+    
+    const message = result.products.length > 0 
+      ? "Products for supplier retrieved successfully" 
+      : "No products found for this supplier";
+    
+    sendResponse(
+      res,
+      200,
+      message,
+      {
+        products: transformedProducts,
+        pagination: result.pagination
+      }
+    );
   } catch (error) {
     logger.error(
       `Error retrieving products for supplier: ${req.params.supplierId}`,
