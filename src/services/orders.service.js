@@ -2,7 +2,7 @@ const Order = require("../models/order.model.js");
 const Product = require("../models/product.model.js");
 const { generateOrderId } = require("../utils/order.utils.js");
 const APIFeatures = require("../utils/apiFeatures.js");
-const logger = require("../utils/logger.js");
+
 
 /**
  * Get all orders with optional filtering and pagination
@@ -11,8 +11,23 @@ const getAllOrdersService = async (query = {}) => {
   // Define custom filters mapping
   const customFilters = {
     status: 'status',
-    customer: 'customer',
-    dateField: 'orderDate'
+    customer: 'customer.customerId',
+    fromDate: {
+      field: 'orderDate',
+      transform: (value) => ({ $gte: new Date(value) })
+    },
+    toDate: {
+      field: 'orderDate',
+      transform: (value) => ({ $lte: new Date(value) })
+    },
+    minAmount: {
+      field: 'totalAmount',
+      transform: (value) => ({ $gte: parseFloat(value) })
+    },
+    maxAmount: {
+      field: 'totalAmount',
+      transform: (value) => ({ $lte: parseFloat(value) })
+    }
   };
 
   // Build filter using APIFeatures utility
@@ -183,16 +198,7 @@ const getOrdersByCustomerService = async (customerId, query = {}) => {
   };
 };
 
-/**
- * Get orders by customer ID (alternative implementation)
- */
-const getOrdersByCustomerIdService = async (customerId) => {
-  logger.debug(
-    `getOrdersByCustomerIdService called with customer ID: ${customerId}`
-  );
-  return await Order.find({ "customer.customerId": customerId })
-    .populate("products.product", "name description sellingPrice category sku productID");
-};
+
 
 /**
  * Get orders by status
@@ -228,8 +234,7 @@ const deleteAllOrdersService = async () => {
 module.exports = {
   getAllOrdersService,
   getOrderByOrderIDService,
-  getOrderByIdService,
-  getOrdersByCustomerIdService,
+  getOrderByIdService, 
   createOrderService,
   updateOrderService,
   deleteOrderService,

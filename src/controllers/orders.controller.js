@@ -4,14 +4,14 @@ const logger = require("../utils/logger.js");
 const { DatabaseError } = require("../utils/errors");
 const {
   getAllOrdersService,
-  getOrderByIdService,
-  getOrdersByCustomerIdService,
+  getOrderByIdService,  
   getOrderByOrderIDService,
   createOrderService,
   updateOrderService,
   deleteOrderService,
   deleteAllOrdersService,
   getOrdersByStatusService,
+  getOrdersByCustomerService,
 } = require("../services/orders.service");
 const { transformOrder, generateOrderId } = require("../utils/order.utils");
 const Product = require("../models/product.model");
@@ -23,9 +23,13 @@ const Product = require("../models/product.model");
  */
 const getAllOrders = asyncHandler(async (req, res, next) => {
   logger.info("getAllOrders called");
+  logger.debug("Query parameters:", req.query);
   try {
     const result = await getAllOrdersService(req.query);
+    
+    // Transform orders for API response
     const transformedOrders = result.orders.map(transformOrder);
+    
     sendResponse(
       res, 
       200, 
@@ -72,18 +76,25 @@ const getOrdersByCustomerId = asyncHandler(async (req, res, next) => {
     `getOrdersByCustomerId called with customer ID: ${req.params.customerId}`
   );
   try {
-    const orders = await getOrdersByCustomerIdService(req.params.customerId);
-    if (orders && orders.length > 0) {
-      const transformedOrders = orders.map(transformOrder);
-      sendResponse(
-        res,
-        200,
-        "Orders retrieved successfully",
-        transformedOrders
-      );
-    } else {
-      return next(DatabaseError.notFound("Orders for customer"));
+    const result = await getOrdersByCustomerService(req.params.customerId, req.query);
+    
+    if (!result.orders.length) {
+      return sendResponse(res, 200, "No orders found for this customer", {
+        orders: [],
+        pagination: result.pagination
+      });
     }
+    
+    const transformedOrders = result.orders.map(transformOrder);
+    sendResponse(
+      res,
+      200,
+      "Orders retrieved successfully",
+      {
+        orders: transformedOrders,
+        pagination: result.pagination
+      }
+    );
   } catch (error) {
     logger.error(
       `Error retrieving orders for customer: ${req.params.customerId}`,
@@ -218,24 +229,30 @@ const deleteAllOrders = asyncHandler(async (req, res, next) => {
 /**
  * @desc    Get orders by status
  * @route   GET /orders/status/:status
- * @access  Public
+ * @access  Private
  */
 const getOrdersByStatus = asyncHandler(async (req, res, next) => {
   logger.info(`getOrdersByStatus called with status: ${req.params.status}`);
   try {
-    const orders = await getOrdersByStatusService(req.params.status);
-    if (orders && orders.length > 0) {
-      const transformedOrders = orders.map(transformOrder);
-      sendResponse(
-        res,
-        200,
-        "Orders retrieved successfully",
-        transformedOrders
-      );
-    } else {
-      // Return empty array instead of 404 for empty results
-      sendResponse(res, 200, "No orders found with this status", []);
+    const result = await getOrdersByStatusService(req.params.status, req.query);
+    
+    if (!result.orders.length) {
+      return sendResponse(res, 200, `No orders found with status: ${req.params.status}`, {
+        orders: [],
+        pagination: result.pagination
+      });
     }
+    
+    const transformedOrders = result.orders.map(transformOrder);
+    sendResponse(
+      res,
+      200,
+      "Orders retrieved successfully",
+      {
+        orders: transformedOrders,
+        pagination: result.pagination
+      }
+    );
   } catch (error) {
     logger.error(
       `Error retrieving orders with status: ${req.params.status}`,

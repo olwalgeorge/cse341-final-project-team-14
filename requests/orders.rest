@@ -1,0 +1,107 @@
+@baseUrl = http://localhost:3000
+@token = your_auth_token_here
+
+### Get All Orders (Requires Authentication)
+GET {{baseUrl}}/orders
+Authorization: Bearer {{token}}
+
+### Get Orders with Pagination
+GET {{baseUrl}}/orders?page=1&limit=10
+Authorization: Bearer {{token}}
+
+### Get Orders with Sorting (descending by orderDate)
+GET {{baseUrl}}/orders?sort=-orderDate
+Authorization: Bearer {{token}}
+
+### Get Orders with Sorting (ascending by totalAmount)
+GET {{baseUrl}}/orders?sort=totalAmount
+Authorization: Bearer {{token}}
+
+### Get Orders with Multiple Sorting Criteria
+GET {{baseUrl}}/orders?sort=status,-orderDate
+Authorization: Bearer {{token}}
+
+### Filter Orders by Status
+GET {{baseUrl}}/orders?status=Pending
+Authorization: Bearer {{token}}
+
+### Filter Orders by Date Range
+GET {{baseUrl}}/orders?fromDate=2023-01-01&toDate=2023-12-31
+Authorization: Bearer {{token}}
+
+### Filter Orders by Amount Range
+GET {{baseUrl}}/orders?minAmount=5000&maxAmount=6000
+Authorization: Bearer {{token}}
+
+### Combined Filtering, Sorting and Pagination
+GET {{baseUrl}}/orders?status=Pending&minAmount=500&sort=-orderDate&page=1&limit=5
+Authorization: Bearer {{token}}
+
+### Get Order by MongoDB ID
+GET {{baseUrl}}/orders/67f81e533e0490886947f008
+Authorization: Bearer {{token}}
+
+### Get Order by Order ID
+GET {{baseUrl}}/orders/orderID/OR-00001
+Authorization: Bearer {{token}}
+
+### Get Orders by Customer with Pagination and Sorting
+GET {{baseUrl}}/orders/customer/67f67b829d34cfbe039e94be?page=1&limit=5&sort=-orderDate
+Authorization: Bearer {{token}}
+
+### Get Orders by Status with Pagination and Sorting
+GET {{baseUrl}}/orders/status/Pending?page=1&limit=5&sort=totalAmount
+Authorization: Bearer {{token}}
+
+### Create New Order
+POST {{baseUrl}}/orders
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "customer": "67f67b829d34cfbe039e94be",
+  "items": [
+    {
+      "product": "67f8ee1eaf6bfc397a056b86",
+      "quantity": 2,
+      "price": 1700.00
+    },
+    {
+      "product": "67f8ec8aaf6bfc397a056b7f",
+      "quantity": 1,
+      "price": 2000.00
+    }
+  ],
+  "shippingAddress": {
+    "street": "123 Main St",
+    "city": "San Francisco",
+    "state": "CA",
+    "postalCode": "94107",
+    "country": "USA"
+  },
+  "status": "Pending"
+}
+
+### Update Order
+PUT {{baseUrl}}/orders/67f81e533e0490886947f008
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "status": "Processing",
+  "shippingAddress": {
+    "street": "456 Updated St",
+    "city": "San Francisco",
+    "state": "CA",
+    "postalCode": "94107",
+    "country": "USA"
+  }
+}
+
+### Delete Order
+DELETE {{baseUrl}}/orders/67f81e533e0490886947f008
+Authorization: Bearer {{token}}
+
+### Delete All Orders
+DELETE {{baseUrl}}/orders
+Authorization: Bearer {{token}}

@@ -512,3 +512,10 @@ TypeError: products.map is not a function
 2025-04-12 14:58:16 ERROR [inventory-api]: Products for supplier not found - GET /products/supplier/67f66c737ed7ddb60e54af6f 
 2025-04-12 14:58:59 ERROR [inventory-api]: Products for supplier not found - GET /products/supplier/67f66c737ed7ddb60e54af6f 
 2025-04-12 15:09:21 ERROR [inventory-api]: Expected double-quoted property name in JSON at position 39 (line 5 column 1) - PUT /products/67f8ee1eaf6bfc397a056b86 
+2025-04-12 15:36:52 ERROR [inventory-api]: Product with ID 67f8cdc8f72a040e609a5ca9 not found - POST /orders 
+2025-04-12 15:42:13 ERROR [inventory-api]: Error creating order: Customer not found 
+Error: Customer not found
+    at createOrderService (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\orders.service.js:92:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\orders.controller.js:158:19
+2025-04-12 15:42:13 ERROR [inventory-api]: Customer not found - POST /orders 

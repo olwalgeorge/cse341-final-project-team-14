@@ -7085,3 +7085,126 @@ TypeError: products.map is not a function
 2025-04-12 15:24:59 INFO [inventory-api]: User registered successfully: superadmin 
 2025-04-12 15:25:00 DEBUG [inventory-api]: Serializing user: 67fa5b9be15046592d0ce2d7 
 2025-04-12 15:25:00 INFO [inventory-api]: User superadmin (ID: 67fa5b9be15046592d0ce2d7, userID: SM-00011) logged in after registration 
+2025-04-12 15:33:31 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-12 15:33:34 INFO [inventory-api]: MongoDB Connected: cluster0-shard-00-00.wncfx.mongodb.net 
+2025-04-12 15:33:40 DEBUG [inventory-api]: Deserialized user: superadmin (67fa5b9be15046592d0ce2d7) 
+2025-04-12 15:33:40 DEBUG [inventory-api]: Session: 
+2025-04-12 15:33:40 DEBUG [inventory-api]: Auth check: 
+2025-04-12 15:33:40 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 15:33:40 INFO [inventory-api]: getAllOrders called 
+2025-04-12 15:33:40 DEBUG [inventory-api]: Query parameters: 
+2025-04-12 15:33:40 DEBUG [inventory-api]: Built filter: 
+2025-04-12 15:34:19 DEBUG [inventory-api]: Deserialized user: superadmin (67fa5b9be15046592d0ce2d7) 
+2025-04-12 15:34:19 DEBUG [inventory-api]: Session: 
+2025-04-12 15:34:19 DEBUG [inventory-api]: Auth check: 
+2025-04-12 15:34:19 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 15:34:19 INFO [inventory-api]: getAllOrders called 
+2025-04-12 15:34:19 DEBUG [inventory-api]: Query parameters: 
+2025-04-12 15:34:19 DEBUG [inventory-api]: Built filter: 
+2025-04-12 15:34:41 DEBUG [inventory-api]: Deserialized user: superadmin (67fa5b9be15046592d0ce2d7) 
+2025-04-12 15:34:41 DEBUG [inventory-api]: Session: 
+2025-04-12 15:34:41 DEBUG [inventory-api]: Auth check: 
+2025-04-12 15:34:41 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 15:34:41 INFO [inventory-api]: getAllOrders called 
+2025-04-12 15:34:41 DEBUG [inventory-api]: Query parameters: 
+2025-04-12 15:34:41 DEBUG [inventory-api]: Built filter: 
+2025-04-12 15:35:12 DEBUG [inventory-api]: Deserialized user: superadmin (67fa5b9be15046592d0ce2d7) 
+2025-04-12 15:35:12 DEBUG [inventory-api]: Session: 
+2025-04-12 15:35:12 DEBUG [inventory-api]: Auth check: 
+2025-04-12 15:35:12 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 15:35:12 INFO [inventory-api]: getAllOrders called 
+2025-04-12 15:35:12 DEBUG [inventory-api]: Query parameters: 
+2025-04-12 15:35:12 DEBUG [inventory-api]: Built filter: 
+2025-04-12 15:35:44 DEBUG [inventory-api]: Deserialized user: superadmin (67fa5b9be15046592d0ce2d7) 
+2025-04-12 15:35:44 DEBUG [inventory-api]: Session: 
+2025-04-12 15:35:44 DEBUG [inventory-api]: Auth check: 
+2025-04-12 15:35:44 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 15:35:44 INFO [inventory-api]: getAllOrders called 
+2025-04-12 15:35:44 DEBUG [inventory-api]: Query parameters: 
+2025-04-12 15:35:44 DEBUG [inventory-api]: Built filter: 
+2025-04-12 15:35:50 DEBUG [inventory-api]: Deserialized user: superadmin (67fa5b9be15046592d0ce2d7) 
+2025-04-12 15:35:50 DEBUG [inventory-api]: Session: 
+2025-04-12 15:35:50 DEBUG [inventory-api]: Auth check: 
+2025-04-12 15:35:50 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 15:35:50 INFO [inventory-api]: getOrderById called with ID: 67f81e533e0490886947f008 
+2025-04-12 15:35:57 DEBUG [inventory-api]: Deserialized user: superadmin (67fa5b9be15046592d0ce2d7) 
+2025-04-12 15:35:57 DEBUG [inventory-api]: Session: 
+2025-04-12 15:35:57 DEBUG [inventory-api]: Auth check: 
+2025-04-12 15:35:57 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 15:35:57 INFO [inventory-api]: getOrderByOrderID called with order ID: OR-00001 
+2025-04-12 15:36:33 DEBUG [inventory-api]: Deserialized user: superadmin (67fa5b9be15046592d0ce2d7) 
+2025-04-12 15:36:33 DEBUG [inventory-api]: Session: 
+2025-04-12 15:36:33 DEBUG [inventory-api]: Auth check: 
+2025-04-12 15:36:33 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 15:36:33 INFO [inventory-api]: getOrdersByCustomerId called with customer ID: 67f67b829d34cfbe039e94be 
+2025-04-12 15:36:52 DEBUG [inventory-api]: Deserialized user: superadmin (67fa5b9be15046592d0ce2d7) 
+2025-04-12 15:36:52 DEBUG [inventory-api]: Session: 
+2025-04-12 15:36:52 DEBUG [inventory-api]: Auth check: 
+2025-04-12 15:36:52 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 15:36:52 INFO [inventory-api]: createOrder called 
+2025-04-12 15:36:52 DEBUG [inventory-api]: Request body: 
+2025-04-12 15:36:52 DEBUG [inventory-api]: Generated orderID: OR-00006 
+2025-04-12 15:36:52 ERROR [inventory-api]: Product with ID 67f8cdc8f72a040e609a5ca9 not found - POST /orders 
+2025-04-12 15:37:30 DEBUG [inventory-api]: Deserialized user: superadmin (67fa5b9be15046592d0ce2d7) 
+2025-04-12 15:37:30 DEBUG [inventory-api]: Session: 
+2025-04-12 15:37:30 INFO [inventory-api]: getAllProducts called 
+2025-04-12 15:37:30 DEBUG [inventory-api]: Filters applied: 
+2025-04-12 15:37:30 DEBUG [inventory-api]: getAllProductsService called with query: 
+2025-04-12 15:37:30 DEBUG [inventory-api]: Built filter: 
+2025-04-12 15:41:11 DEBUG [inventory-api]: Deserialized user: superadmin (67fa5b9be15046592d0ce2d7) 
+2025-04-12 15:41:11 DEBUG [inventory-api]: Session: 
+2025-04-12 15:41:11 DEBUG [inventory-api]: Auth check: 
+2025-04-12 15:41:11 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 15:41:11 INFO [inventory-api]: getAllCustomers called 
+2025-04-12 15:41:11 DEBUG [inventory-api]: Query parameters: 
+2025-04-12 15:41:11 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-12 15:41:11 DEBUG [inventory-api]: Built filter: 
+2025-04-12 15:41:36 DEBUG [inventory-api]: Deserialized user: superadmin (67fa5b9be15046592d0ce2d7) 
+2025-04-12 15:41:36 DEBUG [inventory-api]: Session: 
+2025-04-12 15:41:36 DEBUG [inventory-api]: Auth check: 
+2025-04-12 15:41:36 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 15:41:36 INFO [inventory-api]: createOrder called 
+2025-04-12 15:41:36 DEBUG [inventory-api]: Request body: 
+2025-04-12 15:41:37 DEBUG [inventory-api]: Generated orderID: OR-00006 
+2025-04-12 15:41:47 DEBUG [inventory-api]: Deserialized user: superadmin (67fa5b9be15046592d0ce2d7) 
+2025-04-12 15:41:47 DEBUG [inventory-api]: Session: 
+2025-04-12 15:41:47 DEBUG [inventory-api]: Auth check: 
+2025-04-12 15:41:47 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 15:41:47 WARN [inventory-api]: Validation failed 
+2025-04-12 15:42:12 DEBUG [inventory-api]: Deserialized user: superadmin (67fa5b9be15046592d0ce2d7) 
+2025-04-12 15:42:12 DEBUG [inventory-api]: Session: 
+2025-04-12 15:42:12 DEBUG [inventory-api]: Auth check: 
+2025-04-12 15:42:12 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 15:42:12 INFO [inventory-api]: createOrder called 
+2025-04-12 15:42:12 DEBUG [inventory-api]: Request body: 
+2025-04-12 15:42:12 DEBUG [inventory-api]: Generated orderID: OR-00007 
+2025-04-12 15:42:13 ERROR [inventory-api]: Error creating order: Customer not found 
+Error: Customer not found
+    at createOrderService (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\orders.service.js:92:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\orders.controller.js:158:19
+2025-04-12 15:42:13 ERROR [inventory-api]: Customer not found - POST /orders 
+2025-04-12 15:44:39 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-12 15:44:43 INFO [inventory-api]: MongoDB Connected: cluster0-shard-00-02.wncfx.mongodb.net 
+2025-04-12 15:44:52 DEBUG [inventory-api]: Deserialized user: superadmin (67fa5b9be15046592d0ce2d7) 
+2025-04-12 15:44:52 DEBUG [inventory-api]: Session: 
+2025-04-12 15:44:52 DEBUG [inventory-api]: Auth check: 
+2025-04-12 15:44:52 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 15:44:52 INFO [inventory-api]: getAllOrders called 
+2025-04-12 15:44:52 DEBUG [inventory-api]: Query parameters: 
+2025-04-12 15:44:52 DEBUG [inventory-api]: Built filter: 
+2025-04-12 15:45:02 DEBUG [inventory-api]: Deserialized user: superadmin (67fa5b9be15046592d0ce2d7) 
+2025-04-12 15:45:02 DEBUG [inventory-api]: Session: 
+2025-04-12 15:45:02 DEBUG [inventory-api]: Auth check: 
+2025-04-12 15:45:02 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 15:45:02 INFO [inventory-api]: getOrderById called with ID: 67f81e533e0490886947f008 
+2025-04-12 15:45:07 DEBUG [inventory-api]: Deserialized user: superadmin (67fa5b9be15046592d0ce2d7) 
+2025-04-12 15:45:07 DEBUG [inventory-api]: Session: 
+2025-04-12 15:45:07 DEBUG [inventory-api]: Auth check: 
+2025-04-12 15:45:07 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 15:45:07 INFO [inventory-api]: getOrderByOrderID called with order ID: OR-00001 
+2025-04-12 15:45:26 DEBUG [inventory-api]: Deserialized user: superadmin (67fa5b9be15046592d0ce2d7) 
+2025-04-12 15:45:26 DEBUG [inventory-api]: Session: 
+2025-04-12 15:45:26 DEBUG [inventory-api]: Auth check: 
+2025-04-12 15:45:26 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 15:45:26 INFO [inventory-api]: getOrdersByCustomerId called with customer ID: 67f67b829d34cfbe039e94be 
