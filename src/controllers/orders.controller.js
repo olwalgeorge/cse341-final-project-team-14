@@ -24,9 +24,17 @@ const Product = require("../models/product.model");
 const getAllOrders = asyncHandler(async (req, res, next) => {
   logger.info("getAllOrders called");
   try {
-    const orders = await getAllOrdersService();
-    const transformedOrders = orders.map(transformOrder);
-    sendResponse(res, 200, "Orders retrieved successfully", transformedOrders);
+    const result = await getAllOrdersService(req.query);
+    const transformedOrders = result.orders.map(transformOrder);
+    sendResponse(
+      res, 
+      200, 
+      "Orders retrieved successfully", 
+      {
+        orders: transformedOrders,
+        pagination: result.pagination
+      }
+    );
   } catch (error) {
     logger.error("Error retrieving all orders:", error);
     next(error);

@@ -145,7 +145,7 @@ GET http://localhost:3000/orders?status=pending&fromDate=2023-01-01&toDate=2023-
 Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
 
 ### Get Order by MongoDB ID (Requires Authentication)
-GET http://localhost:3000/orders/65fb123abc456d789e012347
+GET http://localhost:3000/orders/67f81e533e0490886947f008
 Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
 
 ### Get Order by Order ID (Requires Authentication)

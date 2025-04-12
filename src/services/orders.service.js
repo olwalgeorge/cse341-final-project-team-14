@@ -1,57 +1,34 @@
 const Order = require("../models/order.model.js");
-const Product = require("../models/product.model.js"); // Added Product import
+const Product = require("../models/product.model.js");
 const { generateOrderId } = require("../utils/order.utils.js");
+const APIFeatures = require("../utils/apiFeatures.js");
 const logger = require("../utils/logger.js");
 
 /**
  * Get all orders with optional filtering and pagination
  */
 const getAllOrdersService = async (query = {}) => {
-  // Create filter object
-  const filter = {};
+  // Define custom filters mapping
+  const customFilters = {
+    status: 'status',
+    customer: 'customer',
+    dateField: 'orderDate'
+  };
 
-  // Apply status filter
-  if (query.status) {
-    filter.status = query.status;
-  }
+  // Build filter using APIFeatures utility
+  const filter = APIFeatures.buildFilter(query, customFilters);
 
-  // Apply customer filter
-  if (query.customer) {
-    filter.customer = query.customer;
-  }
-
-  // Apply date range filter
-  if (query.fromDate || query.toDate) {
-    filter.orderDate = {};
-    if (query.fromDate) filter.orderDate.$gte = new Date(query.fromDate);
-    if (query.toDate) filter.orderDate.$lte = new Date(query.toDate);
-  }
-
-  // Pagination
-  const page = parseInt(query.page) || 1;
-  const limit = parseInt(query.limit) || 10;
-  const skip = (page - 1) * limit;
-
-  // Sort options
-  const sort = {};
-  if (query.sort) {
-    const sortFields = query.sort.split(",");
-    sortFields.forEach((field) => {
-      if (field.startsWith("-")) {
-        sort[field.substring(1)] = -1;
-      } else {
-        sort[field] = 1;
-      }
-    });
-  } else {
-    sort.orderDate = -1; // Default sort by newest orders
-  }
+  // Get pagination parameters
+  const pagination = APIFeatures.getPagination(query);
+  
+  // Get sort parameters with default sort by order date descending
+  const sort = APIFeatures.getSort(query, '-orderDate');
 
   // Execute query
   const orders = await Order.find(filter)
     .sort(sort)
-    .skip(skip)
-    .limit(limit)
+    .skip(pagination.skip)
+    .limit(pagination.limit)
     .populate("customer.customerId", "name email phone customerID")
     .populate("products.product", "name description sellingPrice category sku productID");
 
@@ -60,12 +37,7 @@ const getAllOrdersService = async (query = {}) => {
 
   return {
     orders,
-    pagination: {
-      total,
-      page,
-      limit,
-      totalPages: Math.ceil(total / limit),
-    },
+    pagination: APIFeatures.paginationResult(total, pagination)
   };
 };
 
@@ -190,10 +162,25 @@ const deleteOrderService = async (id) => {
 /**
  * Get orders by customer ID
  */
-const getOrdersByCustomerService = async (customerId) => {
-  return await Order.find({ "customer.customerId": customerId })
+const getOrdersByCustomerService = async (customerId, query = {}) => {
+  // Get pagination and sorting parameters
+  const pagination = APIFeatures.getPagination(query);
+  const sort = APIFeatures.getSort(query, '-orderDate');
+
+  const orders = await Order.find({ "customer.customerId": customerId })
+    .sort(sort)
+    .skip(pagination.skip)
+    .limit(pagination.limit)
     .populate("customer.customerId", "name email phone customerID")
     .populate("products.product", "name description sellingPrice category sku productID");
+
+  // Get total count for pagination
+  const total = await Order.countDocuments({ "customer.customerId": customerId });
+
+  return {
+    orders,
+    pagination: APIFeatures.paginationResult(total, pagination)
+  };
 };
 
 /**
@@ -210,10 +197,25 @@ const getOrdersByCustomerIdService = async (customerId) => {
 /**
  * Get orders by status
  */
-const getOrdersByStatusService = async (status) => {
-  return await Order.find({ status: status })
+const getOrdersByStatusService = async (status, query = {}) => {
+  // Get pagination and sorting parameters
+  const pagination = APIFeatures.getPagination(query);
+  const sort = APIFeatures.getSort(query, '-orderDate');
+
+  const orders = await Order.find({ status: status })
+    .sort(sort)
+    .skip(pagination.skip)
+    .limit(pagination.limit)
     .populate("customer.customerId", "name email phone customerID")
     .populate("products.product", "name description sellingPrice category sku productID");
+
+  // Get total count for pagination
+  const total = await Order.countDocuments({ status: status });
+
+  return {
+    orders,
+    pagination: APIFeatures.paginationResult(total, pagination)
+  };
 };
 
 /**

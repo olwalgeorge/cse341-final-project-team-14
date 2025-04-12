@@ -5965,3 +5965,38 @@ TypeError: warehouses.map is not a function
 2025-04-11 14:12:06 DEBUG [inventory-api]: Auth check: 
 2025-04-11 14:12:06 INFO [inventory-api]: User ben is authenticated 
 2025-04-11 14:12:06 WARN [inventory-api]: Validation failed 
+2025-04-12 08:53:14 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-12 08:53:18 INFO [inventory-api]: MongoDB Connected: cluster0-shard-00-00.wncfx.mongodb.net 
+2025-04-12 08:53:35 DEBUG [inventory-api]: Session: 
+2025-04-12 08:53:35 DEBUG [inventory-api]: Auth check: 
+2025-04-12 08:53:35 WARN [inventory-api]: Authentication failed - no session 
+2025-04-12 08:53:35 ERROR [inventory-api]: Authentication required - GET /customers 
+2025-04-12 08:57:10 DEBUG [inventory-api]: Session: 
+2025-04-12 08:57:10 INFO [inventory-api]: User superadmin logged in successfully 
+2025-04-12 08:57:11 INFO [inventory-api]: User superadmin logged in successfully. 
+2025-04-12 08:58:02 DEBUG [inventory-api]: Session: 
+2025-04-12 08:58:02 DEBUG [inventory-api]: Auth check: 
+2025-04-12 08:58:02 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 08:58:02 INFO [inventory-api]: getAllOrders called 
+2025-04-12 08:58:02 DEBUG [inventory-api]: Built filter: 
+2025-04-12 08:58:02 ERROR [inventory-api]: Error retrieving all orders: orders.map is not a function 
+TypeError: orders.map is not a function
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\orders.controller.js:28:38
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-04-12 08:58:02 ERROR [inventory-api]: orders.map is not a function - GET /orders 
+2025-04-12 09:00:40 DEBUG [inventory-api]: Session: 
+2025-04-12 09:00:40 DEBUG [inventory-api]: Auth check: 
+2025-04-12 09:00:40 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 09:00:40 INFO [inventory-api]: getOrderById called with ID: 65fb123abc456d789e012347 
+2025-04-12 09:00:40 ERROR [inventory-api]: Order not found - GET /orders/65fb123abc456d789e012347 
+2025-04-12 09:00:50 DEBUG [inventory-api]: Session: 
+2025-04-12 09:00:50 DEBUG [inventory-api]: Auth check: 
+2025-04-12 09:00:50 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 09:00:50 INFO [inventory-api]: getOrderByOrderID called with order ID: OR-00001 
+2025-04-12 09:04:18 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-12 09:04:22 INFO [inventory-api]: MongoDB Connected: cluster0-shard-00-02.wncfx.mongodb.net 
+2025-04-12 09:04:26 DEBUG [inventory-api]: Session: 
+2025-04-12 09:04:26 DEBUG [inventory-api]: Auth check: 
+2025-04-12 09:04:26 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 09:04:26 INFO [inventory-api]: getAllOrders called 
+2025-04-12 09:04:26 DEBUG [inventory-api]: Built filter: 

@@ -1,6 +1,7 @@
 const InventoryTransaction = require("../models/inventoryTransaction.model.js");
 const Inventory = require("../models/inventory.model.js");
 const { generateTransactionId } = require("../utils/inventoryTransaction.utils.js");
+const APIFeatures = require("../utils/apiFeatures.js");
 const logger = require("../utils/logger.js");
 
 /**
@@ -8,61 +9,30 @@ const logger = require("../utils/logger.js");
  */
 const getAllInventoryTransactionsService = async (query = {}) => {
   try {
-    // Create filter object
-    const filter = {};
+    // Define custom filters mapping
+    const customFilters = {
+      transactionType: 'transactionType',
+      inventory: 'inventory',
+      product: 'product',
+      warehouse: 'warehouse',
+      // Define dateField for date range filtering
+      dateField: 'transactionDate'
+    };
 
-    // Apply transaction type filter
-    if (query.transactionType) {
-      filter.transactionType = query.transactionType;
-    }
+    // Build filter using APIFeatures utility
+    const filter = APIFeatures.buildFilter(query, customFilters);
 
-    // Apply inventory filter
-    if (query.inventory) {
-      filter.inventory = query.inventory;
-    }
-
-    // Apply product filter
-    if (query.product) {
-      filter.product = query.product;
-    }
-
-    // Apply warehouse filter
-    if (query.warehouse) {
-      filter.warehouse = query.warehouse;
-    }
-
-    // Apply date range filter
-    if (query.fromDate || query.toDate) {
-      filter.transactionDate = {};
-      if (query.fromDate) filter.transactionDate.$gte = new Date(query.fromDate);
-      if (query.toDate) filter.transactionDate.$lte = new Date(query.toDate);
-    }
-
-    // Pagination
-    const page = parseInt(query.page) || 1;
-    const limit = parseInt(query.limit) || 10;
-    const skip = (page - 1) * limit;
-
-    // Sort options
-    const sort = {};
-    if (query.sort) {
-      const sortFields = query.sort.split(",");
-      sortFields.forEach((field) => {
-        if (field.startsWith("-")) {
-          sort[field.substring(1)] = -1;
-        } else {
-          sort[field] = 1;
-        }
-      });
-    } else {
-      sort.transactionDate = -1; // Default sort by newest transaction
-    }
+    // Get pagination parameters
+    const pagination = APIFeatures.getPagination(query);
+    
+    // Get sort parameters with default sort by transaction date descending
+    const sort = APIFeatures.getSort(query, '-transactionDate');
 
     // Execute query
     const transactions = await InventoryTransaction.find(filter)
       .sort(sort)
-      .skip(skip)
-      .limit(limit)
+      .skip(pagination.skip)
+      .limit(pagination.limit)
       .populate("product", "name productID sku category")
       .populate("warehouse", "name warehouseID")
       .populate("fromWarehouse", "name warehouseID")
@@ -74,12 +44,7 @@ const getAllInventoryTransactionsService = async (query = {}) => {
 
     return {
       transactions,
-      pagination: {
-        total,
-        page,
-        limit,
-        totalPages: Math.ceil(total / limit),
-      },
+      pagination: APIFeatures.paginationResult(total, pagination)
     };
   } catch (error) {
     logger.error("Error in getAllInventoryTransactionsService:", error);
@@ -124,15 +89,29 @@ const getInventoryTransactionByTransactionIDService = async (transactionID) => {
 /**
  * Get inventory transactions by product
  */
-const getInventoryTransactionsByProductService = async (productId) => {
+const getInventoryTransactionsByProductService = async (productId, query = {}) => {
   try {
-    return await InventoryTransaction.find({ product: productId })
-      .sort({ transactionDate: -1 })
+    // Use our pagination and sorting utilities
+    const pagination = APIFeatures.getPagination(query);
+    const sort = APIFeatures.getSort(query, '-transactionDate');
+    
+    const transactions = await InventoryTransaction.find({ product: productId })
+      .sort(sort)
+      .skip(pagination.skip)
+      .limit(pagination.limit)
       .populate("product", "name productID sku category")
       .populate("warehouse", "name warehouseID")
       .populate("fromWarehouse", "name warehouseID")
       .populate("toWarehouse", "name warehouseID")
       .populate("performedBy", "fullName email username");
+    
+    // Get total count for pagination
+    const total = await InventoryTransaction.countDocuments({ product: productId });
+
+    return {
+      transactions,
+      pagination: APIFeatures.paginationResult(total, pagination)
+    };
   } catch (error) {
     logger.error(`Error in getInventoryTransactionsByProductService for product ${productId}:`, error);
     throw error;
@@ -142,21 +121,37 @@ const getInventoryTransactionsByProductService = async (productId) => {
 /**
  * Get inventory transactions by warehouse
  */
-const getInventoryTransactionsByWarehouseService = async (warehouseId) => {
+const getInventoryTransactionsByWarehouseService = async (warehouseId, query = {}) => {
   try {
-    return await InventoryTransaction.find({ 
+    // Use our pagination and sorting utilities
+    const pagination = APIFeatures.getPagination(query);
+    const sort = APIFeatures.getSort(query, '-transactionDate');
+    
+    const filter = { 
       $or: [
         { warehouse: warehouseId },
         { fromWarehouse: warehouseId },
         { toWarehouse: warehouseId }
       ]
-    })
-      .sort({ transactionDate: -1 })
+    };
+    
+    const transactions = await InventoryTransaction.find(filter)
+      .sort(sort)
+      .skip(pagination.skip)
+      .limit(pagination.limit)
       .populate("product", "name productID sku category")
       .populate("warehouse", "name warehouseID")
       .populate("fromWarehouse", "name warehouseID")
       .populate("toWarehouse", "name warehouseID")
       .populate("performedBy", "fullName email username");
+    
+    // Get total count for pagination
+    const total = await InventoryTransaction.countDocuments(filter);
+
+    return {
+      transactions,
+      pagination: APIFeatures.paginationResult(total, pagination)
+    };
   } catch (error) {
     logger.error(`Error in getInventoryTransactionsByWarehouseService for warehouse ${warehouseId}:`, error);
     throw error;
