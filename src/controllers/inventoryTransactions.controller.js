@@ -8,6 +8,7 @@ const {
   getInventoryTransactionByTransactionIDService,
   getInventoryTransactionsByProductService,
   getInventoryTransactionsByWarehouseService,
+  getInventoryTransactionsByTypeService,
   createInventoryTransactionService,
   deleteInventoryTransactionService,
   deleteAllInventoryTransactionsService
@@ -21,9 +22,12 @@ const { transformInventoryTransaction, generateTransactionId } = require("../uti
  */
 const getAllInventoryTransactions = asyncHandler(async (req, res, next) => {
   logger.info("getAllInventoryTransactions called");
+  logger.debug("Query parameters:", req.query);
+  
   try {
     const result = await getAllInventoryTransactionsService(req.query);
     const transformedTransactions = result.transactions.map(transformInventoryTransaction);
+    
     sendResponse(
       res,
       200,
@@ -98,20 +102,28 @@ const getInventoryTransactionByTransactionID = asyncHandler(async (req, res, nex
  */
 const getInventoryTransactionsByProduct = asyncHandler(async (req, res, next) => {
   logger.info(`getInventoryTransactionsByProduct called with product ID: ${req.params.productId}`);
+  logger.debug("Query parameters:", req.query);
+  
   try {
-    const transactions = await getInventoryTransactionsByProductService(req.params.productId);
-    if (transactions && transactions.length > 0) {
-      const transformedTransactions = transactions.map(transformInventoryTransaction);
-      sendResponse(
-        res,
-        200,
-        "Inventory transactions retrieved successfully",
-        transformedTransactions
-      );
-    } else {
-      // Return empty array instead of 404 for empty results
-      sendResponse(res, 200, "No inventory transactions found for this product", []);
+    const result = await getInventoryTransactionsByProductService(req.params.productId, req.query);
+    
+    if (!result.transactions.length) {
+      return sendResponse(res, 200, "No inventory transactions found for this product", {
+        transactions: [],
+        pagination: result.pagination
+      });
     }
+    
+    const transformedTransactions = result.transactions.map(transformInventoryTransaction);
+    sendResponse(
+      res,
+      200,
+      "Inventory transactions retrieved successfully",
+      {
+        transactions: transformedTransactions,
+        pagination: result.pagination
+      }
+    );
   } catch (error) {
     logger.error(`Error retrieving inventory transactions for product: ${req.params.productId}`, error);
     next(error);
@@ -125,22 +137,65 @@ const getInventoryTransactionsByProduct = asyncHandler(async (req, res, next) =>
  */
 const getInventoryTransactionsByWarehouse = asyncHandler(async (req, res, next) => {
   logger.info(`getInventoryTransactionsByWarehouse called with warehouse ID: ${req.params.warehouseId}`);
+  logger.debug("Query parameters:", req.query);
+  
   try {
-    const transactions = await getInventoryTransactionsByWarehouseService(req.params.warehouseId);
-    if (transactions && transactions.length > 0) {
-      const transformedTransactions = transactions.map(transformInventoryTransaction);
-      sendResponse(
-        res,
-        200,
-        "Inventory transactions retrieved successfully",
-        transformedTransactions
-      );
-    } else {
-      // Return empty array instead of 404 for empty results
-      sendResponse(res, 200, "No inventory transactions found for this warehouse", []);
+    const result = await getInventoryTransactionsByWarehouseService(req.params.warehouseId, req.query);
+    
+    if (!result.transactions.length) {
+      return sendResponse(res, 200, "No inventory transactions found for this warehouse", {
+        transactions: [],
+        pagination: result.pagination
+      });
     }
+    
+    const transformedTransactions = result.transactions.map(transformInventoryTransaction);
+    sendResponse(
+      res,
+      200,
+      "Inventory transactions retrieved successfully",
+      {
+        transactions: transformedTransactions,
+        pagination: result.pagination
+      }
+    );
   } catch (error) {
     logger.error(`Error retrieving inventory transactions for warehouse: ${req.params.warehouseId}`, error);
+    next(error);
+  }
+});
+
+/**
+ * @desc    Get inventory transactions by transaction type
+ * @route   GET /inventory-transactions/type/:transactionType
+ * @access  Private
+ */
+const getInventoryTransactionsByType = asyncHandler(async (req, res, next) => {
+  logger.info(`getInventoryTransactionsByType called with type: ${req.params.transactionType}`);
+  logger.debug("Query parameters:", req.query);
+  
+  try {
+    const result = await getInventoryTransactionsByTypeService(req.params.transactionType, req.query);
+    
+    if (!result.transactions.length) {
+      return sendResponse(res, 200, `No inventory transactions found with type: ${req.params.transactionType}`, {
+        transactions: [],
+        pagination: result.pagination
+      });
+    }
+    
+    const transformedTransactions = result.transactions.map(transformInventoryTransaction);
+    sendResponse(
+      res,
+      200,
+      "Inventory transactions retrieved successfully",
+      {
+        transactions: transformedTransactions,
+        pagination: result.pagination
+      }
+    );
+  } catch (error) {
+    logger.error(`Error retrieving inventory transactions for type: ${req.params.transactionType}`, error);
     next(error);
   }
 });
@@ -221,6 +276,7 @@ module.exports = {
   getInventoryTransactionByTransactionID,
   getInventoryTransactionsByProduct,
   getInventoryTransactionsByWarehouse,
+  getInventoryTransactionsByType,
   createInventoryTransaction,
   deleteInventoryTransactionById,
   deleteAllInventoryTransactions

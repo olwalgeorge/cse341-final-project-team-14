@@ -6,57 +6,82 @@ const {
   getInventoryTransactionByTransactionID,
   getInventoryTransactionsByProduct,
   getInventoryTransactionsByWarehouse,
+  getInventoryTransactionsByType,
   createInventoryTransaction,
   deleteInventoryTransactionById,
   deleteAllInventoryTransactions
-} = require("../controllers/inventoryTransactions.controller.js");
-const validate = require("../middlewares/validation.middleware.js");
-const isAuthenticated = require("../middlewares/auth.middleware.js");
+} = require("../controllers/inventoryTransactions.controller");
+const isAuthenticated = require("../middlewares/auth.middleware");
+const validate = require("../middlewares/validation.middleware");
 const {
-  transactionID_ValidationRules,
+  transaction_IdValidationRules,
   transactionIDValidationRules,
   productIdValidationRules,
   warehouseIdValidationRules,
-  inventoryTransactionCreateValidationRules
-} = require("../validators/inventoryTransaction.validator.js");
+  transactionTypeValidationRules,
+  createTransactionValidationRules
+} = require("../validators/inventoryTransaction.validator");
 
-// All routes require authentication for inventory transactions
-router.use(isAuthenticated);
+// Get all inventory transactions
+router.get("/", isAuthenticated, getAllInventoryTransactions);
 
-// Main routes
-router.get("/", getAllInventoryTransactions);
-router.post("/", validate(inventoryTransactionCreateValidationRules()), createInventoryTransaction);
-router.delete("/", deleteAllInventoryTransactions);
+// Get transaction by MongoDB ID
+router.get(
+  "/:transaction_Id", 
+  isAuthenticated, 
+  validate(transaction_IdValidationRules()),
+  getInventoryTransactionById
+);
 
-// Routes with parameters
+// Get transaction by transaction ID (IT-XXXXX format)
 router.get(
   "/transactionID/:transactionID", 
+  isAuthenticated, 
   validate(transactionIDValidationRules()),
   getInventoryTransactionByTransactionID
 );
 
+// Get transactions by product
 router.get(
-  "/product/:productId",
+  "/product/:productId", 
+  isAuthenticated, 
   validate(productIdValidationRules()),
   getInventoryTransactionsByProduct
 );
 
+// Get transactions by warehouse
 router.get(
-  "/warehouse/:warehouseId",
+  "/warehouse/:warehouseId", 
+  isAuthenticated, 
   validate(warehouseIdValidationRules()),
   getInventoryTransactionsByWarehouse
 );
 
+// Get transactions by transaction type
 router.get(
-  "/:_id",
-  validate(transactionID_ValidationRules()),
-  getInventoryTransactionById
+  "/type/:transactionType", 
+  isAuthenticated, 
+  validate(transactionTypeValidationRules()),
+  getInventoryTransactionsByType
 );
 
+// Create new transaction
+router.post(
+  "/", 
+  isAuthenticated, 
+  validate(createTransactionValidationRules()),
+  createInventoryTransaction
+);
+
+// Delete transaction by ID
 router.delete(
-  "/:_id",
-  validate(transactionID_ValidationRules()),
+  "/:transaction_Id", 
+  isAuthenticated, 
+  validate(transaction_IdValidationRules()),
   deleteInventoryTransactionById
 );
+
+// Delete all transactions
+router.delete("/", isAuthenticated, deleteAllInventoryTransactions);
 
 module.exports = router;

@@ -1,0 +1,105 @@
+@baseUrl = http://localhost:3000
+@token = your_auth_token_here
+
+### Get All Inventory Transactions
+GET {{baseUrl}}/inventory-transactions
+Authorization: Bearer {{token}}
+
+### Get Inventory Transactions with Pagination
+GET {{baseUrl}}/inventory-transactions?page=1&limit=10
+Authorization: Bearer {{token}}
+
+### Get Inventory Transactions with Sorting (newest first)
+GET {{baseUrl}}/inventory-transactions?sort=-transactionDate
+Authorization: Bearer {{token}}
+
+### Get Inventory Transactions with Sorting (by transaction type)
+GET {{baseUrl}}/inventory-transactions?sort=transactionType,-transactionDate
+Authorization: Bearer {{token}}
+
+### Filter Inventory Transactions by Date Range
+GET {{baseUrl}}/inventory-transactions?fromDate=2023-01-01&toDate=2023-12-31
+Authorization: Bearer {{token}}
+
+### Filter Inventory Transactions by Transaction Type
+GET {{baseUrl}}/inventory-transactions?transactionType=Adjustment
+Authorization: Bearer {{token}}
+
+### Filter Inventory Transactions by Product
+GET {{baseUrl}}/inventory-transactions?product=67f8ec8aaf6bfc397a056b7f
+Authorization: Bearer {{token}}
+
+### Filter Inventory Transactions by Warehouse
+GET {{baseUrl}}/inventory-transactions?warehouse=67f8e3c85b1777f2f72ac8e9
+Authorization: Bearer {{token}}
+
+### Filter Inventory Transactions by Document Reference
+GET {{baseUrl}}/inventory-transactions?documentType=Purchase
+Authorization: Bearer {{token}}
+
+### Combined Filtering, Sorting and Pagination
+GET {{baseUrl}}/inventory-transactions?transactionType=Purchase&fromDate=2023-01-01&sort=-transactionDate&page=1&limit=5
+Authorization: Bearer {{token}}
+
+### Get Inventory Transaction by MongoDB ID
+GET {{baseUrl}}/inventory-transactions/67f8f859e9967a65f1ad29e1
+Authorization: Bearer {{token}}
+
+### Get Inventory Transaction by Transaction ID
+GET {{baseUrl}}/inventory-transactions/transactionID/IT-00001
+Authorization: Bearer {{token}}
+
+### Get Inventory Transactions by Product with Pagination and Sorting
+GET {{baseUrl}}/inventory-transactions/product/67f8ec8aaf6bfc397a056b7f?page=1&limit=5&sort=-transactionDate
+Authorization: Bearer {{token}}
+
+### Get Inventory Transactions by Warehouse with Pagination and Sorting
+GET {{baseUrl}}/inventory-transactions/warehouse/67f8e3c85b1777f2f72ac8e9?page=1&limit=5&sort=-transactionDate
+Authorization: Bearer {{token}}
+
+### Get Inventory Transactions by Type with Pagination and Sorting
+GET {{baseUrl}}/inventory-transactions/type/Adjustment?page=1&limit=5&sort=-transactionDate
+Authorization: Bearer {{token}}
+
+### Create New Inventory Transaction - Adjustment
+POST {{baseUrl}}/inventory-transactions
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "inventory": "67f8f19c967f8b21cb2ae9c5",
+  "product": "67f8ec8aaf6bfc397a056b7f",
+  "warehouse": "67f8e3c85b1777f2f72ac8e9",
+  "transactionType": "Adjustment",
+  "quantityBefore": 10,
+  "quantityChange": 9,
+  "notes": "Adjustment due to physical count"
+}
+
+### Create New Inventory Transaction - Purchase
+POST {{baseUrl}}/inventory-transactions
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "inventory": "67f8cdc8f72a040e609a5ca8",
+  "product": "67f8ec8aaf6bfc397a056b7f",
+  "warehouse": "67f8e3c85b1777f2f72ac8e9",
+  "transactionType": "Purchase",
+  "quantityBefore": 15,
+  "quantityChange": 10,
+  "reference": {
+    "documentType": "Purchase",
+    "documentId": "67f66c737ed7ddb60e54af70",
+    "documentCode": "PU-00003"
+  },
+  "notes": "Stock received from supplier"
+}
+
+### Delete Inventory Transaction
+DELETE {{baseUrl}}/inventory-transactions/67f8f859e9967a65f1ad29e1
+Authorization: Bearer {{token}}
+
+### Delete All Inventory Transactions
+DELETE {{baseUrl}}/inventory-transactions
+Authorization: Bearer {{token}}

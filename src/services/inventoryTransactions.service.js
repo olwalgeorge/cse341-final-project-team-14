@@ -9,14 +9,51 @@ const logger = require("../utils/logger.js");
  */
 const getAllInventoryTransactionsService = async (query = {}) => {
   try {
-    // Define custom filters mapping
+    // Define custom filters mapping based on our model structure
     const customFilters = {
-      transactionType: 'transactionType',
+      transactionType: {
+        field: 'transactionType',
+        transform: (value) => {
+          // Ensure the transaction type matches model's enum values
+          const transactionTypes = [
+            "Adjustment", "Purchase", "Sale", "Return", 
+            "Transfer In", "Transfer Out", "Damaged", "Expired", "Initial"
+          ];
+          return transactionTypes.includes(value) ? value : null;
+        }
+      },
       inventory: 'inventory',
       product: 'product',
       warehouse: 'warehouse',
-      // Define dateField for date range filtering
-      dateField: 'transactionDate'
+      fromWarehouse: 'fromWarehouse',
+      toWarehouse: 'toWarehouse',
+      reference: 'reference.documentId',
+      documentType: {
+        field: 'reference.documentType',
+        transform: (value) => {
+          // Ensure document type matches model's allowed values
+          const documentTypes = ["Purchase", "Order", "Adjustment", "Transfer", "Return"];
+          return documentTypes.includes(value) ? value : null;
+        }
+      },
+      documentCode: 'reference.documentCode',
+      fromDate: {
+        field: 'transactionDate',
+        transform: (value) => ({ $gte: new Date(value) })
+      },
+      toDate: {
+        field: 'transactionDate',
+        transform: (value) => ({ $lte: new Date(value) })
+      },
+      minChange: {
+        field: 'quantityChange',
+        transform: (value) => ({ $gte: parseInt(value) })
+      },
+      maxChange: {
+        field: 'quantityChange',
+        transform: (value) => ({ $lte: parseInt(value) })
+      },
+      performedBy: 'performedBy'
     };
 
     // Build filter using APIFeatures utility
@@ -95,7 +132,37 @@ const getInventoryTransactionsByProductService = async (productId, query = {}) =
     const pagination = APIFeatures.getPagination(query);
     const sort = APIFeatures.getSort(query, '-transactionDate');
     
-    const transactions = await InventoryTransaction.find({ product: productId })
+    // Create the product filter
+    const filter = { product: productId };
+    
+    // Apply any additional filters based on the model's structure
+    const additionalFilters = APIFeatures.buildFilter(query, {
+      transactionType: {
+        field: 'transactionType',
+        transform: (value) => {
+          const transactionTypes = [
+            "Adjustment", "Purchase", "Sale", "Return", 
+            "Transfer In", "Transfer Out", "Damaged", "Expired", "Initial"
+          ];
+          return transactionTypes.includes(value) ? value : null;
+        }
+      },
+      warehouse: 'warehouse',
+      fromDate: {
+        field: 'transactionDate',
+        transform: (value) => ({ $gte: new Date(value) })
+      },
+      toDate: {
+        field: 'transactionDate',
+        transform: (value) => ({ $lte: new Date(value) })
+      }
+    });
+    
+    // Combine filters
+    const combinedFilter = { ...filter, ...additionalFilters };
+    
+    // Execute query with pagination and sorting
+    const transactions = await InventoryTransaction.find(combinedFilter)
       .sort(sort)
       .skip(pagination.skip)
       .limit(pagination.limit)
@@ -106,7 +173,7 @@ const getInventoryTransactionsByProductService = async (productId, query = {}) =
       .populate("performedBy", "fullName email username");
     
     // Get total count for pagination
-    const total = await InventoryTransaction.countDocuments({ product: productId });
+    const total = await InventoryTransaction.countDocuments(combinedFilter);
 
     return {
       transactions,
@@ -127,6 +194,7 @@ const getInventoryTransactionsByWarehouseService = async (warehouseId, query = {
     const pagination = APIFeatures.getPagination(query);
     const sort = APIFeatures.getSort(query, '-transactionDate');
     
+    // Create the warehouse filter (matching any of the warehouse fields)
     const filter = { 
       $or: [
         { warehouse: warehouseId },
@@ -135,7 +203,27 @@ const getInventoryTransactionsByWarehouseService = async (warehouseId, query = {
       ]
     };
     
-    const transactions = await InventoryTransaction.find(filter)
+    // Apply any additional filters from query
+    const additionalFilters = APIFeatures.buildFilter(query, {
+      transactionType: 'transactionType',
+      product: 'product',
+      fromDate: {
+        field: 'transactionDate',
+        transform: (value) => ({ $gte: new Date(value) })
+      },
+      toDate: {
+        field: 'transactionDate',
+        transform: (value) => ({ $lte: new Date(value) })
+      }
+    });
+    
+    // Combine filters using $and to maintain the $or structure
+    const combinedFilter = Object.keys(additionalFilters).length > 0
+      ? { $and: [filter, additionalFilters] }
+      : filter;
+    
+    // Execute query with pagination and sorting
+    const transactions = await InventoryTransaction.find(combinedFilter)
       .sort(sort)
       .skip(pagination.skip)
       .limit(pagination.limit)
@@ -146,7 +234,7 @@ const getInventoryTransactionsByWarehouseService = async (warehouseId, query = {
       .populate("performedBy", "fullName email username");
     
     // Get total count for pagination
-    const total = await InventoryTransaction.countDocuments(filter);
+    const total = await InventoryTransaction.countDocuments(combinedFilter);
 
     return {
       transactions,
@@ -154,6 +242,71 @@ const getInventoryTransactionsByWarehouseService = async (warehouseId, query = {
     };
   } catch (error) {
     logger.error(`Error in getInventoryTransactionsByWarehouseService for warehouse ${warehouseId}:`, error);
+    throw error;
+  }
+};
+
+/**
+ * Get inventory transactions by transaction type - leveraging model's transaction type enum
+ */
+const getInventoryTransactionsByTypeService = async (transactionType, query = {}) => {
+  try {
+    // Verify transaction type against the model's allowed values
+    const transactionTypes = [
+      "Adjustment", "Purchase", "Sale", "Return", 
+      "Transfer In", "Transfer Out", "Damaged", "Expired", "Initial"
+    ];
+    
+    if (!transactionTypes.includes(transactionType)) {
+      throw new Error(`Invalid transaction type: ${transactionType}`);
+    }
+    
+    // Use our pagination and sorting utilities
+    const pagination = APIFeatures.getPagination(query);
+    const sort = APIFeatures.getSort(query, '-transactionDate');
+    
+    // Create the transaction type filter
+    const filter = { transactionType: transactionType };
+    
+    // Apply any additional filters from query
+    const additionalFilters = APIFeatures.buildFilter(query, {
+      product: 'product',
+      warehouse: 'warehouse',
+      fromWarehouse: 'fromWarehouse',
+      toWarehouse: 'toWarehouse',
+      fromDate: {
+        field: 'transactionDate',
+        transform: (value) => ({ $gte: new Date(value) })
+      },
+      toDate: {
+        field: 'transactionDate',
+        transform: (value) => ({ $lte: new Date(value) })
+      }
+    });
+    
+    // Combine filters
+    const combinedFilter = { ...filter, ...additionalFilters };
+    
+    // Execute query with pagination and sorting
+    const transactions = await InventoryTransaction.find(combinedFilter)
+      .sort(sort)
+      .skip(pagination.skip)
+      .limit(pagination.limit)
+      .populate("product", "name productID sku category")
+      .populate("warehouse", "name warehouseID")
+      .populate("fromWarehouse", "name warehouseID")
+      .populate("toWarehouse", "name warehouseID")
+      .populate("performedBy", "fullName email username");
+    
+    // Get total count for pagination
+    const total = await InventoryTransaction.countDocuments(combinedFilter);
+
+    return {
+      transactions,
+      pagination: APIFeatures.paginationResult(total, pagination)
+    };
+  } catch (error) {
+    logger.error(`Error in getInventoryTransactionsByTypeService for type ${transactionType}:`, error);
     throw error;
   }
 };
@@ -252,6 +405,7 @@ module.exports = {
   getInventoryTransactionByTransactionIDService,
   getInventoryTransactionsByProductService,
   getInventoryTransactionsByWarehouseService,
+  getInventoryTransactionsByTypeService,
   createInventoryTransactionService,
   deleteInventoryTransactionService,
   deleteAllInventoryTransactionsService
