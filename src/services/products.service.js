@@ -166,7 +166,7 @@ const searchProductsService = async (term, query = {}) => {
         { name: regex },
         { description: regex },
         { category: regex },
-        { tags: regex }  // This will match if any tag in the array matches the regex
+        { tags: regex }  
       ]
     };
     

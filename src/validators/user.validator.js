@@ -150,6 +150,21 @@ const roleValidationRules = () => {
   ];
 };
 
+/**
+ * Validation rules for search term
+ */
+const searchValidationRules = () => {
+  return [
+    check("term", "Search term must be provided")
+      .exists()
+      .notEmpty()
+      .isLength({ min: 2, max: 50 })
+      .withMessage("Search term must be between 2 and 50 characters")
+      .trim()
+      .escape(),
+  ];
+};
+
 module.exports = {
   userUpdateValidationRules,
   userIDValidationRules,
@@ -161,4 +176,5 @@ module.exports = {
   usernameValidationRules,
   emailValidationRules,
   roleValidationRules,
+  searchValidationRules,
 };

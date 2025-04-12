@@ -10,6 +10,7 @@ const {
   getUsersByRole,
   deleteAllUsers,
   updateUserById,
+  searchUsers,
 } = require("../controllers/users.controller.js");
 const validate = require("../middlewares/validation.middleware.js");
 const isAuthenticated = require("../middlewares/auth.middleware.js");
@@ -21,9 +22,12 @@ const {
   usernameValidationRules,
   emailValidationRules,
   roleValidationRules,
+  searchValidationRules,
 } = require("../validators/user.validator.js");
 
 const router = express.Router();
+
+router.get("/search", isAuthenticated, validate(searchValidationRules()), searchUsers);
 
 router.get("/profile", isAuthenticated, getUserProfile);
 

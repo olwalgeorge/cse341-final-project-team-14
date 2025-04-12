@@ -59,10 +59,43 @@ const deleteAllUsersService = async () => {
   return await User.deleteMany({});
 };
 
+/**
+ * Search users by term (searches username, email, fullName)
+ * @param {string} term - The search term
+ * @returns {Promise<Array>} - Array of matching users
+ */
+const searchUsersService = async (term) => {
+  logger.debug(`searchUsersService called with term: ${term}`);
+  
+  try {
+    // Create a case-insensitive regex for the search term
+    const regex = new RegExp(term, "i");
+    
+    // Create a query that searches in username, email, and fullName
+    const searchQuery = {
+      $or: [
+        { username: regex },
+        { email: regex },
+        { fullName: regex },
+        { userID: regex }
+      ]
+    };
+    
+    // Execute the search query
+    const users = await User.find(searchQuery).lean();
+    
+    logger.debug(`Found ${users.length} users matching "${term}"`);
+    
+    return users;
+  } catch (error) {
+    logger.error(`Error in searchUsersService for term ${term}:`, error);
+    throw error;
+  }
+};
+
 module.exports = {
   getUserByIdService,
   getUserByUserIdService,
- 
   deleteUserByIdService,
   getAllUsersService,
   getUserByUsernameService,
@@ -70,4 +103,5 @@ module.exports = {
   getUsersByRoleService,
   deleteAllUsersService,
   updateUserService,
+  searchUsersService,
 };

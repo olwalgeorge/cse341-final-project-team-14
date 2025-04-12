@@ -1,7 +1,7 @@
 const sendResponse = require("../utils/response.js");
 const asyncHandler = require("express-async-handler");
 const logger = require("../utils/logger.js");
-const { ApiError, DatabaseError} = require("../utils/errors");
+const { ApiError, DatabaseError } = require("../utils/errors");
 const {
   getUserByIdService,
   getUserByUserIdService,
@@ -12,7 +12,7 @@ const {
   getUsersByRoleService,
   deleteAllUsersService,
   updateUserService,
- 
+  searchUsersService,
 } = require("../services/users.service");
 const { transformUser, transformUserData } = require("../utils/user.utils.js");
 
@@ -253,7 +253,6 @@ const deleteAllUsers = asyncHandler(async (req, res, next) => {
   }
 });
 
-
 /**
  * @desc    Update user by ID
  * @route   PUT /users/:user_Id
@@ -282,6 +281,43 @@ const updateUserById = asyncHandler(async (req, res, next) => {
   }
 });
 
+/**
+ * @desc    Search users by text
+ * @route   GET /users/search
+ * @access  Private
+ */
+const searchUsers = asyncHandler(async (req, res, next) => {
+  const term = req.query.term;
+  logger.info(`searchUsers called with term: ${term}`);
+  
+  try {
+    const users = await searchUsersService(term);
+    
+    if (!users || !Array.isArray(users)) {
+      logger.error("Search returned invalid result");
+      return next(DatabaseError.dataError("Search result is not in expected format"));
+    }
+    
+    if (users.length === 0) {
+      logger.info(`No users found for search term: ${term}`);
+      return sendResponse(res, 200, "No users found matching your search", []);
+    }
+    
+    // Transform each user to protect sensitive data
+    const transformedUsers = users.map(transformUser);
+    
+    sendResponse(
+      res,
+      200,
+      `Found ${transformedUsers.length} users matching "${term}"`,
+      transformedUsers
+    );
+  } catch (error) {
+    logger.error(`Error searching users for term: ${term}`, error);
+    next(error);
+  }
+});
+
 module.exports = {
   getUserProfile,
   logoutUser,
@@ -294,5 +330,6 @@ module.exports = {
   getUsersByRole,
   deleteAllUsers,
   updateUserById,
+  searchUsers,
 };
 

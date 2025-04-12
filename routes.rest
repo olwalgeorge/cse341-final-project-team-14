@@ -32,6 +32,10 @@ Content-Type: application/json
   "fullName": "George Olwal"
 }
 
+### Search Users (Requires Authentication)
+GET http://localhost:3000/users/search?term=super
+# No need for Authorization Bearer token with cookie-based auth
+
 ### Logout User (Requires Authentication)
 POST http://localhost:3000/auth/logout
 # No need for Authorization Bearer token with cookie-based auth
