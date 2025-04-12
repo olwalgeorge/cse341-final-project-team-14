@@ -6675,3 +6675,128 @@ TypeError: products.map is not a function
 2025-04-12 13:06:55 INFO [inventory-api]: searchUsers called with term: super 
 2025-04-12 13:06:55 DEBUG [inventory-api]: searchUsersService called with term: super 
 2025-04-12 13:06:55 DEBUG [inventory-api]: Found 1 users matching "super" 
+2025-04-12 13:09:46 DEBUG [inventory-api]: Deserialized user: superadmin (67fa30bd8a88a8c6fa0014d1) 
+2025-04-12 13:09:46 DEBUG [inventory-api]: Session: 
+2025-04-12 13:09:46 DEBUG [inventory-api]: Auth check: 
+2025-04-12 13:09:46 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 13:09:46 INFO [inventory-api]: getAllCustomers called 
+2025-04-12 13:09:46 DEBUG [inventory-api]: getAllCustomersService called 
+2025-04-12 13:10:38 DEBUG [inventory-api]: Deserialized user: superadmin (67fa30bd8a88a8c6fa0014d1) 
+2025-04-12 13:10:38 DEBUG [inventory-api]: Session: 
+2025-04-12 13:10:38 DEBUG [inventory-api]: Auth check: 
+2025-04-12 13:10:38 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 13:10:38 INFO [inventory-api]: getAllCustomers called 
+2025-04-12 13:10:38 DEBUG [inventory-api]: getAllCustomersService called 
+2025-04-12 13:10:53 DEBUG [inventory-api]: Deserialized user: superadmin (67fa30bd8a88a8c6fa0014d1) 
+2025-04-12 13:10:53 DEBUG [inventory-api]: Session: 
+2025-04-12 13:10:53 DEBUG [inventory-api]: Auth check: 
+2025-04-12 13:10:53 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 13:10:53 INFO [inventory-api]: getAllCustomers called 
+2025-04-12 13:10:53 DEBUG [inventory-api]: getAllCustomersService called 
+2025-04-12 13:16:32 DEBUG [inventory-api]: Deserialized user: superadmin (67fa30bd8a88a8c6fa0014d1) 
+2025-04-12 13:16:32 DEBUG [inventory-api]: Session: 
+2025-04-12 13:16:32 DEBUG [inventory-api]: Auth check: 
+2025-04-12 13:16:32 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 13:16:32 INFO [inventory-api]: getAllCustomers called 
+2025-04-12 13:16:32 DEBUG [inventory-api]: getAllCustomersService called 
+2025-04-12 13:16:45 DEBUG [inventory-api]: Deserialized user: superadmin (67fa30bd8a88a8c6fa0014d1) 
+2025-04-12 13:16:45 DEBUG [inventory-api]: Session: 
+2025-04-12 13:16:45 DEBUG [inventory-api]: Auth check: 
+2025-04-12 13:16:45 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 13:16:45 INFO [inventory-api]: getAllCustomers called 
+2025-04-12 13:16:45 DEBUG [inventory-api]: getAllCustomersService called 
+2025-04-12 13:17:12 DEBUG [inventory-api]: Deserialized user: superadmin (67fa30bd8a88a8c6fa0014d1) 
+2025-04-12 13:17:12 DEBUG [inventory-api]: Session: 
+2025-04-12 13:17:12 DEBUG [inventory-api]: Auth check: 
+2025-04-12 13:17:12 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 13:17:12 INFO [inventory-api]: getAllCustomers called 
+2025-04-12 13:17:12 DEBUG [inventory-api]: getAllCustomersService called 
+2025-04-12 13:25:21 DEBUG [inventory-api]: Deserialized user: superadmin (67fa30bd8a88a8c6fa0014d1) 
+2025-04-12 13:25:21 DEBUG [inventory-api]: Session: 
+2025-04-12 13:25:21 DEBUG [inventory-api]: Auth check: 
+2025-04-12 13:25:21 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 13:25:21 INFO [inventory-api]: getAllCustomers called 
+2025-04-12 13:25:21 DEBUG [inventory-api]: getAllCustomersService called 
+2025-04-12 13:25:26 DEBUG [inventory-api]: Deserialized user: superadmin (67fa30bd8a88a8c6fa0014d1) 
+2025-04-12 13:25:26 DEBUG [inventory-api]: Session: 
+2025-04-12 13:25:26 DEBUG [inventory-api]: Auth check: 
+2025-04-12 13:25:26 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 13:25:26 INFO [inventory-api]: getAllCustomers called 
+2025-04-12 13:25:26 DEBUG [inventory-api]: getAllCustomersService called 
+2025-04-12 13:25:29 DEBUG [inventory-api]: Deserialized user: superadmin (67fa30bd8a88a8c6fa0014d1) 
+2025-04-12 13:25:29 DEBUG [inventory-api]: Session: 
+2025-04-12 13:25:29 DEBUG [inventory-api]: Auth check: 
+2025-04-12 13:25:29 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 13:25:29 INFO [inventory-api]: getAllCustomers called 
+2025-04-12 13:25:29 DEBUG [inventory-api]: getAllCustomersService called 
+2025-04-12 13:25:43 DEBUG [inventory-api]: Deserialized user: superadmin (67fa30bd8a88a8c6fa0014d1) 
+2025-04-12 13:25:43 DEBUG [inventory-api]: Session: 
+2025-04-12 13:25:43 DEBUG [inventory-api]: Auth check: 
+2025-04-12 13:25:43 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 13:25:43 INFO [inventory-api]: getAllCustomers called 
+2025-04-12 13:25:43 DEBUG [inventory-api]: getAllCustomersService called 
+2025-04-12 13:25:53 DEBUG [inventory-api]: Deserialized user: superadmin (67fa30bd8a88a8c6fa0014d1) 
+2025-04-12 13:25:53 DEBUG [inventory-api]: Session: 
+2025-04-12 13:25:53 DEBUG [inventory-api]: Auth check: 
+2025-04-12 13:25:53 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 13:25:53 WARN [inventory-api]: Validation failed 
+2025-04-12 13:26:52 DEBUG [inventory-api]: Deserialized user: superadmin (67fa30bd8a88a8c6fa0014d1) 
+2025-04-12 13:26:52 DEBUG [inventory-api]: Session: 
+2025-04-12 13:26:52 DEBUG [inventory-api]: Auth check: 
+2025-04-12 13:26:52 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 13:26:52 INFO [inventory-api]: getAllCustomers called 
+2025-04-12 13:26:52 DEBUG [inventory-api]: getAllCustomersService called 
+2025-04-12 13:37:37 DEBUG [inventory-api]: Deserialized user: superadmin (67fa30bd8a88a8c6fa0014d1) 
+2025-04-12 13:37:37 DEBUG [inventory-api]: Session: 
+2025-04-12 13:37:51 DEBUG [inventory-api]: Deserialized user: superadmin (67fa30bd8a88a8c6fa0014d1) 
+2025-04-12 13:37:51 DEBUG [inventory-api]: Session: 
+2025-04-12 13:38:06 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-12 13:38:09 INFO [inventory-api]: MongoDB Connected: cluster0-shard-00-01.wncfx.mongodb.net 
+2025-04-12 13:38:16 DEBUG [inventory-api]: Deserialized user: superadmin (67fa30bd8a88a8c6fa0014d1) 
+2025-04-12 13:38:16 DEBUG [inventory-api]: Session: 
+2025-04-12 13:38:16 DEBUG [inventory-api]: Auth check: 
+2025-04-12 13:38:16 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 13:38:16 INFO [inventory-api]: getAllCustomers called 
+2025-04-12 13:38:16 DEBUG [inventory-api]: Query parameters: 
+2025-04-12 13:38:16 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-12 13:38:16 DEBUG [inventory-api]: Built filter: 
+2025-04-12 13:38:53 DEBUG [inventory-api]: Deserialized user: superadmin (67fa30bd8a88a8c6fa0014d1) 
+2025-04-12 13:38:53 DEBUG [inventory-api]: Session: 
+2025-04-12 13:38:53 DEBUG [inventory-api]: Auth check: 
+2025-04-12 13:38:53 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 13:38:53 INFO [inventory-api]: getAllCustomers called 
+2025-04-12 13:38:53 DEBUG [inventory-api]: Query parameters: 
+2025-04-12 13:38:53 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-12 13:38:53 DEBUG [inventory-api]: Built filter: 
+2025-04-12 13:39:20 DEBUG [inventory-api]: Deserialized user: superadmin (67fa30bd8a88a8c6fa0014d1) 
+2025-04-12 13:39:20 DEBUG [inventory-api]: Session: 
+2025-04-12 13:39:20 DEBUG [inventory-api]: Auth check: 
+2025-04-12 13:39:20 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 13:39:20 INFO [inventory-api]: getAllCustomers called 
+2025-04-12 13:39:20 DEBUG [inventory-api]: Query parameters: 
+2025-04-12 13:39:20 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-12 13:39:20 DEBUG [inventory-api]: Built filter: 
+2025-04-12 13:44:42 DEBUG [inventory-api]: Deserialized user: superadmin (67fa30bd8a88a8c6fa0014d1) 
+2025-04-12 13:44:42 DEBUG [inventory-api]: Session: 
+2025-04-12 13:44:42 DEBUG [inventory-api]: Auth check: 
+2025-04-12 13:44:42 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 13:44:42 INFO [inventory-api]: createCustomer called 
+2025-04-12 13:44:42 DEBUG [inventory-api]: Request body: 
+2025-04-12 13:44:43 DEBUG [inventory-api]: Generated customerID: CU-00002 
+2025-04-12 13:44:43 DEBUG [inventory-api]: createCustomerService called with data: 
+2025-04-12 13:45:53 DEBUG [inventory-api]: Deserialized user: superadmin (67fa30bd8a88a8c6fa0014d1) 
+2025-04-12 13:45:53 DEBUG [inventory-api]: Session: 
+2025-04-12 13:45:53 DEBUG [inventory-api]: Auth check: 
+2025-04-12 13:45:53 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 13:45:53 INFO [inventory-api]: createCustomer called 
+2025-04-12 13:45:53 DEBUG [inventory-api]: Request body: 
+2025-04-12 13:45:53 DEBUG [inventory-api]: Generated customerID: CU-00003 
+2025-04-12 13:45:53 DEBUG [inventory-api]: createCustomerService called with data: 
+2025-04-12 13:46:28 DEBUG [inventory-api]: Deserialized user: superadmin (67fa30bd8a88a8c6fa0014d1) 
+2025-04-12 13:46:28 DEBUG [inventory-api]: Session: 
+2025-04-12 13:46:28 DEBUG [inventory-api]: Auth check: 
+2025-04-12 13:46:28 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 13:46:28 INFO [inventory-api]: getAllCustomers called 
+2025-04-12 13:46:28 DEBUG [inventory-api]: Query parameters: 
+2025-04-12 13:46:28 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-12 13:46:28 DEBUG [inventory-api]: Built filter: 

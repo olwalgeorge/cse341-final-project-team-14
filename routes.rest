@@ -299,7 +299,7 @@ GET http://localhost:3000/customers
 Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
 
 ### Get Customers with Filtering (Requires Authentication)
-GET http://localhost:3000/customers?name=John&page=1&limit=10
+GET http://localhost:3000/customers?name=John
 Authorization: Bearer YOUR_ACCESS_TOKEN  # Replace YOUR_ACCESS_TOKEN
 
 ### Search Customers (Requires Authentication)

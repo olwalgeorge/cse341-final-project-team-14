@@ -17,10 +17,16 @@ const {
   customerCreateValidationRules,
   customerUpdateValidationRules,
   customer_IdValidationRules,
+  customerQueryValidationRules,
 } = require("../validators/customer.validator.js");
 
 // all routes are protected and require authentication
-router.get("/", isAuthenticated, getAllCustomers);
+router.get(
+  "/", 
+  isAuthenticated,
+  validate(customerQueryValidationRules()),
+  getAllCustomers
+);
 router.get(
   "/customerID/:customerID",
   isAuthenticated,

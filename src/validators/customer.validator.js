@@ -1,4 +1,4 @@
-const { check, param } = require("express-validator");
+const { check, param, query } = require("express-validator");
 
 const customerIDValidationRules = () => {
   return [
@@ -90,10 +90,55 @@ const customerUpdateValidationRules = () => {
   ];
 };
 
+/**
+ * Validation rules for customer query parameters
+ */
+const customerQueryValidationRules = () => {
+  return [
+    query("page")
+      .optional()
+      .isInt({ min: 1 })
+      .withMessage("Page must be a positive integer"),
+    query("limit")
+      .optional()
+      .isInt({ min: 1, max: 100 })
+      .withMessage("Limit must be between 1 and 100"),
+    query("sort")
+      .optional()
+      .isString()
+      .withMessage("Sort must be a string"),
+    query("name")
+      .optional()
+      .isString()
+      .withMessage("Name filter must be a string"),
+    query("email")
+      .optional()
+      .isString()
+      .withMessage("Email filter must be a string"),
+    query("phone")
+      .optional()
+      .isString()
+      .withMessage("Phone filter must be a string"),
+    query("city")
+      .optional()
+      .isString()
+      .withMessage("City filter must be a string"),
+    query("state")
+      .optional()
+      .isString()
+      .withMessage("State filter must be a string"),
+    query("country")
+      .optional()
+      .isString()
+      .withMessage("Country filter must be a string"),
+  ];
+};
+
 module.exports = {
   customerIDValidationRules,
   customer_IdValidationRules,
   emailValidationRules,
   customerCreateValidationRules,
   customerUpdateValidationRules,
+  customerQueryValidationRules,
 };

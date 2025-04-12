@@ -1,0 +1,90 @@
+@baseUrl = http://localhost:3000
+@token = your_auth_token_here
+
+### Get all customers
+GET {{baseUrl}}/customers
+Authorization: Bearer {{token}}
+
+### Get all customers with pagination
+GET {{baseUrl}}/customers?page=1&limit=10
+Authorization: Bearer {{token}}
+
+### Get all customers with sorting (ascending by name)
+GET {{baseUrl}}/customers?sort=name
+Authorization: Bearer {{token}}
+
+### Get all customers with sorting (descending by name)
+GET {{baseUrl}}/customers?sort=-name
+Authorization: Bearer {{token}}
+
+### Get all customers with multiple sorting criteria
+GET {{baseUrl}}/customers?sort=-createdAt,name
+Authorization: Bearer {{token}}
+
+### Filter customers by name (partial match)
+GET {{baseUrl}}/customers?name=Joh
+Authorization: Bearer {{token}}
+
+### Filter customers by email domain
+GET {{baseUrl}}/customers?email=gmail.com
+Authorization: Bearer {{token}}
+
+### Filter customers by location
+GET {{baseUrl}}/customers?city=Kisumu
+Authorization: Bearer {{token}}
+
+### Combined filtering, sorting and pagination
+GET {{baseUrl}}/customers?city=New York&sort=-createdAt&page=1&limit=5
+Authorization: Bearer {{token}}
+
+### Get Customer by MongoDB ID (Requires Authentication)
+GET {{baseUrl}}/customers/67f67b829d34cfbe039e94be
+Authorization: Bearer {{token}}
+
+### Get Customer by Customer ID (Requires Authentication) 
+GET {{baseUrl}}/customers/customerID/CU-00001
+Authorization: Bearer {{token}}
+
+### Get Customer by Email (Requires Authentication)
+GET {{baseUrl}}/customers/email/john.doe@example.com
+Authorization: Bearer {{token}}
+
+### Search Customers (Requires Authentication)
+GET {{baseUrl}}/customers/search?term=john
+Authorization: Bearer {{token}}
+
+### Create New Customer (Requires Authentication)
+POST {{baseUrl}}/customers
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "Timothy Oketch",
+  "email": "timothy.oketch@example.com",
+  "phone": "0123456789",
+  "address": {
+    "street": "123 Kisumu Rd",
+    "city": "Kisumu",
+    "state": "Kisumu",
+    "postalCode": "40100",
+    "country": "Kenya"
+  }
+}
+
+### Update Customer (Requires Authentication)
+PUT {{baseUrl}}/customers/65fb123abc456d789e012349
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "John M. Doe",
+  "phone": "9876543210"
+}
+
+### Delete Customer (Requires Authentication)
+DELETE {{baseUrl}}/customers/65fb123abc456d789e012349
+Authorization: Bearer {{token}}
+
+### Delete All Customers (Requires Authentication)
+DELETE {{baseUrl}}/customers
+Authorization: Bearer {{token}}

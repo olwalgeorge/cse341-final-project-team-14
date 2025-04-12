@@ -81,8 +81,24 @@ const customerSchema = new Schema(
   }
 );
 
+// Add indexes for commonly filtered fields
+customerSchema.index({ name: 1 });
+customerSchema.index({ email: 1 });
+customerSchema.index({ customerID: 1 });
+customerSchema.index({ "address.city": 1 });
+customerSchema.index({ "address.state": 1 });
+customerSchema.index({ "address.country": 1 });
+
 // Add a text index for searching
-customerSchema.index({ name: "text", email: "text" });
+customerSchema.index(
+  { 
+    name: "text", 
+    email: "text", 
+    "address.city": "text", 
+    "address.state": "text",
+    "address.country": "text"
+  }
+);
 
 const Customer = mongoose.model("Customer", customerSchema);
 

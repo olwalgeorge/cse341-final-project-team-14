@@ -21,14 +21,20 @@ const { transformCustomer, generateCustomerId } = require("../utils/customer.uti
  */
 const getAllCustomers = asyncHandler(async (req, res, next) => {
   logger.info("getAllCustomers called");
+  logger.debug("Query parameters:", req.query);
   try {
-    const customers = await getAllCustomersService();
-    const transformedCustomers = customers.map(transformCustomer);
+    const result = await getAllCustomersService(req.query);
+    // Transform customers before sending response
+    const transformedCustomers = result.customers.map(transformCustomer);
+    
     sendResponse(
       res,
       200,
       "Customers retrieved successfully",
-      transformedCustomers
+      {
+        customers: transformedCustomers,
+        pagination: result.pagination
+      }
     );
   } catch (error) {
     logger.error("Error retrieving all customers:", error);

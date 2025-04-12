@@ -1,10 +1,63 @@
 const Customer = require("../models/customer.model");
 const logger = require("../utils/logger");
+const APIFeatures = require("../utils/apiFeatures");
 
-// Get all customers
-const getAllCustomersService = async () => {
-  logger.debug("getAllCustomersService called");
-  return await Customer.find({});
+// Get all customers with filtering, pagination, and sorting
+const getAllCustomersService = async (query = {}) => {
+  logger.debug("getAllCustomersService called with query:", query);
+  
+  try {
+    // Define custom filters mapping
+    const customFilters = {
+      name: {
+        field: 'name',
+        transform: (value) => ({ $regex: value, $options: 'i' })
+      },
+      email: {
+        field: 'email',
+        transform: (value) => ({ $regex: value, $options: 'i' })
+      },
+      phone: 'phone',
+      city: {
+        field: 'address.city',
+        transform: (value) => ({ $regex: value, $options: 'i' })
+      },
+      state: {
+        field: 'address.state',
+        transform: (value) => ({ $regex: value, $options: 'i' })
+      },
+      country: {
+        field: 'address.country',
+        transform: (value) => ({ $regex: value, $options: 'i' })
+      }
+    };
+    
+    // Build filter using APIFeatures utility
+    const filter = APIFeatures.buildFilter(query, customFilters);
+    
+    // Get pagination parameters
+    const pagination = APIFeatures.getPagination(query);
+    
+    // Get sort parameters with default sort by name
+    const sort = APIFeatures.getSort(query, 'name');
+
+    // Execute query with pagination and sorting
+    const customers = await Customer.find(filter)
+      .sort(sort)
+      .skip(pagination.skip)
+      .limit(pagination.limit);
+    
+    // Get total count for pagination
+    const total = await Customer.countDocuments(filter);
+    
+    return {
+      customers,
+      pagination: APIFeatures.paginationResult(total, pagination)
+    };
+  } catch (error) {
+    logger.error("Error in getAllCustomersService:", error);
+    throw error;
+  }
 };
 
 // Get customer by email
