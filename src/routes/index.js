@@ -10,6 +10,9 @@ const purchaseRoutes = require("./purchases.routes.js");
 const warehouseRoutes = require("./warehouses.routes.js");
 const inventoryRoutes = require("./inventory.routes.js");
 const inventoryTransactionRoutes = require("./inventoryTransactions.routes.js");
+const inventoryReturnRoutes = require("./inventoryReturns.routes");
+const inventoryAdjustmentRoutes = require("./inventoryAdjustments.routes");
+const inventoryTransferRoutes = require("./inventoryTransfers.routes");
 
 const path = require("path");
 
@@ -29,5 +32,8 @@ router.use("/purchases", purchaseRoutes);
 router.use("/warehouses", warehouseRoutes);
 router.use("/inventory", inventoryRoutes);
 router.use("/inventory-transactions", inventoryTransactionRoutes);
+router.use("/inventory-returns", inventoryReturnRoutes);
+router.use("/inventory-adjustments", inventoryAdjustmentRoutes);
+router.use("/inventory-transfers", inventoryTransferRoutes);
 
 module.exports = router;

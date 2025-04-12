@@ -1,0 +1,167 @@
+@baseUrl = http://localhost:3000
+@token = your_auth_token_here
+
+### Get All Inventory Transfers
+GET {{baseUrl}}/inventory-transfers
+Authorization: Bearer {{token}}
+
+### Get Inventory Transfers with Pagination
+GET {{baseUrl}}/inventory-transfers?page=1&limit=10
+Authorization: Bearer {{token}}
+
+### Get Inventory Transfers with Sorting (newest first)
+GET {{baseUrl}}/inventory-transfers?sort=-requestDate
+Authorization: Bearer {{token}}
+
+### Get Inventory Transfers with Sorting (by status and date)
+GET {{baseUrl}}/inventory-transfers?sort=status,-requestDate
+Authorization: Bearer {{token}}
+
+### Filter Inventory Transfers by Date Range
+GET {{baseUrl}}/inventory-transfers?fromDate=2023-01-01&toDate=2023-12-31
+Authorization: Bearer {{token}}
+
+### Filter Inventory Transfers by Status
+GET {{baseUrl}}/inventory-transfers?status=Pending
+Authorization: Bearer {{token}}
+
+### Filter Inventory Transfers by From Warehouse
+GET {{baseUrl}}/inventory-transfers?fromWarehouse=67f8e3c85b1777f2f72ac8e9
+Authorization: Bearer {{token}}
+
+### Filter Inventory Transfers by To Warehouse
+GET {{baseUrl}}/inventory-transfers?toWarehouse=67f8e3c85b1777f2f72ac8ea
+Authorization: Bearer {{token}}
+
+### Filter Inventory Transfers by Product (items containing product)
+GET {{baseUrl}}/inventory-transfers?product=67f8ec8aaf6bfc397a056b7f
+Authorization: Bearer {{token}}
+
+### Combined Filtering, Sorting and Pagination
+GET {{baseUrl}}/inventory-transfers?status=Pending&fromWarehouse=67f8e3c85b1777f2f72ac8e9&sort=-requestDate&page=1&limit=5
+Authorization: Bearer {{token}}
+
+### Get Inventory Transfer by MongoDB ID
+GET {{baseUrl}}/inventory-transfers/67f8f859e9967a65f1ad29e1
+Authorization: Bearer {{token}}
+
+### Get Inventory Transfer by Transfer ID
+GET {{baseUrl}}/inventory-transfers/transferID/TR-00001
+Authorization: Bearer {{token}}
+
+### Get Inventory Transfers by From Warehouse with Pagination and Sorting
+GET {{baseUrl}}/inventory-transfers/from-warehouse/67f8e3c85b1777f2f72ac8e9?page=1&limit=5&sort=-requestDate
+Authorization: Bearer {{token}}
+
+### Get Inventory Transfers by To Warehouse with Pagination and Sorting
+GET {{baseUrl}}/inventory-transfers/to-warehouse/67f8e3c85b1777f2f72ac8ea?page=1&limit=5&sort=-requestDate
+Authorization: Bearer {{token}}
+
+### Get Inventory Transfers by Status with Pagination and Sorting
+GET {{baseUrl}}/inventory-transfers/status/Pending?page=1&limit=5&sort=-requestDate
+Authorization: Bearer {{token}}
+
+### Create New Inventory Transfer
+POST {{baseUrl}}/inventory-transfers
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "fromWarehouse": "67f8e3c85b1777f2f72ac8e9",
+  "toWarehouse": "67f8e3c85b1777f2f72ac8ea",
+  "items": [
+    {
+      "product": "67f8ec8aaf6bfc397a056b7f",
+      "quantity": 5,
+      "notes": "Transferring excess stock"
+    },
+    {
+      "product": "67f8cdc8f72a040e609a5ca9",
+      "quantity": 3,
+      "notes": "Low stock at destination warehouse"
+    }
+  ],
+  "status": "Draft",
+  "expectedDeliveryDate": "2023-08-15T10:00:00Z",
+  "notes": "Regular inventory rebalancing"
+}
+
+### Update Inventory Transfer
+PUT {{baseUrl}}/inventory-transfers/67f8f859e9967a65f1ad29e1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "status": "Pending",
+  "expectedDeliveryDate": "2023-08-20T10:00:00Z",
+  "notes": "Updated delivery schedule"
+}
+
+### Approve Inventory Transfer
+PUT {{baseUrl}}/inventory-transfers/67f8f859e9967a65f1ad29e1/approve
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "notes": "Approved after verification of stock levels"
+}
+
+### Ship Inventory Transfer
+PUT {{baseUrl}}/inventory-transfers/67f8f859e9967a65f1ad29e1/ship
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "transportInfo": {
+    "method": "Truck",
+    "carrier": "Fast Logistics",
+    "trackingNumber": "FL123456789"
+  },
+  "notes": "Dispatched via company truck"
+}
+
+### Receive Inventory Transfer - Partial Receipt
+PUT {{baseUrl}}/inventory-transfers/67f8f859e9967a65f1ad29e1/receive
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "items": [
+    {
+      "product": "67f8ec8aaf6bfc397a056b7f",
+      "receivedQuantity": 3
+    },
+    {
+      "product": "67f8cdc8f72a040e609a5ca9",
+      "receivedQuantity": 2
+    }
+  ],
+  "notes": "Partial receipt due to some items being back-ordered"
+}
+
+### Receive Inventory Transfer - Complete Receipt
+PUT {{baseUrl}}/inventory-transfers/67f8f859e9967a65f1ad29e1/receive
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "items": [
+    {
+      "product": "67f8ec8aaf6bfc397a056b7f",
+      "receivedQuantity": 2
+    },
+    {
+      "product": "67f8cdc8f72a040e609a5ca9",
+      "receivedQuantity": 1
+    }
+  ],
+  "notes": "Completed receipt of all items"
+}
+
+### Delete Inventory Transfer
+DELETE {{baseUrl}}/inventory-transfers/67f8f859e9967a65f1ad29e1
+Authorization: Bearer {{token}}
+
+### Delete All Inventory Transfers
+DELETE {{baseUrl}}/inventory-transfers
+Authorization: Bearer {{token}}

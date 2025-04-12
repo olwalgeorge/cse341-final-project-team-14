@@ -1,0 +1,139 @@
+@baseUrl = http://localhost:3000
+@token = your_auth_token_here
+
+### Get All Inventory Adjustments
+GET {{baseUrl}}/inventory-adjustments
+Authorization: Bearer {{token}}
+
+### Get Inventory Adjustments with Pagination
+GET {{baseUrl}}/inventory-adjustments?page=1&limit=10
+Authorization: Bearer {{token}}
+
+### Get Inventory Adjustments with Sorting (newest first)
+GET {{baseUrl}}/inventory-adjustments?sort=-adjustmentDate
+Authorization: Bearer {{token}}
+
+### Get Inventory Adjustments with Sorting (by reason and date)
+GET {{baseUrl}}/inventory-adjustments?sort=reason,-adjustmentDate
+Authorization: Bearer {{token}}
+
+### Filter Inventory Adjustments by Date Range
+GET {{baseUrl}}/inventory-adjustments?fromDate=2023-01-01&toDate=2023-12-31
+Authorization: Bearer {{token}}
+
+### Filter Inventory Adjustments by Reason
+GET {{baseUrl}}/inventory-adjustments?reason=Physical%20Count
+Authorization: Bearer {{token}}
+
+### Filter Inventory Adjustments by Status
+GET {{baseUrl}}/inventory-adjustments?status=Pending%20Approval
+Authorization: Bearer {{token}}
+
+### Filter Inventory Adjustments by Warehouse
+GET {{baseUrl}}/inventory-adjustments?warehouse=67f8e3c85b1777f2f72ac8e9
+Authorization: Bearer {{token}}
+
+### Filter Inventory Adjustments by Product
+GET {{baseUrl}}/inventory-adjustments?product=67f8ec8aaf6bfc397a056b7f
+Authorization: Bearer {{token}}
+
+### Combined Filtering, Sorting and Pagination
+GET {{baseUrl}}/inventory-adjustments?reason=Physical%20Count&status=Approved&sort=-adjustmentDate&page=1&limit=5
+Authorization: Bearer {{token}}
+
+### Get Inventory Adjustment by MongoDB ID
+GET {{baseUrl}}/inventory-adjustments/67f8f859e9967a65f1ad29e1
+Authorization: Bearer {{token}}
+
+### Get Inventory Adjustment by Adjustment ID
+GET {{baseUrl}}/inventory-adjustments/adjustmentID/ADJ-00001
+Authorization: Bearer {{token}}
+
+### Get Inventory Adjustments by Warehouse with Pagination and Sorting
+GET {{baseUrl}}/inventory-adjustments/warehouse/67f8e3c85b1777f2f72ac8e9?page=1&limit=5&sort=-adjustmentDate
+Authorization: Bearer {{token}}
+
+### Get Inventory Adjustments by Reason with Pagination and Sorting
+GET {{baseUrl}}/inventory-adjustments/reason/Physical%20Count?page=1&limit=5&sort=-adjustmentDate
+Authorization: Bearer {{token}}
+
+### Get Inventory Adjustments by Status with Pagination and Sorting
+GET {{baseUrl}}/inventory-adjustments/status/Pending%20Approval?page=1&limit=5&sort=-adjustmentDate
+Authorization: Bearer {{token}}
+
+### Create New Inventory Adjustment - Physical Count
+POST {{baseUrl}}/inventory-adjustments
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "warehouse": "67f8e3c85b1777f2f72ac8e9",
+  "reason": "Physical Count",
+  "description": "Monthly inventory count adjustment",
+  "items": [
+    {
+      "product": "67f8ec8aaf6bfc397a056b7f",
+      "quantityBefore": 10,
+      "quantityAfter": 12,
+      "reason": "Found additional items in back storage"
+    },
+    {
+      "product": "67f8cdc8f72a040e609a5ca9",
+      "quantityBefore": 15,
+      "quantityAfter": 13,
+      "reason": "Two items missing during count"
+    }
+  ],
+  "status": "Draft"
+}
+
+### Create New Inventory Adjustment - Damaged Goods
+POST {{baseUrl}}/inventory-adjustments
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "warehouse": "67f8e3c85b1777f2f72ac8e9",
+  "reason": "Damaged Goods",
+  "description": "Items damaged during shipping",
+  "items": [
+    {
+      "product": "67f8ec8aaf6bfc397a056b7f",
+      "quantityBefore": 10,
+      "quantityAfter": 8,
+      "reason": "Water damage to two units"
+    }
+  ],
+  "status": "Pending Approval"
+}
+
+### Update Inventory Adjustment
+PUT {{baseUrl}}/inventory-adjustments/67f8f859e9967a65f1ad29e1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "status": "Pending Approval",
+  "description": "Updated monthly inventory count adjustment with more details"
+}
+
+### Approve Inventory Adjustment
+PUT {{baseUrl}}/inventory-adjustments/67f8f859e9967a65f1ad29e1/approve
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "description": "Approved after verification of physical count results"
+}
+
+### Complete Inventory Adjustment (Apply changes to inventory)
+PUT {{baseUrl}}/inventory-adjustments/67f8f859e9967a65f1ad29e1/complete
+Authorization: Bearer {{token}}
+
+### Delete Inventory Adjustment
+DELETE {{baseUrl}}/inventory-adjustments/67f8f859e9967a65f1ad29e1
+Authorization: Bearer {{token}}
+
+### Delete All Inventory Adjustments
+DELETE {{baseUrl}}/inventory-adjustments
+Authorization: Bearer {{token}}

@@ -1,0 +1,180 @@
+@baseUrl = http://localhost:3000
+@token = your_auth_token_here
+
+### Get All Inventory Returns
+GET {{baseUrl}}/inventory-returns
+Authorization: Bearer {{token}}
+
+### Get Inventory Returns with Pagination
+GET {{baseUrl}}/inventory-returns?page=1&limit=10
+Authorization: Bearer {{token}}
+
+### Get Inventory Returns with Sorting (newest first)
+GET {{baseUrl}}/inventory-returns?sort=-returnDate
+Authorization: Bearer {{token}}
+
+### Get Inventory Returns with Sorting (by status and date)
+GET {{baseUrl}}/inventory-returns?sort=status,-returnDate
+Authorization: Bearer {{token}}
+
+### Filter Inventory Returns by Date Range
+GET {{baseUrl}}/inventory-returns?fromDate=2023-01-01&toDate=2023-12-31
+Authorization: Bearer {{token}}
+
+### Filter Inventory Returns by Status
+GET {{baseUrl}}/inventory-returns?status=Pending
+Authorization: Bearer {{token}}
+
+### Filter Inventory Returns by Source Type
+GET {{baseUrl}}/inventory-returns?sourceType=Customer
+Authorization: Bearer {{token}}
+
+### Filter Inventory Returns by Warehouse
+GET {{baseUrl}}/inventory-returns?warehouse=67f8e3c85b1777f2f72ac8e9
+Authorization: Bearer {{token}}
+
+### Filter Inventory Returns by Product
+GET {{baseUrl}}/inventory-returns?product=67f8ec8aaf6bfc397a056b7f
+Authorization: Bearer {{token}}
+
+### Combined Filtering, Sorting and Pagination
+GET {{baseUrl}}/inventory-returns?sourceType=Customer&status=Pending&fromDate=2023-01-01&sort=-returnDate&page=1&limit=5
+Authorization: Bearer {{token}}
+
+### Get Inventory Return by MongoDB ID
+GET {{baseUrl}}/inventory-returns/67f8f859e9967a65f1ad29e1
+Authorization: Bearer {{token}}
+
+### Get Inventory Return by Return ID
+GET {{baseUrl}}/inventory-returns/returnID/RET-00001
+Authorization: Bearer {{token}}
+
+### Get Inventory Returns by Warehouse with Pagination and Sorting
+GET {{baseUrl}}/inventory-returns/warehouse/67f8e3c85b1777f2f72ac8e9?page=1&limit=5&sort=-returnDate
+Authorization: Bearer {{token}}
+
+### Get Inventory Returns by Source Type (Customer) with Pagination and Sorting
+GET {{baseUrl}}/inventory-returns/source/Customer?page=1&limit=5&sort=-returnDate
+Authorization: Bearer {{token}}
+
+### Get Inventory Returns by Specific Customer with Pagination and Sorting
+GET {{baseUrl}}/inventory-returns/source/Customer/67f67b829d34cfbe039e94be?page=1&limit=5&sort=-returnDate
+Authorization: Bearer {{token}}
+
+### Get Inventory Returns by Source Type (Supplier) with Pagination and Sorting
+GET {{baseUrl}}/inventory-returns/source/Supplier?page=1&limit=5&sort=-returnDate
+Authorization: Bearer {{token}}
+
+### Get Inventory Returns by Specific Supplier with Pagination and Sorting
+GET {{baseUrl}}/inventory-returns/source/Supplier/67f66c737ed7ddb60e54af6f?page=1&limit=5&sort=-returnDate
+Authorization: Bearer {{token}}
+
+### Get Inventory Returns by Status with Pagination and Sorting
+GET {{baseUrl}}/inventory-returns/status/Pending?page=1&limit=5&sort=-returnDate
+Authorization: Bearer {{token}}
+
+### Create New Inventory Return - Customer Return
+POST {{baseUrl}}/inventory-returns
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "sourceType": "Customer",
+  "source": {
+    "sourceId": "67f67b829d34cfbe039e94be",
+    "sourceName": "John Doe"
+  },
+  "relatedDocument": {
+    "documentType": "Order",
+    "documentId": "67f81e533e0490886947f008",
+    "documentCode": "OR-00001"
+  },
+  "warehouse": "67f8e3c85b1777f2f72ac8e9",
+  "items": [
+    {
+      "product": "67f8ec8aaf6bfc397a056b7f",
+      "quantity": 2,
+      "reason": "Customer Return",
+      "condition": "Used",
+      "action": "Return to Stock",
+      "notes": "Product in good condition, returned due to wrong size"
+    },
+    {
+      "product": "67f8cdc8f72a040e609a5ca9",
+      "quantity": 1,
+      "reason": "Quality Issue",
+      "condition": "Damaged",
+      "action": "Dispose",
+      "notes": "Product screen cracked"
+    }
+  ],
+  "status": "Pending",
+  "notes": "Customer return from online order OR-00001"
+}
+
+### Create New Inventory Return - Supplier Return
+POST {{baseUrl}}/inventory-returns
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "sourceType": "Supplier",
+  "source": {
+    "sourceId": "67f66c737ed7ddb60e54af6f",
+    "sourceName": "Electronics Inc."
+  },
+  "relatedDocument": {
+    "documentType": "Purchase",
+    "documentId": "67f66c737ed7ddb60e54af70",
+    "documentCode": "PU-00003"
+  },
+  "warehouse": "67f8e3c85b1777f2f72ac8e9",
+  "items": [
+    {
+      "product": "67f8ec8aaf6bfc397a056b7f",
+      "quantity": 5,
+      "reason": "Quality Issue",
+      "condition": "Defective",
+      "action": "Return to Supplier",
+      "notes": "Batch has manufacturing defect"
+    }
+  ],
+  "status": "Draft",
+  "notes": "Return to supplier due to manufacturing defect in recent batch"
+}
+
+### Update Inventory Return
+PUT {{baseUrl}}/inventory-returns/67f8f859e9967a65f1ad29e1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "status": "Pending",
+  "notes": "Updated return notes with additional information"
+}
+
+### Approve Inventory Return
+PUT {{baseUrl}}/inventory-returns/67f8f859e9967a65f1ad29e1/approve
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "notes": "Approved after verification with customer"
+}
+
+### Process Inventory Return
+PUT {{baseUrl}}/inventory-returns/67f8f859e9967a65f1ad29e1/process
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "notes": "Processed and updated inventory"
+}
+
+### Delete Inventory Return
+DELETE {{baseUrl}}/inventory-returns/67f8f859e9967a65f1ad29e1
+Authorization: Bearer {{token}}
+
+### Delete All Inventory Returns
+DELETE {{baseUrl}}/inventory-returns
+Authorization: Bearer {{token}}
