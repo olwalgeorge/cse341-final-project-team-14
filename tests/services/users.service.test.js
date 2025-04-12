@@ -63,7 +63,7 @@ describe('Users Service Tests', () => {
   describe('getUserByUserIdService', () => {
     it('should retrieve a user by userID', async () => {
       // First create a user with a specific userID
-      const user = await createTestUser({
+       await createTestUser({
         ...userData,
         userID: 'SM-00002',
         username: 'useriduser',
