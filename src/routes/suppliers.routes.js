@@ -4,49 +4,86 @@ const {
   getAllSuppliers,
   getSupplierById,
   getSupplierBySupplierID,
-  getSupplierByName,
+  getSupplierByEmail,
   createSupplier,
   updateSupplierById,
   deleteSupplierById,
   deleteAllSuppliers,
-} = require("../controllers/suppliers.controller");
-const validate = require("../middlewares/validation.middleware");
-const isAuthenticated = require("../middlewares/auth.middleware");
+  searchSuppliers,
+} = require("../controllers/suppliers.controller.js");
+const validate = require("../middlewares/validation.middleware.js");
+const isAuthenticated = require("../middlewares/auth.middleware.js");
 const {
   supplierIDValidationRules,
-  supplierMongoIdValidationRules,
+  supplierCreateValidationRules,
   supplierUpdateValidationRules,
-} = require("../validators/supplier.validator");
+  supplierMongoIdValidationRules, 
+  supplierQueryValidationRules,
+  supplierSearchValidationRules,
+  supplierEmailValidationRules,
+} = require("../validators/supplier.validator.js");
 
-// all routes are protected and require authentication
-router.get("/", isAuthenticated, getAllSuppliers);
+router.get(
+  "/search", 
+  isAuthenticated,
+  validate(supplierSearchValidationRules()),
+  searchSuppliers
+);
+
+router.get(
+  "/", 
+  isAuthenticated,
+  validate(supplierQueryValidationRules()),
+  getAllSuppliers
+);
+
 router.get(
   "/supplierID/:supplierID",
   isAuthenticated,
   validate(supplierIDValidationRules()),
   getSupplierBySupplierID
 );
-router.get("/name/:name", isAuthenticated, getSupplierByName);
+
+router.get(
+  "/email/:email", 
+  isAuthenticated,
+  validate(supplierEmailValidationRules()),
+  getSupplierByEmail
+);
+
 router.get(
   "/:supplier_Id",
   isAuthenticated,
-  validate(supplierMongoIdValidationRules()),
+  validate(supplierMongoIdValidationRules()), 
   getSupplierById
 );
-router.post("/", isAuthenticated, createSupplier);
+
+router.post(
+  "/",
+  isAuthenticated,
+  validate(supplierCreateValidationRules()),
+  createSupplier
+);
+
 router.put(
   "/:supplier_Id",
   isAuthenticated,
-  validate(supplierMongoIdValidationRules()),
+  validate(supplierMongoIdValidationRules()), 
   validate(supplierUpdateValidationRules()),
   updateSupplierById
 );
+
 router.delete(
   "/:supplier_Id",
   isAuthenticated,
-  validate(supplierMongoIdValidationRules()),
+  validate(supplierMongoIdValidationRules()), 
   deleteSupplierById
 );
-router.delete("/", isAuthenticated, deleteAllSuppliers);
+
+router.delete(
+  "/", 
+  isAuthenticated, 
+  deleteAllSuppliers
+);
 
 module.exports = router;

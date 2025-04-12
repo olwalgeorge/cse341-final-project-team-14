@@ -1,91 +1,91 @@
-// models/Supplier.js
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
-const supplierSchema = new Schema({
-  supplierID: {
-    type: String,
-    unique: true,
-    match: [/^SP-\d{5}$/],
-    index: true,
-    required: true,
-  },
-  name: {
-    type: String,
-    required: [true, "Supplier name is required"],
-    trim: true,
-    maxlength: [100, "Supplier name cannot exceed 100 characters"],
-  },
-  contact: {
-    phone: {
+const supplierSchema = new Schema(
+  {
+    supplierID: {
       type: String,
-      required: [true, "Phone number is required"],
-      match: [/^[0-9]{10,15}$/, "Please enter a valid phone number"],
-    },
-    email: {
-      type: String,
-      trim: true,
-      lowercase: true,
       unique: true,
-      validate: {
-        validator: async function (v) {
-          const supplier = await this.constructor.findOne({ "contact.email": v });
-          if (supplier) {
-            return false;
-          }
+      match: [/^SP-\d{5}$/],
+      required: true,
+    },
+    name: {
+      type: String,
+      required: [true, "Supplier name is required"],
+      trim: true,
+      maxlength: [100, "Supplier name cannot exceed 100 characters"],
+    },
+    contact: {
+      phone: {
+        type: String,
+        validate: {
+          validator: function (v) {
+            return /^[0-9]{10,15}$/.test(v);
+          },
+          message: "Please enter a valid phone number",
         },
-        message: "Email already exists.",
+      },
+      email: {
+        type: String,
+        trim: true,
+        lowercase: true,
       },
     },
+    address: {
+      street: {
+        type: String,
+        trim: true,
+        maxlength: [100, "Street address cannot exceed 100 characters"],
+      },
+      city: {
+        type: String,
+        trim: true,
+        maxlength: [50, "City name cannot exceed 50 characters"],
+      },
+      state: {
+        type: String,
+        trim: true,
+        maxlength: [50, "State name cannot exceed 50 characters"],
+      },
+      postalCode: {
+        type: String,
+        trim: true,
+        maxlength: [20, "Postal code cannot exceed 20 characters"],
+      },
+      country: {
+        type: String,
+        trim: true,
+        maxlength: [50, "Country name cannot exceed 50 characters"],
+      },
+    },
+    status: {
+      type: String,
+      enum: ["Active", "Inactive", "Pending", "Blocked"],
+      default: "Active",
+    },
   },
-  address: {
-    street: {
-      type: String,
-      required: [true, "Street address is required"],
-      trim: true,
-      maxlength: [200, "Street address cannot exceed 200 characters"],
-    },
-    city: {
-      type: String,
-      required: [true, "City is required"],
-      trim: true,
-      maxlength: [50, "City name cannot exceed 50 characters"],
-    },
-    state: {
-      type: String,
-      required: [true, "State is required"],
-      trim: true,
-      maxlength: [50, "State name cannot exceed 50 characters"],
-    },
-    postalCode: {
-      type: String,
-      required: [true, "Postal code is required"],
-      trim: true,
-      maxlength: [20, "Postal code cannot exceed 20 characters"],
-    },
-    country: {
-      type: String,
-      required: [true, "Country is required"],
-      trim: true,
-      maxlength: [50, "Country name cannot exceed 50 characters"],
-    },
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-  updatedAt: {
-    type: Date,
-    default: Date.now,
-  },
-});
+  {
+    timestamps: true,
+  }
+);
 
-// Update the updatedAt field before saving
-supplierSchema.pre("save", function (next) {
-  this.updatedAt = Date.now();
-  next();
-});
+// Define indexes for the fields we'll often query by
+supplierSchema.index({ name: 1 });
+supplierSchema.index({ "contact.email": 1 });
+supplierSchema.index({ "address.city": 1 });
+supplierSchema.index({ "address.state": 1 });
+supplierSchema.index({ "address.country": 1 });
+supplierSchema.index({ status: 1 });
 
-const Supplier = mongoose.model("Supplier", supplierSchema);
+// Add a text index for searching
+supplierSchema.index(
+  { 
+    name: "text", 
+    "contact.email": "text", 
+    "address.city": "text", 
+    "address.state": "text",
+    "address.country": "text"
+  }
+);
 
-module.exports = Supplier;
+module.exports = mongoose.model("Supplier", supplierSchema);

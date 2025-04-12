@@ -5,12 +5,13 @@ const { DatabaseError } = require("../utils/errors");
 const {
   getAllSuppliersService,
   getSupplierByIdService,
-  getSupplierByNameService,
   getSupplierBySupplierIDService,
+  getSupplierByEmailService,
   createSupplierService,
   updateSupplierService,
   deleteSupplierService,
   deleteAllSuppliersService,
+  searchSuppliersService,
 } = require("../services/suppliers.service");
 const { transformSupplier, generateSupplierId } = require("../utils/supplier.utils");
 
@@ -21,17 +22,53 @@ const { transformSupplier, generateSupplierId } = require("../utils/supplier.uti
  */
 const getAllSuppliers = asyncHandler(async (req, res, next) => {
   logger.info("getAllSuppliers called");
+  logger.debug("Query parameters:", req.query);
   try {
-    const suppliers = await getAllSuppliersService();
-    const transformedSuppliers = suppliers.map(transformSupplier);
+    const result = await getAllSuppliersService(req.query);
+    const transformedSuppliers = result.suppliers.map(transformSupplier);
+    
     sendResponse(
       res,
       200,
       "Suppliers retrieved successfully",
-      transformedSuppliers
+      {
+        suppliers: transformedSuppliers,
+        pagination: result.pagination
+      }
     );
   } catch (error) {
     logger.error("Error retrieving all suppliers:", error);
+    next(error);
+  }
+});
+
+/**
+ * @desc    Search suppliers
+ * @route   GET /suppliers/search
+ * @access  Private
+ */
+const searchSuppliers = asyncHandler(async (req, res, next) => {
+  logger.info("searchSuppliers called");
+  logger.debug("Search term:", req.query.term);
+  try {
+    if (!req.query.term) {
+      return next(new Error("Search term is required"));
+    }
+    
+    const result = await searchSuppliersService(req.query.term, req.query);
+    const transformedSuppliers = result.suppliers.map(transformSupplier);
+    
+    sendResponse(
+      res,
+      200,
+      "Suppliers search results",
+      {
+        suppliers: transformedSuppliers,
+        pagination: result.pagination
+      }
+    );
+  } catch (error) {
+    logger.error("Error searching suppliers:", error);
     next(error);
   }
 });
@@ -62,34 +99,6 @@ const getSupplierById = asyncHandler(async (req, res, next) => {
   }
 });
 
-/**
- * @desc    Get supplier by name
- * @route   GET /suppliers/name/:name
- * @access  Private
- */
-const getSupplierByName = asyncHandler(async (req, res, next) => {
-  logger.info(`getSupplierByName called with name: ${req.params.name}`);
-  try {
-    const supplier = await getSupplierByNameService(req.params.name);
-    if (supplier) {
-      const transformedSupplier = transformSupplier(supplier);
-      sendResponse(
-        res,
-        200,
-        "Supplier retrieved successfully",
-        transformedSupplier
-      );
-    } else {
-      return next(DatabaseError.notFound("Supplier"));
-    }
-  } catch (error) {
-    logger.error(
-      `Error retrieving supplier with name: ${req.params.name}`,
-      error
-    );
-    next(error);
-  }
-});
 
 /**
  * @desc    Get supplier by supplier ID (SP-XXXXX format)
@@ -120,6 +129,32 @@ const getSupplierBySupplierID = asyncHandler(async (req, res, next) => {
       `Error retrieving supplier with supplier ID: ${req.params.supplierID}`,
       error
     );
+    next(error);
+  }
+});
+
+/**
+ * @desc    Get supplier by email
+ * @route   GET /suppliers/email/:email
+ * @access  Public
+ */
+const getSupplierByEmail = asyncHandler(async (req, res, next) => {
+  logger.info(`getSupplierByEmail called with email: ${req.params.email}`);
+  try {
+    const supplier = await getSupplierByEmailService(req.params.email);
+    if (supplier) {
+      const transformedSupplier = transformSupplier(supplier);
+      sendResponse(
+        res,
+        200,
+        "Supplier retrieved successfully",
+        transformedSupplier
+      );
+    } else {
+      return next(DatabaseError.notFound("Supplier"));
+    }
+  } catch (error) {
+    logger.error(`Error retrieving supplier with email: ${req.params.email}`, error);
     next(error);
   }
 });
@@ -221,11 +256,12 @@ const deleteAllSuppliers = asyncHandler(async (req, res, next) => {
 
 module.exports = {
   getAllSuppliers,
-  getSupplierById,
-  getSupplierByName,
+  getSupplierById, 
   getSupplierBySupplierID,
+  getSupplierByEmail,
   createSupplier,
   updateSupplierById,
   deleteSupplierById,
   deleteAllSuppliers,
+  searchSuppliers,
 };

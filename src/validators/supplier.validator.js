@@ -1,4 +1,4 @@
-const { check, param } = require("express-validator");
+const { check, param, query } = require("express-validator");
 
 const isMongoIdParam = (paramName, errorMessage) => {
   return param(paramName, errorMessage).isMongoId();
@@ -9,6 +9,17 @@ const supplierIDValidationRules = () => {
     param("supplierID", "Supplier ID should be in the format SP-xxxxx").matches(
       /^SP-\d{5}$/
     ),
+  ];
+};
+
+/**
+ * Validation rules for supplier email parameter
+ */
+const supplierEmailValidationRules = () => {
+  return [
+    param("email", "Please provide a valid email address")
+      .isEmail()
+      .normalizeEmail()
   ];
 };
 
@@ -103,9 +114,87 @@ const supplierUpdateValidationRules = () => {
   ];
 };
 
+/**
+ * Validation rules for supplier query parameters
+ */
+const supplierQueryValidationRules = () => {
+  return [
+    query("page")
+      .optional()
+      .isInt({ min: 1 })
+      .withMessage("Page must be a positive integer"),
+    query("limit")
+      .optional()
+      .isInt({ min: 1, max: 100 })
+      .withMessage("Limit must be between 1 and 100"),
+    query("sort")
+      .optional()
+      .isString()
+      .withMessage("Sort must be a string"),
+    query("name")
+      .optional()
+      .isString()
+      .withMessage("Name filter must be a string"),
+    query("email")
+      .optional()
+      .isString()
+      .withMessage("Email filter must be a string"),
+    query("phone")
+      .optional()
+      .isString()
+      .withMessage("Phone filter must be a string"),
+    query("city")
+      .optional()
+      .isString()
+      .withMessage("City filter must be a string"),
+    query("state")
+      .optional()
+      .isString()
+      .withMessage("State filter must be a string"),
+    query("country")
+      .optional()
+      .isString()
+      .withMessage("Country filter must be a string"),
+    query("status")
+      .optional()
+      .isIn(["Active", "Inactive", "Pending", "Blocked"])
+      .withMessage("Status must be one of: Active, Inactive, Pending, Blocked"),
+  ];
+};
+
+/**
+ * Validation rules for supplier search
+ */
+const supplierSearchValidationRules = () => {
+  return [
+    query("term")
+      .notEmpty()
+      .withMessage("Search term is required")
+      .isString()
+      .withMessage("Search term must be a string")
+      .isLength({ min: 2 })
+      .withMessage("Search term must be at least 2 characters"),
+    query("page")
+      .optional()
+      .isInt({ min: 1 })
+      .withMessage("Page must be a positive integer"),
+    query("limit")
+      .optional()
+      .isInt({ min: 1, max: 100 })
+      .withMessage("Limit must be between 1 and 100"),
+    query("sort")
+      .optional()
+      .isString()
+      .withMessage("Sort must be a string"),
+  ];
+};
+
 module.exports = {
   supplierIDValidationRules,
   supplierMongoIdValidationRules,
   supplierCreateValidationRules,
   supplierUpdateValidationRules,
+  supplierQueryValidationRules,
+  supplierSearchValidationRules,
+  supplierEmailValidationRules, 
 };

@@ -1,0 +1,104 @@
+@baseUrl = http://localhost:3000
+@token = your_auth_token_here
+
+### Get all suppliers
+GET {{baseUrl}}/suppliers
+Authorization: Bearer {{token}}
+
+### Get all suppliers with pagination
+GET {{baseUrl}}/suppliers?page=1&limit=10
+Authorization: Bearer {{token}}
+
+### Get all suppliers with sorting (ascending by name)
+GET {{baseUrl}}/suppliers?sort=name
+Authorization: Bearer {{token}}
+
+### Get all suppliers with sorting (descending by name)
+GET {{baseUrl}}/suppliers?sort=-name
+Authorization: Bearer {{token}}
+
+### Get all suppliers with multiple sorting criteria
+GET {{baseUrl}}/suppliers?sort=-createdAt,name
+Authorization: Bearer {{token}}
+
+### Filter suppliers by name (partial match)
+GET {{baseUrl}}/suppliers?name=Tech
+Authorization: Bearer {{token}}
+
+### Filter suppliers by email domain
+GET {{baseUrl}}/suppliers?email=electronics
+Authorization: Bearer {{token}}
+
+### Filter suppliers by location
+GET {{baseUrl}}/suppliers?city=New York
+Authorization: Bearer {{token}}
+
+### Filter suppliers by status
+GET {{baseUrl}}/suppliers?status=Active
+Authorization: Bearer {{token}}
+
+### Combined filtering, sorting and pagination
+GET {{baseUrl}}/suppliers?city=New York&sort=-createdAt&page=1&limit=5
+Authorization: Bearer {{token}}
+
+### Search Suppliers
+GET {{baseUrl}}/suppliers/search?term=electronics
+Authorization: Bearer {{token}}
+
+### Search Suppliers with Pagination
+GET {{baseUrl}}/suppliers/search?term=tech&page=1&limit=5
+Authorization: Bearer {{token}}
+
+### Search Suppliers with Sorting
+GET {{baseUrl}}/suppliers/search?term=electronics&sort=name
+Authorization: Bearer {{token}}
+
+### Get Supplier by MongoDB ID
+GET {{baseUrl}}/suppliers/67f66c737ed7ddb60e54af6f
+Authorization: Bearer {{token}}
+
+### Get Supplier by Supplier ID
+GET {{baseUrl}}/suppliers/supplierID/SP-00001
+Authorization: Bearer {{token}}
+
+### Create New Supplier
+POST {{baseUrl}}/suppliers
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "Kenya Electronics Ltd",
+  "contact": {
+    "phone": "254712345678",
+    "email": "info@kenyaelectronics.co.ke"
+  },
+  "address": {
+    "street": "789 Nairobi Business Park",
+    "city": "Nairobi",
+    "state": "Nairobi",
+    "postalCode": "00100",
+    "country": "Kenya"
+  },
+  "status": "Active"
+}
+
+### Update Supplier
+PUT {{baseUrl}}/suppliers/67f66c737ed7ddb60e54af6f
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "Kenya Electronics Corporation",
+  "contact": {
+    "phone": "254712345679"
+  },
+  "status": "Active"
+}
+
+### Delete Supplier
+DELETE {{baseUrl}}/suppliers/67f66c737ed7ddb60e54af71
+Authorization: Bearer {{token}}
+
+### Delete All Suppliers (use with caution)
+DELETE {{baseUrl}}/suppliers
+Authorization: Bearer {{token}}
