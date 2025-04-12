@@ -1,77 +1,67 @@
-const Purchase = require("../models/purchase.model.js");
+const Purchase = require("../models/purchase.model");
 const Product = require("../models/product.model.js");
+const APIFeatures = require("../utils/apiFeatures");
 const { generatePurchaseId } = require("../utils/purchase.utils.js");
 const logger = require("../utils/logger.js");
 
 /**
- * Get all purchases with optional filtering and pagination
+ * Get all purchases with filtering, pagination and sorting
  */
 const getAllPurchasesService = async (query = {}) => {
-  // Create filter object
-  const filter = {};
-
-  // Apply status filter
-  if (query.status) {
-    filter.status = query.status;
-  }
-
-  // Apply supplier filter
-  if (query.supplier) {
-    filter.supplier = query.supplier;
-  }
-
-  // Apply payment status filter
-  if (query.paymentStatus) {
-    filter.paymentStatus = query.paymentStatus;
-  }
-
-  // Apply date range filter
-  if (query.fromDate || query.toDate) {
-    filter.purchaseDate = {};
-    if (query.fromDate) filter.purchaseDate.$gte = new Date(query.fromDate);
-    if (query.toDate) filter.purchaseDate.$lte = new Date(query.toDate);
-  }
-
-  // Pagination
-  const page = parseInt(query.page) || 1;
-  const limit = parseInt(query.limit) || 10;
-  const skip = (page - 1) * limit;
-
-  // Sort options
-  const sort = {};
-  if (query.sort) {
-    const sortFields = query.sort.split(",");
-    sortFields.forEach((field) => {
-      if (field.startsWith("-")) {
-        sort[field.substring(1)] = -1;
-      } else {
-        sort[field] = 1;
+  logger.debug("getAllPurchasesService called with query:", query);
+  
+  try {
+    // Define custom filters mapping
+    const customFilters = {
+      status: 'status',
+      supplier: 'supplier',
+      paymentStatus: 'paymentStatus',
+      fromDate: {
+        field: 'purchaseDate',
+        transform: (value) => ({ $gte: new Date(value) })
+      },
+      toDate: {
+        field: 'purchaseDate',
+        transform: (value) => ({ $lte: new Date(value) })
+      },
+      minAmount: {
+        field: 'totalAmount',
+        transform: (value) => ({ $gte: parseFloat(value) })
+      },
+      maxAmount: {
+        field: 'totalAmount',
+        transform: (value) => ({ $lte: parseFloat(value) })
       }
-    });
-  } else {
-    sort.purchaseDate = -1; // Default sort by newest purchases
+    };
+    
+    // Build filter using APIFeatures utility
+    const filter = APIFeatures.buildFilter(query, customFilters);
+    
+    // Get pagination parameters
+    const pagination = APIFeatures.getPagination(query);
+    
+    // Get sort parameters with default sort by purchase date (newest first)
+    const sort = APIFeatures.getSort(query, '-purchaseDate');
+
+    // Execute query with pagination and sorting
+    const purchases = await Purchase.find(filter)
+      .sort(sort)
+      .skip(pagination.skip)
+      .limit(pagination.limit)
+      .populate("supplier", "name supplierID contact")
+      .populate("items.product", "name description costPrice category sku productID");
+    
+    // Get total count for pagination
+    const total = await Purchase.countDocuments(filter);
+    
+    return {
+      purchases,
+      pagination: APIFeatures.paginationResult(total, pagination)
+    };
+  } catch (error) {
+    logger.error("Error in getAllPurchasesService:", error);
+    throw error;
   }
-
-  // Execute query
-  const purchases = await Purchase.find(filter)
-    .sort(sort)
-    .skip(skip)
-    .limit(limit)
-    .populate("supplier", "name supplierID contact")
-    .populate("items.product", "name description costPrice category sku productID");
-
-  // Get total count for pagination
-  const total = await Purchase.countDocuments(filter);
-
-  return {
-    purchases,
-    pagination: {
-      total,
-      page,
-      limit,
-      totalPages: Math.ceil(total / limit),
-    },
-  };
 };
 
 /**
@@ -169,27 +159,111 @@ const deletePurchaseService = async (id) => {
 };
 
 /**
- * Get purchases by supplier ID
+ * Get purchases by supplier
  */
-const getPurchasesBySupplierService = async (supplierId) => {
-  logger.debug(
-    `getPurchasesBySupplierService called with supplier ID: ${supplierId}`
-  );
-  return await Purchase.find({ supplier: supplierId })
-    .populate("supplier", "name supplierID contact")
-    .populate("items.product", "name description costPrice category sku productID");
+const getPurchasesBySupplierService = async (supplierId, query = {}) => {
+  logger.debug(`getPurchasesBySupplierService called with supplier ID: ${supplierId}`);
+  
+  try {
+    // Get pagination parameters
+    const pagination = APIFeatures.getPagination(query);
+    
+    // Get sort parameters with default sort by purchase date (newest first)
+    const sort = APIFeatures.getSort(query, '-purchaseDate');
+
+    // Create the supplier filter
+    const filter = { supplier: supplierId };
+    
+    // Apply any additional filters from query if needed
+    const additionalFilters = APIFeatures.buildFilter(query, {
+      status: 'status',
+      paymentStatus: 'paymentStatus',
+      fromDate: {
+        field: 'purchaseDate',
+        transform: (value) => ({ $gte: new Date(value) })
+      },
+      toDate: {
+        field: 'purchaseDate',
+        transform: (value) => ({ $lte: new Date(value) })
+      }
+    });
+    
+    // Combine filters
+    const combinedFilter = { ...filter, ...additionalFilters };
+
+    // Execute query with pagination and sorting
+    const purchases = await Purchase.find(combinedFilter)
+      .sort(sort)
+      .skip(pagination.skip)
+      .limit(pagination.limit)
+      .populate("supplier", "name supplierID contact")
+      .populate("items.product", "name description costPrice category sku productID");
+    
+    // Get total count for pagination
+    const total = await Purchase.countDocuments(combinedFilter);
+    
+    return {
+      purchases,
+      pagination: APIFeatures.paginationResult(total, pagination)
+    };
+  } catch (error) {
+    logger.error(`Error in getPurchasesBySupplierService: ${error.message}`);
+    throw error;
+  }
 };
 
 /**
  * Get purchases by status
  */
-const getPurchasesByStatusService = async (status) => {
-  logger.debug(
-    `getPurchasesByStatusService called with status: ${status}`
-  );
-  return await Purchase.find({ status: status })
-    .populate("supplier", "name supplierID contact")
-    .populate("items.product", "name description costPrice category sku productID");
+const getPurchasesByStatusService = async (status, query = {}) => {
+  logger.debug(`getPurchasesByStatusService called with status: ${status}`);
+  
+  try {
+    // Get pagination parameters
+    const pagination = APIFeatures.getPagination(query);
+    
+    // Get sort parameters with default sort by purchase date (newest first)
+    const sort = APIFeatures.getSort(query, '-purchaseDate');
+
+    // Create the status filter
+    const filter = { status: status };
+    
+    // Apply any additional filters from query if needed
+    const additionalFilters = APIFeatures.buildFilter(query, {
+      supplier: 'supplier',
+      paymentStatus: 'paymentStatus',
+      fromDate: {
+        field: 'purchaseDate',
+        transform: (value) => ({ $gte: new Date(value) })
+      },
+      toDate: {
+        field: 'purchaseDate',
+        transform: (value) => ({ $lte: new Date(value) })
+      }
+    });
+    
+    // Combine filters
+    const combinedFilter = { ...filter, ...additionalFilters };
+
+    // Execute query with pagination and sorting
+    const purchases = await Purchase.find(combinedFilter)
+      .sort(sort)
+      .skip(pagination.skip)
+      .limit(pagination.limit)
+      .populate("supplier", "name supplierID contact")
+      .populate("items.product", "name description costPrice category sku productID");
+    
+    // Get total count for pagination
+    const total = await Purchase.countDocuments(combinedFilter);
+    
+    return {
+      purchases,
+      pagination: APIFeatures.paginationResult(total, pagination)
+    };
+  } catch (error) {
+    logger.error(`Error in getPurchasesByStatusService: ${error.message}`);
+    throw error;
+  }
 };
 
 /**
@@ -202,11 +276,11 @@ const deleteAllPurchasesService = async () => {
 module.exports = {
   getAllPurchasesService,
   getPurchaseByIdService,
+  getPurchaseByPurchaseIDService,
   createPurchaseService,
   updatePurchaseService,
   deletePurchaseService,
   deleteAllPurchasesService,
-  getPurchaseByPurchaseIDService,
   getPurchasesBySupplierService,
   getPurchasesByStatusService,
 };

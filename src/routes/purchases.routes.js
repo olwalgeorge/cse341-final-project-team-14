@@ -22,26 +22,30 @@ const {
   purchaseStatusValidationRules,
 } = require("../validators/purchase.validator.js");
 
-// Public routes
 router.get("/", getAllPurchases);
 router.get(
   "/purchaseID/:purchaseID",
+  isAuthenticated,
   validate(purchaseIDValidationRules()),
   getPurchaseByPurchaseID
 );
-router.get(
-  "/supplier/:supplierId",
-  validate(supplierIdValidationRules()),
-  getPurchasesBySupplier
-);
+
 router.get(
   "/status/:status",
+  isAuthenticated,
   validate(purchaseStatusValidationRules()),
   getPurchasesByStatus
 );
-router.get("/:_id", validate(purchase_IdValidationRules()), getPurchaseById);
+router.get(
+  "/supplier/:supplierId",
+  isAuthenticated,
+  validate(supplierIdValidationRules()),
+  getPurchasesBySupplier
+);
 
-// Protected routes - require authentication
+router.get("/:purchase_Id", validate(purchase_IdValidationRules()), getPurchaseById);
+
+
 router.post(
   "/",
   isAuthenticated,
@@ -49,14 +53,14 @@ router.post(
   createPurchase
 );
 router.put(
-  "/:_id",
+  "/:purchase_Id",
   isAuthenticated,
   validate(purchase_IdValidationRules()),
   validate(purchaseUpdateValidationRules()),
   updatePurchaseById
 );
 router.delete(
-  "/:_id",
+  "/:purchase_Id",
   isAuthenticated,
   validate(purchase_IdValidationRules()),
   deletePurchaseById

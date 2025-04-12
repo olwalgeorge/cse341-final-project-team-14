@@ -9,7 +9,7 @@ const {
   updateCustomerById,
   deleteCustomerById,
   deleteAllCustomers,
-  searchCustomers, // Add the new controller import
+  searchCustomers, 
 } = require("../controllers/customers.controller.js");
 const validate = require("../middlewares/validation.middleware.js");
 const isAuthenticated = require("../middlewares/auth.middleware.js");
@@ -19,7 +19,7 @@ const {
   customerUpdateValidationRules,
   customer_IdValidationRules,
   customerQueryValidationRules,
-  customerSearchValidationRules, // Add the new validation import
+  customerSearchValidationRules,
 } = require("../validators/customer.validator.js");
 
 // Add the search route
