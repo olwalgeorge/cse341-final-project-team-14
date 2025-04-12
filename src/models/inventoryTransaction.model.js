@@ -2,23 +2,23 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const transactionTypes = [
-  "Adjustment", 
-  "Purchase", 
-  "Sale", 
-  "Return", 
-  "Transfer In", 
-  "Transfer Out", 
+  "Adjustment",
+  "Purchase",
+  "Sale",
+  "Return",
+  "Transfer In",
+  "Transfer Out",
   "Damaged",
   "Expired",
   "Initial"
 ];
 
 const referenceDocumentTypes = [
-  "Purchase", 
-  "Order", 
-  "Adjustment", 
-  "Transfer", 
-  "Return"
+  "Purchase",
+  "Order",
+  "InventoryAdjustment",
+  "InventoryTransfer",
+  "InventoryReturn"
 ];
 
 const inventoryTransactionSchema = new Schema({
@@ -74,30 +74,30 @@ const inventoryTransactionSchema = new Schema({
       validator: function(value) {
         // Quantity change cannot be zero
         if (value === 0) return false;
-        
+
         // Sale, Transfer Out, Damaged, and Expired should have negative quantity change
         if (["Sale", "Transfer Out", "Damaged", "Expired"].includes(this.transactionType) && value > 0) {
           return false;
         }
-        
+
         // Purchase, Transfer In, Initial should have positive quantity change
         if (["Purchase", "Transfer In", "Initial"].includes(this.transactionType) && value < 0) {
           return false;
         }
-        
+
         return true;
       },
       message: function(props) {
         if (props.value === 0) return "Quantity change cannot be zero";
-        
+
         if (["Sale", "Transfer Out", "Damaged", "Expired"].includes(this.transactionType) && props.value > 0) {
           return `${this.transactionType} transactions must have a negative quantity change`;
         }
-        
+
         if (["Purchase", "Transfer In", "Initial"].includes(this.transactionType) && props.value < 0) {
           return `${this.transactionType} transactions must have a positive quantity change`;
         }
-        
+
         return "Invalid quantity change";
       }
     }
@@ -112,6 +112,30 @@ const inventoryTransactionSchema = new Schema({
       enum: {
         values: referenceDocumentTypes,
         message: `Document type must be one of: ${referenceDocumentTypes.join(', ')}`
+      },
+      validate: { // Define validation directly within documentType
+        validator: function(value) {
+          if (!value) return true; // Allow null or undefined documentType
+
+          if (this.transactionType === "Purchase" && value !== "Purchase") {
+            return false;
+          }
+
+          if (this.transactionType === "Sale" && value !== "Order") {
+            return false;
+          }
+
+          return true;
+        },
+        message: function() {
+          if (this.transactionType === "Purchase") {
+            return "Purchase transactions must reference a Purchase document";
+          }
+          if (this.transactionType === "Sale") {
+            return "Sale transactions must reference an Order document";
+          }
+          return "Invalid reference document type for this transaction type";
+        }
       }
     },
     documentId: {
@@ -133,7 +157,7 @@ const inventoryTransactionSchema = new Schema({
         if (this.transactionType === "Transfer Out" && !value) {
           return false;
         }
-        
+
         return true;
       },
       message: "From warehouse is required for Transfer Out transactions"
@@ -148,23 +172,23 @@ const inventoryTransactionSchema = new Schema({
         if (this.transactionType === "Transfer In" && !value) {
           return false;
         }
-        
+
         // From and To warehouses cannot be the same
         if (value && this.fromWarehouse && value.equals(this.fromWarehouse)) {
           return false;
         }
-        
+
         return true;
       },
       message: function(props) {
         if (this.transactionType === "Transfer In" && !props.value) {
           return "To warehouse is required for Transfer In transactions";
         }
-        
+
         if (props.value && this.fromWarehouse && props.value.equals(this.fromWarehouse)) {
           return "From and To warehouses cannot be the same";
         }
-        
+
         return "Invalid To warehouse";
       }
     }
@@ -184,29 +208,12 @@ const inventoryTransactionSchema = new Schema({
 
 // Pre-save middleware to calculate quantityAfter if not provided
 inventoryTransactionSchema.pre('save', function(next) {
-  if (this.quantityBefore !== undefined && 
-      this.quantityChange !== undefined && 
+  if (this.quantityBefore !== undefined &&
+      this.quantityChange !== undefined &&
       this.quantityAfter === undefined) {
     this.quantityAfter = this.quantityBefore + this.quantityChange;
   }
   next();
-});
-
-// Custom validation for document type based on transaction type
-inventoryTransactionSchema.path('reference').validate(function(value) {
-  if (!value || !value.documentType) return true;
-  
-  if (this.transactionType === "Purchase" && value.documentType !== "Purchase") {
-    this.invalidate('reference.documentType', "Purchase transactions must reference a Purchase document");
-    return false;
-  }
-  
-  if (this.transactionType === "Sale" && value.documentType !== "Order") {
-    this.invalidate('reference.documentType', "Sale transactions must reference an Order document");
-    return false;
-  }
-  
-  return true;
 });
 
 module.exports = mongoose.model("InventoryTransaction", inventoryTransactionSchema);
