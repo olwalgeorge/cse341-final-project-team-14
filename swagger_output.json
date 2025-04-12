@@ -43,6 +43,30 @@
     {
       "name": "Purchases",
       "description": "Purchase management endpoints"
+    },
+    {
+      "name": "Inventory",
+      "description": "Inventory management endpoints"
+    },
+    {
+      "name": "Warehouses",
+      "description": "Warehouse management endpoints"
+    },
+    {
+      "name": "Inventory Transactions",
+      "description": "Inventory transaction endpoints"
+    },
+    {
+      "name": "Inventory Transfers",
+      "description": "Inventory transfer endpoints"
+    },
+    {
+      "name": "Inventory Returns",
+      "description": "Inventory return endpoints"
+    },
+    {
+      "name": "Inventory Adjustments",
+      "description": "Inventory adjustment endpoints"
     }
   ],
   "components": {
@@ -895,6 +919,1585 @@
           }
         }
       },
+      "InventoryTransaction": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "transactionID": {
+            "type": "string",
+            "example": "IT-00001",
+            "pattern": "^IT-\\d{5}$"
+          },
+          "inventory": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "$ref": "#/components/schemas/Inventory"
+              }
+            ]
+          },
+          "product": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "$ref": "#/components/schemas/Product"
+              }
+            ]
+          },
+          "warehouse": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "$ref": "#/components/schemas/Warehouse"
+              }
+            ]
+          },
+          "transactionType": {
+            "type": "string",
+            "enum": [
+              "Adjustment",
+              "Purchase",
+              "Sale",
+              "Return",
+              "Transfer In",
+              "Transfer Out",
+              "Damaged",
+              "Expired",
+              "Initial"
+            ],
+            "example": "Purchase"
+          },
+          "transactionDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "quantityBefore": {
+            "type": "number",
+            "example": 10
+          },
+          "quantityChange": {
+            "type": "number",
+            "example": 5
+          },
+          "quantityAfter": {
+            "type": "number",
+            "example": 15
+          },
+          "reference": {
+            "type": "object",
+            "properties": {
+              "documentType": {
+                "type": "string",
+                "enum": [
+                  "Purchase",
+                  "Order",
+                  "InventoryAdjustment",
+                  "InventoryTransfer",
+                  "InventoryReturn"
+                ],
+                "example": "Purchase"
+              },
+              "documentId": {
+                "type": "string",
+                "example": "67f66c737ed7ddb60e54af70"
+              },
+              "documentCode": {
+                "type": "string",
+                "example": "PU-00001"
+              }
+            }
+          },
+          "fromWarehouse": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "$ref": "#/components/schemas/Warehouse"
+              }
+            ]
+          },
+          "toWarehouse": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "$ref": "#/components/schemas/Warehouse"
+              }
+            ]
+          },
+          "notes": {
+            "type": "string",
+            "example": "Stock received from supplier"
+          },
+          "performedBy": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "$ref": "#/components/schemas/User"
+              }
+            ]
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "InventoryTransactionInput": {
+        "type": "object",
+        "required": [
+          "product",
+          "warehouse",
+          "transactionType",
+          "quantityBefore",
+          "quantityChange"
+        ],
+        "properties": {
+          "transactionID": {
+            "type": "string",
+            "example": "IT-00001",
+            "description": "Optional - will be auto-generated if not provided"
+          },
+          "inventory": {
+            "type": "string",
+            "example": "67f8f19c967f8b21cb2ae9c5"
+          },
+          "product": {
+            "type": "string",
+            "example": "67f8ec8aaf6bfc397a056b7f"
+          },
+          "warehouse": {
+            "type": "string",
+            "example": "67f8e3c85b1777f2f72ac8e9"
+          },
+          "transactionType": {
+            "type": "string",
+            "enum": [
+              "Adjustment",
+              "Purchase",
+              "Sale",
+              "Return",
+              "Transfer In",
+              "Transfer Out",
+              "Damaged",
+              "Expired",
+              "Initial"
+            ],
+            "example": "Purchase"
+          },
+          "transactionDate": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Optional - defaults to current date/time"
+          },
+          "quantityBefore": {
+            "type": "number",
+            "example": 10
+          },
+          "quantityChange": {
+            "type": "number",
+            "example": 5
+          },
+          "reference": {
+            "type": "object",
+            "properties": {
+              "documentType": {
+                "type": "string",
+                "enum": [
+                  "Purchase",
+                  "Order",
+                  "InventoryAdjustment",
+                  "InventoryTransfer",
+                  "InventoryReturn"
+                ],
+                "example": "Purchase"
+              },
+              "documentId": {
+                "type": "string",
+                "example": "67f66c737ed7ddb60e54af70"
+              },
+              "documentCode": {
+                "type": "string",
+                "example": "PU-00001"
+              }
+            }
+          },
+          "fromWarehouse": {
+            "type": "string",
+            "example": "67f8e3c85b1777f2f72ac8e9",
+            "description": "Required for Transfer Out transactions"
+          },
+          "toWarehouse": {
+            "type": "string",
+            "example": "67fa93a246dd3dafdcbf730b",
+            "description": "Required for Transfer In transactions"
+          },
+          "notes": {
+            "type": "string",
+            "example": "Stock received from supplier"
+          }
+        }
+      },
+      "Inventory": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "inventoryID": {
+            "type": "string",
+            "example": "IN-00001",
+            "pattern": "^IN-\\d{5}$"
+          },
+          "product": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "$ref": "#/components/schemas/Product"
+              }
+            ]
+          },
+          "warehouse": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "$ref": "#/components/schemas/Warehouse"
+              }
+            ]
+          },
+          "quantity": {
+            "type": "number",
+            "example": 25
+          },
+          "minStockLevel": {
+            "type": "number",
+            "example": 5
+          },
+          "maxStockLevel": {
+            "type": "number",
+            "example": 50
+          },
+          "stockStatus": {
+            "type": "string",
+            "enum": [
+              "In Stock",
+              "Low Stock",
+              "Out of Stock",
+              "Overstock"
+            ],
+            "example": "In Stock"
+          },
+          "location": {
+            "type": "object",
+            "properties": {
+              "aisle": {
+                "type": "string",
+                "example": "A5"
+              },
+              "rack": {
+                "type": "string",
+                "example": "R3"
+              },
+              "bin": {
+                "type": "string",
+                "example": "B12"
+              }
+            }
+          },
+          "lastStockCheck": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "notes": {
+            "type": "string",
+            "example": "Main stock location for laptops"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "InventoryInput": {
+        "type": "object",
+        "required": [
+          "product",
+          "warehouse"
+        ],
+        "properties": {
+          "product": {
+            "type": "string",
+            "example": "67f8ec8aaf6bfc397a056b7f"
+          },
+          "warehouse": {
+            "type": "string",
+            "example": "67f8e3c85b1777f2f72ac8e9"
+          },
+          "quantity": {
+            "type": "number",
+            "example": 25,
+            "description": "Default is 0 if not provided"
+          },
+          "minStockLevel": {
+            "type": "number",
+            "example": 5
+          },
+          "maxStockLevel": {
+            "type": "number",
+            "example": 50
+          },
+          "location": {
+            "type": "object",
+            "properties": {
+              "aisle": {
+                "type": "string",
+                "example": "A5"
+              },
+              "rack": {
+                "type": "string",
+                "example": "R3"
+              },
+              "bin": {
+                "type": "string",
+                "example": "B12"
+              }
+            }
+          },
+          "notes": {
+            "type": "string",
+            "example": "Main stock location for laptops"
+          }
+        }
+      },
+      "InventoryUpdate": {
+        "type": "object",
+        "properties": {
+          "quantity": {
+            "type": "number",
+            "example": 30
+          },
+          "minStockLevel": {
+            "type": "number",
+            "example": 5
+          },
+          "maxStockLevel": {
+            "type": "number",
+            "example": 50
+          },
+          "location": {
+            "type": "object",
+            "properties": {
+              "aisle": {
+                "type": "string",
+                "example": "A5"
+              },
+              "rack": {
+                "type": "string",
+                "example": "R3"
+              },
+              "bin": {
+                "type": "string",
+                "example": "B12"
+              }
+            }
+          },
+          "lastStockCheck": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "notes": {
+            "type": "string",
+            "example": "Updated stock location for laptops"
+          }
+        }
+      },
+      "Warehouse": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "warehouseID": {
+            "type": "string",
+            "example": "WH-00001",
+            "pattern": "^WH-\\d{5}$"
+          },
+          "name": {
+            "type": "string",
+            "example": "East Distribution Center"
+          },
+          "description": {
+            "type": "string",
+            "example": "Primary warehouse for eastern region distribution"
+          },
+          "capacity": {
+            "type": "number",
+            "example": 50000
+          },
+          "capacityUnit": {
+            "type": "string",
+            "example": "sqft"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "Active",
+              "Inactive",
+              "Maintenance"
+            ],
+            "example": "Active"
+          },
+          "contact": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "example": "John Manager"
+              },
+              "phone": {
+                "type": "string",
+                "example": "5551234567"
+              },
+              "email": {
+                "type": "string",
+                "example": "john.manager@example.com"
+              }
+            }
+          },
+          "address": {
+            "type": "object",
+            "properties": {
+              "street": {
+                "type": "string",
+                "example": "123 Warehouse Blvd"
+              },
+              "city": {
+                "type": "string",
+                "example": "Atlanta"
+              },
+              "state": {
+                "type": "string",
+                "example": "GA"
+              },
+              "postalCode": {
+                "type": "string",
+                "example": "30301"
+              },
+              "country": {
+                "type": "string",
+                "example": "USA"
+              }
+            }
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "WarehouseInput": {
+        "type": "object",
+        "required": [
+          "name",
+          "capacity",
+          "status",
+          "address"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "East Distribution Center"
+          },
+          "description": {
+            "type": "string",
+            "example": "Primary warehouse for eastern region distribution"
+          },
+          "capacity": {
+            "type": "number",
+            "example": 50000
+          },
+          "capacityUnit": {
+            "type": "string",
+            "example": "sqft"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "Active",
+              "Inactive",
+              "Maintenance"
+            ],
+            "example": "Active"
+          },
+          "contact": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "example": "John Manager"
+              },
+              "phone": {
+                "type": "string",
+                "example": "5551234567"
+              },
+              "email": {
+                "type": "string",
+                "example": "john.manager@example.com"
+              }
+            }
+          },
+          "address": {
+            "type": "object",
+            "properties": {
+              "street": {
+                "type": "string",
+                "example": "123 Warehouse Blvd"
+              },
+              "city": {
+                "type": "string",
+                "example": "Atlanta"
+              },
+              "state": {
+                "type": "string",
+                "example": "GA"
+              },
+              "postalCode": {
+                "type": "string",
+                "example": "30301"
+              },
+              "country": {
+                "type": "string",
+                "example": "USA"
+              }
+            }
+          }
+        }
+      },
+      "WarehouseUpdate": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "East Distribution Center Updated"
+          },
+          "description": {
+            "type": "string",
+            "example": "Updated description for eastern region distribution center"
+          },
+          "capacity": {
+            "type": "number",
+            "example": 60000
+          },
+          "capacityUnit": {
+            "type": "string",
+            "example": "sqft"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "Active",
+              "Inactive",
+              "Maintenance"
+            ],
+            "example": "Maintenance"
+          },
+          "contact": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "example": "Sarah Manager"
+              },
+              "phone": {
+                "type": "string",
+                "example": "5559876543"
+              },
+              "email": {
+                "type": "string",
+                "example": "sarah.manager@example.com"
+              }
+            }
+          },
+          "address": {
+            "type": "object",
+            "properties": {
+              "street": {
+                "type": "string",
+                "example": "456 Warehouse Ave"
+              },
+              "city": {
+                "type": "string",
+                "example": "Atlanta"
+              },
+              "state": {
+                "type": "string",
+                "example": "GA"
+              },
+              "postalCode": {
+                "type": "string",
+                "example": "30301"
+              },
+              "country": {
+                "type": "string",
+                "example": "USA"
+              }
+            }
+          }
+        }
+      },
+      "InventoryTransfer": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "transferID": {
+            "type": "string",
+            "example": "TR-00001",
+            "pattern": "^TR-\\d{5}$"
+          },
+          "fromWarehouse": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "$ref": "#/components/schemas/Warehouse"
+              }
+            ]
+          },
+          "toWarehouse": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "$ref": "#/components/schemas/Warehouse"
+              }
+            ]
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "product": {
+                  "oneOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "$ref": "#/components/schemas/Product"
+                    }
+                  ]
+                },
+                "quantity": {
+                  "type": "number",
+                  "example": 5
+                },
+                "receivedQuantity": {
+                  "type": "number",
+                  "example": 5
+                },
+                "notes": {
+                  "type": "string",
+                  "example": "Transferring for stock replenishment"
+                }
+              }
+            }
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "Draft",
+              "Pending",
+              "Approved",
+              "In Transit",
+              "Partially Received",
+              "Completed",
+              "Canceled"
+            ],
+            "example": "Pending"
+          },
+          "requestDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "approvalDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "shippingDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "receivingDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "completionDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "expectedDeliveryDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "transportInfo": {
+            "type": "object",
+            "properties": {
+              "method": {
+                "type": "string",
+                "example": "Truck"
+              },
+              "carrier": {
+                "type": "string",
+                "example": "Fast Logistics"
+              },
+              "trackingNumber": {
+                "type": "string",
+                "example": "FL123456789"
+              }
+            }
+          },
+          "requestedBy": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "$ref": "#/components/schemas/User"
+              }
+            ]
+          },
+          "approvedBy": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "$ref": "#/components/schemas/User"
+              }
+            ]
+          },
+          "receivedBy": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "$ref": "#/components/schemas/User"
+              }
+            ]
+          },
+          "notes": {
+            "type": "string",
+            "example": "Regular inventory replenishment transfer"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "InventoryTransferInput": {
+        "type": "object",
+        "required": [
+          "fromWarehouse",
+          "toWarehouse",
+          "items"
+        ],
+        "properties": {
+          "fromWarehouse": {
+            "type": "string",
+            "example": "67f8e3c85b1777f2f72ac8e9"
+          },
+          "toWarehouse": {
+            "type": "string",
+            "example": "67fa93a246dd3dafdcbf730b"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "product",
+                "quantity"
+              ],
+              "properties": {
+                "product": {
+                  "type": "string",
+                  "example": "67f8ec8aaf6bfc397a056b7f"
+                },
+                "quantity": {
+                  "type": "number",
+                  "example": 5
+                },
+                "notes": {
+                  "type": "string",
+                  "example": "Transferring for stock replenishment"
+                }
+              }
+            }
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "Draft",
+              "Pending",
+              "Approved",
+              "In Transit",
+              "Partially Received",
+              "Completed",
+              "Canceled"
+            ],
+            "example": "Pending",
+            "description": "Default is Pending if not provided"
+          },
+          "expectedDeliveryDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "transportInfo": {
+            "type": "object",
+            "properties": {
+              "method": {
+                "type": "string",
+                "example": "Truck"
+              },
+              "carrier": {
+                "type": "string",
+                "example": "Fast Logistics"
+              },
+              "trackingNumber": {
+                "type": "string",
+                "example": "FL123456789"
+              }
+            }
+          },
+          "notes": {
+            "type": "string",
+            "example": "Regular inventory replenishment transfer"
+          }
+        }
+      },
+      "InventoryTransferUpdate": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "Draft",
+              "Pending",
+              "Approved",
+              "In Transit",
+              "Partially Received",
+              "Completed",
+              "Canceled"
+            ],
+            "example": "Approved"
+          },
+          "expectedDeliveryDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "transportInfo": {
+            "type": "object",
+            "properties": {
+              "method": {
+                "type": "string",
+                "example": "Truck"
+              },
+              "carrier": {
+                "type": "string",
+                "example": "Fast Logistics"
+              },
+              "trackingNumber": {
+                "type": "string",
+                "example": "FL123456789"
+              }
+            }
+          },
+          "notes": {
+            "type": "string",
+            "example": "Priority transfer approved"
+          }
+        }
+      },
+      "InventoryReturn": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "returnID": {
+            "type": "string",
+            "example": "RET-00001",
+            "pattern": "^RET-\\d{5}$"
+          },
+          "returnType": {
+            "type": "string",
+            "enum": [
+              "Customer Return",
+              "Supplier Return",
+              "Damaged Goods",
+              "Defective Product"
+            ],
+            "example": "Customer Return"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "Draft",
+              "Pending",
+              "Approved",
+              "Completed",
+              "Rejected",
+              "Canceled"
+            ],
+            "example": "Pending"
+          },
+          "customer": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "$ref": "#/components/schemas/Customer"
+              }
+            ]
+          },
+          "supplier": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "$ref": "#/components/schemas/Supplier"
+              }
+            ]
+          },
+          "warehouse": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "$ref": "#/components/schemas/Warehouse"
+              }
+            ]
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "product": {
+                  "oneOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "$ref": "#/components/schemas/Product"
+                    }
+                  ]
+                },
+                "quantity": {
+                  "type": "number",
+                  "example": 2
+                },
+                "reason": {
+                  "type": "string",
+                  "enum": [
+                    "Defective",
+                    "Damaged",
+                    "Incorrect Item",
+                    "Expired",
+                    "Customer Dissatisfaction",
+                    "Other"
+                  ],
+                  "example": "Defective"
+                },
+                "condition": {
+                  "type": "string",
+                  "enum": [
+                    "Good",
+                    "Damaged",
+                    "Defective",
+                    "Expired"
+                  ],
+                  "example": "Defective"
+                },
+                "notes": {
+                  "type": "string",
+                  "example": "Product doesn't power on"
+                }
+              }
+            }
+          },
+          "returnDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "referenceOrder": {
+            "type": "string",
+            "example": "67f81e533e0490886947f008"
+          },
+          "referencePurchase": {
+            "type": "string",
+            "example": "67f66c737ed7ddb60e54af70"
+          },
+          "requestedBy": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "$ref": "#/components/schemas/User"
+              }
+            ]
+          },
+          "approvedBy": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "$ref": "#/components/schemas/User"
+              }
+            ]
+          },
+          "completedBy": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "$ref": "#/components/schemas/User"
+              }
+            ]
+          },
+          "actualReturnedItems": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "product": {
+                  "oneOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "$ref": "#/components/schemas/Product"
+                    }
+                  ]
+                },
+                "quantity": {
+                  "type": "number",
+                  "example": 2
+                },
+                "condition": {
+                  "type": "string",
+                  "enum": [
+                    "Good",
+                    "Damaged",
+                    "Defective",
+                    "Expired"
+                  ],
+                  "example": "Defective"
+                },
+                "notes": {
+                  "type": "string",
+                  "example": "Multiple scratches on casing"
+                }
+              }
+            }
+          },
+          "notes": {
+            "type": "string",
+            "example": "Customer returning due to defective product"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "InventoryReturnInput": {
+        "type": "object",
+        "required": [
+          "returnType",
+          "warehouse",
+          "items"
+        ],
+        "properties": {
+          "returnType": {
+            "type": "string",
+            "enum": [
+              "Customer Return",
+              "Supplier Return",
+              "Damaged Goods",
+              "Defective Product"
+            ],
+            "example": "Customer Return"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "Draft",
+              "Pending",
+              "Approved",
+              "Completed",
+              "Rejected",
+              "Canceled"
+            ],
+            "example": "Pending",
+            "description": "Default is Pending if not provided"
+          },
+          "customer": {
+            "type": "string",
+            "example": "67f67b829d34cfbe039e94be",
+            "description": "Required for Customer Returns"
+          },
+          "supplier": {
+            "type": "string",
+            "example": "67f66c737ed7ddb60e54af6f",
+            "description": "Required for Supplier Returns"
+          },
+          "warehouse": {
+            "type": "string",
+            "example": "67f8e3c85b1777f2f72ac8e9"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "product",
+                "quantity",
+                "reason"
+              ],
+              "properties": {
+                "product": {
+                  "type": "string",
+                  "example": "67f8ec8aaf6bfc397a056b7f"
+                },
+                "quantity": {
+                  "type": "number",
+                  "example": 2
+                },
+                "reason": {
+                  "type": "string",
+                  "enum": [
+                    "Defective",
+                    "Damaged",
+                    "Incorrect Item",
+                    "Expired",
+                    "Customer Dissatisfaction",
+                    "Other"
+                  ],
+                  "example": "Defective"
+                },
+                "condition": {
+                  "type": "string",
+                  "enum": [
+                    "Good",
+                    "Damaged",
+                    "Defective",
+                    "Expired"
+                  ],
+                  "example": "Defective"
+                },
+                "notes": {
+                  "type": "string",
+                  "example": "Product doesn't power on"
+                }
+              }
+            }
+          },
+          "returnDate": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Optional - defaults to current date/time"
+          },
+          "referenceOrder": {
+            "type": "string",
+            "example": "67f81e533e0490886947f008",
+            "description": "Required for Customer Returns"
+          },
+          "referencePurchase": {
+            "type": "string",
+            "example": "67f66c737ed7ddb60e54af70",
+            "description": "Required for Supplier Returns"
+          },
+          "notes": {
+            "type": "string",
+            "example": "Customer returning due to defective product"
+          }
+        }
+      },
+      "InventoryReturnUpdate": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "Draft",
+              "Pending",
+              "Approved",
+              "Completed",
+              "Rejected",
+              "Canceled"
+            ],
+            "example": "Approved"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "product",
+                "quantity",
+                "reason"
+              ],
+              "properties": {
+                "product": {
+                  "type": "string",
+                  "example": "67f8ec8aaf6bfc397a056b7f"
+                },
+                "quantity": {
+                  "type": "number",
+                  "example": 2
+                },
+                "reason": {
+                  "type": "string",
+                  "enum": [
+                    "Defective",
+                    "Damaged",
+                    "Incorrect Item",
+                    "Expired",
+                    "Customer Dissatisfaction",
+                    "Other"
+                  ],
+                  "example": "Defective"
+                },
+                "condition": {
+                  "type": "string",
+                  "enum": [
+                    "Good",
+                    "Damaged",
+                    "Defective",
+                    "Expired"
+                  ],
+                  "example": "Defective"
+                },
+                "notes": {
+                  "type": "string",
+                  "example": "Product doesn't power on"
+                }
+              }
+            }
+          },
+          "notes": {
+            "type": "string",
+            "example": "Updated return information after customer inspection"
+          }
+        }
+      },
+      "InventoryAdjustment": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "adjustmentID": {
+            "type": "string",
+            "example": "ADJ-00001",
+            "pattern": "^ADJ-\\d{5}$"
+          },
+          "adjustmentType": {
+            "type": "string",
+            "enum": [
+              "Quantity Correction",
+              "Inventory Count",
+              "Write-Off",
+              "Expired",
+              "Damaged"
+            ],
+            "example": "Quantity Correction"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "Pending",
+              "Approved",
+              "Completed",
+              "Rejected",
+              "Canceled"
+            ],
+            "example": "Pending"
+          },
+          "warehouse": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "$ref": "#/components/schemas/Warehouse"
+              }
+            ]
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "product": {
+                  "oneOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "$ref": "#/components/schemas/Product"
+                    }
+                  ]
+                },
+                "inventory": {
+                  "oneOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "$ref": "#/components/schemas/Inventory"
+                    }
+                  ]
+                },
+                "currentQuantity": {
+                  "type": "number",
+                  "example": 18
+                },
+                "newQuantity": {
+                  "type": "number",
+                  "example": 20
+                },
+                "adjustmentQuantity": {
+                  "type": "number",
+                  "example": 2
+                },
+                "reason": {
+                  "type": "string",
+                  "example": "Physical count correction"
+                }
+              }
+            }
+          },
+          "adjustmentDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "requestedBy": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "$ref": "#/components/schemas/User"
+              }
+            ]
+          },
+          "approvedBy": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "$ref": "#/components/schemas/User"
+              }
+            ]
+          },
+          "completedBy": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "$ref": "#/components/schemas/User"
+              }
+            ]
+          },
+          "notes": {
+            "type": "string",
+            "example": "Adjustment after physical inventory count"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "InventoryAdjustmentInput": {
+        "type": "object",
+        "required": [
+          "adjustmentType",
+          "warehouse",
+          "items"
+        ],
+        "properties": {
+          "adjustmentType": {
+            "type": "string",
+            "enum": [
+              "Quantity Correction",
+              "Inventory Count",
+              "Write-Off",
+              "Expired",
+              "Damaged"
+            ],
+            "example": "Quantity Correction"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "Pending",
+              "Approved",
+              "Completed",
+              "Rejected",
+              "Canceled"
+            ],
+            "example": "Pending",
+            "description": "Default is Pending if not provided"
+          },
+          "warehouse": {
+            "type": "string",
+            "example": "67f8e3c85b1777f2f72ac8e9"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "product",
+                "newQuantity"
+              ],
+              "properties": {
+                "product": {
+                  "type": "string",
+                  "example": "67f8ec8aaf6bfc397a056b7f"
+                },
+                "inventory": {
+                  "type": "string",
+                  "example": "67f8f19c967f8b21cb2ae9c5"
+                },
+                "currentQuantity": {
+                  "type": "number",
+                  "example": 18,
+                  "description": "Optional - will be fetched from inventory if not provided"
+                },
+                "newQuantity": {
+                  "type": "number",
+                  "example": 20
+                },
+                "reason": {
+                  "type": "string",
+                  "example": "Physical count correction"
+                }
+              }
+            }
+          },
+          "adjustmentDate": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Optional - defaults to current date/time"
+          },
+          "notes": {
+            "type": "string",
+            "example": "Adjustment after physical inventory count"
+          }
+        }
+      },
+      "InventoryAdjustmentUpdate": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "Pending",
+              "Approved",
+              "Completed",
+              "Rejected",
+              "Canceled"
+            ],
+            "example": "Approved"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "product",
+                "newQuantity"
+              ],
+              "properties": {
+                "product": {
+                  "type": "string",
+                  "example": "67f8ec8aaf6bfc397a056b7f"
+                },
+                "newQuantity": {
+                  "type": "number",
+                  "example": 20
+                },
+                "reason": {
+                  "type": "string",
+                  "example": "Updated after recount"
+                }
+              }
+            }
+          },
+          "notes": {
+            "type": "string",
+            "example": "Adjustment verified by warehouse manager"
+          }
+        }
+      },
       "Pagination": {
         "type": "object",
         "properties": {
@@ -1646,6 +3249,47 @@
       }
     },
     "/users/{_id}": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get user by ID",
+        "description": "Retrieve user details by MongoDB ID",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "MongoDB ID of the user"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Success"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          }
+        }
+      },
       "put": {
         "tags": [
           "Users"
@@ -2156,8 +3800,8 @@
         "description": "Retrieve product details by MongoDB ID",
         "parameters": [
           {
-            "in": "path",
             "name": "_id",
+            "in": "path",
             "required": true,
             "schema": {
               "type": "string"
@@ -2630,20 +4274,20 @@
         ],
         "summary": "Get supplier by ID",
         "description": "Retrieve supplier details by MongoDB ID",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
         "parameters": [
           {
-            "in": "path",
             "name": "_id",
+            "in": "path",
             "required": true,
             "schema": {
               "type": "string"
             },
             "description": "MongoDB ID of the supplier"
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
           }
         ],
         "responses": {
@@ -3222,8 +4866,8 @@
         ],
         "parameters": [
           {
-            "in": "path",
             "name": "_id",
+            "in": "path",
             "required": true,
             "schema": {
               "type": "string"
@@ -3778,8 +5422,8 @@
         ],
         "parameters": [
           {
-            "in": "path",
             "name": "_id",
+            "in": "path",
             "required": true,
             "schema": {
               "type": "string"
@@ -4379,8 +6023,8 @@
         ],
         "parameters": [
           {
-            "in": "path",
             "name": "_id",
+            "in": "path",
             "required": true,
             "schema": {
               "type": "string"
@@ -4541,6 +6185,4974 @@
           },
           "404": {
             "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/inventory": {
+      "get": {
+        "tags": [
+          "Inventory"
+        ],
+        "summary": "Get all inventory items",
+        "description": "Retrieve a list of all inventory items with optional filtering, sorting, and pagination",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "product",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by product ID"
+          },
+          {
+            "in": "query",
+            "name": "warehouse",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by warehouse ID"
+          },
+          {
+            "in": "query",
+            "name": "stockStatus",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "In Stock",
+                "Low Stock",
+                "Out of Stock",
+                "Overstock"
+              ]
+            },
+            "description": "Filter by inventory stock status"
+          },
+          {
+            "in": "query",
+            "name": "minQuantity",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Filter by minimum quantity available"
+          },
+          {
+            "in": "query",
+            "name": "maxQuantity",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Filter by maximum quantity available"
+          },
+          {
+            "in": "query",
+            "name": "lastStockCheckFrom",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "description": "Filter items with last stock check after this date"
+          },
+          {
+            "in": "query",
+            "name": "lastStockCheckTo",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "description": "Filter items with last stock check before this date"
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer",
+              "default": 1
+            },
+            "description": "Page number for pagination"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer",
+              "default": 10
+            },
+            "description": "Number of records per page"
+          },
+          {
+            "in": "query",
+            "name": "sort",
+            "schema": {
+              "type": "string",
+              "default": "product"
+            },
+            "description": "Sort fields (comma separated), prefix with - for descending order"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "inventory": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Inventory"
+                          }
+                        },
+                        "pagination": {
+                          "$ref": "#/components/schemas/Pagination"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Inventory"
+        ],
+        "summary": "Create a new inventory item",
+        "description": "Create a new inventory item record in the system",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InventoryInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Inventory item created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Inventory"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Inventory"
+        ],
+        "summary": "Delete all inventory items",
+        "description": "Delete all inventory items from the system (use with caution)",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All inventory items deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/inventory/{_id}": {
+      "get": {
+        "tags": [
+          "Inventory"
+        ],
+        "summary": "Get inventory item by ID",
+        "description": "Retrieve inventory item details by MongoDB ID",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "MongoDB ID of the inventory item"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Inventory"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Inventory"
+        ],
+        "summary": "Update inventory item",
+        "description": "Update inventory item details by MongoDB ID",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "MongoDB ID of the inventory item"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InventoryUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Inventory item updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Inventory"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Inventory"
+        ],
+        "summary": "Delete inventory item",
+        "description": "Delete an inventory item by MongoDB ID",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "MongoDB ID of the inventory item to delete"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Inventory item deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/inventory/inventoryID/{inventoryID}": {
+      "get": {
+        "tags": [
+          "Inventory"
+        ],
+        "summary": "Get inventory item by inventory ID",
+        "description": "Retrieve inventory item details by inventory ID (IN-XXXXX format)",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "inventoryID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^IN-\\d{5}$"
+            },
+            "description": "Inventory ID in IN-XXXXX format"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Inventory"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/inventory/product/{productId}": {
+      "get": {
+        "tags": [
+          "Inventory"
+        ],
+        "summary": "Get inventory by product",
+        "description": "Retrieve inventory across all warehouses for a specific product",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "MongoDB ID of the product"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Inventory"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/inventory/warehouse/{warehouseId}": {
+      "get": {
+        "tags": [
+          "Inventory"
+        ],
+        "summary": "Get inventory by warehouse",
+        "description": "Retrieve all inventory items for a specific warehouse",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "warehouseId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "MongoDB ID of the warehouse"
+          },
+          {
+            "in": "query",
+            "name": "stockStatus",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "In Stock",
+                "Low Stock",
+                "Out of Stock",
+                "Overstock"
+              ]
+            },
+            "description": "Filter by inventory stock status"
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer",
+              "default": 1
+            },
+            "description": "Page number for pagination"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer",
+              "default": 10
+            },
+            "description": "Number of records per page"
+          },
+          {
+            "in": "query",
+            "name": "sort",
+            "schema": {
+              "type": "string",
+              "default": "product"
+            },
+            "description": "Sort fields (comma separated), prefix with - for descending order"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "inventory": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Inventory"
+                          }
+                        },
+                        "pagination": {
+                          "$ref": "#/components/schemas/Pagination"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/inventory/status/{stockStatus}": {
+      "get": {
+        "tags": [
+          "Inventory"
+        ],
+        "summary": "Get inventory by stock status",
+        "description": "Retrieve inventory items with a specific stock status",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "stockStatus",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "In Stock",
+                "Low Stock",
+                "Out of Stock",
+                "Overstock"
+              ]
+            },
+            "description": "Stock status to filter by"
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer",
+              "default": 1
+            },
+            "description": "Page number for pagination"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer",
+              "default": 10
+            },
+            "description": "Number of records per page"
+          },
+          {
+            "in": "query",
+            "name": "sort",
+            "schema": {
+              "type": "string",
+              "default": "product"
+            },
+            "description": "Sort fields (comma separated), prefix with - for descending order"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "inventory": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Inventory"
+                          }
+                        },
+                        "pagination": {
+                          "$ref": "#/components/schemas/Pagination"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/warehouses": {
+      "get": {
+        "tags": [
+          "Warehouses"
+        ],
+        "summary": "Get all warehouses",
+        "description": "Retrieve a list of all warehouses with optional filtering, sorting, and pagination",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "name",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter warehouses by name (case-insensitive partial match)"
+          },
+          {
+            "in": "query",
+            "name": "status",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "Active",
+                "Inactive",
+                "Maintenance"
+              ]
+            },
+            "description": "Filter warehouses by status"
+          },
+          {
+            "in": "query",
+            "name": "minCapacity",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Filter warehouses by minimum capacity"
+          },
+          {
+            "in": "query",
+            "name": "maxCapacity",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Filter warehouses by maximum capacity"
+          },
+          {
+            "in": "query",
+            "name": "city",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter warehouses by city"
+          },
+          {
+            "in": "query",
+            "name": "state",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter warehouses by state/province"
+          },
+          {
+            "in": "query",
+            "name": "country",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter warehouses by country"
+          },
+          {
+            "in": "query",
+            "name": "postalCode",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter warehouses by postal code"
+          },
+          {
+            "in": "query",
+            "name": "contactName",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter warehouses by contact name"
+          },
+          {
+            "in": "query",
+            "name": "contactEmail",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter warehouses by contact email"
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer",
+              "default": 1
+            },
+            "description": "Page number for pagination"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer",
+              "default": 10
+            },
+            "description": "Number of records per page"
+          },
+          {
+            "in": "query",
+            "name": "sort",
+            "schema": {
+              "type": "string",
+              "default": "name"
+            },
+            "description": "Sort fields (comma separated), prefix with - for descending order"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "warehouses": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Warehouse"
+                          }
+                        },
+                        "pagination": {
+                          "$ref": "#/components/schemas/Pagination"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Warehouses"
+        ],
+        "summary": "Create a new warehouse",
+        "description": "Create a new warehouse record in the system",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WarehouseInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Warehouse created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Warehouse"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Warehouses"
+        ],
+        "summary": "Delete all warehouses",
+        "description": "Delete all warehouses from the system (use with caution)",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All warehouses deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/warehouses/{_id}": {
+      "get": {
+        "tags": [
+          "Warehouses"
+        ],
+        "summary": "Get warehouse by ID",
+        "description": "Retrieve warehouse details by MongoDB ID",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "MongoDB ID of the warehouse"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Warehouse"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Warehouses"
+        ],
+        "summary": "Update warehouse",
+        "description": "Update warehouse details by MongoDB ID",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "MongoDB ID of the warehouse"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WarehouseUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Warehouse updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Warehouse"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Warehouses"
+        ],
+        "summary": "Delete warehouse",
+        "description": "Delete a warehouse by MongoDB ID",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "MongoDB ID of the warehouse to delete"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Warehouse deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/warehouses/warehouseID/{warehouseID}": {
+      "get": {
+        "tags": [
+          "Warehouses"
+        ],
+        "summary": "Get warehouse by warehouse ID",
+        "description": "Retrieve warehouse details by warehouse ID (WH-XXXXX format)",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "warehouseID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^WH-\\d{5}$"
+            },
+            "description": "Warehouse ID in WH-XXXXX format"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Warehouse"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/warehouses/name/{name}": {
+      "get": {
+        "tags": [
+          "Warehouses"
+        ],
+        "summary": "Get warehouse by name",
+        "description": "Retrieve warehouse details by warehouse name",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Exact warehouse name"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Warehouse"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/inventory-transactions": {
+      "get": {
+        "tags": [
+          "Inventory Transactions"
+        ],
+        "summary": "Get all inventory transactions",
+        "description": "Retrieve a list of all inventory transactions with optional filtering, sorting, and pagination",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "transactionType",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "Adjustment",
+                "Purchase",
+                "Sale",
+                "Return",
+                "Transfer In",
+                "Transfer Out",
+                "Damaged",
+                "Expired",
+                "Initial"
+              ]
+            },
+            "description": "Filter by transaction type"
+          },
+          {
+            "in": "query",
+            "name": "product",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by product ID"
+          },
+          {
+            "in": "query",
+            "name": "warehouse",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by warehouse ID"
+          },
+          {
+            "in": "query",
+            "name": "fromWarehouse",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by source warehouse (for transfers)"
+          },
+          {
+            "in": "query",
+            "name": "toWarehouse",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by destination warehouse (for transfers)"
+          },
+          {
+            "in": "query",
+            "name": "documentType",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "Purchase",
+                "Order",
+                "InventoryAdjustment",
+                "InventoryTransfer",
+                "InventoryReturn"
+              ]
+            },
+            "description": "Filter by reference document type"
+          },
+          {
+            "in": "query",
+            "name": "fromDate",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "description": "Filter transactions after this date (inclusive)"
+          },
+          {
+            "in": "query",
+            "name": "toDate",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "description": "Filter transactions before this date (inclusive)"
+          },
+          {
+            "in": "query",
+            "name": "minChange",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Filter by minimum quantity change"
+          },
+          {
+            "in": "query",
+            "name": "maxChange",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Filter by maximum quantity change"
+          },
+          {
+            "in": "query",
+            "name": "performedBy",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by user who performed the transaction"
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer",
+              "default": 1
+            },
+            "description": "Page number for pagination"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer",
+              "default": 10
+            },
+            "description": "Number of records per page"
+          },
+          {
+            "in": "query",
+            "name": "sort",
+            "schema": {
+              "type": "string",
+              "default": "-transactionDate"
+            },
+            "description": "Sort fields (comma separated), prefix with - for descending order"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "transactions": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/InventoryTransaction"
+                          }
+                        },
+                        "pagination": {
+                          "$ref": "#/components/schemas/Pagination"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Inventory Transactions"
+        ],
+        "summary": "Create a new inventory transaction",
+        "description": "Create a new inventory transaction record in the system",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InventoryTransactionInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Inventory transaction created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/InventoryTransaction"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Inventory Transactions"
+        ],
+        "summary": "Delete all inventory transactions",
+        "description": "Delete all inventory transactions from the system (use with caution)",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All inventory transactions deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/inventory-transactions/{_id}": {
+      "get": {
+        "tags": [
+          "Inventory Transactions"
+        ],
+        "summary": "Get inventory transaction by ID",
+        "description": "Retrieve inventory transaction details by MongoDB ID",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "MongoDB ID of the inventory transaction"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/InventoryTransaction"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Inventory Transactions"
+        ],
+        "summary": "Delete inventory transaction",
+        "description": "Delete an inventory transaction by MongoDB ID",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "MongoDB ID of the inventory transaction to delete"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Inventory transaction deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/inventory-transactions/transactionID/{transactionID}": {
+      "get": {
+        "tags": [
+          "Inventory Transactions"
+        ],
+        "summary": "Get inventory transaction by transaction ID",
+        "description": "Retrieve inventory transaction details by transaction ID (IT-XXXXX format)",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "transactionID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^IT-\\d{5}$"
+            },
+            "description": "Transaction ID in IT-XXXXX format"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/InventoryTransaction"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/inventory-transactions/product/{productId}": {
+      "get": {
+        "tags": [
+          "Inventory Transactions"
+        ],
+        "summary": "Get inventory transactions by product",
+        "description": "Retrieve inventory transactions for a specific product",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "MongoDB ID of the product"
+          },
+          {
+            "in": "query",
+            "name": "transactionType",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by transaction type"
+          },
+          {
+            "in": "query",
+            "name": "warehouse",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by warehouse ID"
+          },
+          {
+            "in": "query",
+            "name": "fromDate",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "description": "Filter transactions after this date (inclusive)"
+          },
+          {
+            "in": "query",
+            "name": "toDate",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "description": "Filter transactions before this date (inclusive)"
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer",
+              "default": 1
+            },
+            "description": "Page number for pagination"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer",
+              "default": 10
+            },
+            "description": "Number of records per page"
+          },
+          {
+            "in": "query",
+            "name": "sort",
+            "schema": {
+              "type": "string",
+              "default": "-transactionDate"
+            },
+            "description": "Sort fields (comma separated), prefix with - for descending order"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "transactions": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/InventoryTransaction"
+                          }
+                        },
+                        "pagination": {
+                          "$ref": "#/components/schemas/Pagination"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/inventory-transactions/warehouse/{warehouseId}": {
+      "get": {
+        "tags": [
+          "Inventory Transactions"
+        ],
+        "summary": "Get inventory transactions by warehouse",
+        "description": "Retrieve inventory transactions for a specific warehouse",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "warehouseId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "MongoDB ID of the warehouse"
+          },
+          {
+            "in": "query",
+            "name": "transactionType",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by transaction type"
+          },
+          {
+            "in": "query",
+            "name": "product",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by product ID"
+          },
+          {
+            "in": "query",
+            "name": "fromDate",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "description": "Filter transactions after this date (inclusive)"
+          },
+          {
+            "in": "query",
+            "name": "toDate",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "description": "Filter transactions before this date (inclusive)"
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer",
+              "default": 1
+            },
+            "description": "Page number for pagination"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer",
+              "default": 10
+            },
+            "description": "Number of records per page"
+          },
+          {
+            "in": "query",
+            "name": "sort",
+            "schema": {
+              "type": "string",
+              "default": "-transactionDate"
+            },
+            "description": "Sort fields (comma separated), prefix with - for descending order"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "transactions": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/InventoryTransaction"
+                          }
+                        },
+                        "pagination": {
+                          "$ref": "#/components/schemas/Pagination"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/inventory-transactions/type/{transactionType}": {
+      "get": {
+        "tags": [
+          "Inventory Transactions"
+        ],
+        "summary": "Get inventory transactions by type",
+        "description": "Retrieve inventory transactions of a specific type",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "transactionType",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "Adjustment",
+                "Purchase",
+                "Sale",
+                "Return",
+                "Transfer In",
+                "Transfer Out",
+                "Damaged",
+                "Expired",
+                "Initial"
+              ]
+            },
+            "description": "Transaction type"
+          },
+          {
+            "in": "query",
+            "name": "product",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by product ID"
+          },
+          {
+            "in": "query",
+            "name": "warehouse",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by warehouse ID"
+          },
+          {
+            "in": "query",
+            "name": "fromWarehouse",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by source warehouse (for transfers)"
+          },
+          {
+            "in": "query",
+            "name": "toWarehouse",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by destination warehouse (for transfers)"
+          },
+          {
+            "in": "query",
+            "name": "fromDate",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "description": "Filter transactions after this date (inclusive)"
+          },
+          {
+            "in": "query",
+            "name": "toDate",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "description": "Filter transactions before this date (inclusive)"
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer",
+              "default": 1
+            },
+            "description": "Page number for pagination"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer",
+              "default": 10
+            },
+            "description": "Number of records per page"
+          },
+          {
+            "in": "query",
+            "name": "sort",
+            "schema": {
+              "type": "string",
+              "default": "-transactionDate"
+            },
+            "description": "Sort fields (comma separated), prefix with - for descending order"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "transactions": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/InventoryTransaction"
+                          }
+                        },
+                        "pagination": {
+                          "$ref": "#/components/schemas/Pagination"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/inventory-transfers": {
+      "get": {
+        "tags": [
+          "Inventory Transfers"
+        ],
+        "summary": "Get all inventory transfers",
+        "description": "Retrieve a list of all inventory transfers with optional filtering, sorting, and pagination",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "status",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "Draft",
+                "Pending",
+                "Approved",
+                "In Transit",
+                "Partially Received",
+                "Completed",
+                "Canceled"
+              ]
+            },
+            "description": "Filter transfers by status"
+          },
+          {
+            "in": "query",
+            "name": "fromWarehouse",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by source warehouse ID"
+          },
+          {
+            "in": "query",
+            "name": "toWarehouse",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by destination warehouse ID"
+          },
+          {
+            "in": "query",
+            "name": "product",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by product ID (returns transfers containing this product)"
+          },
+          {
+            "in": "query",
+            "name": "requestedBy",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by user who requested the transfer"
+          },
+          {
+            "in": "query",
+            "name": "approvedBy",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by user who approved the transfer"
+          },
+          {
+            "in": "query",
+            "name": "fromDate",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "description": "Filter transfers requested after this date (inclusive)"
+          },
+          {
+            "in": "query",
+            "name": "toDate",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "description": "Filter transfers requested before this date (inclusive)"
+          },
+          {
+            "in": "query",
+            "name": "fromDeliveryDate",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "description": "Filter transfers with expected delivery after this date"
+          },
+          {
+            "in": "query",
+            "name": "toDeliveryDate",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "description": "Filter transfers with expected delivery before this date"
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer",
+              "default": 1
+            },
+            "description": "Page number for pagination"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer",
+              "default": 10
+            },
+            "description": "Number of records per page"
+          },
+          {
+            "in": "query",
+            "name": "sort",
+            "schema": {
+              "type": "string",
+              "default": "-requestDate"
+            },
+            "description": "Sort fields (comma separated), prefix with - for descending order"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "transfers": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/InventoryTransfer"
+                          }
+                        },
+                        "pagination": {
+                          "$ref": "#/components/schemas/Pagination"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Inventory Transfers"
+        ],
+        "summary": "Create a new inventory transfer",
+        "description": "Create a new inventory transfer record in the system",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InventoryTransferInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Inventory transfer created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/InventoryTransfer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Inventory Transfers"
+        ],
+        "summary": "Delete all inventory transfers",
+        "description": "Delete all inventory transfers from the system (use with caution)",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All inventory transfers deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/inventory-transfers/{_id}": {
+      "get": {
+        "tags": [
+          "Inventory Transfers"
+        ],
+        "summary": "Get inventory transfer by ID",
+        "description": "Retrieve inventory transfer details by MongoDB ID",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "MongoDB ID of the inventory transfer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/InventoryTransfer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Inventory Transfers"
+        ],
+        "summary": "Update inventory transfer",
+        "description": "Update inventory transfer details by MongoDB ID",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "MongoDB ID of the inventory transfer"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InventoryTransferUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Inventory transfer updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/InventoryTransfer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Inventory Transfers"
+        ],
+        "summary": "Delete inventory transfer",
+        "description": "Delete an inventory transfer by MongoDB ID",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "MongoDB ID of the inventory transfer to delete"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Inventory transfer deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/inventory-transfers/transferID/{transferID}": {
+      "get": {
+        "tags": [
+          "Inventory Transfers"
+        ],
+        "summary": "Get inventory transfer by transfer ID",
+        "description": "Retrieve inventory transfer details by transfer ID (TR-XXXXX format)",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "transferID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^TR-\\d{5}$"
+            },
+            "description": "Transfer ID in TR-XXXXX format"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/InventoryTransfer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/inventory-transfers/{_id}/approve": {
+      "put": {
+        "tags": [
+          "Inventory Transfers"
+        ],
+        "summary": "Approve inventory transfer",
+        "description": "Approve an inventory transfer and change its status to Approved",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "MongoDB ID of the inventory transfer to approve"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "notes": {
+                    "type": "string",
+                    "example": "Approved after verification of stock levels"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Inventory transfer approved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/InventoryTransfer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/inventory-transfers/{_id}/ship": {
+      "put": {
+        "tags": [
+          "Inventory Transfers"
+        ],
+        "summary": "Ship inventory transfer",
+        "description": "Ship an inventory transfer, update inventory at source warehouse, and change status to In Transit",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "MongoDB ID of the inventory transfer to ship"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "transportInfo": {
+                    "type": "object",
+                    "properties": {
+                      "method": {
+                        "type": "string",
+                        "example": "Truck"
+                      },
+                      "carrier": {
+                        "type": "string",
+                        "example": "Fast Logistics"
+                      },
+                      "trackingNumber": {
+                        "type": "string",
+                        "example": "FL123456789"
+                      }
+                    }
+                  },
+                  "notes": {
+                    "type": "string",
+                    "example": "Dispatched via company truck"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Inventory transfer shipped successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/InventoryTransfer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/inventory-transfers/{_id}/receive": {
+      "put": {
+        "tags": [
+          "Inventory Transfers"
+        ],
+        "summary": "Receive inventory transfer",
+        "description": "Receive items from an inventory transfer, update inventory at destination warehouse, and update status",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "MongoDB ID of the inventory transfer to receive"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "items"
+                ],
+                "properties": {
+                  "items": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "product",
+                        "receivedQuantity"
+                      ],
+                      "properties": {
+                        "product": {
+                          "type": "string",
+                          "example": "67f8ec8aaf6bfc397a056b7f"
+                        },
+                        "receivedQuantity": {
+                          "type": "integer",
+                          "example": 3
+                        }
+                      }
+                    }
+                  },
+                  "notes": {
+                    "type": "string",
+                    "example": "Partial receipt due to some items being back-ordered"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Inventory transfer received successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/InventoryTransfer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/inventory-transfers/from-warehouse/{warehouseId}": {
+      "get": {
+        "tags": [
+          "Inventory Transfers"
+        ],
+        "summary": "Get transfers by source warehouse",
+        "description": "Retrieve inventory transfers from a specific warehouse",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "warehouseId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "MongoDB ID of the source warehouse"
+          },
+          {
+            "in": "query",
+            "name": "status",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "Draft",
+                "Pending",
+                "Approved",
+                "In Transit",
+                "Partially Received",
+                "Completed",
+                "Canceled"
+              ]
+            },
+            "description": "Filter transfers by status"
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer",
+              "default": 1
+            },
+            "description": "Page number for pagination"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer",
+              "default": 10
+            },
+            "description": "Number of records per page"
+          },
+          {
+            "in": "query",
+            "name": "sort",
+            "schema": {
+              "type": "string",
+              "default": "-requestDate"
+            },
+            "description": "Sort fields (comma separated), prefix with - for descending order"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "transfers": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/InventoryTransfer"
+                          }
+                        },
+                        "pagination": {
+                          "$ref": "#/components/schemas/Pagination"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/inventory-transfers/to-warehouse/{warehouseId}": {
+      "get": {
+        "tags": [
+          "Inventory Transfers"
+        ],
+        "summary": "Get transfers by destination warehouse",
+        "description": "Retrieve inventory transfers to a specific warehouse",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "warehouseId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "MongoDB ID of the destination warehouse"
+          },
+          {
+            "in": "query",
+            "name": "status",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "Draft",
+                "Pending",
+                "Approved",
+                "In Transit",
+                "Partially Received",
+                "Completed",
+                "Canceled"
+              ]
+            },
+            "description": "Filter transfers by status"
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer",
+              "default": 1
+            },
+            "description": "Page number for pagination"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer",
+              "default": 10
+            },
+            "description": "Number of records per page"
+          },
+          {
+            "in": "query",
+            "name": "sort",
+            "schema": {
+              "type": "string",
+              "default": "-requestDate"
+            },
+            "description": "Sort fields (comma separated), prefix with - for descending order"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "transfers": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/InventoryTransfer"
+                          }
+                        },
+                        "pagination": {
+                          "$ref": "#/components/schemas/Pagination"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/inventory-transfers/status/{status}": {
+      "get": {
+        "tags": [
+          "Inventory Transfers"
+        ],
+        "summary": "Get transfers by status",
+        "description": "Retrieve inventory transfers with a specific status",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "status",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "Draft",
+                "Pending",
+                "Approved",
+                "In Transit",
+                "Partially Received",
+                "Completed",
+                "Canceled"
+              ]
+            },
+            "description": "Transfer status to filter by"
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer",
+              "default": 1
+            },
+            "description": "Page number for pagination"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer",
+              "default": 10
+            },
+            "description": "Number of records per page"
+          },
+          {
+            "in": "query",
+            "name": "sort",
+            "schema": {
+              "type": "string",
+              "default": "-requestDate"
+            },
+            "description": "Sort fields (comma separated), prefix with - for descending order"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "transfers": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/InventoryTransfer"
+                          }
+                        },
+                        "pagination": {
+                          "$ref": "#/components/schemas/Pagination"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/inventory-returns": {
+      "get": {
+        "tags": [
+          "Inventory Returns"
+        ],
+        "summary": "Get all inventory returns",
+        "description": "Retrieve a list of all inventory returns with optional filtering, sorting, and pagination",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "status",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "Draft",
+                "Pending",
+                "Approved",
+                "Completed",
+                "Rejected",
+                "Canceled"
+              ]
+            },
+            "description": "Filter returns by status"
+          },
+          {
+            "in": "query",
+            "name": "returnType",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "Customer Return",
+                "Supplier Return",
+                "Damaged Goods",
+                "Defective Product"
+              ]
+            },
+            "description": "Filter by return type"
+          },
+          {
+            "in": "query",
+            "name": "product",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by product ID"
+          },
+          {
+            "in": "query",
+            "name": "customer",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by customer ID (for customer returns)"
+          },
+          {
+            "in": "query",
+            "name": "supplier",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by supplier ID (for supplier returns)"
+          },
+          {
+            "in": "query",
+            "name": "warehouse",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by warehouse ID"
+          },
+          {
+            "in": "query",
+            "name": "referenceOrder",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by reference order ID"
+          },
+          {
+            "in": "query",
+            "name": "referencePurchase",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by reference purchase ID"
+          },
+          {
+            "in": "query",
+            "name": "fromDate",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "description": "Filter returns after this date (inclusive)"
+          },
+          {
+            "in": "query",
+            "name": "toDate",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "description": "Filter returns before this date (inclusive)"
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer",
+              "default": 1
+            },
+            "description": "Page number for pagination"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer",
+              "default": 10
+            },
+            "description": "Number of records per page"
+          },
+          {
+            "in": "query",
+            "name": "sort",
+            "schema": {
+              "type": "string",
+              "default": "-createdAt"
+            },
+            "description": "Sort fields (comma separated), prefix with - for descending order"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "returns": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/InventoryReturn"
+                          }
+                        },
+                        "pagination": {
+                          "$ref": "#/components/schemas/Pagination"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Inventory Returns"
+        ],
+        "summary": "Create a new inventory return",
+        "description": "Create a new inventory return record in the system",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InventoryReturnInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Inventory return created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/InventoryReturn"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/inventory-returns/{_id}": {
+      "get": {
+        "tags": [
+          "Inventory Returns"
+        ],
+        "summary": "Get inventory return by ID",
+        "description": "Retrieve inventory return details by MongoDB ID",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "MongoDB ID of the inventory return"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/InventoryReturn"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Inventory Returns"
+        ],
+        "summary": "Update inventory return",
+        "description": "Update inventory return details by MongoDB ID",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "MongoDB ID of the inventory return"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InventoryReturnUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Inventory return updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/InventoryReturn"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Inventory Returns"
+        ],
+        "summary": "Delete inventory return",
+        "description": "Delete an inventory return by MongoDB ID",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "MongoDB ID of the inventory return to delete"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Inventory return deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/inventory-returns/returnID/{returnID}": {
+      "get": {
+        "tags": [
+          "Inventory Returns"
+        ],
+        "summary": "Get inventory return by return ID",
+        "description": "Retrieve inventory return details by return ID (RET-XXXXX format)",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "returnID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^RET-\\d{5}$"
+            },
+            "description": "Return ID in RET-XXXXX format"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/InventoryReturn"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/inventory-returns/{_id}/approve": {
+      "put": {
+        "tags": [
+          "Inventory Returns"
+        ],
+        "summary": "Approve inventory return",
+        "description": "Approve an inventory return request and change its status to Approved",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "MongoDB ID of the inventory return to approve"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "notes": {
+                    "type": "string",
+                    "example": "Return approved after quality verification"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Inventory return approved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/InventoryReturn"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/inventory-returns/{_id}/complete": {
+      "put": {
+        "tags": [
+          "Inventory Returns"
+        ],
+        "summary": "Complete inventory return",
+        "description": "Mark an inventory return as completed and update inventory accordingly",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "MongoDB ID of the inventory return to complete"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "actualReturnedItems": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "product",
+                        "quantity",
+                        "condition"
+                      ],
+                      "properties": {
+                        "product": {
+                          "type": "string",
+                          "example": "67f8ec8aaf6bfc397a056b7f"
+                        },
+                        "quantity": {
+                          "type": "number",
+                          "example": 2
+                        },
+                        "condition": {
+                          "type": "string",
+                          "enum": [
+                            "Good",
+                            "Damaged",
+                            "Defective",
+                            "Expired"
+                          ],
+                          "example": "Good"
+                        },
+                        "notes": {
+                          "type": "string",
+                          "example": "Minor packaging damage"
+                        }
+                      }
+                    }
+                  },
+                  "notes": {
+                    "type": "string",
+                    "example": "All items received as expected"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Inventory return completed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/InventoryReturn"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/inventory-returns/status/{status}": {
+      "get": {
+        "tags": [
+          "Inventory Returns"
+        ],
+        "summary": "Get returns by status",
+        "description": "Retrieve inventory returns with a specific status",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "status",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "Draft",
+                "Pending",
+                "Approved",
+                "Completed",
+                "Rejected",
+                "Canceled"
+              ]
+            },
+            "description": "Return status to filter by"
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer",
+              "default": 1
+            },
+            "description": "Page number for pagination"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer",
+              "default": 10
+            },
+            "description": "Number of records per page"
+          },
+          {
+            "in": "query",
+            "name": "sort",
+            "schema": {
+              "type": "string",
+              "default": "-createdAt"
+            },
+            "description": "Sort fields (comma separated), prefix with - for descending order"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "returns": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/InventoryReturn"
+                          }
+                        },
+                        "pagination": {
+                          "$ref": "#/components/schemas/Pagination"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/inventory-returns/type/{returnType}": {
+      "get": {
+        "tags": [
+          "Inventory Returns"
+        ],
+        "summary": "Get returns by type",
+        "description": "Retrieve inventory returns of a specific type",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "returnType",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "Customer Return",
+                "Supplier Return",
+                "Damaged Goods",
+                "Defective Product"
+              ]
+            },
+            "description": "Return type to filter by"
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer",
+              "default": 1
+            },
+            "description": "Page number for pagination"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer",
+              "default": 10
+            },
+            "description": "Number of records per page"
+          },
+          {
+            "in": "query",
+            "name": "sort",
+            "schema": {
+              "type": "string",
+              "default": "-createdAt"
+            },
+            "description": "Sort fields (comma separated), prefix with - for descending order"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "returns": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/InventoryReturn"
+                          }
+                        },
+                        "pagination": {
+                          "$ref": "#/components/schemas/Pagination"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/inventory-adjustments": {
+      "get": {
+        "tags": [
+          "Inventory Adjustments"
+        ],
+        "summary": "Get all inventory adjustments",
+        "description": "Retrieve a list of all inventory adjustments with optional filtering, sorting, and pagination",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "status",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "Pending",
+                "Approved",
+                "Completed",
+                "Rejected",
+                "Canceled"
+              ]
+            },
+            "description": "Filter adjustments by status"
+          },
+          {
+            "in": "query",
+            "name": "adjustmentType",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "Quantity Correction",
+                "Inventory Count",
+                "Write-Off",
+                "Expired",
+                "Damaged"
+              ]
+            },
+            "description": "Filter by adjustment type"
+          },
+          {
+            "in": "query",
+            "name": "product",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by product ID"
+          },
+          {
+            "in": "query",
+            "name": "warehouse",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by warehouse ID"
+          },
+          {
+            "in": "query",
+            "name": "requestedBy",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by user who requested the adjustment"
+          },
+          {
+            "in": "query",
+            "name": "approvedBy",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by user who approved the adjustment"
+          },
+          {
+            "in": "query",
+            "name": "fromDate",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "description": "Filter adjustments after this date (inclusive)"
+          },
+          {
+            "in": "query",
+            "name": "toDate",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "description": "Filter adjustments before this date (inclusive)"
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer",
+              "default": 1
+            },
+            "description": "Page number for pagination"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer",
+              "default": 10
+            },
+            "description": "Number of records per page"
+          },
+          {
+            "in": "query",
+            "name": "sort",
+            "schema": {
+              "type": "string",
+              "default": "-createdAt"
+            },
+            "description": "Sort fields (comma separated), prefix with - for descending order"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "adjustments": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/InventoryAdjustment"
+                          }
+                        },
+                        "pagination": {
+                          "$ref": "#/components/schemas/Pagination"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Inventory Adjustments"
+        ],
+        "summary": "Create a new inventory adjustment",
+        "description": "Create a new inventory adjustment record in the system",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InventoryAdjustmentInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Inventory adjustment created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/InventoryAdjustment"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/inventory-adjustments/{_id}": {
+      "get": {
+        "tags": [
+          "Inventory Adjustments"
+        ],
+        "summary": "Get inventory adjustment by ID",
+        "description": "Retrieve inventory adjustment details by MongoDB ID",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "MongoDB ID of the inventory adjustment"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/InventoryAdjustment"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Inventory Adjustments"
+        ],
+        "summary": "Update inventory adjustment",
+        "description": "Update inventory adjustment details by MongoDB ID",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "MongoDB ID of the inventory adjustment"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InventoryAdjustmentUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Inventory adjustment updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/InventoryAdjustment"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Inventory Adjustments"
+        ],
+        "summary": "Delete inventory adjustment",
+        "description": "Delete an inventory adjustment by MongoDB ID",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "MongoDB ID of the inventory adjustment to delete"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Inventory adjustment deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/inventory-adjustments/adjustmentID/{adjustmentID}": {
+      "get": {
+        "tags": [
+          "Inventory Adjustments"
+        ],
+        "summary": "Get inventory adjustment by adjustment ID",
+        "description": "Retrieve inventory adjustment details by adjustment ID (ADJ-XXXXX format)",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "adjustmentID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^ADJ-\\d{5}$"
+            },
+            "description": "Adjustment ID in ADJ-XXXXX format"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/InventoryAdjustment"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/inventory-adjustments/{_id}/approve": {
+      "put": {
+        "tags": [
+          "Inventory Adjustments"
+        ],
+        "summary": "Approve inventory adjustment",
+        "description": "Approve an inventory adjustment request and change its status to Approved",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "MongoDB ID of the inventory adjustment to approve"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "notes": {
+                    "type": "string",
+                    "example": "Adjustment approved based on physical count verification"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Inventory adjustment approved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/InventoryAdjustment"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/inventory-adjustments/{_id}/complete": {
+      "put": {
+        "tags": [
+          "Inventory Adjustments"
+        ],
+        "summary": "Complete inventory adjustment",
+        "description": "Execute the inventory adjustment and update inventory quantities",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "MongoDB ID of the inventory adjustment to complete"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "notes": {
+                    "type": "string",
+                    "example": "Adjustment completed and inventory updated"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Inventory adjustment completed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/InventoryAdjustment"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/inventory-adjustments/status/{status}": {
+      "get": {
+        "tags": [
+          "Inventory Adjustments"
+        ],
+        "summary": "Get adjustments by status",
+        "description": "Retrieve inventory adjustments with a specific status",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "status",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "Pending",
+                "Approved",
+                "Completed",
+                "Rejected",
+                "Canceled"
+              ]
+            },
+            "description": "Adjustment status to filter by"
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer",
+              "default": 1
+            },
+            "description": "Page number for pagination"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer",
+              "default": 10
+            },
+            "description": "Number of records per page"
+          },
+          {
+            "in": "query",
+            "name": "sort",
+            "schema": {
+              "type": "string",
+              "default": "-createdAt"
+            },
+            "description": "Sort fields (comma separated), prefix with - for descending order"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "adjustments": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/InventoryAdjustment"
+                          }
+                        },
+                        "pagination": {
+                          "$ref": "#/components/schemas/Pagination"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/inventory-adjustments/type/{adjustmentType}": {
+      "get": {
+        "tags": [
+          "Inventory Adjustments"
+        ],
+        "summary": "Get adjustments by type",
+        "description": "Retrieve inventory adjustments of a specific type",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "adjustmentType",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "Quantity Correction",
+                "Inventory Count",
+                "Write-Off",
+                "Expired",
+                "Damaged"
+              ]
+            },
+            "description": "Adjustment type to filter by"
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer",
+              "default": 1
+            },
+            "description": "Page number for pagination"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer",
+              "default": 10
+            },
+            "description": "Number of records per page"
+          },
+          {
+            "in": "query",
+            "name": "sort",
+            "schema": {
+              "type": "string",
+              "default": "-createdAt"
+            },
+            "description": "Sort fields (comma separated), prefix with - for descending order"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "adjustments": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/InventoryAdjustment"
+                          }
+                        },
+                        "pagination": {
+                          "$ref": "#/components/schemas/Pagination"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
           },
           "500": {
             "$ref": "#/components/responses/ServerError"

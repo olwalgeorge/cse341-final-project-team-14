@@ -26,7 +26,8 @@ describe('Suppliers Service Tests', () => {
       state: 'Test State',
       postalCode: '12345',
       country: 'Test Country'
-    }
+    },
+    status: 'ACTIVE' // Added status field with current enum value
   };
 
   beforeEach(async () => {
@@ -56,6 +57,7 @@ describe('Suppliers Service Tests', () => {
       expect(result.name).toBe(supplierData.name);
       expect(result.contact.phone).toBe(supplierData.contact.phone);
       expect(result.contact.email).toBe(supplierData.contact.email);
+      expect(result.status).toBe(supplierData.status); // Check status
     });
 
     it('should throw an error if supplierID is missing', async () => {
@@ -104,7 +106,8 @@ describe('Suppliers Service Tests', () => {
         contact: {
           phone: '9876543210',
           email: 'updated@supplier.com'
-        }
+        },
+        status: 'INACTIVE' // Update with a different valid status
       };
       
       // Update supplier
@@ -114,6 +117,7 @@ describe('Suppliers Service Tests', () => {
       expect(result.name).toBe(updateData.name);
       expect(result.contact.phone).toBe(updateData.contact.phone);
       expect(result.contact.email).toBe(updateData.contact.email);
+      expect(result.status).toBe(updateData.status); // Check updated status
       // Original fields should remain unchanged
       expect(result.supplierID).toBe('SP-00003');
     });

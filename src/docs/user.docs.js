@@ -239,6 +239,33 @@ module.exports = {
     },
   },
   "/users/{_id}": {
+    get: {
+      tags: ["Users"],
+      summary: "Get user by ID",
+      description: "Retrieve user details by MongoDB ID",
+      security: [{ bearerAuth: [] }],
+      parameters: [
+        {
+          name: "_id",
+          in: "path",
+          required: true,
+          schema: { type: "string" },
+          description: "MongoDB ID of the user",
+        },
+      ],
+      responses: {
+        200: {
+          description: "User retrieved successfully",
+          content: {
+            "application/json": {
+              schema: { $ref: "#/components/schemas/Success" },
+            },
+          },
+        },
+        404: { $ref: "#/components/responses/NotFoundError" },
+        401: { $ref: "#/components/responses/UnauthorizedError" },
+      },
+    },
     put: {
       tags: ["Users"],
       summary: "Update user by MongoDB ID",

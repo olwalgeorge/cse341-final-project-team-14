@@ -17,7 +17,8 @@ describe('Suppliers Routes Tests', () => {
       state: 'Test State',
       postalCode: '12345',
       country: 'Test Country'
-    }
+    },
+    status: 'ACTIVE' // Added status field with current enum value
   };
 
   // Mock user for authentication
@@ -140,7 +141,8 @@ describe('Suppliers Routes Tests', () => {
           state: 'New State',
           postalCode: '54321',
           country: 'New Country'
-        }
+        },
+        status: 'ACTIVE' // Include status
       };
       
       // Make request
@@ -153,11 +155,13 @@ describe('Suppliers Routes Tests', () => {
       expect(response.status).toBe(201);
       expect(response.body.status).toBe('success');
       expect(response.body.data.name).toBe(newSupplier.name);
+      expect(response.body.data.status).toBe(newSupplier.status); // Check status in response
       expect(response.body.data.supplierID).toBe('SP-00001'); // From our mock
       
       // Verify supplier was created in database
       const savedSupplier = await Supplier.findOne({ name: newSupplier.name });
       expect(savedSupplier).toBeTruthy();
+      expect(savedSupplier.status).toBe(newSupplier.status); // Check status in DB
     });
 
     it('should return validation error for invalid data', async () => {
@@ -190,7 +194,8 @@ describe('Suppliers Routes Tests', () => {
         contact: {
           phone: '5555555555',
           email: 'updated@supplier.com'
-        }
+        },
+        status: 'INACTIVE' // Change status
       };
       
       // Make request
@@ -204,10 +209,12 @@ describe('Suppliers Routes Tests', () => {
       expect(response.body.status).toBe('success');
       expect(response.body.data.name).toBe(updateData.name);
       expect(response.body.data.contact.phone).toBe(updateData.contact.phone);
+      expect(response.body.data.status).toBe(updateData.status); // Check updated status
       
       // Verify database was updated
       const updatedSupplier = await Supplier.findById(supplier._id);
       expect(updatedSupplier.name).toBe(updateData.name);
+      expect(updatedSupplier.status).toBe(updateData.status); // Check status in DB
     });
   });
 

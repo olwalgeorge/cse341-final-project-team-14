@@ -163,12 +163,14 @@ describe('Suppliers Controller Tests', () => {
           state: 'New State',
           postalCode: '12345',
           country: 'New Country'
-        }
+        },
+        status: 'ACTIVE' // Include status
       };
       
       const createdSupplier = {
         _id: new mongoose.Types.ObjectId(),
         supplierID: 'SP-00001',
+        status: 'ACTIVE', // Include status
         ...supplierData
       };
       
@@ -239,7 +241,8 @@ describe('Suppliers Controller Tests', () => {
         contact: {
           phone: '9876543210',
           email: 'updated@supplier.com'
-        }
+        },
+        status: 'INACTIVE' // Include status update
       };
       
       const updatedSupplier = {
@@ -250,6 +253,7 @@ describe('Suppliers Controller Tests', () => {
           phone: '9876543210',
           email: 'updated@supplier.com'
         },
+        status: 'INACTIVE', // Include updated status
         address: {
           street: '123 Test St',
           city: 'Test City',

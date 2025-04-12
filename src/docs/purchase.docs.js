@@ -283,8 +283,8 @@ const purchaseRoutes = {
       security: [{ bearerAuth: [] }],
       parameters: [
         {
-          in: "path",
           name: "_id",
+          in: "path",
           required: true,
           schema: { type: "string" },
           description: "MongoDB ID of the purchase",

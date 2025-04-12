@@ -207,16 +207,16 @@ const supplierRoutes = {
       tags: ["Suppliers"],
       summary: "Get supplier by ID",
       description: "Retrieve supplier details by MongoDB ID",
-      security: [{ bearerAuth: [] }],
       parameters: [
         {
-          in: "path",
           name: "_id",
+          in: "path",
           required: true,
           schema: { type: "string" },
           description: "MongoDB ID of the supplier",
         },
       ],
+      security: [{ bearerAuth: [] }],
       responses: {
         200: {
           description: "Successful operation",

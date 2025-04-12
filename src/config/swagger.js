@@ -7,6 +7,12 @@ const supplierRoutes = require("../docs/supplier.docs");
 const orderRoutes = require("../docs/order.docs");
 const customerRoutes = require("../docs/customer.docs");
 const purchaseRoutes = require("../docs/purchase.docs");
+const inventoryRoutes = require("../docs/inventory.docs");
+const warehouseRoutes = require("../docs/warehouse.docs");
+const inventoryTransactionRoutes = require("../docs/inventoryTransaction.docs");
+const inventoryTransferRoutes = require("../docs/inventoryTransfer.docs");
+const inventoryReturnRoutes = require("../docs/inventoryReturn.docs");
+const inventoryAdjustmentRoutes = require("../docs/inventoryAdjustment.docs");
 const components = require("../docs/components");
 
 const swaggerConfig = {
@@ -41,6 +47,12 @@ const swaggerConfig = {
     { name: "Orders", description: "Order management endpoints" },
     { name: "Customers", description: "Customer management endpoints" },
     { name: "Purchases", description: "Purchase management endpoints" },
+    { name: "Inventory", description: "Inventory management endpoints" },
+    { name: "Warehouses", description: "Warehouse management endpoints" },
+    { name: "Inventory Transactions", description: "Inventory transaction endpoints" },
+    { name: "Inventory Transfers", description: "Inventory transfer endpoints" },
+    { name: "Inventory Returns", description: "Inventory return endpoints" },
+    { name: "Inventory Adjustments", description: "Inventory adjustment endpoints" },
   ],
   components: components,
   paths: {
@@ -51,6 +63,12 @@ const swaggerConfig = {
     ...orderRoutes,
     ...customerRoutes,
     ...purchaseRoutes,
+    ...inventoryRoutes,
+    ...warehouseRoutes,
+    ...inventoryTransactionRoutes,
+    ...inventoryTransferRoutes,
+    ...inventoryReturnRoutes,
+    ...inventoryAdjustmentRoutes,
   },
 };
 

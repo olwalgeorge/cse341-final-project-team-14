@@ -5,10 +5,11 @@ describe('User Model Tests', () => {
   const userData = {
     userID: 'SM-00001',
     username: 'testuser',
-    fullName: 'Test User', // Using fullName instead of firstName/lastName
+    fullName: 'Test User',
     email: 'test@example.com',
-    password: 'Test@123!', // Strong password with special character
-    role: 'ADMIN'
+    password: 'Test@123!',
+    role: 'ADMIN',
+    status: 'ACTIVE' // Added status field
   };
 
   it('should create a new user successfully', async () => {
@@ -18,11 +19,11 @@ describe('User Model Tests', () => {
     expect(savedUser._id).toBeDefined();
     expect(savedUser.userID).toBe(userData.userID);
     expect(savedUser.username).toBe(userData.username);
-    expect(savedUser.fullName).toBe(userData.fullName); // Check fullName instead of firstName/lastName
+    expect(savedUser.fullName).toBe(userData.fullName);
     expect(savedUser.email).toBe(userData.email);
-    // Password should be hashed
     expect(savedUser.password).not.toBe(userData.password);
     expect(savedUser.role).toBe(userData.role);
+    expect(savedUser.status).toBe(userData.status); // Check status
   });
 
   it('should fail to create a user without required fields', async () => {
@@ -91,5 +92,52 @@ describe('User Model Tests', () => {
     });
     
     expect(userWithoutRole.role).toBe('USER'); // Default role is USER not CUSTOMER
+  });
+
+  it('should correctly set the default status if not provided', async () => {
+    const userWithoutStatus = new User({
+      ...userData,
+      status: undefined
+    });
+    
+    expect(userWithoutStatus.status).toBe('ACTIVE'); // Default status is ACTIVE
+  });
+
+  it('should reject invalid status value', async () => {
+    const userWithInvalidStatus = new User({
+      ...userData,
+      status: 'INVALID_STATUS'
+    });
+    
+    let error;
+    try {
+      await userWithInvalidStatus.validate();
+    } catch (err) {
+      error = err;
+    }
+    
+    expect(error).toBeDefined();
+    expect(error.errors.status).toBeDefined();
+  });
+
+  it('should accept all valid status values', async () => {
+    // Test each valid status value
+    const validStatuses = ['ACTIVE', 'INACTIVE', 'SUSPENDED', 'PENDING'];
+    
+    for (const status of validStatuses) {
+      const user = new User({
+        ...userData,
+        status
+      });
+      
+      let error;
+      try {
+        await user.validate();
+      } catch (err) {
+        error = err;
+      }
+      
+      expect(error).toBeUndefined();
+    }
   });
 });
