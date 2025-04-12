@@ -1,0 +1,153 @@
+@baseUrl = http://localhost:3000
+@token = your_auth_token_here
+
+### Get All Warehouses
+GET {{baseUrl}}/warehouses
+Authorization: Bearer {{token}}
+
+### Get Warehouses with Basic Filtering
+GET {{baseUrl}}/warehouses?name=Distribution&status=Active
+Authorization: Bearer {{token}}
+
+### Get Warehouses with Pagination
+GET {{baseUrl}}/warehouses?page=1&limit=10
+Authorization: Bearer {{token}}
+
+### Get Warehouses with Sorting (by capacity descending)
+GET {{baseUrl}}/warehouses?sort=-capacity
+Authorization: Bearer {{token}}
+
+### Get Warehouses with Sorting (by name and then status)
+GET {{baseUrl}}/warehouses?sort=name,status
+Authorization: Bearer {{token}}
+
+### Filter Warehouses by Address
+GET {{baseUrl}}/warehouses?city=Atlanta&country=USA
+Authorization: Bearer {{token}}
+
+### Filter Warehouses by Capacity Range
+GET {{baseUrl}}/warehouses?minCapacity=10000&maxCapacity=100000
+Authorization: Bearer {{token}}
+
+### Filter Warehouses by Contact Information
+GET {{baseUrl}}/warehouses?contactName=John&contactEmail=john
+Authorization: Bearer {{token}}
+
+### Combined Filtering, Sorting and Pagination
+GET {{baseUrl}}/warehouses?name=Distribution&status=Active&city=Atlanta&sort=capacity,-createdAt&page=1&limit=10
+Authorization: Bearer {{token}}
+
+### Get Warehouse by MongoDB ID
+GET {{baseUrl}}/warehouses/67f8e3c85b1777f2f72ac8e9
+Authorization: Bearer {{token}}
+
+### Get Warehouse by Warehouse ID
+GET {{baseUrl}}/warehouses/warehouseID/WH-00001
+Authorization: Bearer {{token}}
+
+### Get Warehouse by Name
+GET {{baseUrl}}/warehouses/name/East%20Distribution%20Center
+Authorization: Bearer {{token}}
+
+### Search Warehouses
+GET {{baseUrl}}/warehouses/search?term=distribution
+Authorization: Bearer {{token}}
+
+### Create New Warehouse
+POST {{baseUrl}}/warehouses
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "East Sales Warehouse",
+  "description": "Primary sales warehouse for eastern region",
+  "capacity": 30000,
+  "capacityUnit": "sqft",
+  "status": "Active",
+  "contact": {
+    "name": "John Sales",
+    "phone": "5555555556",
+    "email": "john.sales@example.com"
+  },
+  "address": {
+    "street": "456 Sales Drive",
+    "city": "New York City",
+    "state": "NY",
+    "postalCode": "10021",
+    "country": "USA"
+  }
+}
+
+### Update Warehouse Basic Information
+PUT {{baseUrl}}/warehouses/67f8e3c85b1777f2f72ac8e9
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "description": "Updated description for East Distribution Center",
+  "status": "Active"
+}
+
+### Update Warehouse Contact Information
+PUT {{baseUrl}}/warehouses/67f8e3c85b1777f2f72ac8e9
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "contact": {
+    "name": "Michael Roberts",
+    "phone": "5551234567",
+    "email": "michael.roberts@example.com"
+  }
+}
+
+### Update Warehouse Address
+PUT {{baseUrl}}/warehouses/67f8e3c85b1777f2f72ac8e9
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "address": {
+    "street": "789 Distribution Parkway",
+    "city": "Atlanta",
+    "state": "GA",
+    "postalCode": "30301",
+    "country": "USA"
+  }
+}
+
+### Update Warehouse Capacity
+PUT {{baseUrl}}/warehouses/67f8e3c85b1777f2f72ac8e9
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "capacity": 65000,
+  "capacityUnit": "sqft"
+}
+
+### Change Warehouse Status to Maintenance
+PUT {{baseUrl}}/warehouses/67f8e3c85b1777f2f72ac8e9
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "status": "Maintenance"
+}
+
+### Change Warehouse Status to Inactive
+PUT {{baseUrl}}/warehouses/67f8e3c85b1777f2f72ac8e9
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "status": "Inactive"
+}
+
+### Delete Warehouse
+DELETE {{baseUrl}}/warehouses/67f8e3c85b1777f2f72ac8e9
+Authorization: Bearer {{token}}
+
+### Delete All Warehouses (USE WITH CAUTION)
+DELETE {{baseUrl}}/warehouses
+Authorization: Bearer {{token}}

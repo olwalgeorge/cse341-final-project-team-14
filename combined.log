@@ -7318,3 +7318,46 @@ Error: Customer not found
 2025-04-12 18:47:00 INFO [inventory-api]: MongoDB Connected: cluster0-shard-00-00.wncfx.mongodb.net 
 2025-04-12 19:03:17 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
 2025-04-12 19:03:21 INFO [inventory-api]: MongoDB Connected: cluster0-shard-00-02.wncfx.mongodb.net 
+2025-04-12 19:17:22 DEBUG [inventory-api]: Deserialized user: superadmin (67fa5b9be15046592d0ce2d7) 
+2025-04-12 19:17:22 DEBUG [inventory-api]: Session: 
+2025-04-12 19:17:22 DEBUG [inventory-api]: Auth check: 
+2025-04-12 19:17:22 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 19:17:22 INFO [inventory-api]: getAllWarehouses called 
+2025-04-12 19:17:35 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-12 19:17:38 INFO [inventory-api]: MongoDB Connected: cluster0-shard-00-01.wncfx.mongodb.net 
+2025-04-12 19:18:40 DEBUG [inventory-api]: Deserialized user: superadmin (67fa5b9be15046592d0ce2d7) 
+2025-04-12 19:18:40 DEBUG [inventory-api]: Session: 
+2025-04-12 19:18:40 DEBUG [inventory-api]: Auth check: 
+2025-04-12 19:18:40 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 19:18:40 INFO [inventory-api]: getWarehouseById called with ID: 67f8e3c85b1777f2f72ac8e9 
+2025-04-12 19:18:40 DEBUG [inventory-api]: getWarehouseByIdService called with warehouse_Id: 67f8e3c85b1777f2f72ac8e9 
+2025-04-12 19:18:45 DEBUG [inventory-api]: Deserialized user: superadmin (67fa5b9be15046592d0ce2d7) 
+2025-04-12 19:18:45 DEBUG [inventory-api]: Session: 
+2025-04-12 19:18:45 DEBUG [inventory-api]: Auth check: 
+2025-04-12 19:18:45 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 19:18:45 INFO [inventory-api]: getWarehouseByWarehouseID called with warehouse ID: WH-00001 
+2025-04-12 19:18:45 DEBUG [inventory-api]: getWarehouseByWarehouseIDService called with warehouseID: WH-00001 
+2025-04-12 19:19:07 DEBUG [inventory-api]: Deserialized user: superadmin (67fa5b9be15046592d0ce2d7) 
+2025-04-12 19:19:07 DEBUG [inventory-api]: Session: 
+2025-04-12 19:19:07 DEBUG [inventory-api]: Auth check: 
+2025-04-12 19:19:07 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 19:19:07 INFO [inventory-api]: getWarehouseByName called with name: East Distribution Center 
+2025-04-12 19:19:07 DEBUG [inventory-api]: getWarehouseByNameService called with name: East Distribution Center 
+2025-04-12 19:22:54 DEBUG [inventory-api]: Deserialized user: superadmin (67fa5b9be15046592d0ce2d7) 
+2025-04-12 19:22:54 DEBUG [inventory-api]: Session: 
+2025-04-12 19:22:54 DEBUG [inventory-api]: Auth check: 
+2025-04-12 19:22:54 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 19:22:54 INFO [inventory-api]: createWarehouse called 
+2025-04-12 19:22:54 DEBUG [inventory-api]: Request body: 
+2025-04-12 19:22:55 DEBUG [inventory-api]: Generated warehouse ID: WH-00002 
+2025-04-12 19:22:55 DEBUG [inventory-api]: Warehouse data with generated ID: 
+2025-04-12 19:22:55 DEBUG [inventory-api]: createWarehouseService called with data: 
+2025-04-12 19:24:02 DEBUG [inventory-api]: Deserialized user: superadmin (67fa5b9be15046592d0ce2d7) 
+2025-04-12 19:24:02 DEBUG [inventory-api]: Session: 
+2025-04-12 19:24:02 DEBUG [inventory-api]: Auth check: 
+2025-04-12 19:24:02 INFO [inventory-api]: User superadmin is authenticated 
+2025-04-12 19:24:02 INFO [inventory-api]: createWarehouse called 
+2025-04-12 19:24:02 DEBUG [inventory-api]: Request body: 
+2025-04-12 19:24:02 DEBUG [inventory-api]: Generated warehouse ID: WH-00003 
+2025-04-12 19:24:02 DEBUG [inventory-api]: Warehouse data with generated ID: 
+2025-04-12 19:24:02 DEBUG [inventory-api]: createWarehouseService called with data: 
