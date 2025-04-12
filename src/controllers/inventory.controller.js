@@ -19,19 +19,21 @@ const { transformInventory, generateInventoryId } = require("../utils/inventory.
 /**
  * @desc    Get all inventory items
  * @route   GET /inventory
- * @access  Private
+ * @access  Public
  */
 const getAllInventory = asyncHandler(async (req, res, next) => {
   logger.info("getAllInventory called");
+  logger.debug("Query parameters:", req.query);
+  
   try {
     const result = await getAllInventoryService(req.query);
-    const transformedInventory = result.inventory.map(transformInventory);
+    
     sendResponse(
       res,
       200,
       "Inventory items retrieved successfully",
       {
-        inventory: transformedInventory,
+        inventory: result.inventoryItems,
         pagination: result.pagination
       }
     );
@@ -103,33 +105,32 @@ const getInventoryByInventoryID = asyncHandler(async (req, res, next) => {
 /**
  * @desc    Get inventory items by warehouse
  * @route   GET /inventory/warehouse/:warehouseId
- * @access  Private
+ * @access  Public
  */
 const getInventoryByWarehouse = asyncHandler(async (req, res, next) => {
-  logger.info(
-    `getInventoryByWarehouse called with warehouse ID: ${req.params.warehouseId}`
-  );
+  logger.info(`getInventoryByWarehouse called with warehouse ID: ${req.params.warehouseId}`);
+  
   try {
-    const inventory = await getInventoryByWarehouseService(
-      req.params.warehouseId
-    );
-    if (inventory && inventory.length > 0) {
-      const transformedInventory = inventory.map(transformInventory);
-      sendResponse(
-        res,
-        200,
-        "Inventory items retrieved successfully",
-        transformedInventory
-      );
-    } else {
-      // Return empty array instead of 404 for empty results
-      sendResponse(res, 200, "No inventory items found for this warehouse", []);
+    const result = await getInventoryByWarehouseService(req.params.warehouseId, req.query);
+    
+    if (!result.inventoryItems.length) {
+      return sendResponse(res, 200, "No inventory items found for this warehouse", {
+        inventory: [],
+        pagination: result.pagination
+      });
     }
-  } catch (error) {
-    logger.error(
-      `Error retrieving inventory items for warehouse: ${req.params.warehouseId}`,
-      error
+    
+    sendResponse(
+      res,
+      200,
+      "Inventory items retrieved successfully",
+      {
+        inventory: result.inventoryItems,
+        pagination: result.pagination
+      }
     );
+  } catch (error) {
+    logger.error(`Error retrieving inventory for warehouse ID: ${req.params.warehouseId}`, error);
     next(error);
   }
 });
@@ -137,63 +138,65 @@ const getInventoryByWarehouse = asyncHandler(async (req, res, next) => {
 /**
  * @desc    Get inventory items by product
  * @route   GET /inventory/product/:productId
- * @access  Private
+ * @access  Public
  */
 const getInventoryByProduct = asyncHandler(async (req, res, next) => {
-  logger.info(
-    `getInventoryByProduct called with product ID: ${req.params.productId}`
-  );
+  logger.info(`getInventoryByProduct called with product ID: ${req.params.productId}`);
+  
   try {
-    const inventory = await getInventoryByProductService(
-      req.params.productId
-    );
-    if (inventory && inventory.length > 0) {
-      const transformedInventory = inventory.map(transformInventory);
-      sendResponse(
-        res,
-        200,
-        "Inventory items retrieved successfully",
-        transformedInventory
-      );
-    } else {
-      // Return empty array instead of 404 for empty results
-      sendResponse(res, 200, "No inventory items found for this product", []);
+    const result = await getInventoryByProductService(req.params.productId, req.query);
+    
+    if (!result.inventoryItems.length) {
+      return sendResponse(res, 200, "No inventory items found for this product", {
+        inventory: [],
+        pagination: result.pagination
+      });
     }
-  } catch (error) {
-    logger.error(
-      `Error retrieving inventory items for product: ${req.params.productId}`,
-      error
+    
+    sendResponse(
+      res,
+      200,
+      "Inventory items retrieved successfully",
+      {
+        inventory: result.inventoryItems,
+        pagination: result.pagination
+      }
     );
+  } catch (error) {
+    logger.error(`Error retrieving inventory for product ID: ${req.params.productId}`, error);
     next(error);
   }
 });
 
 /**
  * @desc    Get inventory items by stock status
- * @route   GET /inventory/status/:status
- * @access  Private
+ * @route   GET /inventory/status/:stockStatus
+ * @access  Public
  */
 const getInventoryByStockStatus = asyncHandler(async (req, res, next) => {
-  logger.info(`getInventoryByStockStatus called with status: ${req.params.status}`);
+  logger.info(`getInventoryByStockStatus called with status: ${req.params.stockStatus}`);
+  
   try {
-    const inventory = await getInventoryByStockStatusService(req.params.status);
-    if (inventory && inventory.length > 0) {
-      const transformedInventory = inventory.map(transformInventory);
-      sendResponse(
-        res,
-        200,
-        "Inventory items retrieved successfully",
-        transformedInventory
-      );
-    } else {
-      // Return empty array instead of 404 for empty results
-      sendResponse(res, 200, "No inventory items found with this status", []);
+    const result = await getInventoryByStockStatusService(req.params.stockStatus, req.query);
+    
+    if (!result.inventoryItems.length) {
+      return sendResponse(res, 200, `No inventory items found with status: ${req.params.stockStatus}`, {
+        inventory: [],
+        pagination: result.pagination
+      });
     }
-  } catch (error) {
-    logger.error(
-      `Error retrieving inventory items with status: ${req.params.status}`,
-      error
+    
+    sendResponse(
+      res,
+      200,
+      "Inventory items retrieved successfully",
+      {
+        inventory: result.inventoryItems,
+        pagination: result.pagination
+      }
     );
+  } catch (error) {
+    logger.error(`Error retrieving inventory with status: ${req.params.stockStatus}`, error);
     next(error);
   }
 });

@@ -7294,3 +7294,23 @@ Error: Customer not found
 2025-04-12 16:25:24 DEBUG [inventory-api]: Query parameters: 
 2025-04-12 16:25:24 DEBUG [inventory-api]: getAllPurchasesService called with query: 
 2025-04-12 16:25:24 DEBUG [inventory-api]: Built filter: 
+2025-04-12 16:30:00 DEBUG [inventory-api]: Deserialized user: superadmin (67fa5b9be15046592d0ce2d7) 
+2025-04-12 16:30:00 DEBUG [inventory-api]: Session: 
+2025-04-12 16:30:00 INFO [inventory-api]: getAllInventory called 
+2025-04-12 16:30:13 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-12 16:30:16 INFO [inventory-api]: MongoDB Connected: cluster0-shard-00-02.wncfx.mongodb.net 
+2025-04-12 16:31:00 DEBUG [inventory-api]: Deserialized user: superadmin (67fa5b9be15046592d0ce2d7) 
+2025-04-12 16:31:00 DEBUG [inventory-api]: Session: 
+2025-04-12 16:31:00 INFO [inventory-api]: getAllInventory called 
+2025-04-12 16:31:00 DEBUG [inventory-api]: Query parameters: 
+2025-04-12 16:31:00 DEBUG [inventory-api]: getAllInventoryService called with query: 
+2025-04-12 16:31:00 DEBUG [inventory-api]: Built filter: 
+2025-04-12 16:32:07 DEBUG [inventory-api]: Deserialized user: superadmin (67fa5b9be15046592d0ce2d7) 
+2025-04-12 16:32:07 DEBUG [inventory-api]: Session: 
+2025-04-12 16:32:07 INFO [inventory-api]: getAllInventory called 
+2025-04-12 16:32:07 DEBUG [inventory-api]: Query parameters: 
+2025-04-12 16:32:07 DEBUG [inventory-api]: getAllInventoryService called with query: 
+2025-04-12 16:32:07 DEBUG [inventory-api]: Built filter: 
+2025-04-12 16:32:21 DEBUG [inventory-api]: Deserialized user: superadmin (67fa5b9be15046592d0ce2d7) 
+2025-04-12 16:32:21 DEBUG [inventory-api]: Session: 
+2025-04-12 16:32:21 INFO [inventory-api]: getInventoryById called with ID: 67f8f19c967f8b21cb2ae9c5 

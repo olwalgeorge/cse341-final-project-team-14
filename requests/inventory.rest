@@ -1,0 +1,94 @@
+@baseUrl = http://localhost:3000
+@token = your_auth_token_here
+
+### Get All Inventory Items
+GET {{baseUrl}}/inventory
+
+### Get Inventory Items with Pagination
+GET {{baseUrl}}/inventory?page=1&limit=10
+
+### Get Inventory Items with Sorting (ascending by inventoryID)
+GET {{baseUrl}}/inventory?sort=inventoryID
+
+### Get Inventory Items with Sorting (descending by quantity)
+GET {{baseUrl}}/inventory?sort=-quantity
+
+### Get Inventory Items with Multiple Sorting Criteria
+GET {{baseUrl}}/inventory?sort=warehouse,-quantity
+
+### Filter Inventory Items by Warehouse
+GET {{baseUrl}}/inventory?warehouse=67f8e3c85b1777f2f72ac8e9
+
+### Filter Inventory Items by Product
+GET {{baseUrl}}/inventory?product=67f8ec8aaf6bfc397a056b7f
+
+### Filter Inventory Items by Stock Status
+GET {{baseUrl}}/inventory?stockStatus=Low%20Stock
+
+### Filter Inventory Items by Quantity Range
+GET {{baseUrl}}/inventory?minQuantity=5&maxQuantity=20
+
+### Filter Inventory Items by Location
+GET {{baseUrl}}/inventory?locationAisle=A5&locationRack=R3
+
+### Filter Inventory Items by Last Stock Check Date Range
+GET {{baseUrl}}/inventory?fromDate=2023-01-01&toDate=2023-12-31
+
+### Combined Filtering, Sorting and Pagination
+GET {{baseUrl}}/inventory?warehouse=67f8e3c85b1777f2f72ac8e9&stockStatus=Low%20Stock&sort=-quantity&page=1&limit=5
+
+### Get Inventory Item by MongoDB ID
+GET {{baseUrl}}/inventory/67f8f19c967f8b21cb2ae9c5
+
+### Get Inventory Item by Inventory ID
+GET {{baseUrl}}/inventory/inventoryID/IN-00001
+
+### Get Inventory Items by Warehouse with Pagination and Sorting
+GET {{baseUrl}}/inventory/warehouse/67f8e3c85b1777f2f72ac8e9?page=1&limit=5&sort=-quantity
+
+### Get Inventory Items by Product with Pagination and Sorting
+GET {{baseUrl}}/inventory/product/67f8ec8aaf6bfc397a056b7f?page=1&limit=5&sort=warehouse
+
+### Get Inventory Items by Stock Status with Pagination and Sorting
+GET {{baseUrl}}/inventory/status/Low%20Stock?page=1&limit=5&sort=inventoryID
+
+### Create New Inventory Item (Requires Authentication)
+POST {{baseUrl}}/inventory
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "product": "67f8ec8aaf6bfc397a056b7f",
+  "warehouse": "67f8e3c85b1777f2f72ac8e9",
+  "quantity": 10,
+  "minStockLevel": 5,
+  "maxStockLevel": 50,
+  "location": {
+    "aisle": "A5",
+    "rack": "R3",
+    "bin": "B12"
+  },
+  "notes": "Main stock location for laptops"
+}
+
+### Update Inventory Item (Requires Authentication)
+PUT {{baseUrl}}/inventory/67f8f19c967f8b21cb2ae9c5
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "quantity": 15,
+  "location": {
+    "aisle": "A6",
+    "rack": "R4"
+  },
+  "lastStockCheck": "2023-07-15T10:00:00Z"
+}
+
+### Delete Inventory Item (Requires Authentication)
+DELETE {{baseUrl}}/inventory/67f8f19c967f8b21cb2ae9c5
+Authorization: Bearer {{token}}
+
+### Delete All Inventory Items (Requires Authentication)
+DELETE {{baseUrl}}/inventory
+Authorization: Bearer {{token}}
