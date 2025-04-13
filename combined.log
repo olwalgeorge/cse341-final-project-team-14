@@ -7589,3 +7589,152 @@ Error: Test error
     at Object.worker (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\jest-runner\build\testWorker.js:106:12)
 2025-04-12 23:27:04 DEBUG [inventory-api]: Generated inventory ID: IN-00003 
 2025-04-12 23:27:04 DEBUG [inventory-api]: Generated inventory ID: IN-00001 
+2025-04-13 11:42:16 DEBUG [inventory-api]: getUserByIdService called with ID: 67fb78e8d9e481ae1f473d5f 
+2025-04-13 11:42:17 DEBUG [inventory-api]: getUserByIdService called with ID: 67fb78e9d9e481ae1f473d70 
+2025-04-13 11:42:17 DEBUG [inventory-api]: getUserByUserIdService called with userID: SM-00001 
+2025-04-13 11:42:17 DEBUG [inventory-api]: getUserByUserIdService called with userID: SM-99999 
+2025-04-13 11:42:17 DEBUG [inventory-api]: updateUserProfileService called with ID: 67fb78e9d9e481ae1f473d84 
+2025-04-13 11:42:18 DEBUG [inventory-api]: updateUserProfileService called with ID: 67fb78ead9e481ae1f473d92 
+2025-04-13 11:42:18 DEBUG [inventory-api]: getUsersByRoleService called with role: ADMIN 
+2025-04-13 11:42:18 DEBUG [inventory-api]: getUsersByRoleService called with role: USER 
+2025-04-13 11:42:19 DEBUG [inventory-api]: searchUsersService called with term: admin 
+2025-04-13 11:42:19 DEBUG [inventory-api]: searchUsersService called with term: nonexistent 
+2025-04-13 11:42:19 DEBUG [inventory-api]: getAllUsersService called with query: 
+2025-04-13 11:42:19 DEBUG [inventory-api]: Built filter: 
+2025-04-13 11:42:19 DEBUG [inventory-api]: getAllUsersService called with query: 
+2025-04-13 11:42:19 DEBUG [inventory-api]: Built filter: 
+2025-04-13 11:44:01 DEBUG [inventory-api]: getUserByIdService called with ID: 67fb795049b3ed99ec90f848 
+2025-04-13 11:44:01 DEBUG [inventory-api]: getUserByIdService called with ID: 67fb795149b3ed99ec90f859 
+2025-04-13 11:44:01 DEBUG [inventory-api]: getUserByUserIdService called with userID: SM-00001 
+2025-04-13 11:44:01 DEBUG [inventory-api]: getUserByUserIdService called with userID: SM-99999 
+2025-04-13 11:44:02 DEBUG [inventory-api]: updateUserProfileService called with ID: 67fb795149b3ed99ec90f86d 
+2025-04-13 11:44:02 DEBUG [inventory-api]: updateUserProfileService called with ID: 67fb795249b3ed99ec90f87b 
+2025-04-13 11:44:02 DEBUG [inventory-api]: getUsersByRoleService called with role: ADMIN 
+2025-04-13 11:44:03 DEBUG [inventory-api]: getUsersByRoleService called with role: USER 
+2025-04-13 11:44:03 DEBUG [inventory-api]: searchUsersService called with term: admin 
+2025-04-13 11:44:03 DEBUG [inventory-api]: searchUsersService called with term: nonexistent 
+2025-04-13 11:44:03 DEBUG [inventory-api]: getAllUsersService called with query: 
+2025-04-13 11:44:03 DEBUG [inventory-api]: Built filter: 
+2025-04-13 11:44:04 DEBUG [inventory-api]: getAllUsersService called with query: 
+2025-04-13 11:44:04 DEBUG [inventory-api]: Built filter: 
+2025-04-13 11:45:47 DEBUG [inventory-api]: getUserByIdService called with ID: 67fb79ba3c8ff348e67d78aa 
+2025-04-13 11:45:47 DEBUG [inventory-api]: getUserByIdService called with ID: 67fb79bb3c8ff348e67d78bb 
+2025-04-13 11:45:47 DEBUG [inventory-api]: getUserByUserIdService called with userID: SM-00001 
+2025-04-13 11:45:48 DEBUG [inventory-api]: getUserByUserIdService called with userID: SM-99999 
+2025-04-13 11:45:48 DEBUG [inventory-api]: updateUserProfileService called with ID: 67fb79bc3c8ff348e67d78cf 
+2025-04-13 11:45:48 DEBUG [inventory-api]: updateUserProfileService called with ID: 67fb79bc3c8ff348e67d78dd 
+2025-04-13 11:45:48 DEBUG [inventory-api]: getUsersByRoleService called with role: ADMIN 
+2025-04-13 11:45:49 DEBUG [inventory-api]: getUsersByRoleService called with role: USER 
+2025-04-13 11:45:49 DEBUG [inventory-api]: searchUsersService called with term: admin 
+2025-04-13 11:45:49 DEBUG [inventory-api]: searchUsersService called with term: nonexistent 
+2025-04-13 11:45:50 DEBUG [inventory-api]: getAllUsersService called with query: 
+2025-04-13 11:45:50 DEBUG [inventory-api]: Built filter: 
+2025-04-13 11:45:50 DEBUG [inventory-api]: getAllUsersService called with query: 
+2025-04-13 11:45:50 DEBUG [inventory-api]: Built filter: 
+2025-04-13 11:46:17 DEBUG [inventory-api]: getUserByIdService called with ID: 67fb79d92311035ff8521d45 
+2025-04-13 11:46:18 DEBUG [inventory-api]: getUserByIdService called with ID: 67fb79da2311035ff8521d56 
+2025-04-13 11:46:18 DEBUG [inventory-api]: getUserByUserIdService called with userID: SM-00001 
+2025-04-13 11:46:18 DEBUG [inventory-api]: getUserByUserIdService called with userID: SM-99999 
+2025-04-13 11:46:18 DEBUG [inventory-api]: updateUserProfileService called with ID: 67fb79da2311035ff8521d6a 
+2025-04-13 11:46:19 DEBUG [inventory-api]: updateUserProfileService called with ID: 67fb79db2311035ff8521d78 
+2025-04-13 11:46:19 DEBUG [inventory-api]: getUsersByRoleService called with role: ADMIN 
+2025-04-13 11:46:19 DEBUG [inventory-api]: getUsersByRoleService called with role: USER 
+2025-04-13 11:46:20 DEBUG [inventory-api]: searchUsersService called with term: admin 
+2025-04-13 11:46:20 DEBUG [inventory-api]: searchUsersService called with term: nonexistent 
+2025-04-13 11:46:20 DEBUG [inventory-api]: getAllUsersService called with query: 
+2025-04-13 11:46:20 DEBUG [inventory-api]: Built filter: 
+2025-04-13 11:46:20 DEBUG [inventory-api]: getAllUsersService called with query: 
+2025-04-13 11:46:20 DEBUG [inventory-api]: Built filter: 
+2025-04-13 11:47:20 DEBUG [inventory-api]: getUserByIdService called with ID: 67fb7a18d7bcfc4514d210bd 
+2025-04-13 11:47:20 DEBUG [inventory-api]: getUserByIdService called with ID: 67fb7a18d7bcfc4514d210ce 
+2025-04-13 11:47:21 DEBUG [inventory-api]: getUserByUserIdService called with userID: SM-00001 
+2025-04-13 11:47:21 DEBUG [inventory-api]: getUserByUserIdService called with userID: SM-99999 
+2025-04-13 11:47:21 DEBUG [inventory-api]: updateUserProfileService called with ID: 67fb7a19d7bcfc4514d210e2 
+2025-04-13 11:47:21 DEBUG [inventory-api]: updateUserProfileService called with ID: 67fb7a19d7bcfc4514d210f0 
+2025-04-13 11:47:22 DEBUG [inventory-api]: getUsersByRoleService called with role: ADMIN 
+2025-04-13 11:47:22 DEBUG [inventory-api]: getUsersByRoleService called with role: USER 
+2025-04-13 11:47:22 DEBUG [inventory-api]: searchUsersService called with term: admin 
+2025-04-13 11:47:23 DEBUG [inventory-api]: searchUsersService called with term: nonexistent 
+2025-04-13 11:47:23 DEBUG [inventory-api]: getAllUsersService called with query: 
+2025-04-13 11:47:23 DEBUG [inventory-api]: Built filter: 
+2025-04-13 11:47:23 DEBUG [inventory-api]: getAllUsersService called with query: 
+2025-04-13 11:47:23 DEBUG [inventory-api]: Built filter: 
+2025-04-13 11:58:58 INFO [inventory-api]: getUserProfile called for user testuser (ID: 67fb7cd19fd301fdabdcc4ba, userID: SM-00001) 
+2025-04-13 11:58:58 DEBUG [inventory-api]: getUserByIdService called with ID: 67fb7cd19fd301fdabdcc4ba 
+2025-04-13 11:58:58 WARN [inventory-api]: User found in session but not in database: 67fb7cd19fd301fdabdcc4ba 
+2025-04-13 11:58:58 INFO [inventory-api]: getAllUsers called 
+2025-04-13 11:58:58 DEBUG [inventory-api]: Query parameters: 
+2025-04-13 11:58:58 DEBUG [inventory-api]: getAllUsersService called with query: 
+2025-04-13 11:58:58 DEBUG [inventory-api]: Built filter: 
+2025-04-13 11:58:58 INFO [inventory-api]: getAllUsers called 
+2025-04-13 11:58:58 DEBUG [inventory-api]: Query parameters: 
+2025-04-13 11:58:58 DEBUG [inventory-api]: getAllUsersService called with query: 
+2025-04-13 11:58:58 DEBUG [inventory-api]: Built filter: 
+2025-04-13 11:58:58 INFO [inventory-api]: getUsersByRole called with role: ADMIN 
+2025-04-13 11:58:58 DEBUG [inventory-api]: getUsersByRoleService called with role: ADMIN 
+2025-04-13 11:58:58 INFO [inventory-api]: getUsersByRole called with role: SUPERADMIN 
+2025-04-13 11:58:58 DEBUG [inventory-api]: getUsersByRoleService called with role: SUPERADMIN 
+2025-04-13 11:58:59 INFO [inventory-api]: getUserById called with ID: SM-00002 
+2025-04-13 11:58:59 DEBUG [inventory-api]: Request body: 
+2025-04-13 11:58:59 DEBUG [inventory-api]: getUserByUserIdService called with userID: SM-00002 
+2025-04-13 11:58:59 INFO [inventory-api]: getUserById called with ID: SM-99999 
+2025-04-13 11:58:59 DEBUG [inventory-api]: Request body: 
+2025-04-13 11:58:59 DEBUG [inventory-api]: getUserByUserIdService called with userID: SM-99999 
+2025-04-13 11:58:59 INFO [inventory-api]: getUserByUsername called with username: testadmin 
+2025-04-13 11:58:59 INFO [inventory-api]: getUserByEmail called with email: user@example.com 
+2025-04-13 11:58:59 INFO [inventory-api]: updateUserProfile called for user testuser (ID: 67fb7cd39fd301fdabdcc500, userID: SM-00001) 
+2025-04-13 11:58:59 DEBUG [inventory-api]: Request body: 
+2025-04-13 11:58:59 DEBUG [inventory-api]: updateUserProfileService called with ID: 67fb7cd39fd301fdabdcc500 
+2025-04-13 11:58:59 WARN [inventory-api]: User found in session but not in database: 67fb7cd39fd301fdabdcc500 
+2025-04-13 11:59:22 INFO [inventory-api]: getUserProfile called for user testuser (ID: 67fb7ce9121de63001100dce, userID: SM-00001) 
+2025-04-13 11:59:22 DEBUG [inventory-api]: getUserByIdService called with ID: 67fb7ce9121de63001100dce 
+2025-04-13 11:59:22 WARN [inventory-api]: User found in session but not in database: 67fb7ce9121de63001100dce 
+2025-04-13 11:59:22 INFO [inventory-api]: getAllUsers called 
+2025-04-13 11:59:22 DEBUG [inventory-api]: Query parameters: 
+2025-04-13 11:59:22 DEBUG [inventory-api]: getAllUsersService called with query: 
+2025-04-13 11:59:22 DEBUG [inventory-api]: Built filter: 
+2025-04-13 11:59:22 INFO [inventory-api]: getAllUsers called 
+2025-04-13 11:59:22 DEBUG [inventory-api]: Query parameters: 
+2025-04-13 11:59:22 DEBUG [inventory-api]: getAllUsersService called with query: 
+2025-04-13 11:59:22 DEBUG [inventory-api]: Built filter: 
+2025-04-13 11:59:22 INFO [inventory-api]: getUsersByRole called with role: ADMIN 
+2025-04-13 11:59:22 DEBUG [inventory-api]: getUsersByRoleService called with role: ADMIN 
+2025-04-13 11:59:22 INFO [inventory-api]: getUsersByRole called with role: SUPERADMIN 
+2025-04-13 11:59:22 DEBUG [inventory-api]: getUsersByRoleService called with role: SUPERADMIN 
+2025-04-13 11:59:23 INFO [inventory-api]: getUserById called with ID: SM-00002 
+2025-04-13 11:59:23 DEBUG [inventory-api]: Request body: 
+2025-04-13 11:59:23 DEBUG [inventory-api]: getUserByUserIdService called with userID: SM-00002 
+2025-04-13 11:59:23 INFO [inventory-api]: getUserById called with ID: SM-99999 
+2025-04-13 11:59:23 DEBUG [inventory-api]: Request body: 
+2025-04-13 11:59:23 DEBUG [inventory-api]: getUserByUserIdService called with userID: SM-99999 
+2025-04-13 11:59:23 INFO [inventory-api]: getUserByUsername called with username: testadmin 
+2025-04-13 11:59:23 INFO [inventory-api]: getUserByEmail called with email: user@example.com 
+2025-04-13 11:59:23 INFO [inventory-api]: updateUserProfile called for user testuser (ID: 67fb7ceb121de63001100e14, userID: SM-00001) 
+2025-04-13 11:59:23 DEBUG [inventory-api]: Request body: 
+2025-04-13 11:59:23 DEBUG [inventory-api]: updateUserProfileService called with ID: 67fb7ceb121de63001100e14 
+2025-04-13 11:59:23 WARN [inventory-api]: User found in session but not in database: 67fb7ceb121de63001100e14 
+2025-04-13 12:00:36 INFO [inventory-api]: getUserProfile called for user testadmin (ID: 67fb7d342d9751436afa9387, userID: SM-00001) 
+2025-04-13 12:00:36 DEBUG [inventory-api]: getUserByIdService called with ID: 67fb7d342d9751436afa9387 
+2025-04-13 12:00:36 INFO [inventory-api]: getAllUsers called 
+2025-04-13 12:00:36 DEBUG [inventory-api]: Query parameters: 
+2025-04-13 12:00:36 DEBUG [inventory-api]: getAllUsersService called with query: 
+2025-04-13 12:00:36 DEBUG [inventory-api]: Built filter: 
+2025-04-13 12:00:37 INFO [inventory-api]: getAllUsers called 
+2025-04-13 12:00:37 DEBUG [inventory-api]: Query parameters: 
+2025-04-13 12:00:37 DEBUG [inventory-api]: getAllUsersService called with query: 
+2025-04-13 12:00:37 DEBUG [inventory-api]: Built filter: 
+2025-04-13 12:00:37 INFO [inventory-api]: getUsersByRole called with role: ADMIN 
+2025-04-13 12:00:37 DEBUG [inventory-api]: getUsersByRoleService called with role: ADMIN 
+2025-04-13 12:00:37 INFO [inventory-api]: getUsersByRole called with role: SUPERADMIN 
+2025-04-13 12:00:37 DEBUG [inventory-api]: getUsersByRoleService called with role: SUPERADMIN 
+2025-04-13 12:00:37 INFO [inventory-api]: getUserById called with ID: SM-00002 
+2025-04-13 12:00:37 DEBUG [inventory-api]: Request body: 
+2025-04-13 12:00:37 DEBUG [inventory-api]: getUserByUserIdService called with userID: SM-00002 
+2025-04-13 12:00:37 INFO [inventory-api]: getUserById called with ID: SM-99999 
+2025-04-13 12:00:37 DEBUG [inventory-api]: Request body: 
+2025-04-13 12:00:37 DEBUG [inventory-api]: getUserByUserIdService called with userID: SM-99999 
+2025-04-13 12:00:38 INFO [inventory-api]: getUserByUsername called with username: testadmin 
+2025-04-13 12:00:38 INFO [inventory-api]: getUserByEmail called with email: user@example.com 
+2025-04-13 12:00:38 INFO [inventory-api]: updateUserProfile called for user testadmin (ID: 67fb7d362d9751436afa93cd, userID: SM-00001) 
+2025-04-13 12:00:38 DEBUG [inventory-api]: Request body: 
+2025-04-13 12:00:38 DEBUG [inventory-api]: updateUserProfileService called with ID: 67fb7d362d9751436afa93cd 

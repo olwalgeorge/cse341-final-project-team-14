@@ -11,7 +11,12 @@
     "format": "prettier --write .",
     "swagger-gen": "node ./scripts/swagger.js",
     "prestart": "npm run swagger-gen",
-    "debug": "nodemon --inspect src/server.js"
+    "debug": "nodemon --inspect src/server.js",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "test:user": "jest __tests__/models/user.model.test.js",
+    "test:user:watch": "jest --watch __tests__/models/user.model.test.js"
   },
   "keywords": [
     "inventory",
