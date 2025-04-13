@@ -56,7 +56,7 @@ GET {{baseUrl}}/products/category/Electronics
 GET {{baseUrl}}/products/category/Electronics?minPrice=1000&inStock=true
 
 ### Get Products by Supplier
-GET {{baseUrl}}/products/supplier/67f66c737ed7ddb60e54af6f
+GET {{baseUrl}}/products/supplier/67fbe670ca7dc6f6163af2b7
 
 ### Get Products by Supplier with Filtering
 GET {{baseUrl}}/products/supplier/67f66c737ed7ddb60e54af6f?category=Electronics&maxPrice=2000
@@ -67,17 +67,15 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-  "name": "HP Pavilion 15",
-  "description": "15-inch laptop with Intel Core i7, 16GB RAM, 512GB SSD",
-  "sellingPrice": 999.99,
-  "costPrice": 750.00,
+  "name": "iPhone 14 Pro Max",
+  "description": "6.7-inch phone with A16 Bionic chip, 6GB RAM, 256GB Storage",
+  "sellingPrice": 1099.99,
+  "costPrice": 879.99,
   "category": "Electronics",
-  "supplier": "67f66c737ed7ddb60e54af6f",
-  "sku": "HP123456",
-  "tags": ["laptop", "hp", "windows"],
-  "unit": "pcs",
-  "productID": "PR-00010",
-  "inStock": true
+  "supplier": "67fbe670ca7dc6f6163af2b7",
+  "sku": "APPL123456",
+  "tags": ["phone", "apple", "ios"],
+  "unit": "pcs"  
 }
 
 ### Update Product (Requires Authentication)

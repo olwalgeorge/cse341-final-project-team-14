@@ -1,5 +1,6 @@
 const Purchase = require("../models/purchase.model");
 const Product = require("../models/product.model.js");
+const inventoryTransactionManager = require("../managers/inventoryTransaction.manager.js");
 const APIFeatures = require("../utils/apiFeatures");
 const { generatePurchaseId } = require("../utils/purchase.utils.js");
 const logger = require("../utils/logger.js");
@@ -141,14 +142,76 @@ const createPurchaseService = async (purchaseData) => {
 /**
  * Update a purchase by ID
  */
-const updatePurchaseService = async (id, updates) => {
-  return await Purchase.findByIdAndUpdate(
-    id,
-    { ...updates, updatedAt: Date.now() },
-    { new: true, runValidators: true }
-  )
-    .populate("supplier", "name supplierID contact")
-    .populate("items.product", "name description costPrice category sku productID");
+const updatePurchaseService = async (id, updates, userId) => {
+  try {
+    // Get the existing purchase to check if status is changing to "Received"
+    const existingPurchase = await Purchase.findById(id)
+      .populate("supplier", "name supplierID contact")
+      .populate("items.product", "name description costPrice category sku productID")
+      .populate("receivingWarehouse", "name warehouseID");
+    
+    if (!existingPurchase) {
+      throw new Error("Purchase not found");
+    }
+    
+    // Check if status is changing from something else to "Received"
+    const isChangingToReceived = 
+      updates.status === "Received" && 
+      existingPurchase.status !== "Received";
+    
+    const updatedPurchase = await Purchase.findByIdAndUpdate(
+      id,
+      { ...updates, updatedAt: Date.now() },
+      { new: true, runValidators: true }
+    )
+      .populate("supplier", "name supplierID contact")
+      .populate("items.product", "name description costPrice category sku productID")
+      .populate("receivingWarehouse", "name warehouseID");
+    
+    // If status changed to "Received", update inventory quantities
+    if (isChangingToReceived) {
+      logger.info(`Purchase ${existingPurchase.purchaseID} status changed to Received. Updating inventory.`);
+      
+      // Make sure there's a receiving warehouse specified
+      if (!existingPurchase.receivingWarehouse) {
+        throw new Error("Cannot receive purchase without a specified receiving warehouse");
+      }
+      
+      // Start a session for transaction consistency
+      const session = await Purchase.startSession();
+      
+      try {
+        await session.withTransaction(async () => {
+          // Process each purchase item and update inventory
+          for (const item of existingPurchase.items) {
+            // Use the inventory transaction manager to process the purchase
+            await inventoryTransactionManager.processPurchase({
+              product: item.product._id,
+              warehouse: existingPurchase.receivingWarehouse._id,
+              quantity: item.quantity,
+              performedBy: userId,
+              reference: {
+                documentType: "Purchase",
+                documentId: existingPurchase._id,
+                documentCode: existingPurchase.purchaseID
+              },
+              notes: `Purchase received from ${existingPurchase.supplier.name}`
+            });
+          }
+        });
+      } catch (error) {
+        logger.error(`Error updating inventory for purchase ${existingPurchase.purchaseID}:`, error);
+        throw error;
+      } finally {
+        await session.endSession();
+      }
+    }
+    
+    return updatedPurchase;
+  } catch (error) {
+    logger.error(`Error in updatePurchaseService: ${error.message}`);
+    throw error;
+  }
 };
 
 /**

@@ -59,22 +59,22 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-  "name": "East Sales Warehouse",
-  "description": "Primary sales warehouse for eastern region",
-  "capacity": 30000,
+  "name": "Kisumu Sales Warehouse",
+  "description": "Sales warehouse for Kisumu region",
+  "capacity": 50000,
   "capacityUnit": "sqft",
   "status": "Active",
   "contact": {
-    "name": "John Sales",
-    "phone": "5555555556",
-    "email": "john.sales@example.com"
+    "name": "Jane Doe",
+    "phone": "254712345678",
+    "email": "jane.doe@kisumusaleswarehouse.com"
   },
   "address": {
-    "street": "456 Sales Drive",
-    "city": "New York City",
-    "state": "NY",
-    "postalCode": "10021",
-    "country": "USA"
+    "street": "123 Kisumu Warehouse Rd",
+    "city": "Kisumu",
+    "state": "Kisumu",
+    "postalCode": "40100",
+    "country": "Kenya"
   }
 }
 

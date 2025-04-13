@@ -164,7 +164,13 @@ const updatePurchaseById = asyncHandler(async (req, res, next) => {
       }
     }
     
-    const purchase = await updatePurchaseService(req.params.purchase_Id, req.body);
+    // Pass the user ID from the request to track who updated the purchase
+    const purchase = await updatePurchaseService(
+      req.params.purchase_Id, 
+      req.body,
+      req.user?._id
+    );
+    
     if (purchase) {
       const transformedPurchase = transformPurchase(purchase);
       sendResponse(

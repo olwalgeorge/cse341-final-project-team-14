@@ -48,6 +48,12 @@ const purchaseSchema = new Schema(
       enum: ["Pending", "Ordered", "Received", "Cancelled", "Returned"],
       default: "Pending",
     },
+    receivingWarehouse: {
+      type: Schema.Types.ObjectId,
+      ref: "Warehouse",
+      required: [true, "Receiving warehouse is required"],
+      description: "The warehouse where purchased items will be received"
+    },
     paymentStatus: {
       type: String,
       enum: ["Unpaid", "Partially_paid", "Paid"],

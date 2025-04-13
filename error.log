@@ -1967,3 +1967,33 @@ Use mongoose.model(name, schema)
     at model.Query.exec (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:4456:63)
     at getAllInventoryService (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\inventory.service.js:57:28)
     at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\inventory.controller.js:29:20
+2025-04-13 19:16:39 ERROR [inventory-api]: Expected double-quoted property name in JSON at position 28 (line 3 column 1) - PUT /users/profile 
+2025-04-13 19:30:43 ERROR [inventory-api]: Error creating product: Product validation failed: supplier: Supplier does not exist in the database 
+ValidationError: Product validation failed: supplier: Supplier does not exist in the database
+    at Document.invalidate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3329:32)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3090:17
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+2025-04-13 19:30:43 ERROR [inventory-api]: Validation Error - POST /products 
+2025-04-13 19:38:15 ERROR [inventory-api]: Error creating product: Product validation failed: sku: Product SKU already exists 
+ValidationError: Product validation failed: sku: Product SKU already exists
+    at Document.invalidate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3329:32)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3090:17
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+2025-04-13 19:38:15 ERROR [inventory-api]: Validation Error - POST /products 
+2025-04-13 19:40:01 ERROR [inventory-api]: Error creating product: Product validation failed: sku: Product SKU already exists 
+ValidationError: Product validation failed: sku: Product SKU already exists
+    at Document.invalidate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3329:32)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3090:17
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+2025-04-13 19:40:01 ERROR [inventory-api]: Validation Error - POST /products 
+2025-04-13 19:57:50 ERROR [inventory-api]: Purchase not found - PUT /purchases/67f66c737ed7ddb60e54af70 
+2025-04-13 20:57:02 ERROR [inventory-api]: Error in updatePurchaseService: Purchase not found 
+2025-04-13 20:57:02 ERROR [inventory-api]: Error updating purchase with ID: 67fbec19ca7dc6f6163af304 Purchase not found 
+Error: Purchase not found
+    at updatePurchaseService (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\purchases.service.js:154:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\purchases.controller.js:168:22
+2025-04-13 20:57:02 ERROR [inventory-api]: Purchase not found - PUT /purchases/67fbec19ca7dc6f6163af304 

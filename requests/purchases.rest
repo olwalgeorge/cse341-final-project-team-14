@@ -22,7 +22,7 @@ GET {{baseUrl}}/purchases?sort=status,-purchaseDate
 Authorization: Bearer {{token}}
 
 ### Filter Purchases by Status
-GET {{baseUrl}}/purchases?status=Ordered
+GET {{baseUrl}}/purchases?status=Pending
 Authorization: Bearer {{token}}
 
 ### Filter Purchases by Payment Status
@@ -63,35 +63,83 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-  "supplier": "67f66c737ed7ddb60e54af6f",
+  "supplier": "67fbe670ca7dc6f6163af2b7",
   "items": [
     {
-      "product": "67f8cdc8f72a040e609a5ca9",
-      "quantity": 5,
-      "price": 1800.00
+      "product": "67fbe80fca7dc6f6163af2d5",
+      "quantity": 10,
+      "price": 599.99
     },
     {
-      "product": "67f8ce0df72a040e609a5caf",
-      "quantity": 3,
-      "price": 550.00
+      "product": "67fbe83aca7dc6f6163af2db",
+      "quantity": 10,
+      "price": 799.99
     }
   ],
   "purchaseDate": "2023-05-15T10:00:00Z",
-  "status": "Ordered",
+  "status": "Pending",
   "paymentStatus": "Unpaid",
   "paymentDue": "2023-06-15T10:00:00Z",
-  "notes": "Bulk purchase of laptops for inventory"
+  "notes": "Bulk purchase of apple iphone and laptop for inventory"
+}
+
+### Create New Purchase with Receiving Warehouse (Required)
+POST {{baseUrl}}/purchases
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "supplier": "67fbe670ca7dc6f6163af2b7",
+  "receivingWarehouse": "67fbe4457b9b324c6c2da9ab",
+  "items": [
+    {
+      "product": "67fbe80fca7dc6f6163af2d5",
+      "quantity": 10,
+      "price": 599.99
+    },
+    {
+      "product": "67fbe83aca7dc6f6163af2db",
+      "quantity": 10,
+      "price": 799.99
+    }
+  ],
+  "purchaseDate": "2023-05-15T10:00:00Z",
+  "status": "Pending",
+  "paymentStatus": "Unpaid",
+  "paymentDue": "2023-06-15T10:00:00Z",
+  "notes": "Bulk purchase of apple iphone and laptop for inventory"
 }
 
 ### Update Purchase
-PUT {{baseUrl}}/purchases/67f66c737ed7ddb60e54af70
+PUT {{baseUrl}}/purchases/67fbfa7b01c36f6102012c1f
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "status": "Ordered",
+  "paymentStatus": "Unpaid",
+  "notes": "Payment not made yet"
+}
+
+### Update Purchase Status to Received (Will Automatically Update Inventory)
+PUT {{baseUrl}}/purchases/67fbfa7b01c36f6102012c1f
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
   "status": "Received",
-  "paymentStatus": "Paid",
-  "notes": "Payment completed on delivery"
+  "paymentStatus": "Unpaid",
+  "notes": "Items received at warehouse, inventory automatically updated"
+}
+
+### Update Purchase with Different Receiving Warehouse
+PUT {{baseUrl}}/purchases/67fbec19ca7dc6f6163af304
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "receivingWarehouse": "67f8eba21e783b4d3c48a903",
+  "notes": "Changed receiving warehouse to secondary location"
 }
 
 ### Delete Purchase

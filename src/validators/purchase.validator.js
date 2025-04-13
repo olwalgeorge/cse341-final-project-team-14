@@ -34,6 +34,9 @@ const purchaseCreateValidationRules = () => {
     check("supplier")
       .isMongoId()
       .withMessage("Invalid supplier ID"),
+    check("receivingWarehouse")
+      .isMongoId()
+      .withMessage("Receiving warehouse is required and must be a valid warehouse ID"),
     check("items")
       .isArray({ min: 1 })
       .withMessage("At least one item is required"),
@@ -81,6 +84,10 @@ const purchaseUpdateValidationRules = () => {
       .optional()
       .isMongoId()
       .withMessage("Invalid supplier ID"),
+    check("receivingWarehouse")
+      .optional()
+      .isMongoId()
+      .withMessage("Receiving warehouse must be a valid warehouse ID"),
     check("items")
       .optional()
       .isArray()

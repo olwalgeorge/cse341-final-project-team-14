@@ -71,14 +71,14 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-  "name": "Timothy Oketch",
-  "email": "timothy.oketch@example.com",
-  "phone": "0123456789",
+  "name": "Ben",
+  "email": "ben@example.com",
+  "phone": "9876543210",
   "address": {
-    "street": "123 Kisumu Rd",
-    "city": "Kisumu",
-    "state": "Kisumu",
-    "postalCode": "40100",
+    "street": "456 Nairobi Ave",
+    "city": "Nairobi",
+    "state": "Nairobi",
+    "postalCode": "00100",
     "country": "Kenya"
   }
 }

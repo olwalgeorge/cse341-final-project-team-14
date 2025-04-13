@@ -9,7 +9,7 @@ Content-Type: application/json
   "fullName": "Super Admin",
   "username": "superadmin",
   "password": "SuperAdmin1234!",
-  "email": "superadmin@example.com"
+  "email": "superadmin@example.com",  
 }
 
 ### Login User
@@ -83,7 +83,7 @@ Content-Type: application/json
 # No need for Authorization Bearer token with cookie-based auth
 
 {
-  "fullName": "Updated Admin Name"
+  "role": "SUPERADMIN"
 }
 
 ### Get User By ID (userID format)
