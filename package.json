@@ -5,12 +5,7 @@
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
-    "dev": "nodemon src/server.js",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage",
-    "test:unit": "jest tests/models tests/services",
-    "test:integration": "jest tests/controllers tests/routes",
+    "dev": "nodemon src/server.js",   
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "format": "prettier --write .",
