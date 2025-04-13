@@ -1,8 +1,7 @@
 const InventoryTransfer = require("../models/inventoryTransfer.model.js");
 const Inventory = require("../models/inventory.model.js");
-const InventoryTransaction = require("../models/inventoryTransaction.model.js");
 const { generateTransferId } = require("../utils/inventoryTransfer.utils.js");
-const { generateTransactionId } = require("../utils/inventoryTransaction.utils.js");
+const inventoryTransactionManager = require("../managers/inventoryTransaction.manager.js");
 const APIFeatures = require("../utils/apiFeatures.js");
 const logger = require("../utils/logger.js");
 
@@ -409,14 +408,14 @@ const shipInventoryTransferService = async (id, shipData, userId) => {
       throw new Error(`Cannot ship transfer in ${existingTransfer.status} status. Transfer must be in Approved status.`);
     }
     
-    // Create inventory transactions for each item for Transfer Out
+    // Process transfer out for each item using the inventory transaction manager
     const session = await InventoryTransfer.startSession();
     let shippedTransfer;
     
     await session.withTransaction(async () => {
       // Process each item in the transfer
       for (const item of existingTransfer.items) {
-        // Find inventory item in from warehouse
+        // Verify inventory exists and has sufficient quantity
         const inventory = await Inventory.findOne({
           product: item.product._id,
           warehouse: existingTransfer.fromWarehouse._id
@@ -431,37 +430,20 @@ const shipInventoryTransferService = async (id, shipData, userId) => {
           throw new Error(`Insufficient quantity of ${item.product.name} in ${existingTransfer.fromWarehouse.name}. Available: ${inventory.quantity}, Required: ${item.quantity}`);
         }
         
-        // Create transaction for transferring out from the source warehouse
-        const transactionData = {
-          transactionID: await generateTransactionId(),
-          inventory: inventory._id,
+        // Use the inventory transaction manager to process the transfer out
+        await inventoryTransactionManager.processTransferOut({
           product: item.product._id,
-          warehouse: existingTransfer.fromWarehouse._id,
-          transactionType: "Transfer Out",
-          quantityBefore: inventory.quantity,
-          quantityChange: -item.quantity,
-          quantityAfter: inventory.quantity - item.quantity,
           fromWarehouse: existingTransfer.fromWarehouse._id,
           toWarehouse: existingTransfer.toWarehouse._id,
+          quantity: item.quantity,
+          performedBy: userId,
           reference: {
             documentType: "Transfer",
             documentId: existingTransfer._id,
             documentCode: existingTransfer.transferID
           },
-          performedBy: userId,
           notes: shipData.notes || `Transfer out to ${existingTransfer.toWarehouse.name}`
-        };
-        
-        // Create transaction and update inventory
-        await InventoryTransaction.create([transactionData], { session });
-        await Inventory.findByIdAndUpdate(
-          inventory._id,
-          { 
-            quantity: inventory.quantity - item.quantity,
-            lastStockCheck: new Date()
-          },
-          { session }
-        );
+        });
       }
       
       // Update transfer with shipping data
@@ -522,7 +504,7 @@ const receiveInventoryTransferService = async (id, receiveData) => {
       throw new Error("Received items data is required");
     }
     
-    // Create inventory transactions for each received item
+    // Process transfer in for each received item using the inventory transaction manager
     const session = await InventoryTransfer.startSession();
     let receivedTransfer;
     
@@ -550,55 +532,20 @@ const receiveInventoryTransferService = async (id, receiveData) => {
         }
         
         if (receivedQuantity > 0) {
-          // Find or create inventory item in to warehouse
-          let inventory = await Inventory.findOne({
+          // Use the inventory transaction manager to process the transfer in
+          await inventoryTransactionManager.processTransferIn({
             product: transferItem.product._id,
-            warehouse: existingTransfer.toWarehouse._id
-          });
-          
-          if (!inventory) {
-            // Create new inventory record if it doesn't exist
-            inventory = await Inventory.create({
-              inventoryID: `IN-${Math.floor(Math.random() * 90000) + 10000}`, // Generate a random ID for now
-              product: transferItem.product._id,
-              warehouse: existingTransfer.toWarehouse._id,
-              quantity: 0,
-              minStockLevel: 1,
-              maxStockLevel: 1000
-            }, { session });
-          }
-          
-          // Create transaction for transferring in to the destination warehouse
-          const transactionData = {
-            transactionID: await generateTransactionId(),
-            inventory: inventory._id,
-            product: transferItem.product._id,
-            warehouse: existingTransfer.toWarehouse._id,
-            transactionType: "Transfer In",
-            quantityBefore: inventory.quantity,
-            quantityChange: receivedQuantity,
-            quantityAfter: inventory.quantity + receivedQuantity,
             fromWarehouse: existingTransfer.fromWarehouse._id,
             toWarehouse: existingTransfer.toWarehouse._id,
+            quantity: receivedQuantity,
+            performedBy: receiveData.receivedBy,
             reference: {
               documentType: "Transfer",
               documentId: existingTransfer._id,
               documentCode: existingTransfer.transferID
             },
-            performedBy: receiveData.receivedBy,
             notes: receiveData.notes || `Transfer in from ${existingTransfer.fromWarehouse.name}`
-          };
-          
-          // Create transaction and update inventory
-          await InventoryTransaction.create([transactionData], { session });
-          await Inventory.findByIdAndUpdate(
-            inventory._id,
-            { 
-              quantity: inventory.quantity + receivedQuantity,
-              lastStockCheck: new Date()
-            },
-            { session }
-          );
+          });
           
           // Update the transfer item's received quantity
           await InventoryTransfer.updateOne(

@@ -1,8 +1,6 @@
 const InventoryAdjustment = require("../models/inventoryAdjustment.model.js");
-const Inventory = require("../models/inventory.model.js");
-const InventoryTransaction = require("../models/inventoryTransaction.model.js");
 const { generateAdjustmentId } = require("../utils/inventoryAdjustment.utils.js");
-const { generateTransactionId } = require("../utils/inventoryTransaction.utils.js");
+const inventoryTransactionManager = require("../managers/inventoryTransaction.manager.js");
 const APIFeatures = require("../utils/apiFeatures.js");
 const logger = require("../utils/logger.js");
 
@@ -376,61 +374,27 @@ const completeInventoryAdjustmentService = async (id, userId) => {
       throw new Error(`Cannot complete adjustment in ${existingAdjustment.status} status. Adjustment must be in Approved status.`);
     }
     
-    // Create inventory transactions for each item
+    // Process adjustment using the inventory transaction manager
     const session = await InventoryAdjustment.startSession();
     let completedAdjustment;
     
     await session.withTransaction(async () => {
       // Process each item in the adjustment
       for (const item of existingAdjustment.items) {
-        // Find inventory item
-        let inventory = await Inventory.findOne({
-          product: item.product._id,
-          warehouse: existingAdjustment.warehouse._id
-        });
-        
-        if (!inventory) {
-          // Create new inventory entry if it doesn't exist
-          inventory = await Inventory.create({
-            inventoryID: `IN-${Math.floor(Math.random() * 90000) + 10000}`, // Generate a random ID for now
-            product: item.product._id,
-            warehouse: existingAdjustment.warehouse._id,
-            quantity: 0,
-            minStockLevel: 1,
-            maxStockLevel: 1000
-          }, { session });
-        }
-        
-        // Create transaction for the adjustment
-        const quantityChange = item.quantityAfter - item.quantityBefore;
-        const transactionData = {
-          transactionID: await generateTransactionId(),
-          inventory: inventory._id,
+        // Use the inventory transaction manager to process the adjustment
+        await inventoryTransactionManager.processAdjustment({
           product: item.product._id,
           warehouse: existingAdjustment.warehouse._id,
-          transactionType: "Adjustment",
           quantityBefore: item.quantityBefore,
-          quantityChange: quantityChange,
           quantityAfter: item.quantityAfter,
+          performedBy: userId,
           reference: {
             documentType: "Adjustment",
             documentId: existingAdjustment._id,
             documentCode: existingAdjustment.adjustmentID
           },
-          performedBy: userId,
           notes: `${existingAdjustment.reason} adjustment: ${item.reason || existingAdjustment.description || ''}`
-        };
-        
-        // Create transaction and update inventory
-        await InventoryTransaction.create([transactionData], { session });
-        await Inventory.findByIdAndUpdate(
-          inventory._id,
-          { 
-            quantity: item.quantityAfter,
-            lastStockCheck: new Date()
-          },
-          { session }
-        );
+        });
       }
       
       // Update adjustment with completion data
