@@ -92,7 +92,10 @@ const createCustomerService = async (customerData) => {
 // Update customer by customer's MongoDB ID
 const updateCustomerService = async (customer_Id, updateData) => {
   logger.debug(`updateCustomerService called with customer_Id: ${customer_Id}`, updateData);
-  return await Customer.findByIdAndUpdate(customer_Id, updateData, { new: true });
+  return await Customer.findByIdAndUpdate(customer_Id, updateData, { 
+    new: true,
+    runValidators: true  // Ensure validators run on update
+  });
 };
 
 // Delete customer by customer's MongoDB ID

@@ -118,7 +118,10 @@ const createWarehouseService = async (warehouseData) => {
  */
 const updateWarehouseService = async (warehouse_Id, updateData) => {
   logger.debug(`updateWarehouseService called with warehouse_Id: ${warehouse_Id}`, updateData);
-  return await Warehouse.findByIdAndUpdate(warehouse_Id, updateData, { new: true });
+  return await Warehouse.findByIdAndUpdate(warehouse_Id, updateData, { 
+    new: true,
+    runValidators: true  // Ensure validators run on update
+  });
 };
 
 /**

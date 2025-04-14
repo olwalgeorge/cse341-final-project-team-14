@@ -29,6 +29,7 @@ const supplierSchema = new Schema(
         type: String,
         trim: true,
         lowercase: true,
+        unique: true,
       },
     },
     address: {
@@ -66,6 +67,10 @@ const supplierSchema = new Schema(
   },
   {
     timestamps: true,
+    // Make sure all validators run on updates
+    toObject: { virtuals: true },
+    toJSON: { virtuals: true },
+    id: false,
   }
 );
 

@@ -1997,3 +1997,63 @@ Error: Purchase not found
     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
     at async C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\purchases.controller.js:168:22
 2025-04-13 20:57:02 ERROR [inventory-api]: Purchase not found - PUT /purchases/67fbec19ca7dc6f6163af304 
+2025-04-14 14:20:43 ERROR [inventory-api]: Error updating supplier with ID: 67fcef8a732acb406abed782 Supplier not found 
+DatabaseError: Supplier not found
+    at Function.notFound (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\utils\errors\DatabaseError.js:42:12)
+    at Object.notFound [as updateSupplierService] (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\suppliers.service.js:178:27)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at Object.<anonymous> (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\__tests__\services\suppliers.service.test.js:166:22)
+2025-04-14 14:20:43 ERROR [inventory-api]: Error updating supplier with ID: 67fcef8bf5a2bd09ef2f28b4 Supplier not found 
+DatabaseError: Supplier not found
+    at Function.notFound (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\utils\errors\DatabaseError.js:42:12)
+    at notFound (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\suppliers.service.js:178:27)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\suppliers.controller.js:199:22
+2025-04-14 14:20:43 ERROR [inventory-api]: Error updating supplier with ID: 67fcef8bf5a2bd09ef2f28b4 Supplier not found 
+DatabaseError: Supplier not found
+    at Function.notFound (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\utils\errors\DatabaseError.js:42:12)
+    at notFound (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\suppliers.service.js:178:27)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\suppliers.controller.js:199:22
+2025-04-14 14:20:43 ERROR [inventory-api]: Error deleting supplier with ID: 67fcef8bf5a2bd09ef2f28c6 Supplier not found 
+DatabaseError: Supplier not found
+    at Function.notFound (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\utils\errors\DatabaseError.js:42:12)
+    at notFound (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\suppliers.service.js:200:27)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\suppliers.controller.js:225:20
+2025-04-14 14:20:43 ERROR [inventory-api]: Error deleting supplier with ID: 67fcef8bf5a2bd09ef2f28c6 Supplier not found 
+DatabaseError: Supplier not found
+    at Function.notFound (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\utils\errors\DatabaseError.js:42:12)
+    at notFound (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\suppliers.service.js:200:27)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\suppliers.controller.js:225:20
+2025-04-14 14:21:18 ERROR [inventory-api]: Error updating supplier with ID: 67fcefaee91db9ee77d6c75c Supplier not found 
+DatabaseError: Supplier not found
+    at Function.notFound (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\utils\errors\DatabaseError.js:42:12)
+    at Object.notFound [as updateSupplierService] (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\suppliers.service.js:178:27)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at Object.<anonymous> (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\__tests__\services\suppliers.service.test.js:166:22)
+2025-04-14 14:21:23 ERROR [inventory-api]: Error updating supplier with ID: 67fcefb3d4431372a48c4395 Supplier not found 
+DatabaseError: Supplier not found
+    at Function.notFound (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\utils\errors\DatabaseError.js:42:12)
+    at notFound (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\suppliers.service.js:178:27)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\suppliers.controller.js:199:22
+2025-04-14 14:21:23 ERROR [inventory-api]: Error updating supplier with ID: 67fcefb3d4431372a48c4395 Supplier not found 
+DatabaseError: Supplier not found
+    at Function.notFound (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\utils\errors\DatabaseError.js:42:12)
+    at notFound (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\suppliers.service.js:178:27)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\suppliers.controller.js:199:22
+2025-04-14 14:21:23 ERROR [inventory-api]: Error deleting supplier with ID: 67fcefb3d4431372a48c43a7 Supplier not found 
+DatabaseError: Supplier not found
+    at Function.notFound (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\utils\errors\DatabaseError.js:42:12)
+    at notFound (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\suppliers.service.js:200:27)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\suppliers.controller.js:225:20
+2025-04-14 14:21:23 ERROR [inventory-api]: Error deleting supplier with ID: 67fcefb3d4431372a48c43a7 Supplier not found 
+DatabaseError: Supplier not found
+    at Function.notFound (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\utils\errors\DatabaseError.js:42:12)
+    at notFound (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\suppliers.service.js:200:27)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\suppliers.controller.js:225:20

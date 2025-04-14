@@ -140,7 +140,10 @@ const createSupplierService = async (supplierData) => {
 // Update supplier by ID
 const updateSupplierService = async (id, updateData) => {
   logger.debug(`updateSupplierService called with ID: ${id}`, updateData);
-  return await Supplier.findByIdAndUpdate(id, updateData, { new: true });
+  return await Supplier.findByIdAndUpdate(id, updateData, { 
+    new: true,
+    runValidators: true  // Ensure validators run on update
+  });
 };
 
 // Delete supplier by ID

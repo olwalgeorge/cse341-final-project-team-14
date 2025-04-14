@@ -10115,3 +10115,1317 @@ Error: Purchase not found
 2025-04-14 13:10:06 INFO [inventory-api]: MongoDB Connected: cluster0-shard-00-00.wncfx.mongodb.net 
 2025-04-14 14:00:31 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
 2025-04-14 14:00:35 INFO [inventory-api]: MongoDB Connected: cluster0-shard-00-02.wncfx.mongodb.net 
+2025-04-14 14:12:15 DEBUG [inventory-api]: getSupplierByIdService called with ID: 67fced8fdf472c7f8e7e7b39 
+2025-04-14 14:12:15 DEBUG [inventory-api]: getSupplierByIdService called with ID: 67fced8fdf472c7f8e7e7b4c 
+2025-04-14 14:12:15 DEBUG [inventory-api]: getSupplierBySupplierIDService called with supplier ID: SP-00002 
+2025-04-14 14:12:15 INFO [inventory-api]: getAllSuppliers called 
+2025-04-14 14:12:15 DEBUG [inventory-api]: getSupplierBySupplierIDService called with supplier ID: SP-99999 
+2025-04-14 14:12:15 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:12:15 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:12:15 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:12:15 DEBUG [inventory-api]: createSupplierService called with data: 
+2025-04-14 14:12:15 DEBUG [inventory-api]: updateSupplierService called with ID: 67fced8fdf472c7f8e7e7b6c 
+2025-04-14 14:12:16 INFO [inventory-api]: getAllSuppliers called 
+2025-04-14 14:12:16 DEBUG [inventory-api]: updateSupplierService called with ID: 67fced90df472c7f8e7e7b7d 
+2025-04-14 14:12:16 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:12:16 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:12:16 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:12:16 DEBUG [inventory-api]: deleteSupplierService called with ID: 67fced90df472c7f8e7e7b81 
+2025-04-14 14:12:16 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:12:16 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:12:16 INFO [inventory-api]: getSupplierById called with ID: 67fced90b9a1bc6f20fc1e2b 
+2025-04-14 14:12:16 DEBUG [inventory-api]: getSupplierByIdService called with ID: 67fced90b9a1bc6f20fc1e2b 
+2025-04-14 14:12:16 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:12:16 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:12:16 INFO [inventory-api]: getSupplierById called with ID: 67fced90b9a1bc6f20fc1e38 
+2025-04-14 14:12:16 DEBUG [inventory-api]: getSupplierByIdService called with ID: 67fced90b9a1bc6f20fc1e38 
+2025-04-14 14:12:16 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:12:16 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:12:16 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:12:16 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:12:16 DEBUG [inventory-api]: searchSuppliersService called with term: tech 
+2025-04-14 14:12:16 DEBUG [inventory-api]: searchSuppliersService called with term: nonexistent 
+2025-04-14 14:12:16 DEBUG [inventory-api]: searchSuppliersService called with term: food 
+2025-04-14 14:12:16 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:12:16 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:12:16 INFO [inventory-api]: createSupplier called 
+2025-04-14 14:12:16 DEBUG [inventory-api]: Request body: 
+2025-04-14 14:12:16 DEBUG [inventory-api]: Supplier data with generated ID: 
+2025-04-14 14:12:16 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:12:16 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:12:16 DEBUG [inventory-api]: createSupplierService called with data: 
+2025-04-14 14:12:16 WARN [inventory-api]: Validation failed 
+2025-04-14 14:12:16 INFO [inventory-api]: updateSupplierById called with ID: 67fced90b9a1bc6f20fc1e5f 
+2025-04-14 14:12:16 DEBUG [inventory-api]: Update data: 
+2025-04-14 14:12:16 DEBUG [inventory-api]: updateSupplierService called with ID: 67fced90b9a1bc6f20fc1e5f 
+2025-04-14 14:12:16 INFO [inventory-api]: updateSupplierById called with ID: 67fced90b9a1bc6f20fc1e6b 
+2025-04-14 14:12:16 DEBUG [inventory-api]: Update data: 
+2025-04-14 14:12:16 DEBUG [inventory-api]: updateSupplierService called with ID: 67fced90b9a1bc6f20fc1e6b 
+2025-04-14 14:12:16 INFO [inventory-api]: deleteSupplierById called with ID: 67fced90b9a1bc6f20fc1e71 
+2025-04-14 14:12:16 DEBUG [inventory-api]: deleteSupplierService called with ID: 67fced90b9a1bc6f20fc1e71 
+2025-04-14 14:12:16 INFO [inventory-api]: deleteSupplierById called with ID: 67fced90b9a1bc6f20fc1e7d 
+2025-04-14 14:12:16 DEBUG [inventory-api]: deleteSupplierService called with ID: 67fced90b9a1bc6f20fc1e7d 
+2025-04-14 14:12:16 INFO [inventory-api]: getAllSuppliers called 
+2025-04-14 14:12:16 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:12:16 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:12:16 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:12:16 INFO [inventory-api]: getAllSuppliers called 
+2025-04-14 14:12:16 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:12:16 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:12:16 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:12:16 INFO [inventory-api]: searchSuppliers called 
+2025-04-14 14:12:16 DEBUG [inventory-api]: Search term: 
+2025-04-14 14:12:16 DEBUG [inventory-api]: searchSuppliersService called with term: tech 
+2025-04-14 14:12:16 INFO [inventory-api]: searchSuppliers called 
+2025-04-14 14:12:16 DEBUG [inventory-api]: Search term: 
+2025-04-14 14:12:16 DEBUG [inventory-api]: searchSuppliersService called with term: nonexistent 
+2025-04-14 14:13:48 DEBUG [inventory-api]: getSupplierByIdService called with ID: 67fcedece6a339f5b55fe8f0 
+2025-04-14 14:13:48 DEBUG [inventory-api]: getSupplierByIdService called with ID: 67fcedece6a339f5b55fe902 
+2025-04-14 14:13:48 DEBUG [inventory-api]: getSupplierBySupplierIDService called with supplier ID: SP-00002 
+2025-04-14 14:13:48 DEBUG [inventory-api]: getSupplierBySupplierIDService called with supplier ID: SP-99999 
+2025-04-14 14:13:48 DEBUG [inventory-api]: createSupplierService called with data: 
+2025-04-14 14:13:48 DEBUG [inventory-api]: updateSupplierService called with ID: 67fcedece6a339f5b55fe923 
+2025-04-14 14:13:48 DEBUG [inventory-api]: updateSupplierService called with ID: 67fcedece6a339f5b55fe933 
+2025-04-14 14:13:48 DEBUG [inventory-api]: deleteSupplierService called with ID: 67fcedece6a339f5b55fe937 
+2025-04-14 14:13:48 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:13:48 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:13:48 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:13:48 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:13:48 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:13:48 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:13:48 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:13:48 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:13:48 DEBUG [inventory-api]: searchSuppliersService called with term: tech 
+2025-04-14 14:13:48 DEBUG [inventory-api]: searchSuppliersService called with term: nonexistent 
+2025-04-14 14:13:48 DEBUG [inventory-api]: searchSuppliersService called with term: food 
+2025-04-14 14:13:48 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:13:48 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:13:48 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:13:48 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:13:49 INFO [inventory-api]: getAllSuppliers called 
+2025-04-14 14:13:49 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:13:49 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:13:49 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:13:49 INFO [inventory-api]: getAllSuppliers called 
+2025-04-14 14:13:49 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:13:49 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:13:49 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:13:49 INFO [inventory-api]: getSupplierById called with ID: 67fceded55984e93f33fc084 
+2025-04-14 14:13:49 DEBUG [inventory-api]: getSupplierByIdService called with ID: 67fceded55984e93f33fc084 
+2025-04-14 14:13:49 INFO [inventory-api]: getSupplierById called with ID: 67fceded55984e93f33fc091 
+2025-04-14 14:13:49 DEBUG [inventory-api]: getSupplierByIdService called with ID: 67fceded55984e93f33fc091 
+2025-04-14 14:13:49 INFO [inventory-api]: createSupplier called 
+2025-04-14 14:13:49 DEBUG [inventory-api]: Request body: 
+2025-04-14 14:13:49 DEBUG [inventory-api]: Supplier data with generated ID: 
+2025-04-14 14:13:49 DEBUG [inventory-api]: createSupplierService called with data: 
+2025-04-14 14:13:49 WARN [inventory-api]: Validation failed 
+2025-04-14 14:13:49 INFO [inventory-api]: updateSupplierById called with ID: 67fceded55984e93f33fc0b9 
+2025-04-14 14:13:49 DEBUG [inventory-api]: Update data: 
+2025-04-14 14:13:49 DEBUG [inventory-api]: updateSupplierService called with ID: 67fceded55984e93f33fc0b9 
+2025-04-14 14:13:49 INFO [inventory-api]: updateSupplierById called with ID: 67fceded55984e93f33fc0c5 
+2025-04-14 14:13:49 DEBUG [inventory-api]: Update data: 
+2025-04-14 14:13:49 DEBUG [inventory-api]: updateSupplierService called with ID: 67fceded55984e93f33fc0c5 
+2025-04-14 14:13:49 INFO [inventory-api]: deleteSupplierById called with ID: 67fceded55984e93f33fc0cb 
+2025-04-14 14:13:49 DEBUG [inventory-api]: deleteSupplierService called with ID: 67fceded55984e93f33fc0cb 
+2025-04-14 14:13:49 INFO [inventory-api]: deleteSupplierById called with ID: 67fceded55984e93f33fc0d7 
+2025-04-14 14:13:49 DEBUG [inventory-api]: deleteSupplierService called with ID: 67fceded55984e93f33fc0d7 
+2025-04-14 14:13:49 INFO [inventory-api]: getAllSuppliers called 
+2025-04-14 14:13:49 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:13:49 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:13:49 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:13:49 INFO [inventory-api]: getAllSuppliers called 
+2025-04-14 14:13:49 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:13:49 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:13:49 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:13:49 INFO [inventory-api]: searchSuppliers called 
+2025-04-14 14:13:49 DEBUG [inventory-api]: Search term: 
+2025-04-14 14:13:49 DEBUG [inventory-api]: searchSuppliersService called with term: tech 
+2025-04-14 14:13:49 INFO [inventory-api]: searchSuppliers called 
+2025-04-14 14:13:49 DEBUG [inventory-api]: Search term: 
+2025-04-14 14:13:49 DEBUG [inventory-api]: searchSuppliersService called with term: nonexistent 
+2025-04-14 14:14:16 DEBUG [inventory-api]: getSupplierByIdService called with ID: 67fcee08068d959f6b5b85f9 
+2025-04-14 14:14:16 DEBUG [inventory-api]: getSupplierByIdService called with ID: 67fcee08068d959f6b5b860b 
+2025-04-14 14:14:16 DEBUG [inventory-api]: getSupplierBySupplierIDService called with supplier ID: SP-00002 
+2025-04-14 14:14:16 DEBUG [inventory-api]: getSupplierBySupplierIDService called with supplier ID: SP-99999 
+2025-04-14 14:14:16 DEBUG [inventory-api]: createSupplierService called with data: 
+2025-04-14 14:14:16 DEBUG [inventory-api]: updateSupplierService called with ID: 67fcee08068d959f6b5b862b 
+2025-04-14 14:14:16 DEBUG [inventory-api]: updateSupplierService called with ID: 67fcee08068d959f6b5b863c 
+2025-04-14 14:14:16 DEBUG [inventory-api]: deleteSupplierService called with ID: 67fcee08068d959f6b5b8640 
+2025-04-14 14:14:16 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:14:16 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:14:16 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:14:16 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:14:16 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:14:16 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:14:16 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:14:16 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:14:16 DEBUG [inventory-api]: searchSuppliersService called with term: tech 
+2025-04-14 14:14:16 DEBUG [inventory-api]: searchSuppliersService called with term: nonexistent 
+2025-04-14 14:14:16 DEBUG [inventory-api]: searchSuppliersService called with term: food 
+2025-04-14 14:14:16 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:14:16 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:14:16 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:14:16 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:14:16 INFO [inventory-api]: getAllSuppliers called 
+2025-04-14 14:14:16 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:14:16 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:14:16 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:14:17 INFO [inventory-api]: getAllSuppliers called 
+2025-04-14 14:14:17 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:14:17 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:14:17 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:14:17 INFO [inventory-api]: getSupplierById called with ID: 67fcee09de414be8a8223737 
+2025-04-14 14:14:17 DEBUG [inventory-api]: getSupplierByIdService called with ID: 67fcee09de414be8a8223737 
+2025-04-14 14:14:17 INFO [inventory-api]: getSupplierById called with ID: 67fcee09de414be8a8223744 
+2025-04-14 14:14:17 DEBUG [inventory-api]: getSupplierByIdService called with ID: 67fcee09de414be8a8223744 
+2025-04-14 14:14:17 INFO [inventory-api]: createSupplier called 
+2025-04-14 14:14:17 DEBUG [inventory-api]: Request body: 
+2025-04-14 14:14:17 DEBUG [inventory-api]: Supplier data with generated ID: 
+2025-04-14 14:14:17 DEBUG [inventory-api]: createSupplierService called with data: 
+2025-04-14 14:14:17 WARN [inventory-api]: Validation failed 
+2025-04-14 14:14:17 INFO [inventory-api]: updateSupplierById called with ID: 67fcee09de414be8a822376c 
+2025-04-14 14:14:17 DEBUG [inventory-api]: Update data: 
+2025-04-14 14:14:17 DEBUG [inventory-api]: updateSupplierService called with ID: 67fcee09de414be8a822376c 
+2025-04-14 14:14:17 INFO [inventory-api]: updateSupplierById called with ID: 67fcee09de414be8a8223778 
+2025-04-14 14:14:17 DEBUG [inventory-api]: Update data: 
+2025-04-14 14:14:17 DEBUG [inventory-api]: updateSupplierService called with ID: 67fcee09de414be8a8223778 
+2025-04-14 14:14:17 INFO [inventory-api]: deleteSupplierById called with ID: 67fcee09de414be8a822377e 
+2025-04-14 14:14:17 DEBUG [inventory-api]: deleteSupplierService called with ID: 67fcee09de414be8a822377e 
+2025-04-14 14:14:17 INFO [inventory-api]: deleteSupplierById called with ID: 67fcee09de414be8a822378a 
+2025-04-14 14:14:17 DEBUG [inventory-api]: deleteSupplierService called with ID: 67fcee09de414be8a822378a 
+2025-04-14 14:14:17 INFO [inventory-api]: getAllSuppliers called 
+2025-04-14 14:14:17 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:14:17 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:14:17 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:14:17 INFO [inventory-api]: getAllSuppliers called 
+2025-04-14 14:14:17 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:14:17 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:14:17 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:14:17 INFO [inventory-api]: searchSuppliers called 
+2025-04-14 14:14:17 DEBUG [inventory-api]: Search term: 
+2025-04-14 14:14:17 DEBUG [inventory-api]: searchSuppliersService called with term: tech 
+2025-04-14 14:14:17 INFO [inventory-api]: searchSuppliers called 
+2025-04-14 14:14:17 DEBUG [inventory-api]: Search term: 
+2025-04-14 14:14:17 DEBUG [inventory-api]: searchSuppliersService called with term: nonexistent 
+2025-04-14 14:14:40 DEBUG [inventory-api]: getCustomerByIdService called with customer_Id: 67fcee2004db7fc475b6e9ce 
+2025-04-14 14:14:40 DEBUG [inventory-api]: getCustomerByIdService called with customer_Id: 67fcee2004db7fc475b6e9e7 
+2025-04-14 14:14:40 DEBUG [inventory-api]: getCustomerByCustomerIDService called with customerID: CU-00002 
+2025-04-14 14:14:40 DEBUG [inventory-api]: getCustomerByCustomerIDService called with customerID: CU-99999 
+2025-04-14 14:14:40 DEBUG [inventory-api]: createCustomerService called with data: 
+2025-04-14 14:14:40 DEBUG [inventory-api]: updateCustomerService called with customer_Id: 67fcee2004db7fc475b6ea10 
+2025-04-14 14:14:40 DEBUG [inventory-api]: updateCustomerService called with customer_Id: 67fcee2004db7fc475b6ea25 
+2025-04-14 14:14:40 DEBUG [inventory-api]: deleteCustomerService called with customer_Id: 67fcee2004db7fc475b6ea29 
+2025-04-14 14:14:40 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 14:14:40 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:14:40 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 14:14:40 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:14:40 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 14:14:40 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:14:40 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 14:14:40 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:14:40 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 14:14:40 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:14:40 DEBUG [inventory-api]: searchCustomersService called with term: individual 
+2025-04-14 14:14:40 DEBUG [inventory-api]: searchCustomersService called with term: nonexistent 
+2025-04-14 14:14:40 DEBUG [inventory-api]: searchCustomersService called with term: business 
+2025-04-14 14:14:41 INFO [inventory-api]: getAllCustomers called 
+2025-04-14 14:14:41 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:14:41 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 14:14:41 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:14:41 INFO [inventory-api]: getAllCustomers called 
+2025-04-14 14:14:41 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:14:41 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 14:14:41 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:14:41 INFO [inventory-api]: getCustomerById called with customer_Id: 67fcee213aa17e145ba47af9 
+2025-04-14 14:14:41 DEBUG [inventory-api]: getCustomerByIdService called with customer_Id: 67fcee213aa17e145ba47af9 
+2025-04-14 14:14:41 INFO [inventory-api]: getCustomerById called with customer_Id: 67fcee213aa17e145ba47b09 
+2025-04-14 14:14:41 DEBUG [inventory-api]: getCustomerByIdService called with customer_Id: 67fcee213aa17e145ba47b09 
+2025-04-14 14:14:41 INFO [inventory-api]: createCustomer called 
+2025-04-14 14:14:41 DEBUG [inventory-api]: Request body: 
+2025-04-14 14:14:41 DEBUG [inventory-api]: Generated customerID: CU-00003 
+2025-04-14 14:14:41 DEBUG [inventory-api]: createCustomerService called with data: 
+2025-04-14 14:14:41 WARN [inventory-api]: Validation failed 
+2025-04-14 14:14:41 INFO [inventory-api]: updateCustomerById called with customer_Id: 67fcee213aa17e145ba47b37 
+2025-04-14 14:14:41 DEBUG [inventory-api]: Update data: 
+2025-04-14 14:14:41 DEBUG [inventory-api]: updateCustomerService called with customer_Id: 67fcee213aa17e145ba47b37 
+2025-04-14 14:14:41 INFO [inventory-api]: updateCustomerById called with customer_Id: 67fcee213aa17e145ba47b47 
+2025-04-14 14:14:41 DEBUG [inventory-api]: Update data: 
+2025-04-14 14:14:41 DEBUG [inventory-api]: updateCustomerService called with customer_Id: 67fcee213aa17e145ba47b47 
+2025-04-14 14:14:41 INFO [inventory-api]: deleteCustomerById called with customer_Id: 67fcee213aa17e145ba47b4d 
+2025-04-14 14:14:41 DEBUG [inventory-api]: deleteCustomerService called with customer_Id: 67fcee213aa17e145ba47b4d 
+2025-04-14 14:14:41 INFO [inventory-api]: deleteCustomerById called with customer_Id: 67fcee213aa17e145ba47b5d 
+2025-04-14 14:14:41 DEBUG [inventory-api]: deleteCustomerService called with customer_Id: 67fcee213aa17e145ba47b5d 
+2025-04-14 14:14:42 INFO [inventory-api]: searchCustomers called 
+2025-04-14 14:14:42 DEBUG [inventory-api]: Search term: 
+2025-04-14 14:14:42 DEBUG [inventory-api]: searchCustomersService called with term: business 
+2025-04-14 14:14:42 INFO [inventory-api]: searchCustomers called 
+2025-04-14 14:14:42 DEBUG [inventory-api]: Search term: 
+2025-04-14 14:14:42 DEBUG [inventory-api]: searchCustomersService called with term: nonexistent 
+2025-04-14 14:14:43 DEBUG [inventory-api]: getSupplierByIdService called with ID: 67fcee2208ad9a1e70be0778 
+2025-04-14 14:14:43 DEBUG [inventory-api]: getSupplierByIdService called with ID: 67fcee2308ad9a1e70be0789 
+2025-04-14 14:14:43 DEBUG [inventory-api]: getSupplierBySupplierIDService called with supplier ID: SP-00002 
+2025-04-14 14:14:43 DEBUG [inventory-api]: getSupplierBySupplierIDService called with supplier ID: SP-99999 
+2025-04-14 14:14:43 DEBUG [inventory-api]: createSupplierService called with data: 
+2025-04-14 14:14:43 DEBUG [inventory-api]: updateSupplierService called with ID: 67fcee2308ad9a1e70be07a9 
+2025-04-14 14:14:43 DEBUG [inventory-api]: updateSupplierService called with ID: 67fcee2308ad9a1e70be07ba 
+2025-04-14 14:14:43 DEBUG [inventory-api]: deleteSupplierService called with ID: 67fcee2308ad9a1e70be07be 
+2025-04-14 14:14:43 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:14:43 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:14:43 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:14:43 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:14:43 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:14:43 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:14:43 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:14:43 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:14:43 DEBUG [inventory-api]: searchSuppliersService called with term: tech 
+2025-04-14 14:14:43 DEBUG [inventory-api]: searchSuppliersService called with term: nonexistent 
+2025-04-14 14:14:43 DEBUG [inventory-api]: searchSuppliersService called with term: food 
+2025-04-14 14:14:43 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:14:43 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:14:43 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:14:43 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:14:44 INFO [inventory-api]: getAllSuppliers called 
+2025-04-14 14:14:44 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:14:44 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:14:44 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:14:44 INFO [inventory-api]: getAllSuppliers called 
+2025-04-14 14:14:44 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:14:44 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:14:44 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:14:44 INFO [inventory-api]: getSupplierById called with ID: 67fcee24eab95b4c3e7cf65c 
+2025-04-14 14:14:44 DEBUG [inventory-api]: getSupplierByIdService called with ID: 67fcee24eab95b4c3e7cf65c 
+2025-04-14 14:14:44 INFO [inventory-api]: getSupplierById called with ID: 67fcee24eab95b4c3e7cf669 
+2025-04-14 14:14:44 DEBUG [inventory-api]: getSupplierByIdService called with ID: 67fcee24eab95b4c3e7cf669 
+2025-04-14 14:14:45 INFO [inventory-api]: createSupplier called 
+2025-04-14 14:14:45 DEBUG [inventory-api]: Request body: 
+2025-04-14 14:14:45 DEBUG [inventory-api]: Supplier data with generated ID: 
+2025-04-14 14:14:45 DEBUG [inventory-api]: createSupplierService called with data: 
+2025-04-14 14:14:45 WARN [inventory-api]: Validation failed 
+2025-04-14 14:14:45 INFO [inventory-api]: updateSupplierById called with ID: 67fcee25eab95b4c3e7cf690 
+2025-04-14 14:14:45 DEBUG [inventory-api]: Update data: 
+2025-04-14 14:14:45 DEBUG [inventory-api]: updateSupplierService called with ID: 67fcee25eab95b4c3e7cf690 
+2025-04-14 14:14:45 INFO [inventory-api]: updateSupplierById called with ID: 67fcee25eab95b4c3e7cf69c 
+2025-04-14 14:14:45 DEBUG [inventory-api]: Update data: 
+2025-04-14 14:14:45 DEBUG [inventory-api]: updateSupplierService called with ID: 67fcee25eab95b4c3e7cf69c 
+2025-04-14 14:14:45 INFO [inventory-api]: deleteSupplierById called with ID: 67fcee25eab95b4c3e7cf6a2 
+2025-04-14 14:14:45 DEBUG [inventory-api]: deleteSupplierService called with ID: 67fcee25eab95b4c3e7cf6a2 
+2025-04-14 14:14:45 INFO [inventory-api]: deleteSupplierById called with ID: 67fcee25eab95b4c3e7cf6ae 
+2025-04-14 14:14:45 DEBUG [inventory-api]: deleteSupplierService called with ID: 67fcee25eab95b4c3e7cf6ae 
+2025-04-14 14:14:45 INFO [inventory-api]: getAllSuppliers called 
+2025-04-14 14:14:45 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:14:45 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:14:45 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:14:45 INFO [inventory-api]: getAllSuppliers called 
+2025-04-14 14:14:45 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:14:45 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:14:45 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:14:45 INFO [inventory-api]: searchSuppliers called 
+2025-04-14 14:14:45 DEBUG [inventory-api]: Search term: 
+2025-04-14 14:14:45 DEBUG [inventory-api]: searchSuppliersService called with term: tech 
+2025-04-14 14:14:45 INFO [inventory-api]: searchSuppliers called 
+2025-04-14 14:14:45 DEBUG [inventory-api]: Search term: 
+2025-04-14 14:14:45 DEBUG [inventory-api]: searchSuppliersService called with term: nonexistent 
+2025-04-14 14:15:17 DEBUG [inventory-api]: getCustomerByIdService called with customer_Id: 67fcee45ef44d58da9bfb6a9 
+2025-04-14 14:15:17 DEBUG [inventory-api]: getCustomerByIdService called with customer_Id: 67fcee45ef44d58da9bfb6c1 
+2025-04-14 14:15:17 DEBUG [inventory-api]: getCustomerByCustomerIDService called with customerID: CU-00002 
+2025-04-14 14:15:17 DEBUG [inventory-api]: getCustomerByCustomerIDService called with customerID: CU-99999 
+2025-04-14 14:15:17 DEBUG [inventory-api]: createCustomerService called with data: 
+2025-04-14 14:15:17 DEBUG [inventory-api]: updateCustomerService called with customer_Id: 67fcee45ef44d58da9bfb6e9 
+2025-04-14 14:15:17 DEBUG [inventory-api]: updateCustomerService called with customer_Id: 67fcee45ef44d58da9bfb6ff 
+2025-04-14 14:15:17 DEBUG [inventory-api]: deleteCustomerService called with customer_Id: 67fcee45ef44d58da9bfb703 
+2025-04-14 14:15:18 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 14:15:18 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:15:18 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 14:15:18 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:15:18 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 14:15:18 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:15:18 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 14:15:18 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:15:18 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 14:15:18 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:15:18 DEBUG [inventory-api]: searchCustomersService called with term: individual 
+2025-04-14 14:15:18 DEBUG [inventory-api]: searchCustomersService called with term: nonexistent 
+2025-04-14 14:15:18 DEBUG [inventory-api]: searchCustomersService called with term: business 
+2025-04-14 14:15:18 INFO [inventory-api]: getAllCustomers called 
+2025-04-14 14:15:18 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:15:18 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 14:15:18 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:15:19 INFO [inventory-api]: getAllCustomers called 
+2025-04-14 14:15:19 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:15:19 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 14:15:19 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:15:19 INFO [inventory-api]: getCustomerById called with customer_Id: 67fcee474f0f7d0b7fb4733d 
+2025-04-14 14:15:19 DEBUG [inventory-api]: getCustomerByIdService called with customer_Id: 67fcee474f0f7d0b7fb4733d 
+2025-04-14 14:15:19 INFO [inventory-api]: getCustomerById called with customer_Id: 67fcee474f0f7d0b7fb4734e 
+2025-04-14 14:15:19 DEBUG [inventory-api]: getCustomerByIdService called with customer_Id: 67fcee474f0f7d0b7fb4734e 
+2025-04-14 14:15:19 INFO [inventory-api]: createCustomer called 
+2025-04-14 14:15:19 DEBUG [inventory-api]: Request body: 
+2025-04-14 14:15:19 DEBUG [inventory-api]: Generated customerID: CU-00003 
+2025-04-14 14:15:19 DEBUG [inventory-api]: createCustomerService called with data: 
+2025-04-14 14:15:19 WARN [inventory-api]: Validation failed 
+2025-04-14 14:15:19 INFO [inventory-api]: updateCustomerById called with customer_Id: 67fcee474f0f7d0b7fb4737c 
+2025-04-14 14:15:19 DEBUG [inventory-api]: Update data: 
+2025-04-14 14:15:19 DEBUG [inventory-api]: updateCustomerService called with customer_Id: 67fcee474f0f7d0b7fb4737c 
+2025-04-14 14:15:19 INFO [inventory-api]: updateCustomerById called with customer_Id: 67fcee474f0f7d0b7fb4738c 
+2025-04-14 14:15:19 DEBUG [inventory-api]: Update data: 
+2025-04-14 14:15:19 DEBUG [inventory-api]: updateCustomerService called with customer_Id: 67fcee474f0f7d0b7fb4738c 
+2025-04-14 14:15:19 INFO [inventory-api]: deleteCustomerById called with customer_Id: 67fcee474f0f7d0b7fb47392 
+2025-04-14 14:15:19 DEBUG [inventory-api]: deleteCustomerService called with customer_Id: 67fcee474f0f7d0b7fb47392 
+2025-04-14 14:15:19 INFO [inventory-api]: deleteCustomerById called with customer_Id: 67fcee474f0f7d0b7fb473a2 
+2025-04-14 14:15:19 DEBUG [inventory-api]: deleteCustomerService called with customer_Id: 67fcee474f0f7d0b7fb473a2 
+2025-04-14 14:15:20 INFO [inventory-api]: searchCustomers called 
+2025-04-14 14:15:20 DEBUG [inventory-api]: Search term: 
+2025-04-14 14:15:20 DEBUG [inventory-api]: searchCustomersService called with term: business 
+2025-04-14 14:15:20 INFO [inventory-api]: searchCustomers called 
+2025-04-14 14:15:20 DEBUG [inventory-api]: Search term: 
+2025-04-14 14:15:20 DEBUG [inventory-api]: searchCustomersService called with term: nonexistent 
+2025-04-14 14:15:23 DEBUG [inventory-api]: getSupplierByIdService called with ID: 67fcee4bfc38554ac7f4e33b 
+2025-04-14 14:15:23 DEBUG [inventory-api]: getSupplierByIdService called with ID: 67fcee4bfc38554ac7f4e34c 
+2025-04-14 14:15:23 DEBUG [inventory-api]: getSupplierBySupplierIDService called with supplier ID: SP-00002 
+2025-04-14 14:15:23 DEBUG [inventory-api]: getSupplierBySupplierIDService called with supplier ID: SP-99999 
+2025-04-14 14:15:23 DEBUG [inventory-api]: createSupplierService called with data: 
+2025-04-14 14:15:23 INFO [inventory-api]: getAllSuppliers called 
+2025-04-14 14:15:23 DEBUG [inventory-api]: updateSupplierService called with ID: 67fcee4bfc38554ac7f4e36d 
+2025-04-14 14:15:23 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:15:23 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:15:23 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:15:23 DEBUG [inventory-api]: updateSupplierService called with ID: 67fcee4bfc38554ac7f4e37d 
+2025-04-14 14:15:23 DEBUG [inventory-api]: deleteSupplierService called with ID: 67fcee4bfc38554ac7f4e381 
+2025-04-14 14:15:23 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:15:23 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:15:23 INFO [inventory-api]: getAllSuppliers called 
+2025-04-14 14:15:23 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:15:23 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:15:23 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:15:23 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:15:23 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:15:23 INFO [inventory-api]: getSupplierById called with ID: 67fcee4bc8623d3228d24fa8 
+2025-04-14 14:15:23 DEBUG [inventory-api]: getSupplierByIdService called with ID: 67fcee4bc8623d3228d24fa8 
+2025-04-14 14:15:23 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:15:23 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:15:23 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:15:23 INFO [inventory-api]: getSupplierById called with ID: 67fcee4bc8623d3228d24fb6 
+2025-04-14 14:15:23 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:15:23 DEBUG [inventory-api]: getSupplierByIdService called with ID: 67fcee4bc8623d3228d24fb6 
+2025-04-14 14:15:23 DEBUG [inventory-api]: searchSuppliersService called with term: tech 
+2025-04-14 14:15:24 DEBUG [inventory-api]: searchSuppliersService called with term: nonexistent 
+2025-04-14 14:15:24 DEBUG [inventory-api]: searchSuppliersService called with term: food 
+2025-04-14 14:15:24 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:15:24 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:15:24 INFO [inventory-api]: createSupplier called 
+2025-04-14 14:15:24 DEBUG [inventory-api]: Request body: 
+2025-04-14 14:15:24 DEBUG [inventory-api]: Supplier data with generated ID: 
+2025-04-14 14:15:24 DEBUG [inventory-api]: createSupplierService called with data: 
+2025-04-14 14:15:24 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:15:24 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:15:24 WARN [inventory-api]: Validation failed 
+2025-04-14 14:15:24 INFO [inventory-api]: updateSupplierById called with ID: 67fcee4cc8623d3228d24fdf 
+2025-04-14 14:15:24 DEBUG [inventory-api]: Update data: 
+2025-04-14 14:15:24 DEBUG [inventory-api]: updateSupplierService called with ID: 67fcee4cc8623d3228d24fdf 
+2025-04-14 14:15:24 INFO [inventory-api]: updateSupplierById called with ID: 67fcee4cc8623d3228d24fec 
+2025-04-14 14:15:24 DEBUG [inventory-api]: Update data: 
+2025-04-14 14:15:24 DEBUG [inventory-api]: updateSupplierService called with ID: 67fcee4cc8623d3228d24fec 
+2025-04-14 14:15:24 INFO [inventory-api]: deleteSupplierById called with ID: 67fcee4cc8623d3228d24ff2 
+2025-04-14 14:15:24 DEBUG [inventory-api]: deleteSupplierService called with ID: 67fcee4cc8623d3228d24ff2 
+2025-04-14 14:15:24 INFO [inventory-api]: deleteSupplierById called with ID: 67fcee4cc8623d3228d24ffe 
+2025-04-14 14:15:24 DEBUG [inventory-api]: deleteSupplierService called with ID: 67fcee4cc8623d3228d24ffe 
+2025-04-14 14:15:24 INFO [inventory-api]: getAllSuppliers called 
+2025-04-14 14:15:24 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:15:24 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:15:24 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:15:24 INFO [inventory-api]: getAllSuppliers called 
+2025-04-14 14:15:24 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:15:24 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:15:24 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:15:24 INFO [inventory-api]: searchSuppliers called 
+2025-04-14 14:15:24 DEBUG [inventory-api]: Search term: 
+2025-04-14 14:15:24 DEBUG [inventory-api]: searchSuppliersService called with term: tech 
+2025-04-14 14:15:24 INFO [inventory-api]: searchSuppliers called 
+2025-04-14 14:15:24 DEBUG [inventory-api]: Search term: 
+2025-04-14 14:15:24 DEBUG [inventory-api]: searchSuppliersService called with term: nonexistent 
+2025-04-14 14:17:18 DEBUG [inventory-api]: getCustomerByIdService called with customer_Id: 67fceebeec2b497726150001 
+2025-04-14 14:17:18 DEBUG [inventory-api]: getCustomerByIdService called with customer_Id: 67fceebeec2b497726150018 
+2025-04-14 14:17:18 DEBUG [inventory-api]: getCustomerByCustomerIDService called with customerID: CU-00002 
+2025-04-14 14:17:18 DEBUG [inventory-api]: getCustomerByCustomerIDService called with customerID: CU-99999 
+2025-04-14 14:17:18 DEBUG [inventory-api]: createCustomerService called with data: 
+2025-04-14 14:17:18 DEBUG [inventory-api]: updateCustomerService called with customer_Id: 67fceebeec2b497726150042 
+2025-04-14 14:17:18 DEBUG [inventory-api]: updateCustomerService called with customer_Id: 67fceebeec2b497726150058 
+2025-04-14 14:17:18 DEBUG [inventory-api]: deleteCustomerService called with customer_Id: 67fceebeec2b49772615005c 
+2025-04-14 14:17:18 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 14:17:18 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:17:18 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 14:17:18 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:17:18 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 14:17:18 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:17:18 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 14:17:18 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:17:18 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 14:17:18 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:17:18 DEBUG [inventory-api]: searchCustomersService called with term: individual 
+2025-04-14 14:17:18 DEBUG [inventory-api]: searchCustomersService called with term: nonexistent 
+2025-04-14 14:17:18 DEBUG [inventory-api]: searchCustomersService called with term: business 
+2025-04-14 14:17:19 INFO [inventory-api]: getAllCustomers called 
+2025-04-14 14:17:19 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:17:19 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 14:17:19 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:17:19 INFO [inventory-api]: getAllCustomers called 
+2025-04-14 14:17:19 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:17:19 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 14:17:19 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:17:19 INFO [inventory-api]: getCustomerById called with customer_Id: 67fceebf0ac5b1b4842d7d98 
+2025-04-14 14:17:19 DEBUG [inventory-api]: getCustomerByIdService called with customer_Id: 67fceebf0ac5b1b4842d7d98 
+2025-04-14 14:17:19 INFO [inventory-api]: getCustomerById called with customer_Id: 67fceebf0ac5b1b4842d7da8 
+2025-04-14 14:17:19 DEBUG [inventory-api]: getCustomerByIdService called with customer_Id: 67fceebf0ac5b1b4842d7da8 
+2025-04-14 14:17:19 INFO [inventory-api]: createCustomer called 
+2025-04-14 14:17:19 DEBUG [inventory-api]: Request body: 
+2025-04-14 14:17:19 DEBUG [inventory-api]: Generated customerID: CU-00003 
+2025-04-14 14:17:19 DEBUG [inventory-api]: createCustomerService called with data: 
+2025-04-14 14:17:19 WARN [inventory-api]: Validation failed 
+2025-04-14 14:17:19 INFO [inventory-api]: updateCustomerById called with customer_Id: 67fceebf0ac5b1b4842d7dd6 
+2025-04-14 14:17:19 DEBUG [inventory-api]: Update data: 
+2025-04-14 14:17:19 DEBUG [inventory-api]: updateCustomerService called with customer_Id: 67fceebf0ac5b1b4842d7dd6 
+2025-04-14 14:17:20 INFO [inventory-api]: updateCustomerById called with customer_Id: 67fceebf0ac5b1b4842d7de6 
+2025-04-14 14:17:20 DEBUG [inventory-api]: Update data: 
+2025-04-14 14:17:20 DEBUG [inventory-api]: updateCustomerService called with customer_Id: 67fceebf0ac5b1b4842d7de6 
+2025-04-14 14:17:20 INFO [inventory-api]: deleteCustomerById called with customer_Id: 67fceec00ac5b1b4842d7dec 
+2025-04-14 14:17:20 DEBUG [inventory-api]: deleteCustomerService called with customer_Id: 67fceec00ac5b1b4842d7dec 
+2025-04-14 14:17:20 INFO [inventory-api]: deleteCustomerById called with customer_Id: 67fceec00ac5b1b4842d7dfc 
+2025-04-14 14:17:20 DEBUG [inventory-api]: deleteCustomerService called with customer_Id: 67fceec00ac5b1b4842d7dfc 
+2025-04-14 14:17:20 INFO [inventory-api]: searchCustomers called 
+2025-04-14 14:17:20 DEBUG [inventory-api]: Search term: 
+2025-04-14 14:17:20 DEBUG [inventory-api]: searchCustomersService called with term: business 
+2025-04-14 14:17:20 INFO [inventory-api]: searchCustomers called 
+2025-04-14 14:17:20 DEBUG [inventory-api]: Search term: 
+2025-04-14 14:17:20 DEBUG [inventory-api]: searchCustomersService called with term: nonexistent 
+2025-04-14 14:17:22 DEBUG [inventory-api]: getSupplierByIdService called with ID: 67fceec254c4abebcaf5ccea 
+2025-04-14 14:17:22 DEBUG [inventory-api]: getSupplierByIdService called with ID: 67fceec254c4abebcaf5ccfc 
+2025-04-14 14:17:22 DEBUG [inventory-api]: getSupplierBySupplierIDService called with supplier ID: SP-00002 
+2025-04-14 14:17:22 DEBUG [inventory-api]: getSupplierBySupplierIDService called with supplier ID: SP-99999 
+2025-04-14 14:17:22 DEBUG [inventory-api]: createSupplierService called with data: 
+2025-04-14 14:17:22 DEBUG [inventory-api]: updateSupplierService called with ID: 67fceec254c4abebcaf5cd1c 
+2025-04-14 14:17:22 DEBUG [inventory-api]: updateSupplierService called with ID: 67fceec254c4abebcaf5cd2c 
+2025-04-14 14:17:22 DEBUG [inventory-api]: deleteSupplierService called with ID: 67fceec254c4abebcaf5cd30 
+2025-04-14 14:17:22 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:17:22 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:17:22 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:17:22 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:17:22 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:17:22 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:17:22 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:17:22 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:17:22 DEBUG [inventory-api]: searchSuppliersService called with term: tech 
+2025-04-14 14:17:22 DEBUG [inventory-api]: searchSuppliersService called with term: nonexistent 
+2025-04-14 14:17:22 INFO [inventory-api]: getAllSuppliers called 
+2025-04-14 14:17:22 DEBUG [inventory-api]: searchSuppliersService called with term: food 
+2025-04-14 14:17:22 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:17:22 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:17:22 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:17:22 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:17:22 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:17:22 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:17:22 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:17:22 INFO [inventory-api]: getAllSuppliers called 
+2025-04-14 14:17:22 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:17:22 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:17:22 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:17:22 INFO [inventory-api]: getSupplierById called with ID: 67fceec20bdb11da69c391c2 
+2025-04-14 14:17:22 DEBUG [inventory-api]: getSupplierByIdService called with ID: 67fceec20bdb11da69c391c2 
+2025-04-14 14:17:22 INFO [inventory-api]: getSupplierById called with ID: 67fceec20bdb11da69c391d0 
+2025-04-14 14:17:22 DEBUG [inventory-api]: getSupplierByIdService called with ID: 67fceec20bdb11da69c391d0 
+2025-04-14 14:17:22 INFO [inventory-api]: createSupplier called 
+2025-04-14 14:17:22 DEBUG [inventory-api]: Request body: 
+2025-04-14 14:17:22 DEBUG [inventory-api]: Supplier data with generated ID: 
+2025-04-14 14:17:22 DEBUG [inventory-api]: createSupplierService called with data: 
+2025-04-14 14:17:23 WARN [inventory-api]: Validation failed 
+2025-04-14 14:17:23 INFO [inventory-api]: updateSupplierById called with ID: 67fceec30bdb11da69c391fa 
+2025-04-14 14:17:23 DEBUG [inventory-api]: Update data: 
+2025-04-14 14:17:23 DEBUG [inventory-api]: updateSupplierService called with ID: 67fceec30bdb11da69c391fa 
+2025-04-14 14:17:23 INFO [inventory-api]: updateSupplierById called with ID: 67fceec30bdb11da69c39207 
+2025-04-14 14:17:23 DEBUG [inventory-api]: Update data: 
+2025-04-14 14:17:23 DEBUG [inventory-api]: updateSupplierService called with ID: 67fceec30bdb11da69c39207 
+2025-04-14 14:17:23 INFO [inventory-api]: deleteSupplierById called with ID: 67fceec30bdb11da69c3920e 
+2025-04-14 14:17:23 DEBUG [inventory-api]: deleteSupplierService called with ID: 67fceec30bdb11da69c3920e 
+2025-04-14 14:17:23 INFO [inventory-api]: deleteSupplierById called with ID: 67fceec30bdb11da69c3921a 
+2025-04-14 14:17:23 DEBUG [inventory-api]: deleteSupplierService called with ID: 67fceec30bdb11da69c3921a 
+2025-04-14 14:17:23 INFO [inventory-api]: getAllSuppliers called 
+2025-04-14 14:17:23 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:17:23 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:17:23 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:17:23 INFO [inventory-api]: getAllSuppliers called 
+2025-04-14 14:17:23 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:17:23 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:17:23 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:17:23 INFO [inventory-api]: searchSuppliers called 
+2025-04-14 14:17:23 DEBUG [inventory-api]: Search term: 
+2025-04-14 14:17:23 DEBUG [inventory-api]: searchSuppliersService called with term: tech 
+2025-04-14 14:17:23 INFO [inventory-api]: searchSuppliers called 
+2025-04-14 14:17:23 DEBUG [inventory-api]: Search term: 
+2025-04-14 14:17:23 DEBUG [inventory-api]: searchSuppliersService called with term: nonexistent 
+2025-04-14 14:19:22 DEBUG [inventory-api]: getCustomerByIdService called with customer_Id: 67fcef3a6eb926e625a2c1d9 
+2025-04-14 14:19:22 DEBUG [inventory-api]: getCustomerByIdService called with customer_Id: 67fcef3a6eb926e625a2c1f1 
+2025-04-14 14:19:22 DEBUG [inventory-api]: getCustomerByCustomerIDService called with customerID: CU-00002 
+2025-04-14 14:19:22 DEBUG [inventory-api]: getCustomerByCustomerIDService called with customerID: CU-99999 
+2025-04-14 14:19:22 DEBUG [inventory-api]: createCustomerService called with data: 
+2025-04-14 14:19:22 DEBUG [inventory-api]: updateCustomerService called with customer_Id: 67fcef3a6eb926e625a2c21a 
+2025-04-14 14:19:22 DEBUG [inventory-api]: updateCustomerService called with customer_Id: 67fcef3a6eb926e625a2c230 
+2025-04-14 14:19:22 DEBUG [inventory-api]: deleteCustomerService called with customer_Id: 67fcef3a6eb926e625a2c234 
+2025-04-14 14:19:23 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 14:19:23 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:19:23 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 14:19:23 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:19:23 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 14:19:23 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:19:23 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 14:19:23 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:19:23 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 14:19:23 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:19:23 DEBUG [inventory-api]: searchCustomersService called with term: individual 
+2025-04-14 14:19:23 DEBUG [inventory-api]: searchCustomersService called with term: nonexistent 
+2025-04-14 14:19:23 DEBUG [inventory-api]: searchCustomersService called with term: business 
+2025-04-14 14:19:23 INFO [inventory-api]: getAllCustomers called 
+2025-04-14 14:19:23 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:19:23 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 14:19:23 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:19:23 INFO [inventory-api]: getAllCustomers called 
+2025-04-14 14:19:23 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:19:23 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 14:19:23 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:19:23 INFO [inventory-api]: getCustomerById called with customer_Id: 67fcef3bb575951eb5ef3d25 
+2025-04-14 14:19:23 DEBUG [inventory-api]: getCustomerByIdService called with customer_Id: 67fcef3bb575951eb5ef3d25 
+2025-04-14 14:19:23 INFO [inventory-api]: getCustomerById called with customer_Id: 67fcef3bb575951eb5ef3d35 
+2025-04-14 14:19:23 DEBUG [inventory-api]: getCustomerByIdService called with customer_Id: 67fcef3bb575951eb5ef3d35 
+2025-04-14 14:19:23 INFO [inventory-api]: createCustomer called 
+2025-04-14 14:19:23 DEBUG [inventory-api]: Request body: 
+2025-04-14 14:19:23 DEBUG [inventory-api]: Generated customerID: CU-00003 
+2025-04-14 14:19:23 DEBUG [inventory-api]: createCustomerService called with data: 
+2025-04-14 14:19:24 WARN [inventory-api]: Validation failed 
+2025-04-14 14:19:24 INFO [inventory-api]: updateCustomerById called with customer_Id: 67fcef3cb575951eb5ef3d63 
+2025-04-14 14:19:24 DEBUG [inventory-api]: Update data: 
+2025-04-14 14:19:24 DEBUG [inventory-api]: updateCustomerService called with customer_Id: 67fcef3cb575951eb5ef3d63 
+2025-04-14 14:19:24 INFO [inventory-api]: updateCustomerById called with customer_Id: 67fcef3cb575951eb5ef3d73 
+2025-04-14 14:19:24 DEBUG [inventory-api]: Update data: 
+2025-04-14 14:19:24 DEBUG [inventory-api]: updateCustomerService called with customer_Id: 67fcef3cb575951eb5ef3d73 
+2025-04-14 14:19:24 INFO [inventory-api]: deleteCustomerById called with customer_Id: 67fcef3cb575951eb5ef3d79 
+2025-04-14 14:19:24 DEBUG [inventory-api]: deleteCustomerService called with customer_Id: 67fcef3cb575951eb5ef3d79 
+2025-04-14 14:19:24 INFO [inventory-api]: deleteCustomerById called with customer_Id: 67fcef3cb575951eb5ef3d89 
+2025-04-14 14:19:24 DEBUG [inventory-api]: deleteCustomerService called with customer_Id: 67fcef3cb575951eb5ef3d89 
+2025-04-14 14:19:24 INFO [inventory-api]: searchCustomers called 
+2025-04-14 14:19:24 DEBUG [inventory-api]: Search term: 
+2025-04-14 14:19:24 DEBUG [inventory-api]: searchCustomersService called with term: business 
+2025-04-14 14:19:24 INFO [inventory-api]: searchCustomers called 
+2025-04-14 14:19:24 DEBUG [inventory-api]: Search term: 
+2025-04-14 14:19:24 DEBUG [inventory-api]: searchCustomersService called with term: nonexistent 
+2025-04-14 14:19:28 DEBUG [inventory-api]: getSupplierByIdService called with ID: 67fcef40878062ccb49a6573 
+2025-04-14 14:19:28 DEBUG [inventory-api]: getSupplierByIdService called with ID: 67fcef40878062ccb49a6584 
+2025-04-14 14:19:28 DEBUG [inventory-api]: getSupplierBySupplierIDService called with supplier ID: SP-00002 
+2025-04-14 14:19:29 DEBUG [inventory-api]: getSupplierBySupplierIDService called with supplier ID: SP-99999 
+2025-04-14 14:19:29 DEBUG [inventory-api]: createSupplierService called with data: 
+2025-04-14 14:19:29 INFO [inventory-api]: getAllSuppliers called 
+2025-04-14 14:19:29 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:19:29 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:19:29 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:19:29 DEBUG [inventory-api]: updateSupplierService called with ID: 67fcef41878062ccb49a65a5 
+2025-04-14 14:19:29 DEBUG [inventory-api]: updateSupplierService called with ID: 67fcef41878062ccb49a65b6 
+2025-04-14 14:19:29 INFO [inventory-api]: getAllSuppliers called 
+2025-04-14 14:19:29 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:19:29 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:19:29 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:19:29 INFO [inventory-api]: getSupplierById called with ID: 67fcef41e1dfdbb09809d307 
+2025-04-14 14:19:29 DEBUG [inventory-api]: deleteSupplierService called with ID: 67fcef41878062ccb49a65ba 
+2025-04-14 14:19:29 DEBUG [inventory-api]: getSupplierByIdService called with ID: 67fcef41e1dfdbb09809d307 
+2025-04-14 14:19:29 INFO [inventory-api]: getSupplierById called with ID: 67fcef41e1dfdbb09809d313 
+2025-04-14 14:19:29 DEBUG [inventory-api]: getSupplierByIdService called with ID: 67fcef41e1dfdbb09809d313 
+2025-04-14 14:19:29 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:19:29 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:19:29 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:19:29 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:19:29 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:19:29 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:19:29 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:19:29 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:19:29 DEBUG [inventory-api]: searchSuppliersService called with term: tech 
+2025-04-14 14:19:29 INFO [inventory-api]: createSupplier called 
+2025-04-14 14:19:29 DEBUG [inventory-api]: searchSuppliersService called with term: nonexistent 
+2025-04-14 14:19:29 DEBUG [inventory-api]: searchSuppliersService called with term: food 
+2025-04-14 14:19:29 DEBUG [inventory-api]: Request body: 
+2025-04-14 14:19:29 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:19:29 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:19:29 DEBUG [inventory-api]: Supplier data with generated ID: 
+2025-04-14 14:19:29 DEBUG [inventory-api]: createSupplierService called with data: 
+2025-04-14 14:19:29 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:19:29 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:19:29 WARN [inventory-api]: Validation failed 
+2025-04-14 14:19:29 INFO [inventory-api]: updateSupplierById called with ID: 67fcef41e1dfdbb09809d33d 
+2025-04-14 14:19:29 DEBUG [inventory-api]: Update data: 
+2025-04-14 14:19:29 DEBUG [inventory-api]: updateSupplierService called with ID: 67fcef41e1dfdbb09809d33d 
+2025-04-14 14:19:29 INFO [inventory-api]: updateSupplierById called with ID: 67fcef41e1dfdbb09809d349 
+2025-04-14 14:19:29 DEBUG [inventory-api]: Update data: 
+2025-04-14 14:19:29 DEBUG [inventory-api]: updateSupplierService called with ID: 67fcef41e1dfdbb09809d349 
+2025-04-14 14:19:29 INFO [inventory-api]: deleteSupplierById called with ID: 67fcef41e1dfdbb09809d351 
+2025-04-14 14:19:29 DEBUG [inventory-api]: deleteSupplierService called with ID: 67fcef41e1dfdbb09809d351 
+2025-04-14 14:19:29 INFO [inventory-api]: deleteSupplierById called with ID: 67fcef41e1dfdbb09809d35d 
+2025-04-14 14:19:29 DEBUG [inventory-api]: deleteSupplierService called with ID: 67fcef41e1dfdbb09809d35d 
+2025-04-14 14:19:29 INFO [inventory-api]: getAllSuppliers called 
+2025-04-14 14:19:29 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:19:29 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:19:29 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:19:30 INFO [inventory-api]: getAllSuppliers called 
+2025-04-14 14:19:30 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:19:30 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:19:30 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:19:30 INFO [inventory-api]: searchSuppliers called 
+2025-04-14 14:19:30 DEBUG [inventory-api]: Search term: 
+2025-04-14 14:19:30 DEBUG [inventory-api]: searchSuppliersService called with term: tech 
+2025-04-14 14:19:30 INFO [inventory-api]: searchSuppliers called 
+2025-04-14 14:19:30 DEBUG [inventory-api]: Search term: 
+2025-04-14 14:19:30 DEBUG [inventory-api]: searchSuppliersService called with term: nonexistent 
+2025-04-14 14:19:39 DEBUG [inventory-api]: getCustomerByIdService called with customer_Id: 67fcef4bdb77b831a363c357 
+2025-04-14 14:19:39 DEBUG [inventory-api]: getCustomerByIdService called with customer_Id: 67fcef4bdb77b831a363c36f 
+2025-04-14 14:19:39 DEBUG [inventory-api]: getCustomerByCustomerIDService called with customerID: CU-00002 
+2025-04-14 14:19:39 DEBUG [inventory-api]: getCustomerByCustomerIDService called with customerID: CU-99999 
+2025-04-14 14:19:39 DEBUG [inventory-api]: createCustomerService called with data: 
+2025-04-14 14:19:40 DEBUG [inventory-api]: updateCustomerService called with customer_Id: 67fcef4cdb77b831a363c398 
+2025-04-14 14:19:40 DEBUG [inventory-api]: updateCustomerService called with customer_Id: 67fcef4cdb77b831a363c3ae 
+2025-04-14 14:19:40 DEBUG [inventory-api]: deleteCustomerService called with customer_Id: 67fcef4cdb77b831a363c3b2 
+2025-04-14 14:19:40 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 14:19:40 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:19:40 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 14:19:40 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:19:40 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 14:19:40 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:19:40 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 14:19:40 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:19:40 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 14:19:40 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:19:40 DEBUG [inventory-api]: searchCustomersService called with term: individual 
+2025-04-14 14:19:40 DEBUG [inventory-api]: searchCustomersService called with term: nonexistent 
+2025-04-14 14:19:40 DEBUG [inventory-api]: searchCustomersService called with term: business 
+2025-04-14 14:19:41 INFO [inventory-api]: getAllCustomers called 
+2025-04-14 14:19:41 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:19:41 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 14:19:41 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:19:41 INFO [inventory-api]: getAllCustomers called 
+2025-04-14 14:19:41 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:19:41 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 14:19:41 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:19:41 INFO [inventory-api]: getCustomerById called with customer_Id: 67fcef4dba8551c10c65f3cc 
+2025-04-14 14:19:41 DEBUG [inventory-api]: getCustomerByIdService called with customer_Id: 67fcef4dba8551c10c65f3cc 
+2025-04-14 14:19:41 INFO [inventory-api]: getCustomerById called with customer_Id: 67fcef4dba8551c10c65f3dc 
+2025-04-14 14:19:41 DEBUG [inventory-api]: getCustomerByIdService called with customer_Id: 67fcef4dba8551c10c65f3dc 
+2025-04-14 14:19:41 INFO [inventory-api]: createCustomer called 
+2025-04-14 14:19:41 DEBUG [inventory-api]: Request body: 
+2025-04-14 14:19:41 DEBUG [inventory-api]: Generated customerID: CU-00003 
+2025-04-14 14:19:41 DEBUG [inventory-api]: createCustomerService called with data: 
+2025-04-14 14:19:41 WARN [inventory-api]: Validation failed 
+2025-04-14 14:19:41 INFO [inventory-api]: updateCustomerById called with customer_Id: 67fcef4dba8551c10c65f40a 
+2025-04-14 14:19:41 DEBUG [inventory-api]: Update data: 
+2025-04-14 14:19:41 DEBUG [inventory-api]: updateCustomerService called with customer_Id: 67fcef4dba8551c10c65f40a 
+2025-04-14 14:19:41 INFO [inventory-api]: updateCustomerById called with customer_Id: 67fcef4dba8551c10c65f41a 
+2025-04-14 14:19:41 DEBUG [inventory-api]: Update data: 
+2025-04-14 14:19:41 DEBUG [inventory-api]: updateCustomerService called with customer_Id: 67fcef4dba8551c10c65f41a 
+2025-04-14 14:19:42 INFO [inventory-api]: deleteCustomerById called with customer_Id: 67fcef4eba8551c10c65f420 
+2025-04-14 14:19:42 DEBUG [inventory-api]: deleteCustomerService called with customer_Id: 67fcef4eba8551c10c65f420 
+2025-04-14 14:19:42 INFO [inventory-api]: deleteCustomerById called with customer_Id: 67fcef4eba8551c10c65f430 
+2025-04-14 14:19:42 DEBUG [inventory-api]: deleteCustomerService called with customer_Id: 67fcef4eba8551c10c65f430 
+2025-04-14 14:19:42 INFO [inventory-api]: searchCustomers called 
+2025-04-14 14:19:42 DEBUG [inventory-api]: Search term: 
+2025-04-14 14:19:42 DEBUG [inventory-api]: searchCustomersService called with term: business 
+2025-04-14 14:19:42 INFO [inventory-api]: searchCustomers called 
+2025-04-14 14:19:42 DEBUG [inventory-api]: Search term: 
+2025-04-14 14:19:42 DEBUG [inventory-api]: searchCustomersService called with term: nonexistent 
+2025-04-14 14:19:45 DEBUG [inventory-api]: getSupplierByIdService called with ID: 67fcef5174fc169ec9639255 
+2025-04-14 14:19:45 DEBUG [inventory-api]: getSupplierByIdService called with ID: 67fcef5174fc169ec9639266 
+2025-04-14 14:19:46 DEBUG [inventory-api]: getSupplierBySupplierIDService called with supplier ID: SP-00002 
+2025-04-14 14:19:46 DEBUG [inventory-api]: getSupplierBySupplierIDService called with supplier ID: SP-99999 
+2025-04-14 14:19:46 DEBUG [inventory-api]: createSupplierService called with data: 
+2025-04-14 14:19:46 DEBUG [inventory-api]: updateSupplierService called with ID: 67fcef5274fc169ec9639286 
+2025-04-14 14:19:46 DEBUG [inventory-api]: updateSupplierService called with ID: 67fcef5274fc169ec9639297 
+2025-04-14 14:19:46 DEBUG [inventory-api]: deleteSupplierService called with ID: 67fcef5274fc169ec963929b 
+2025-04-14 14:19:46 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:19:46 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:19:46 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:19:46 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:19:46 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:19:46 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:19:46 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:19:46 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:19:46 INFO [inventory-api]: getAllSuppliers called 
+2025-04-14 14:19:46 DEBUG [inventory-api]: searchSuppliersService called with term: tech 
+2025-04-14 14:19:46 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:19:46 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:19:46 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:19:46 DEBUG [inventory-api]: searchSuppliersService called with term: nonexistent 
+2025-04-14 14:19:46 DEBUG [inventory-api]: searchSuppliersService called with term: food 
+2025-04-14 14:19:46 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:19:46 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:19:46 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:19:46 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:19:46 INFO [inventory-api]: getAllSuppliers called 
+2025-04-14 14:19:46 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:19:46 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:19:46 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:19:46 INFO [inventory-api]: getSupplierById called with ID: 67fcef526cb41ad800d6850a 
+2025-04-14 14:19:46 DEBUG [inventory-api]: getSupplierByIdService called with ID: 67fcef526cb41ad800d6850a 
+2025-04-14 14:19:46 INFO [inventory-api]: getSupplierById called with ID: 67fcef526cb41ad800d68517 
+2025-04-14 14:19:46 DEBUG [inventory-api]: getSupplierByIdService called with ID: 67fcef526cb41ad800d68517 
+2025-04-14 14:19:46 INFO [inventory-api]: createSupplier called 
+2025-04-14 14:19:46 DEBUG [inventory-api]: Request body: 
+2025-04-14 14:19:46 DEBUG [inventory-api]: Supplier data with generated ID: 
+2025-04-14 14:19:46 DEBUG [inventory-api]: createSupplierService called with data: 
+2025-04-14 14:19:46 WARN [inventory-api]: Validation failed 
+2025-04-14 14:19:46 INFO [inventory-api]: updateSupplierById called with ID: 67fcef526cb41ad800d6853f 
+2025-04-14 14:19:46 DEBUG [inventory-api]: Update data: 
+2025-04-14 14:19:46 DEBUG [inventory-api]: updateSupplierService called with ID: 67fcef526cb41ad800d6853f 
+2025-04-14 14:19:46 INFO [inventory-api]: updateSupplierById called with ID: 67fcef526cb41ad800d6854b 
+2025-04-14 14:19:46 DEBUG [inventory-api]: Update data: 
+2025-04-14 14:19:46 DEBUG [inventory-api]: updateSupplierService called with ID: 67fcef526cb41ad800d6854b 
+2025-04-14 14:19:46 INFO [inventory-api]: deleteSupplierById called with ID: 67fcef526cb41ad800d68551 
+2025-04-14 14:19:46 DEBUG [inventory-api]: deleteSupplierService called with ID: 67fcef526cb41ad800d68551 
+2025-04-14 14:19:46 INFO [inventory-api]: deleteSupplierById called with ID: 67fcef526cb41ad800d6855d 
+2025-04-14 14:19:46 DEBUG [inventory-api]: deleteSupplierService called with ID: 67fcef526cb41ad800d6855d 
+2025-04-14 14:19:46 INFO [inventory-api]: getAllSuppliers called 
+2025-04-14 14:19:46 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:19:46 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:19:46 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:19:46 INFO [inventory-api]: getAllSuppliers called 
+2025-04-14 14:19:46 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:19:46 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:19:46 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:19:46 INFO [inventory-api]: searchSuppliers called 
+2025-04-14 14:19:46 DEBUG [inventory-api]: Search term: 
+2025-04-14 14:19:46 DEBUG [inventory-api]: searchSuppliersService called with term: tech 
+2025-04-14 14:19:46 INFO [inventory-api]: searchSuppliers called 
+2025-04-14 14:19:46 DEBUG [inventory-api]: Search term: 
+2025-04-14 14:19:46 DEBUG [inventory-api]: searchSuppliersService called with term: nonexistent 
+2025-04-14 14:20:07 DEBUG [inventory-api]: getCustomerByIdService called with customer_Id: 67fcef67cf310d7a5ead771c 
+2025-04-14 14:20:07 DEBUG [inventory-api]: getCustomerByIdService called with customer_Id: 67fcef67cf310d7a5ead7735 
+2025-04-14 14:20:07 DEBUG [inventory-api]: getCustomerByCustomerIDService called with customerID: CU-00002 
+2025-04-14 14:20:07 DEBUG [inventory-api]: getCustomerByCustomerIDService called with customerID: CU-99999 
+2025-04-14 14:20:07 DEBUG [inventory-api]: createCustomerService called with data: 
+2025-04-14 14:20:07 DEBUG [inventory-api]: updateCustomerService called with customer_Id: 67fcef67cf310d7a5ead775b 
+2025-04-14 14:20:07 DEBUG [inventory-api]: updateCustomerService called with customer_Id: 67fcef67cf310d7a5ead7772 
+2025-04-14 14:20:07 DEBUG [inventory-api]: deleteCustomerService called with customer_Id: 67fcef67cf310d7a5ead7776 
+2025-04-14 14:20:07 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 14:20:07 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:20:07 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 14:20:07 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:20:07 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 14:20:07 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:20:07 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 14:20:07 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:20:07 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 14:20:07 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:20:08 DEBUG [inventory-api]: searchCustomersService called with term: individual 
+2025-04-14 14:20:08 DEBUG [inventory-api]: searchCustomersService called with term: nonexistent 
+2025-04-14 14:20:08 DEBUG [inventory-api]: searchCustomersService called with term: business 
+2025-04-14 14:20:09 INFO [inventory-api]: getAllCustomers called 
+2025-04-14 14:20:09 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:20:09 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 14:20:09 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:20:09 INFO [inventory-api]: getAllCustomers called 
+2025-04-14 14:20:09 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:20:09 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 14:20:09 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:20:09 INFO [inventory-api]: getCustomerById called with customer_Id: 67fcef697336a83e2b1158b6 
+2025-04-14 14:20:09 DEBUG [inventory-api]: getCustomerByIdService called with customer_Id: 67fcef697336a83e2b1158b6 
+2025-04-14 14:20:09 INFO [inventory-api]: getCustomerById called with customer_Id: 67fcef697336a83e2b1158c8 
+2025-04-14 14:20:09 DEBUG [inventory-api]: getCustomerByIdService called with customer_Id: 67fcef697336a83e2b1158c8 
+2025-04-14 14:20:09 INFO [inventory-api]: createCustomer called 
+2025-04-14 14:20:09 DEBUG [inventory-api]: Request body: 
+2025-04-14 14:20:09 DEBUG [inventory-api]: Generated customerID: CU-00003 
+2025-04-14 14:20:09 DEBUG [inventory-api]: createCustomerService called with data: 
+2025-04-14 14:20:10 WARN [inventory-api]: Validation failed 
+2025-04-14 14:20:10 INFO [inventory-api]: updateCustomerById called with customer_Id: 67fcef6a7336a83e2b1158f6 
+2025-04-14 14:20:10 DEBUG [inventory-api]: Update data: 
+2025-04-14 14:20:10 DEBUG [inventory-api]: updateCustomerService called with customer_Id: 67fcef6a7336a83e2b1158f6 
+2025-04-14 14:20:10 INFO [inventory-api]: updateCustomerById called with customer_Id: 67fcef6a7336a83e2b115906 
+2025-04-14 14:20:10 DEBUG [inventory-api]: Update data: 
+2025-04-14 14:20:10 DEBUG [inventory-api]: updateCustomerService called with customer_Id: 67fcef6a7336a83e2b115906 
+2025-04-14 14:20:10 INFO [inventory-api]: deleteCustomerById called with customer_Id: 67fcef6a7336a83e2b11590c 
+2025-04-14 14:20:10 DEBUG [inventory-api]: deleteCustomerService called with customer_Id: 67fcef6a7336a83e2b11590c 
+2025-04-14 14:20:10 INFO [inventory-api]: deleteCustomerById called with customer_Id: 67fcef6a7336a83e2b11591c 
+2025-04-14 14:20:10 DEBUG [inventory-api]: deleteCustomerService called with customer_Id: 67fcef6a7336a83e2b11591c 
+2025-04-14 14:20:10 INFO [inventory-api]: searchCustomers called 
+2025-04-14 14:20:10 DEBUG [inventory-api]: Search term: 
+2025-04-14 14:20:10 DEBUG [inventory-api]: searchCustomersService called with term: business 
+2025-04-14 14:20:10 INFO [inventory-api]: searchCustomers called 
+2025-04-14 14:20:10 DEBUG [inventory-api]: Search term: 
+2025-04-14 14:20:10 DEBUG [inventory-api]: searchCustomersService called with term: nonexistent 
+2025-04-14 14:20:15 DEBUG [inventory-api]: getSupplierByIdService called with ID: 67fcef6ffcb1ccb6db79fcad 
+2025-04-14 14:20:15 DEBUG [inventory-api]: getSupplierByIdService called with ID: 67fcef6ffcb1ccb6db79fcbd 
+2025-04-14 14:20:15 DEBUG [inventory-api]: getSupplierBySupplierIDService called with supplier ID: SP-00002 
+2025-04-14 14:20:15 DEBUG [inventory-api]: getSupplierBySupplierIDService called with supplier ID: SP-99999 
+2025-04-14 14:20:15 DEBUG [inventory-api]: createSupplierService called with data: 
+2025-04-14 14:20:15 DEBUG [inventory-api]: updateSupplierService called with ID: 67fcef6ffcb1ccb6db79fcdb 
+2025-04-14 14:20:15 DEBUG [inventory-api]: updateSupplierService called with ID: 67fcef6ffcb1ccb6db79fceb 
+2025-04-14 14:20:15 DEBUG [inventory-api]: deleteSupplierService called with ID: 67fcef6ffcb1ccb6db79fcef 
+2025-04-14 14:20:15 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:20:15 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:20:15 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:20:15 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:20:15 INFO [inventory-api]: getAllSuppliers called 
+2025-04-14 14:20:15 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:20:15 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:20:15 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:20:15 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:20:15 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:20:15 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:20:15 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:20:15 DEBUG [inventory-api]: searchSuppliersService called with term: tech 
+2025-04-14 14:20:16 INFO [inventory-api]: getAllSuppliers called 
+2025-04-14 14:20:16 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:20:16 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:20:16 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:20:16 DEBUG [inventory-api]: searchSuppliersService called with term: nonexistent 
+2025-04-14 14:20:16 DEBUG [inventory-api]: searchSuppliersService called with term: food 
+2025-04-14 14:20:16 INFO [inventory-api]: getSupplierById called with ID: 67fcef70e4a01bae62e157fc 
+2025-04-14 14:20:16 DEBUG [inventory-api]: getSupplierByIdService called with ID: 67fcef70e4a01bae62e157fc 
+2025-04-14 14:20:16 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:20:16 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:20:16 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:20:16 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:20:16 INFO [inventory-api]: getSupplierById called with ID: 67fcef70e4a01bae62e1580a 
+2025-04-14 14:20:16 DEBUG [inventory-api]: getSupplierByIdService called with ID: 67fcef70e4a01bae62e1580a 
+2025-04-14 14:20:16 INFO [inventory-api]: createSupplier called 
+2025-04-14 14:20:16 DEBUG [inventory-api]: Request body: 
+2025-04-14 14:20:16 DEBUG [inventory-api]: Supplier data with generated ID: 
+2025-04-14 14:20:16 DEBUG [inventory-api]: createSupplierService called with data: 
+2025-04-14 14:20:16 WARN [inventory-api]: Validation failed 
+2025-04-14 14:20:16 INFO [inventory-api]: updateSupplierById called with ID: 67fcef70e4a01bae62e15833 
+2025-04-14 14:20:16 DEBUG [inventory-api]: Update data: 
+2025-04-14 14:20:16 DEBUG [inventory-api]: updateSupplierService called with ID: 67fcef70e4a01bae62e15833 
+2025-04-14 14:20:16 INFO [inventory-api]: updateSupplierById called with ID: 67fcef70e4a01bae62e15840 
+2025-04-14 14:20:16 DEBUG [inventory-api]: Update data: 
+2025-04-14 14:20:16 DEBUG [inventory-api]: updateSupplierService called with ID: 67fcef70e4a01bae62e15840 
+2025-04-14 14:20:16 INFO [inventory-api]: deleteSupplierById called with ID: 67fcef70e4a01bae62e15846 
+2025-04-14 14:20:16 DEBUG [inventory-api]: deleteSupplierService called with ID: 67fcef70e4a01bae62e15846 
+2025-04-14 14:20:16 INFO [inventory-api]: deleteSupplierById called with ID: 67fcef70e4a01bae62e15852 
+2025-04-14 14:20:16 DEBUG [inventory-api]: deleteSupplierService called with ID: 67fcef70e4a01bae62e15852 
+2025-04-14 14:20:16 INFO [inventory-api]: getAllSuppliers called 
+2025-04-14 14:20:16 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:20:16 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:20:16 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:20:16 INFO [inventory-api]: getAllSuppliers called 
+2025-04-14 14:20:16 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:20:16 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:20:16 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:20:16 INFO [inventory-api]: searchSuppliers called 
+2025-04-14 14:20:16 DEBUG [inventory-api]: Search term: 
+2025-04-14 14:20:16 DEBUG [inventory-api]: searchSuppliersService called with term: tech 
+2025-04-14 14:20:16 INFO [inventory-api]: searchSuppliers called 
+2025-04-14 14:20:16 DEBUG [inventory-api]: Search term: 
+2025-04-14 14:20:16 DEBUG [inventory-api]: searchSuppliersService called with term: nonexistent 
+2025-04-14 14:20:36 DEBUG [inventory-api]: getCustomerByIdService called with customer_Id: 67fcef84c91b44e1eb56acb2 
+2025-04-14 14:20:36 DEBUG [inventory-api]: getCustomerByIdService called with customer_Id: 67fcef84c91b44e1eb56acca 
+2025-04-14 14:20:36 DEBUG [inventory-api]: getCustomerByCustomerIDService called with customerID: CU-00002 
+2025-04-14 14:20:36 DEBUG [inventory-api]: getCustomerByCustomerIDService called with customerID: CU-99999 
+2025-04-14 14:20:36 DEBUG [inventory-api]: createCustomerService called with data: 
+2025-04-14 14:20:36 DEBUG [inventory-api]: updateCustomerService called with customer_Id: 67fcef84c91b44e1eb56acf3 
+2025-04-14 14:20:36 DEBUG [inventory-api]: updateCustomerService called with customer_Id: 67fcef84c91b44e1eb56ad09 
+2025-04-14 14:20:36 DEBUG [inventory-api]: deleteCustomerService called with customer_Id: 67fcef84c91b44e1eb56ad0d 
+2025-04-14 14:20:36 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 14:20:36 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:20:36 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 14:20:36 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:20:36 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 14:20:36 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:20:36 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 14:20:36 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:20:36 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 14:20:36 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:20:36 DEBUG [inventory-api]: searchCustomersService called with term: individual 
+2025-04-14 14:20:36 DEBUG [inventory-api]: searchCustomersService called with term: nonexistent 
+2025-04-14 14:20:36 DEBUG [inventory-api]: searchCustomersService called with term: business 
+2025-04-14 14:20:37 INFO [inventory-api]: getAllCustomers called 
+2025-04-14 14:20:37 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:20:37 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 14:20:37 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:20:37 INFO [inventory-api]: getAllCustomers called 
+2025-04-14 14:20:37 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:20:37 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 14:20:37 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:20:37 INFO [inventory-api]: getCustomerById called with customer_Id: 67fcef858f4dfc3295ee5cdd 
+2025-04-14 14:20:37 DEBUG [inventory-api]: getCustomerByIdService called with customer_Id: 67fcef858f4dfc3295ee5cdd 
+2025-04-14 14:20:37 INFO [inventory-api]: getCustomerById called with customer_Id: 67fcef858f4dfc3295ee5ced 
+2025-04-14 14:20:37 DEBUG [inventory-api]: getCustomerByIdService called with customer_Id: 67fcef858f4dfc3295ee5ced 
+2025-04-14 14:20:38 INFO [inventory-api]: createCustomer called 
+2025-04-14 14:20:38 DEBUG [inventory-api]: Request body: 
+2025-04-14 14:20:38 DEBUG [inventory-api]: Generated customerID: CU-00003 
+2025-04-14 14:20:38 DEBUG [inventory-api]: createCustomerService called with data: 
+2025-04-14 14:20:38 WARN [inventory-api]: Validation failed 
+2025-04-14 14:20:38 INFO [inventory-api]: updateCustomerById called with customer_Id: 67fcef868f4dfc3295ee5d1c 
+2025-04-14 14:20:38 DEBUG [inventory-api]: Update data: 
+2025-04-14 14:20:38 DEBUG [inventory-api]: updateCustomerService called with customer_Id: 67fcef868f4dfc3295ee5d1c 
+2025-04-14 14:20:38 INFO [inventory-api]: updateCustomerById called with customer_Id: 67fcef868f4dfc3295ee5d2c 
+2025-04-14 14:20:38 DEBUG [inventory-api]: Update data: 
+2025-04-14 14:20:38 DEBUG [inventory-api]: updateCustomerService called with customer_Id: 67fcef868f4dfc3295ee5d2c 
+2025-04-14 14:20:38 INFO [inventory-api]: deleteCustomerById called with customer_Id: 67fcef868f4dfc3295ee5d32 
+2025-04-14 14:20:38 DEBUG [inventory-api]: deleteCustomerService called with customer_Id: 67fcef868f4dfc3295ee5d32 
+2025-04-14 14:20:38 INFO [inventory-api]: deleteCustomerById called with customer_Id: 67fcef868f4dfc3295ee5d42 
+2025-04-14 14:20:38 DEBUG [inventory-api]: deleteCustomerService called with customer_Id: 67fcef868f4dfc3295ee5d42 
+2025-04-14 14:20:38 INFO [inventory-api]: searchCustomers called 
+2025-04-14 14:20:38 DEBUG [inventory-api]: Search term: 
+2025-04-14 14:20:38 DEBUG [inventory-api]: searchCustomersService called with term: business 
+2025-04-14 14:20:38 INFO [inventory-api]: searchCustomers called 
+2025-04-14 14:20:38 DEBUG [inventory-api]: Search term: 
+2025-04-14 14:20:38 DEBUG [inventory-api]: searchCustomersService called with term: nonexistent 
+2025-04-14 14:20:42 DEBUG [inventory-api]: getSupplierByIdService called with ID: 67fcef8a732acb406abed742 
+2025-04-14 14:20:42 DEBUG [inventory-api]: getSupplierByIdService called with ID: 67fcef8a732acb406abed754 
+2025-04-14 14:20:42 DEBUG [inventory-api]: getSupplierBySupplierIDService called with supplier ID: SP-00002 
+2025-04-14 14:20:42 DEBUG [inventory-api]: getSupplierBySupplierIDService called with supplier ID: SP-99999 
+2025-04-14 14:20:42 DEBUG [inventory-api]: createSupplierService called with data: 
+2025-04-14 14:20:42 DEBUG [inventory-api]: updateSupplierService called with ID: 67fcef8a732acb406abed773 
+2025-04-14 14:20:42 INFO [inventory-api]: getAllSuppliers called 
+2025-04-14 14:20:42 DEBUG [inventory-api]: updateSupplierService called with ID: 67fcef8a732acb406abed782 
+2025-04-14 14:20:42 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:20:42 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:20:42 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:20:43 ERROR [inventory-api]: Error updating supplier with ID: 67fcef8a732acb406abed782 Supplier not found 
+DatabaseError: Supplier not found
+    at Function.notFound (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\utils\errors\DatabaseError.js:42:12)
+    at Object.notFound [as updateSupplierService] (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\suppliers.service.js:178:27)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at Object.<anonymous> (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\__tests__\services\suppliers.service.test.js:166:22)
+2025-04-14 14:20:43 DEBUG [inventory-api]: deleteSupplierService called with ID: 67fcef8b732acb406abed786 
+2025-04-14 14:20:43 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:20:43 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:20:43 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:20:43 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:20:43 INFO [inventory-api]: getAllSuppliers called 
+2025-04-14 14:20:43 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:20:43 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:20:43 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:20:43 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:20:43 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:20:43 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:20:43 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:20:43 INFO [inventory-api]: getSupplierById called with ID: 67fcef8bf5a2bd09ef2f2873 
+2025-04-14 14:20:43 DEBUG [inventory-api]: getSupplierByIdService called with ID: 67fcef8bf5a2bd09ef2f2873 
+2025-04-14 14:20:43 DEBUG [inventory-api]: searchSuppliersService called with term: tech 
+2025-04-14 14:20:43 INFO [inventory-api]: getSupplierById called with ID: 67fcef8bf5a2bd09ef2f2882 
+2025-04-14 14:20:43 DEBUG [inventory-api]: getSupplierByIdService called with ID: 67fcef8bf5a2bd09ef2f2882 
+2025-04-14 14:20:43 DEBUG [inventory-api]: searchSuppliersService called with term: nonexistent 
+2025-04-14 14:20:43 DEBUG [inventory-api]: searchSuppliersService called with term: food 
+2025-04-14 14:20:43 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:20:43 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:20:43 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:20:43 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:20:43 INFO [inventory-api]: createSupplier called 
+2025-04-14 14:20:43 DEBUG [inventory-api]: Request body: 
+2025-04-14 14:20:43 DEBUG [inventory-api]: Supplier data with generated ID: 
+2025-04-14 14:20:43 DEBUG [inventory-api]: createSupplierService called with data: 
+2025-04-14 14:20:43 WARN [inventory-api]: Validation failed 
+2025-04-14 14:20:43 INFO [inventory-api]: updateSupplierById called with ID: 67fcef8bf5a2bd09ef2f28a8 
+2025-04-14 14:20:43 DEBUG [inventory-api]: Update data: 
+2025-04-14 14:20:43 DEBUG [inventory-api]: updateSupplierService called with ID: 67fcef8bf5a2bd09ef2f28a8 
+2025-04-14 14:20:43 INFO [inventory-api]: updateSupplierById called with ID: 67fcef8bf5a2bd09ef2f28b4 
+2025-04-14 14:20:43 DEBUG [inventory-api]: Update data: 
+2025-04-14 14:20:43 DEBUG [inventory-api]: updateSupplierService called with ID: 67fcef8bf5a2bd09ef2f28b4 
+2025-04-14 14:20:43 ERROR [inventory-api]: Error updating supplier with ID: 67fcef8bf5a2bd09ef2f28b4 Supplier not found 
+DatabaseError: Supplier not found
+    at Function.notFound (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\utils\errors\DatabaseError.js:42:12)
+    at notFound (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\suppliers.service.js:178:27)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\suppliers.controller.js:199:22
+2025-04-14 14:20:43 ERROR [inventory-api]: Error updating supplier with ID: 67fcef8bf5a2bd09ef2f28b4 Supplier not found 
+DatabaseError: Supplier not found
+    at Function.notFound (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\utils\errors\DatabaseError.js:42:12)
+    at notFound (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\suppliers.service.js:178:27)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\suppliers.controller.js:199:22
+2025-04-14 14:20:43 INFO [inventory-api]: deleteSupplierById called with ID: 67fcef8bf5a2bd09ef2f28ba 
+2025-04-14 14:20:43 DEBUG [inventory-api]: deleteSupplierService called with ID: 67fcef8bf5a2bd09ef2f28ba 
+2025-04-14 14:20:43 INFO [inventory-api]: deleteSupplierById called with ID: 67fcef8bf5a2bd09ef2f28c6 
+2025-04-14 14:20:43 DEBUG [inventory-api]: deleteSupplierService called with ID: 67fcef8bf5a2bd09ef2f28c6 
+2025-04-14 14:20:43 ERROR [inventory-api]: Error deleting supplier with ID: 67fcef8bf5a2bd09ef2f28c6 Supplier not found 
+DatabaseError: Supplier not found
+    at Function.notFound (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\utils\errors\DatabaseError.js:42:12)
+    at notFound (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\suppliers.service.js:200:27)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\suppliers.controller.js:225:20
+2025-04-14 14:20:43 ERROR [inventory-api]: Error deleting supplier with ID: 67fcef8bf5a2bd09ef2f28c6 Supplier not found 
+DatabaseError: Supplier not found
+    at Function.notFound (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\utils\errors\DatabaseError.js:42:12)
+    at notFound (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\suppliers.service.js:200:27)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\suppliers.controller.js:225:20
+2025-04-14 14:20:43 INFO [inventory-api]: getAllSuppliers called 
+2025-04-14 14:20:43 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:20:43 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:20:43 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:20:43 INFO [inventory-api]: getAllSuppliers called 
+2025-04-14 14:20:43 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:20:43 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:20:43 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:20:43 INFO [inventory-api]: searchSuppliers called 
+2025-04-14 14:20:43 DEBUG [inventory-api]: Search term: 
+2025-04-14 14:20:43 DEBUG [inventory-api]: searchSuppliersService called with term: tech 
+2025-04-14 14:20:43 INFO [inventory-api]: searchSuppliers called 
+2025-04-14 14:20:43 DEBUG [inventory-api]: Search term: 
+2025-04-14 14:20:43 DEBUG [inventory-api]: searchSuppliersService called with term: nonexistent 
+2025-04-14 14:21:15 DEBUG [inventory-api]: getCustomerByIdService called with customer_Id: 67fcefaa89d37598cf85ee69 
+2025-04-14 14:21:15 DEBUG [inventory-api]: getCustomerByIdService called with customer_Id: 67fcefab89d37598cf85ee82 
+2025-04-14 14:21:15 DEBUG [inventory-api]: getCustomerByCustomerIDService called with customerID: CU-00002 
+2025-04-14 14:21:15 DEBUG [inventory-api]: getCustomerByCustomerIDService called with customerID: CU-99999 
+2025-04-14 14:21:15 DEBUG [inventory-api]: createCustomerService called with data: 
+2025-04-14 14:21:15 DEBUG [inventory-api]: updateCustomerService called with customer_Id: 67fcefab89d37598cf85eeab 
+2025-04-14 14:21:15 DEBUG [inventory-api]: updateCustomerService called with customer_Id: 67fcefab89d37598cf85eec0 
+2025-04-14 14:21:15 DEBUG [inventory-api]: deleteCustomerService called with customer_Id: 67fcefab89d37598cf85eec4 
+2025-04-14 14:21:15 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 14:21:15 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:21:15 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 14:21:15 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:21:15 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 14:21:15 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:21:15 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 14:21:15 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:21:15 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 14:21:15 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:21:15 DEBUG [inventory-api]: searchCustomersService called with term: individual 
+2025-04-14 14:21:15 DEBUG [inventory-api]: searchCustomersService called with term: nonexistent 
+2025-04-14 14:21:15 DEBUG [inventory-api]: searchCustomersService called with term: business 
+2025-04-14 14:21:16 INFO [inventory-api]: getAllCustomers called 
+2025-04-14 14:21:16 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:21:16 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 14:21:16 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:21:16 INFO [inventory-api]: getAllCustomers called 
+2025-04-14 14:21:16 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:21:16 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 14:21:16 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:21:16 INFO [inventory-api]: getCustomerById called with customer_Id: 67fcefacd416ca132b7b3b24 
+2025-04-14 14:21:16 DEBUG [inventory-api]: getCustomerByIdService called with customer_Id: 67fcefacd416ca132b7b3b24 
+2025-04-14 14:21:16 INFO [inventory-api]: getCustomerById called with customer_Id: 67fcefacd416ca132b7b3b34 
+2025-04-14 14:21:16 DEBUG [inventory-api]: getCustomerByIdService called with customer_Id: 67fcefacd416ca132b7b3b34 
+2025-04-14 14:21:16 INFO [inventory-api]: createCustomer called 
+2025-04-14 14:21:16 DEBUG [inventory-api]: Request body: 
+2025-04-14 14:21:16 DEBUG [inventory-api]: Generated customerID: CU-00003 
+2025-04-14 14:21:16 DEBUG [inventory-api]: createCustomerService called with data: 
+2025-04-14 14:21:16 WARN [inventory-api]: Validation failed 
+2025-04-14 14:21:16 INFO [inventory-api]: updateCustomerById called with customer_Id: 67fcefacd416ca132b7b3b62 
+2025-04-14 14:21:16 DEBUG [inventory-api]: Update data: 
+2025-04-14 14:21:16 DEBUG [inventory-api]: updateCustomerService called with customer_Id: 67fcefacd416ca132b7b3b62 
+2025-04-14 14:21:16 INFO [inventory-api]: updateCustomerById called with customer_Id: 67fcefacd416ca132b7b3b72 
+2025-04-14 14:21:16 DEBUG [inventory-api]: Update data: 
+2025-04-14 14:21:16 DEBUG [inventory-api]: updateCustomerService called with customer_Id: 67fcefacd416ca132b7b3b72 
+2025-04-14 14:21:16 INFO [inventory-api]: deleteCustomerById called with customer_Id: 67fcefacd416ca132b7b3b78 
+2025-04-14 14:21:16 DEBUG [inventory-api]: deleteCustomerService called with customer_Id: 67fcefacd416ca132b7b3b78 
+2025-04-14 14:21:16 INFO [inventory-api]: deleteCustomerById called with customer_Id: 67fcefacd416ca132b7b3b88 
+2025-04-14 14:21:16 DEBUG [inventory-api]: deleteCustomerService called with customer_Id: 67fcefacd416ca132b7b3b88 
+2025-04-14 14:21:17 INFO [inventory-api]: searchCustomers called 
+2025-04-14 14:21:17 DEBUG [inventory-api]: Search term: 
+2025-04-14 14:21:17 DEBUG [inventory-api]: searchCustomersService called with term: business 
+2025-04-14 14:21:17 INFO [inventory-api]: searchCustomers called 
+2025-04-14 14:21:17 DEBUG [inventory-api]: Search term: 
+2025-04-14 14:21:17 DEBUG [inventory-api]: searchCustomersService called with term: nonexistent 
+2025-04-14 14:21:18 DEBUG [inventory-api]: getSupplierByIdService called with ID: 67fcefaee91db9ee77d6c71e 
+2025-04-14 14:21:18 DEBUG [inventory-api]: getSupplierByIdService called with ID: 67fcefaee91db9ee77d6c72f 
+2025-04-14 14:21:18 DEBUG [inventory-api]: getSupplierBySupplierIDService called with supplier ID: SP-00002 
+2025-04-14 14:21:18 DEBUG [inventory-api]: getSupplierBySupplierIDService called with supplier ID: SP-99999 
+2025-04-14 14:21:18 DEBUG [inventory-api]: createSupplierService called with data: 
+2025-04-14 14:21:18 DEBUG [inventory-api]: updateSupplierService called with ID: 67fcefaee91db9ee77d6c74d 
+2025-04-14 14:21:18 DEBUG [inventory-api]: updateSupplierService called with ID: 67fcefaee91db9ee77d6c75c 
+2025-04-14 14:21:18 ERROR [inventory-api]: Error updating supplier with ID: 67fcefaee91db9ee77d6c75c Supplier not found 
+DatabaseError: Supplier not found
+    at Function.notFound (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\utils\errors\DatabaseError.js:42:12)
+    at Object.notFound [as updateSupplierService] (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\suppliers.service.js:178:27)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at Object.<anonymous> (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\__tests__\services\suppliers.service.test.js:166:22)
+2025-04-14 14:21:18 DEBUG [inventory-api]: deleteSupplierService called with ID: 67fcefaee91db9ee77d6c761 
+2025-04-14 14:21:18 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:21:18 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:21:19 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:21:19 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:21:19 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:21:19 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:21:19 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:21:19 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:21:19 DEBUG [inventory-api]: searchSuppliersService called with term: tech 
+2025-04-14 14:21:19 DEBUG [inventory-api]: searchSuppliersService called with term: nonexistent 
+2025-04-14 14:21:19 DEBUG [inventory-api]: searchSuppliersService called with term: food 
+2025-04-14 14:21:19 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:21:19 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:21:19 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:21:19 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:21:22 INFO [inventory-api]: getAllSuppliers called 
+2025-04-14 14:21:22 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:21:22 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:21:22 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:21:22 INFO [inventory-api]: getAllSuppliers called 
+2025-04-14 14:21:22 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:21:22 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:21:22 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:21:22 INFO [inventory-api]: getSupplierById called with ID: 67fcefb2d4431372a48c4356 
+2025-04-14 14:21:22 DEBUG [inventory-api]: getSupplierByIdService called with ID: 67fcefb2d4431372a48c4356 
+2025-04-14 14:21:22 INFO [inventory-api]: getSupplierById called with ID: 67fcefb2d4431372a48c4363 
+2025-04-14 14:21:22 DEBUG [inventory-api]: getSupplierByIdService called with ID: 67fcefb2d4431372a48c4363 
+2025-04-14 14:21:23 INFO [inventory-api]: createSupplier called 
+2025-04-14 14:21:23 DEBUG [inventory-api]: Request body: 
+2025-04-14 14:21:23 DEBUG [inventory-api]: Supplier data with generated ID: 
+2025-04-14 14:21:23 DEBUG [inventory-api]: createSupplierService called with data: 
+2025-04-14 14:21:23 WARN [inventory-api]: Validation failed 
+2025-04-14 14:21:23 INFO [inventory-api]: updateSupplierById called with ID: 67fcefb3d4431372a48c4389 
+2025-04-14 14:21:23 DEBUG [inventory-api]: Update data: 
+2025-04-14 14:21:23 DEBUG [inventory-api]: updateSupplierService called with ID: 67fcefb3d4431372a48c4389 
+2025-04-14 14:21:23 INFO [inventory-api]: updateSupplierById called with ID: 67fcefb3d4431372a48c4395 
+2025-04-14 14:21:23 DEBUG [inventory-api]: Update data: 
+2025-04-14 14:21:23 DEBUG [inventory-api]: updateSupplierService called with ID: 67fcefb3d4431372a48c4395 
+2025-04-14 14:21:23 ERROR [inventory-api]: Error updating supplier with ID: 67fcefb3d4431372a48c4395 Supplier not found 
+DatabaseError: Supplier not found
+    at Function.notFound (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\utils\errors\DatabaseError.js:42:12)
+    at notFound (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\suppliers.service.js:178:27)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\suppliers.controller.js:199:22
+2025-04-14 14:21:23 ERROR [inventory-api]: Error updating supplier with ID: 67fcefb3d4431372a48c4395 Supplier not found 
+DatabaseError: Supplier not found
+    at Function.notFound (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\utils\errors\DatabaseError.js:42:12)
+    at notFound (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\suppliers.service.js:178:27)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\suppliers.controller.js:199:22
+2025-04-14 14:21:23 INFO [inventory-api]: deleteSupplierById called with ID: 67fcefb3d4431372a48c439b 
+2025-04-14 14:21:23 DEBUG [inventory-api]: deleteSupplierService called with ID: 67fcefb3d4431372a48c439b 
+2025-04-14 14:21:23 INFO [inventory-api]: deleteSupplierById called with ID: 67fcefb3d4431372a48c43a7 
+2025-04-14 14:21:23 DEBUG [inventory-api]: deleteSupplierService called with ID: 67fcefb3d4431372a48c43a7 
+2025-04-14 14:21:23 ERROR [inventory-api]: Error deleting supplier with ID: 67fcefb3d4431372a48c43a7 Supplier not found 
+DatabaseError: Supplier not found
+    at Function.notFound (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\utils\errors\DatabaseError.js:42:12)
+    at notFound (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\suppliers.service.js:200:27)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\suppliers.controller.js:225:20
+2025-04-14 14:21:23 ERROR [inventory-api]: Error deleting supplier with ID: 67fcefb3d4431372a48c43a7 Supplier not found 
+DatabaseError: Supplier not found
+    at Function.notFound (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\utils\errors\DatabaseError.js:42:12)
+    at notFound (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\suppliers.service.js:200:27)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\suppliers.controller.js:225:20
+2025-04-14 14:21:23 INFO [inventory-api]: getAllSuppliers called 
+2025-04-14 14:21:23 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:21:23 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:21:23 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:21:23 INFO [inventory-api]: getAllSuppliers called 
+2025-04-14 14:21:23 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:21:23 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:21:23 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:21:23 INFO [inventory-api]: searchSuppliers called 
+2025-04-14 14:21:23 DEBUG [inventory-api]: Search term: 
+2025-04-14 14:21:23 DEBUG [inventory-api]: searchSuppliersService called with term: tech 
+2025-04-14 14:21:23 INFO [inventory-api]: searchSuppliers called 
+2025-04-14 14:21:23 DEBUG [inventory-api]: Search term: 
+2025-04-14 14:21:23 DEBUG [inventory-api]: searchSuppliersService called with term: nonexistent 
+2025-04-14 14:23:35 DEBUG [inventory-api]: getCustomerByIdService called with customer_Id: 67fcf037549946d0096970e0 
+2025-04-14 14:23:35 DEBUG [inventory-api]: getCustomerByIdService called with customer_Id: 67fcf037549946d0096970f9 
+2025-04-14 14:23:35 DEBUG [inventory-api]: getCustomerByCustomerIDService called with customerID: CU-00002 
+2025-04-14 14:23:35 DEBUG [inventory-api]: getCustomerByCustomerIDService called with customerID: CU-99999 
+2025-04-14 14:23:35 DEBUG [inventory-api]: createCustomerService called with data: 
+2025-04-14 14:23:35 DEBUG [inventory-api]: updateCustomerService called with customer_Id: 67fcf037549946d009697122 
+2025-04-14 14:23:35 DEBUG [inventory-api]: updateCustomerService called with customer_Id: 67fcf037549946d009697137 
+2025-04-14 14:23:35 DEBUG [inventory-api]: deleteCustomerService called with customer_Id: 67fcf037549946d00969713b 
+2025-04-14 14:23:35 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 14:23:35 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:23:36 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 14:23:36 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:23:36 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 14:23:36 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:23:36 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 14:23:36 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:23:36 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 14:23:36 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:23:36 DEBUG [inventory-api]: searchCustomersService called with term: individual 
+2025-04-14 14:23:36 DEBUG [inventory-api]: searchCustomersService called with term: nonexistent 
+2025-04-14 14:23:36 DEBUG [inventory-api]: searchCustomersService called with term: business 
+2025-04-14 14:23:36 INFO [inventory-api]: getAllCustomers called 
+2025-04-14 14:23:36 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:23:36 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 14:23:36 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:23:37 INFO [inventory-api]: getAllCustomers called 
+2025-04-14 14:23:37 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:23:37 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 14:23:37 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:23:37 INFO [inventory-api]: getCustomerById called with customer_Id: 67fcf0393cb188a6664c75fb 
+2025-04-14 14:23:37 DEBUG [inventory-api]: getCustomerByIdService called with customer_Id: 67fcf0393cb188a6664c75fb 
+2025-04-14 14:23:37 INFO [inventory-api]: getCustomerById called with customer_Id: 67fcf0393cb188a6664c760b 
+2025-04-14 14:23:37 DEBUG [inventory-api]: getCustomerByIdService called with customer_Id: 67fcf0393cb188a6664c760b 
+2025-04-14 14:23:37 INFO [inventory-api]: createCustomer called 
+2025-04-14 14:23:37 DEBUG [inventory-api]: Request body: 
+2025-04-14 14:23:37 DEBUG [inventory-api]: Generated customerID: CU-00003 
+2025-04-14 14:23:37 DEBUG [inventory-api]: createCustomerService called with data: 
+2025-04-14 14:23:37 WARN [inventory-api]: Validation failed 
+2025-04-14 14:23:37 INFO [inventory-api]: updateCustomerById called with customer_Id: 67fcf0393cb188a6664c7639 
+2025-04-14 14:23:37 DEBUG [inventory-api]: Update data: 
+2025-04-14 14:23:37 DEBUG [inventory-api]: updateCustomerService called with customer_Id: 67fcf0393cb188a6664c7639 
+2025-04-14 14:23:37 INFO [inventory-api]: updateCustomerById called with customer_Id: 67fcf0393cb188a6664c7649 
+2025-04-14 14:23:37 DEBUG [inventory-api]: Update data: 
+2025-04-14 14:23:37 DEBUG [inventory-api]: updateCustomerService called with customer_Id: 67fcf0393cb188a6664c7649 
+2025-04-14 14:23:37 INFO [inventory-api]: deleteCustomerById called with customer_Id: 67fcf0393cb188a6664c764f 
+2025-04-14 14:23:37 DEBUG [inventory-api]: deleteCustomerService called with customer_Id: 67fcf0393cb188a6664c764f 
+2025-04-14 14:23:37 INFO [inventory-api]: deleteCustomerById called with customer_Id: 67fcf0393cb188a6664c765f 
+2025-04-14 14:23:37 DEBUG [inventory-api]: deleteCustomerService called with customer_Id: 67fcf0393cb188a6664c765f 
+2025-04-14 14:23:37 INFO [inventory-api]: searchCustomers called 
+2025-04-14 14:23:37 DEBUG [inventory-api]: Search term: 
+2025-04-14 14:23:37 DEBUG [inventory-api]: searchCustomersService called with term: business 
+2025-04-14 14:23:37 INFO [inventory-api]: searchCustomers called 
+2025-04-14 14:23:37 DEBUG [inventory-api]: Search term: 
+2025-04-14 14:23:37 DEBUG [inventory-api]: searchCustomersService called with term: nonexistent 
+2025-04-14 14:23:38 DEBUG [inventory-api]: getSupplierByIdService called with ID: 67fcf03abf5574bd8f260b44 
+2025-04-14 14:23:38 DEBUG [inventory-api]: getSupplierByIdService called with ID: 67fcf03abf5574bd8f260b55 
+2025-04-14 14:23:38 DEBUG [inventory-api]: getSupplierBySupplierIDService called with supplier ID: SP-00002 
+2025-04-14 14:23:38 DEBUG [inventory-api]: getSupplierBySupplierIDService called with supplier ID: SP-99999 
+2025-04-14 14:23:38 DEBUG [inventory-api]: createSupplierService called with data: 
+2025-04-14 14:23:38 DEBUG [inventory-api]: updateSupplierService called with ID: 67fcf03abf5574bd8f260b73 
+2025-04-14 14:23:38 DEBUG [inventory-api]: updateSupplierService called with ID: 67fcf03abf5574bd8f260b82 
+2025-04-14 14:23:38 DEBUG [inventory-api]: deleteSupplierService called with ID: 67fcf03abf5574bd8f260b86 
+2025-04-14 14:23:38 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:23:38 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:23:38 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:23:38 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:23:38 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:23:38 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:23:38 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:23:38 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:23:38 DEBUG [inventory-api]: searchSuppliersService called with term: tech 
+2025-04-14 14:23:38 DEBUG [inventory-api]: searchSuppliersService called with term: nonexistent 
+2025-04-14 14:23:39 DEBUG [inventory-api]: searchSuppliersService called with term: food 
+2025-04-14 14:23:39 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:23:39 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:23:39 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:23:39 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:23:40 INFO [inventory-api]: getAllSuppliers called 
+2025-04-14 14:23:40 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:23:40 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:23:40 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:23:40 INFO [inventory-api]: getAllSuppliers called 
+2025-04-14 14:23:40 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:23:40 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:23:40 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:23:40 INFO [inventory-api]: getSupplierById called with ID: 67fcf03c42768df970bf4de9 
+2025-04-14 14:23:40 DEBUG [inventory-api]: getSupplierByIdService called with ID: 67fcf03c42768df970bf4de9 
+2025-04-14 14:23:40 INFO [inventory-api]: getSupplierById called with ID: 67fcf03c42768df970bf4df6 
+2025-04-14 14:23:40 DEBUG [inventory-api]: getSupplierByIdService called with ID: 67fcf03c42768df970bf4df6 
+2025-04-14 14:23:40 INFO [inventory-api]: createSupplier called 
+2025-04-14 14:23:40 DEBUG [inventory-api]: Request body: 
+2025-04-14 14:23:41 DEBUG [inventory-api]: Supplier data with generated ID: 
+2025-04-14 14:23:41 DEBUG [inventory-api]: createSupplierService called with data: 
+2025-04-14 14:23:41 WARN [inventory-api]: Validation failed 
+2025-04-14 14:23:41 INFO [inventory-api]: updateSupplierById called with ID: 67fcf03d42768df970bf4e1d 
+2025-04-14 14:23:41 DEBUG [inventory-api]: Update data: 
+2025-04-14 14:23:41 DEBUG [inventory-api]: updateSupplierService called with ID: 67fcf03d42768df970bf4e1d 
+2025-04-14 14:23:41 INFO [inventory-api]: updateSupplierById called with ID: 67fcf03d42768df970bf4e29 
+2025-04-14 14:23:41 DEBUG [inventory-api]: Update data: 
+2025-04-14 14:23:41 DEBUG [inventory-api]: updateSupplierService called with ID: 67fcf03d42768df970bf4e29 
+2025-04-14 14:23:41 INFO [inventory-api]: deleteSupplierById called with ID: 67fcf03d42768df970bf4e2f 
+2025-04-14 14:23:41 DEBUG [inventory-api]: deleteSupplierService called with ID: 67fcf03d42768df970bf4e2f 
+2025-04-14 14:23:41 INFO [inventory-api]: deleteSupplierById called with ID: 67fcf03d42768df970bf4e3b 
+2025-04-14 14:23:41 DEBUG [inventory-api]: deleteSupplierService called with ID: 67fcf03d42768df970bf4e3b 
+2025-04-14 14:23:41 INFO [inventory-api]: getAllSuppliers called 
+2025-04-14 14:23:41 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:23:41 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:23:41 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:23:41 INFO [inventory-api]: getAllSuppliers called 
+2025-04-14 14:23:41 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 14:23:41 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 14:23:41 DEBUG [inventory-api]: Built filter: 
+2025-04-14 14:23:41 INFO [inventory-api]: searchSuppliers called 
+2025-04-14 14:23:41 DEBUG [inventory-api]: Search term: 
+2025-04-14 14:23:41 DEBUG [inventory-api]: searchSuppliersService called with term: tech 
+2025-04-14 14:23:41 INFO [inventory-api]: searchSuppliers called 
+2025-04-14 14:23:41 DEBUG [inventory-api]: Search term: 
+2025-04-14 14:23:41 DEBUG [inventory-api]: searchSuppliersService called with term: nonexistent 
