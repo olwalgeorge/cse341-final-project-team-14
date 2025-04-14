@@ -8,7 +8,7 @@
 
 const mongoose = require('mongoose');
 const Inventory = require('../models/inventory.model.js');
-const InventoryTransaction = require('../models/inventoryTransaction.model.js');
+const InventoryTransaction = require('../models/transaction.model.js');
 const { generateTransactionId } = require('../utils/inventoryTransaction.utils.js');
 const logger = require('../utils/logger.js');
 

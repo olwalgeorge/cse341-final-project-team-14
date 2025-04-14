@@ -1,4 +1,4 @@
-const InventoryTransaction = require("../models/inventoryTransaction.model.js");
+const InventoryTransaction = require("../models/transaction.model.js");
 const Inventory = require("../models/inventory.model.js");
 const { generateTransactionId } = require("../utils/inventoryTransaction.utils.js");
 const APIFeatures = require("../utils/apiFeatures.js");

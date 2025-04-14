@@ -16,9 +16,9 @@ const transactionTypes = [
 const referenceDocumentTypes = [
   "Purchase",
   "Order",
-  "InventoryAdjustment",
-  "InventoryTransfer",
-  "InventoryReturn"
+  "adjustment",
+  "transfer",
+  "return"
 ];
 
 const inventoryTransactionSchema = new Schema({

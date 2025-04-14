@@ -1,4 +1,4 @@
-const InventoryAdjustment = require("../models/inventoryAdjustment.model");
+const InventoryAdjustment = require("../models/adjustment.model");
 const asyncHandler = require("express-async-handler");
 
 /**

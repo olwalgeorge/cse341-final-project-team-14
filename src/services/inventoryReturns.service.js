@@ -1,6 +1,6 @@
-const InventoryReturn = require("../models/inventoryReturn.model.js");
+const InventoryReturn = require("../models/return.model.js");
 const Inventory = require("../models/inventory.model.js");
-const InventoryTransaction = require("../models/inventoryTransaction.model.js");
+const InventoryTransaction = require("../models/transaction.model.js");
 const { generateReturnId } = require("../utils/inventoryReturn.utils.js");
 const { generateTransactionId } = require("../utils/inventoryTransaction.utils.js");
 const APIFeatures = require("../utils/apiFeatures.js");

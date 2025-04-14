@@ -1,4 +1,4 @@
-const InventoryAdjustment = require("../models/inventoryAdjustment.model.js");
+const InventoryAdjustment = require("../models/adjustment.model.js");
 const { generateAdjustmentId } = require("../utils/inventoryAdjustment.utils.js");
 const inventoryTransactionManager = require("../managers/inventoryTransaction.manager.js");
 const APIFeatures = require("../utils/apiFeatures.js");

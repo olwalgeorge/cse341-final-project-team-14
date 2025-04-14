@@ -1,4 +1,4 @@
-const InventoryTransfer = require("../models/inventoryTransfer.model.js");
+const InventoryTransfer = require("../models/transfer.model.js");
 const Inventory = require("../models/inventory.model.js");
 const { generateTransferId } = require("../utils/inventoryTransfer.utils.js");
 const inventoryTransactionManager = require("../managers/inventoryTransaction.manager.js");

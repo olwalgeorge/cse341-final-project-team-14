@@ -1,4 +1,4 @@
-const InventoryTransfer = require("../models/inventoryTransfer.model");
+const InventoryTransfer = require("../models/transfer.model");
 const asyncHandler = require("express-async-handler");
 
 /**

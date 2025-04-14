@@ -1,4 +1,4 @@
-const InventoryReturn = require("../models/inventoryReturn.model");
+const InventoryReturn = require("../models/return.model");
 const asyncHandler = require("express-async-handler");
 
 /**
