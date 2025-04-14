@@ -27,11 +27,25 @@ const errorHandler = (err, req, res, next) => {
     statusCode = err.statusCode;
     errorType = 'ValidationError';
     errorSource = 'validation';
-    errorDetails = {
-      field: err.field,
-      value: err.value,
-      constraint: err.constraint
-    };
+    
+    // Check if there are multiple validation errors
+    if (err.errors && err.errors.length > 0) {
+      // Use detailed error format for multiple errors
+      errorDetails = {
+        errors: err.errors.map(e => ({
+          field: e.field,
+          value: e.value,
+          constraint: e.constraint
+        }))
+      };
+    } else {
+      // Use simple format for single error
+      errorDetails = {
+        field: err.field,
+        value: err.value,
+        constraint: err.constraint
+      };
+    }
   } 
   else if (err instanceof DatabaseError) {
     statusCode = err.statusCode;

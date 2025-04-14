@@ -18,13 +18,51 @@ class AppError extends Error {
  * Validation error for input validation failures
  */
 class ValidationError extends AppError {
-  constructor(field, value, constraint) {
+  constructor(field, value, constraint, errors = []) {
     super(`Validation failed for field: ${field}`);
     this.statusCode = 400;
     this.field = field;
     this.value = value;
     this.constraint = constraint;
     this.name = 'ValidationError';
+    
+    // Support for multiple validation errors
+    this.errors = errors.length > 0 ? errors : [];
+    if (field && constraint && !this.errors.some(e => e.field === field)) {
+      this.errors.push({ field, value, constraint });
+    }
+  }
+  
+  /**
+   * Static method to create a ValidationError with multiple errors
+   * @param {Array} errors - Array of error objects with field, value, and constraint properties
+   * @returns {ValidationError} - A ValidationError instance with multiple errors
+   */
+  static withErrors(errors) {
+    if (!errors || errors.length === 0) {
+      return new ValidationError('validation', null, 'Unknown validation error');
+    }
+    
+    // Use the first error for the main error properties
+    const firstError = errors[0];
+    return new ValidationError(
+      firstError.field,
+      firstError.value,
+      firstError.constraint,
+      errors
+    );
+  }
+  
+  /**
+   * Add another validation error
+   * @param {string} field - Field that failed validation
+   * @param {*} value - Invalid value
+   * @param {string} constraint - Validation constraint that failed
+   * @returns {ValidationError} - This instance for chaining
+   */
+  addError(field, value, constraint) {
+    this.errors.push({ field, value, constraint });
+    return this;
   }
 }
 

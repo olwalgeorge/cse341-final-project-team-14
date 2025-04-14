@@ -34115,3 +34115,1201 @@ Use mongoose.model(name, schema)
 2025-04-14 19:34:10 DEBUG [inventory-api]: Deserialized user: superadmin (67fbe2be7b9b324c6c2da998) 
 2025-04-14 19:34:10 DEBUG [inventory-api]: Session: 
 2025-04-14 19:34:10 WARN [inventory-api]: Validation failed 
+2025-04-14 19:36:30 DEBUG [inventory-api]: Deserialized user: superadmin (67fbe2be7b9b324c6c2da998) 
+2025-04-14 19:36:30 DEBUG [inventory-api]: Session: 
+2025-04-14 19:36:30 INFO [inventory-api]: getProductById called with ID: 67f8ec8aaf6bfc397a056b7f 
+2025-04-14 19:36:30 DEBUG [inventory-api]: getProductByIdService called with ID: 67f8ec8aaf6bfc397a056b7f 
+2025-04-14 19:36:30 ERROR [inventory-api]: Error caught in middleware: DatabaseError - Product not found with ID: 67f8ec8aaf6bfc397a056b7f 
+2025-04-14 19:36:40 DEBUG [inventory-api]: Deserialized user: superadmin (67fbe2be7b9b324c6c2da998) 
+2025-04-14 19:36:40 DEBUG [inventory-api]: Session: 
+2025-04-14 19:36:40 WARN [inventory-api]: Validation failed 
+2025-04-14 19:37:16 DEBUG [inventory-api]: Deserialized user: superadmin (67fbe2be7b9b324c6c2da998) 
+2025-04-14 19:37:16 DEBUG [inventory-api]: Session: 
+2025-04-14 19:37:16 WARN [inventory-api]: Validation failed 
+2025-04-14 19:37:34 DEBUG [inventory-api]: Deserialized user: superadmin (67fbe2be7b9b324c6c2da998) 
+2025-04-14 19:37:34 DEBUG [inventory-api]: Session: 
+2025-04-14 19:37:34 INFO [inventory-api]: getProductById called with ID: 67f8ec8aaf6bfc397a056b76 
+2025-04-14 19:37:34 DEBUG [inventory-api]: getProductByIdService called with ID: 67f8ec8aaf6bfc397a056b76 
+2025-04-14 19:37:35 ERROR [inventory-api]: Error caught in middleware: DatabaseError - Product not found with ID: 67f8ec8aaf6bfc397a056b76 
+2025-04-14 19:49:53 INFO [inventory-api]: getAllCustomers called 
+2025-04-14 19:49:53 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 19:49:53 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 19:49:53 DEBUG [inventory-api]: Built filter: 
+2025-04-14 19:49:53 INFO [inventory-api]: getAllCustomers called 
+2025-04-14 19:49:53 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 19:49:53 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 19:49:53 DEBUG [inventory-api]: Built filter: 
+2025-04-14 19:49:53 INFO [inventory-api]: getCustomerById called with customer_Id: 67fd3cb10dc16cdc4024b6bf 
+2025-04-14 19:49:53 DEBUG [inventory-api]: getCustomerByIdService called with customer_Id: 67fd3cb10dc16cdc4024b6bf 
+2025-04-14 19:49:53 INFO [inventory-api]: getCustomerById called with customer_Id: 67fd3cb10dc16cdc4024b6d0 
+2025-04-14 19:49:53 DEBUG [inventory-api]: getCustomerByIdService called with customer_Id: 67fd3cb10dc16cdc4024b6d0 
+2025-04-14 19:49:53 INFO [inventory-api]: createCustomer called 
+2025-04-14 19:49:53 DEBUG [inventory-api]: Request body: 
+2025-04-14 19:49:53 DEBUG [inventory-api]: Generated customerID: CU-00003 
+2025-04-14 19:49:53 DEBUG [inventory-api]: createCustomerService called with data: 
+2025-04-14 19:49:54 WARN [inventory-api]: Validation failed 
+2025-04-14 19:49:54 INFO [inventory-api]: updateCustomerById called with customer_Id: 67fd3cb20dc16cdc4024b6fe 
+2025-04-14 19:49:54 DEBUG [inventory-api]: Update data: 
+2025-04-14 19:49:54 DEBUG [inventory-api]: updateCustomerService called with customer_Id: 67fd3cb20dc16cdc4024b6fe 
+2025-04-14 19:49:54 INFO [inventory-api]: updateCustomerById called with customer_Id: 67fd3cb20dc16cdc4024b70e 
+2025-04-14 19:49:54 DEBUG [inventory-api]: Update data: 
+2025-04-14 19:49:54 DEBUG [inventory-api]: updateCustomerService called with customer_Id: 67fd3cb20dc16cdc4024b70e 
+2025-04-14 19:49:54 INFO [inventory-api]: deleteCustomerById called with customer_Id: 67fd3cb20dc16cdc4024b714 
+2025-04-14 19:49:54 DEBUG [inventory-api]: deleteCustomerService called with customer_Id: 67fd3cb20dc16cdc4024b714 
+2025-04-14 19:49:54 INFO [inventory-api]: deleteCustomerById called with customer_Id: 67fd3cb20dc16cdc4024b724 
+2025-04-14 19:49:54 DEBUG [inventory-api]: deleteCustomerService called with customer_Id: 67fd3cb20dc16cdc4024b724 
+2025-04-14 19:49:54 INFO [inventory-api]: searchCustomers called 
+2025-04-14 19:49:54 DEBUG [inventory-api]: Search term: 
+2025-04-14 19:49:54 DEBUG [inventory-api]: searchCustomersService called with term: business 
+2025-04-14 19:49:54 INFO [inventory-api]: searchCustomers called 
+2025-04-14 19:49:54 DEBUG [inventory-api]: Search term: 
+2025-04-14 19:49:54 DEBUG [inventory-api]: searchCustomersService called with term: nonexistent 
+2025-04-14 19:50:00 INFO [inventory-api]: getAllSuppliers called 
+2025-04-14 19:50:00 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 19:50:00 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 19:50:00 DEBUG [inventory-api]: Built filter: 
+2025-04-14 19:50:00 INFO [inventory-api]: getAllSuppliers called 
+2025-04-14 19:50:00 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 19:50:00 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 19:50:00 DEBUG [inventory-api]: Built filter: 
+2025-04-14 19:50:01 INFO [inventory-api]: getSupplierById called with ID: 67fd3cb960b7dbf3e6d1fce2 
+2025-04-14 19:50:01 DEBUG [inventory-api]: getSupplierByIdService called with ID: 67fd3cb960b7dbf3e6d1fce2 
+2025-04-14 19:50:01 INFO [inventory-api]: getSupplierById called with ID: 67fd3cb960b7dbf3e6d1fcee 
+2025-04-14 19:50:01 DEBUG [inventory-api]: getSupplierByIdService called with ID: 67fd3cb960b7dbf3e6d1fcee 
+2025-04-14 19:50:01 INFO [inventory-api]: getUserProfile called for user testadmin (ID: 67fd3cb8848cd001c77093df, userID: SM-00001) 
+2025-04-14 19:50:01 DEBUG [inventory-api]: getUserByIdService called with ID: 67fd3cb8848cd001c77093df 
+2025-04-14 19:50:01 INFO [inventory-api]: createSupplier called 
+2025-04-14 19:50:01 DEBUG [inventory-api]: Request body: 
+2025-04-14 19:50:01 DEBUG [inventory-api]: Supplier data with generated ID: 
+2025-04-14 19:50:01 DEBUG [inventory-api]: createSupplierService called with data: 
+2025-04-14 19:50:01 WARN [inventory-api]: Validation failed 
+2025-04-14 19:50:01 INFO [inventory-api]: updateSupplierById called with ID: 67fd3cb960b7dbf3e6d1fd15 
+2025-04-14 19:50:01 DEBUG [inventory-api]: Update data: 
+2025-04-14 19:50:01 DEBUG [inventory-api]: updateSupplierService called with ID: 67fd3cb960b7dbf3e6d1fd15 
+2025-04-14 19:50:01 INFO [inventory-api]: updateSupplierById called with ID: 67fd3cb960b7dbf3e6d1fd22 
+2025-04-14 19:50:01 DEBUG [inventory-api]: Update data: 
+2025-04-14 19:50:01 DEBUG [inventory-api]: updateSupplierService called with ID: 67fd3cb960b7dbf3e6d1fd22 
+2025-04-14 19:50:01 INFO [inventory-api]: deleteSupplierById called with ID: 67fd3cb960b7dbf3e6d1fd28 
+2025-04-14 19:50:01 DEBUG [inventory-api]: deleteSupplierService called with ID: 67fd3cb960b7dbf3e6d1fd28 
+2025-04-14 19:50:01 INFO [inventory-api]: deleteSupplierById called with ID: 67fd3cb960b7dbf3e6d1fd34 
+2025-04-14 19:50:01 DEBUG [inventory-api]: deleteSupplierService called with ID: 67fd3cb960b7dbf3e6d1fd34 
+2025-04-14 19:50:01 INFO [inventory-api]: getAllInventory called 
+2025-04-14 19:50:01 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 19:50:01 DEBUG [inventory-api]: getAllInventoryService called with query: 
+2025-04-14 19:50:01 DEBUG [inventory-api]: Built filter: 
+2025-04-14 19:50:01 INFO [inventory-api]: getAllSuppliers called 
+2025-04-14 19:50:01 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 19:50:01 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 19:50:01 DEBUG [inventory-api]: Built filter: 
+2025-04-14 19:50:01 INFO [inventory-api]: getAllSuppliers called 
+2025-04-14 19:50:01 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 19:50:01 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 19:50:01 DEBUG [inventory-api]: Built filter: 
+2025-04-14 19:50:01 INFO [inventory-api]: searchSuppliers called 
+2025-04-14 19:50:01 DEBUG [inventory-api]: Search term: 
+2025-04-14 19:50:01 DEBUG [inventory-api]: searchSuppliersService called with term: tech 
+2025-04-14 19:50:01 ERROR [inventory-api]: Error in getAllInventoryService: Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema) 
+MissingSchemaError: Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema)
+    at NativeConnection.model (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\connection.js:1491:13)
+    at _getModelFromConn (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:579:15)
+    at addModelNamesToMap (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:507:17)
+    at getModelsMapForPopulate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:208:7)
+    at _populatePath (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4446:21)
+    at Function.populate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4413:21)
+    at model.Query._find (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2407:20)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at model.Query.exec (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:4456:63)
+    at getAllInventoryService (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\inventory.service.js:57:28)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\inventory.controller.js:29:20
+2025-04-14 19:50:01 ERROR [inventory-api]: Error retrieving all inventory items: Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema) 
+MissingSchemaError: Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema)
+    at NativeConnection.model (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\connection.js:1491:13)
+    at _getModelFromConn (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:579:15)
+    at addModelNamesToMap (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:507:17)
+    at getModelsMapForPopulate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:208:7)
+    at _populatePath (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4446:21)
+    at Function.populate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4413:21)
+    at model.Query._find (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2407:20)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at model.Query.exec (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:4456:63)
+    at getAllInventoryService (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\inventory.service.js:57:28)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\inventory.controller.js:29:20
+2025-04-14 19:50:01 INFO [inventory-api]: searchSuppliers called 
+2025-04-14 19:50:01 INFO [inventory-api]: getAllUsers called 
+2025-04-14 19:50:01 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 19:50:01 DEBUG [inventory-api]: getAllUsersService called with query: 
+2025-04-14 19:50:01 DEBUG [inventory-api]: Built filter: 
+2025-04-14 19:50:01 DEBUG [inventory-api]: Search term: 
+2025-04-14 19:50:01 DEBUG [inventory-api]: searchSuppliersService called with term: nonexistent 
+2025-04-14 19:50:01 INFO [inventory-api]: getAllInventory called 
+2025-04-14 19:50:01 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 19:50:01 DEBUG [inventory-api]: getAllInventoryService called with query: 
+2025-04-14 19:50:01 DEBUG [inventory-api]: Built filter: 
+2025-04-14 19:50:02 INFO [inventory-api]: getInventoryById called with ID: 67fd3cba0bfb3c12713bbff3 
+2025-04-14 19:50:02 ERROR [inventory-api]: Error in getInventoryByIdService for ID 67fd3cba0bfb3c12713bbff3: Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema) 
+MissingSchemaError: Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema)
+    at NativeConnection.model (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\connection.js:1491:13)
+    at _getModelFromConn (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:579:15)
+    at addModelNamesToMap (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:507:17)
+    at getModelsMapForPopulate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:208:7)
+    at _populatePath (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4446:21)
+    at Function.populate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4413:21)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2605:11
+    at _init (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:3275:5)
+    at model.Object.<anonymous>.Document.init (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:654:5)
+    at model.Object.<anonymous>.Document.$init (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:667:42)
+    at Object.createModelAndInit (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\queryHelpers.js:119:12)
+    at completeOne (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:3253:11)
+    at model.Query.Object.<anonymous>.Query._completeOne (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2601:3)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2663:10
+    at new Promise (<anonymous>)
+    at model.Query._findOne (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2662:10)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at model.Query.exec (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:4456:63)
+    at getInventoryByIdService (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\inventory.service.js:82:23)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\inventory.controller.js:54:23
+2025-04-14 19:50:02 ERROR [inventory-api]: Error retrieving inventory item with ID: 67fd3cba0bfb3c12713bbff3 Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema) 
+MissingSchemaError: Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema)
+    at NativeConnection.model (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\connection.js:1491:13)
+    at _getModelFromConn (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:579:15)
+    at addModelNamesToMap (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:507:17)
+    at getModelsMapForPopulate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:208:7)
+    at _populatePath (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4446:21)
+    at Function.populate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4413:21)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2605:11
+    at _init (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:3275:5)
+    at model.Object.<anonymous>.Document.init (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:654:5)
+    at model.Object.<anonymous>.Document.$init (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:667:42)
+    at Object.createModelAndInit (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\queryHelpers.js:119:12)
+    at completeOne (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:3253:11)
+    at model.Query.Object.<anonymous>.Query._completeOne (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2601:3)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2663:10
+    at new Promise (<anonymous>)
+    at model.Query._findOne (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2662:10)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at model.Query.exec (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:4456:63)
+    at getInventoryByIdService (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\inventory.service.js:82:23)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\inventory.controller.js:54:23
+2025-04-14 19:50:02 INFO [inventory-api]: getInventoryById called with ID: 67fd3cba0bfb3c12713bbfff 
+2025-04-14 19:50:02 WARN [inventory-api]: Validation failed 
+2025-04-14 19:50:02 WARN [inventory-api]: Validation failed 
+2025-04-14 19:50:02 INFO [inventory-api]: updateInventoryById called with ID: 67fd3cba0bfb3c12713bc020 
+2025-04-14 19:50:02 DEBUG [inventory-api]: Update data: 
+2025-04-14 19:50:02 ERROR [inventory-api]: Error in updateInventoryService for ID 67fd3cba0bfb3c12713bc020: Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema) 
+MissingSchemaError: Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema)
+    at NativeConnection.model (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\connection.js:1491:13)
+    at _getModelFromConn (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:579:15)
+    at addModelNamesToMap (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:507:17)
+    at getModelsMapForPopulate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:208:7)
+    at _populatePath (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4446:21)
+    at Function.populate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4413:21)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2605:11
+    at _init (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:3275:5)
+    at model.Object.<anonymous>.Document.init (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:654:5)
+    at model.Object.<anonymous>.Document.$init (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:667:42)
+    at Object.createModelAndInit (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\queryHelpers.js:119:12)
+    at completeOne (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:3253:11)
+    at model.Query.Object.<anonymous>.Query._completeOne (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2601:3)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:3484:10
+    at new Promise (<anonymous>)
+    at model.Query._findOneAndUpdate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:3483:10)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at model.Query.exec (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:4456:63)
+    at updateInventoryService (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\inventory.service.js:288:23)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\inventory.controller.js:243:23
+2025-04-14 19:50:02 ERROR [inventory-api]: Error updating inventory item with ID: 67fd3cba0bfb3c12713bc020 Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema) 
+MissingSchemaError: Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema)
+    at NativeConnection.model (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\connection.js:1491:13)
+    at _getModelFromConn (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:579:15)
+    at addModelNamesToMap (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:507:17)
+    at getModelsMapForPopulate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:208:7)
+    at _populatePath (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4446:21)
+    at Function.populate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4413:21)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2605:11
+    at _init (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:3275:5)
+    at model.Object.<anonymous>.Document.init (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:654:5)
+    at model.Object.<anonymous>.Document.$init (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:667:42)
+    at Object.createModelAndInit (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\queryHelpers.js:119:12)
+    at completeOne (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:3253:11)
+    at model.Query.Object.<anonymous>.Query._completeOne (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2601:3)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:3484:10
+    at new Promise (<anonymous>)
+    at model.Query._findOneAndUpdate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:3483:10)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at model.Query.exec (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:4456:63)
+    at updateInventoryService (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\inventory.service.js:288:23)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\inventory.controller.js:243:23
+2025-04-14 19:50:02 INFO [inventory-api]: updateInventoryById called with ID: 67fd3cba0bfb3c12713bc02c 
+2025-04-14 19:50:02 DEBUG [inventory-api]: Update data: 
+2025-04-14 19:50:02 INFO [inventory-api]: deleteInventoryById called with ID: 67fd3cba0bfb3c12713bc032 
+2025-04-14 19:50:02 INFO [inventory-api]: deleteInventoryById called with ID: 67fd3cba0bfb3c12713bc03e 
+2025-04-14 19:50:02 INFO [inventory-api]: getInventoryByProduct called with product ID: 67fd3cb90bfb3c12713bbfd8 
+2025-04-14 19:50:02 DEBUG [inventory-api]: getInventoryByProductService called with product ID: 67fd3cb90bfb3c12713bbfd8 
+2025-04-14 19:50:02 DEBUG [inventory-api]: Built filter: 
+2025-04-14 19:50:02 ERROR [inventory-api]: Error in getInventoryByProductService: Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema) 
+2025-04-14 19:50:02 ERROR [inventory-api]: Error retrieving inventory for product ID: 67fd3cb90bfb3c12713bbfd8 Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema) 
+MissingSchemaError: Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema)
+    at NativeConnection.model (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\connection.js:1491:13)
+    at _getModelFromConn (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:579:15)
+    at addModelNamesToMap (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:507:17)
+    at getModelsMapForPopulate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:208:7)
+    at _populatePath (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4446:21)
+    at Function.populate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4413:21)
+    at model.Query._find (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2407:20)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at model.Query.exec (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:4456:63)
+    at getInventoryByProductService (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\inventory.service.js:195:28)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\inventory.controller.js:147:20
+2025-04-14 19:50:02 INFO [inventory-api]: getInventoryByProduct called with product ID: 67fd3cba0bfb3c12713bc04f 
+2025-04-14 19:50:02 DEBUG [inventory-api]: getInventoryByProductService called with product ID: 67fd3cba0bfb3c12713bc04f 
+2025-04-14 19:50:02 DEBUG [inventory-api]: Built filter: 
+2025-04-14 19:50:02 INFO [inventory-api]: getAllUsers called 
+2025-04-14 19:50:02 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 19:50:02 DEBUG [inventory-api]: getAllUsersService called with query: 
+2025-04-14 19:50:02 DEBUG [inventory-api]: Built filter: 
+2025-04-14 19:50:02 INFO [inventory-api]: getInventoryByWarehouse called with warehouse ID: 67fd3cb90bfb3c12713bbfda 
+2025-04-14 19:50:02 DEBUG [inventory-api]: getInventoryByWarehouseService called with warehouse ID: 67fd3cb90bfb3c12713bbfda 
+2025-04-14 19:50:02 DEBUG [inventory-api]: Built filter: 
+2025-04-14 19:50:02 ERROR [inventory-api]: Error in getInventoryByWarehouseService: Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema) 
+2025-04-14 19:50:02 ERROR [inventory-api]: Error retrieving inventory for warehouse ID: 67fd3cb90bfb3c12713bbfda Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema) 
+MissingSchemaError: Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema)
+    at NativeConnection.model (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\connection.js:1491:13)
+    at _getModelFromConn (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:579:15)
+    at addModelNamesToMap (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:507:17)
+    at getModelsMapForPopulate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:208:7)
+    at _populatePath (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4446:21)
+    at Function.populate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4413:21)
+    at model.Query._find (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2407:20)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at model.Query.exec (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:4456:63)
+    at getInventoryByWarehouseService (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\inventory.service.js:141:28)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\inventory.controller.js:114:20
+2025-04-14 19:50:02 INFO [inventory-api]: getInventoryByWarehouse called with warehouse ID: 67fd3cba0bfb3c12713bc061 
+2025-04-14 19:50:02 DEBUG [inventory-api]: getInventoryByWarehouseService called with warehouse ID: 67fd3cba0bfb3c12713bc061 
+2025-04-14 19:50:02 DEBUG [inventory-api]: Built filter: 
+2025-04-14 19:50:02 INFO [inventory-api]: getInventoryByStockStatus called with status: undefined 
+2025-04-14 19:50:02 DEBUG [inventory-api]: getInventoryByStockStatusService called with status: undefined 
+2025-04-14 19:50:02 DEBUG [inventory-api]: Built filter: 
+2025-04-14 19:50:02 WARN [inventory-api]: Validation failed 
+2025-04-14 19:50:03 INFO [inventory-api]: getUsersByRole called with role: ADMIN 
+2025-04-14 19:50:03 DEBUG [inventory-api]: getUsersByRoleService called with role: ADMIN 
+2025-04-14 19:50:03 INFO [inventory-api]: getUsersByRole called with role: SUPERADMIN 
+2025-04-14 19:50:03 DEBUG [inventory-api]: getUsersByRoleService called with role: SUPERADMIN 
+2025-04-14 19:50:03 INFO [inventory-api]: getUserById called with ID: SM-00002 
+2025-04-14 19:50:03 DEBUG [inventory-api]: Request body: 
+2025-04-14 19:50:03 DEBUG [inventory-api]: getUserByUserIdService called with userID: SM-00002 
+2025-04-14 19:50:04 INFO [inventory-api]: getUserById called with ID: SM-99999 
+2025-04-14 19:50:04 DEBUG [inventory-api]: Request body: 
+2025-04-14 19:50:04 DEBUG [inventory-api]: getUserByUserIdService called with userID: SM-99999 
+2025-04-14 19:50:04 INFO [inventory-api]: getUserByUsername called with username: testadmin 
+2025-04-14 19:50:04 INFO [inventory-api]: getUserByEmail called with email: user@example.com 
+2025-04-14 19:50:05 INFO [inventory-api]: updateUserProfile called for user testadmin (ID: 67fd3cbc848cd001c7709422, userID: SM-00001) 
+2025-04-14 19:50:05 DEBUG [inventory-api]: Request body: 
+2025-04-14 19:50:05 DEBUG [inventory-api]: updateUserProfileService called with ID: 67fd3cbc848cd001c7709422 
+2025-04-14 19:52:50 INFO [inventory-api]: getAllCustomers called 
+2025-04-14 19:52:50 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 19:52:50 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 19:52:50 DEBUG [inventory-api]: Built filter: 
+2025-04-14 19:52:51 INFO [inventory-api]: getAllCustomers called 
+2025-04-14 19:52:51 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 19:52:51 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 19:52:51 DEBUG [inventory-api]: Built filter: 
+2025-04-14 19:52:51 INFO [inventory-api]: getCustomerById called with customer_Id: 67fd3d632c111783295694af 
+2025-04-14 19:52:51 DEBUG [inventory-api]: getCustomerByIdService called with customer_Id: 67fd3d632c111783295694af 
+2025-04-14 19:52:51 INFO [inventory-api]: getCustomerById called with customer_Id: 67fd3d632c111783295694bf 
+2025-04-14 19:52:51 DEBUG [inventory-api]: getCustomerByIdService called with customer_Id: 67fd3d632c111783295694bf 
+2025-04-14 19:52:51 INFO [inventory-api]: createCustomer called 
+2025-04-14 19:52:51 DEBUG [inventory-api]: Request body: 
+2025-04-14 19:52:51 DEBUG [inventory-api]: Generated customerID: CU-00003 
+2025-04-14 19:52:51 DEBUG [inventory-api]: createCustomerService called with data: 
+2025-04-14 19:52:51 WARN [inventory-api]: Validation failed 
+2025-04-14 19:52:51 INFO [inventory-api]: updateCustomerById called with customer_Id: 67fd3d632c111783295694ed 
+2025-04-14 19:52:51 DEBUG [inventory-api]: Update data: 
+2025-04-14 19:52:51 DEBUG [inventory-api]: updateCustomerService called with customer_Id: 67fd3d632c111783295694ed 
+2025-04-14 19:52:51 INFO [inventory-api]: updateCustomerById called with customer_Id: 67fd3d632c111783295694fd 
+2025-04-14 19:52:51 DEBUG [inventory-api]: Update data: 
+2025-04-14 19:52:51 DEBUG [inventory-api]: updateCustomerService called with customer_Id: 67fd3d632c111783295694fd 
+2025-04-14 19:52:51 INFO [inventory-api]: deleteCustomerById called with customer_Id: 67fd3d632c11178329569503 
+2025-04-14 19:52:51 DEBUG [inventory-api]: deleteCustomerService called with customer_Id: 67fd3d632c11178329569503 
+2025-04-14 19:52:51 INFO [inventory-api]: deleteCustomerById called with customer_Id: 67fd3d632c11178329569513 
+2025-04-14 19:52:51 DEBUG [inventory-api]: deleteCustomerService called with customer_Id: 67fd3d632c11178329569513 
+2025-04-14 19:52:51 INFO [inventory-api]: searchCustomers called 
+2025-04-14 19:52:51 DEBUG [inventory-api]: Search term: 
+2025-04-14 19:52:51 DEBUG [inventory-api]: searchCustomersService called with term: business 
+2025-04-14 19:52:51 INFO [inventory-api]: searchCustomers called 
+2025-04-14 19:52:51 DEBUG [inventory-api]: Search term: 
+2025-04-14 19:52:51 DEBUG [inventory-api]: searchCustomersService called with term: nonexistent 
+2025-04-14 19:52:55 INFO [inventory-api]: getAllInventory called 
+2025-04-14 19:52:55 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 19:52:55 DEBUG [inventory-api]: getAllInventoryService called with query: 
+2025-04-14 19:52:55 DEBUG [inventory-api]: Built filter: 
+2025-04-14 19:52:55 INFO [inventory-api]: getAllSuppliers called 
+2025-04-14 19:52:55 ERROR [inventory-api]: Error in getAllInventoryService: Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema) 
+MissingSchemaError: Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema)
+    at NativeConnection.model (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\connection.js:1491:13)
+    at _getModelFromConn (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:579:15)
+    at addModelNamesToMap (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:507:17)
+    at getModelsMapForPopulate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:208:7)
+    at _populatePath (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4446:21)
+    at Function.populate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4413:21)
+    at model.Query._find (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2407:20)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at model.Query.exec (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:4456:63)
+    at getAllInventoryService (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\inventory.service.js:57:28)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\inventory.controller.js:29:20
+2025-04-14 19:52:55 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 19:52:55 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 19:52:55 DEBUG [inventory-api]: Built filter: 
+2025-04-14 19:52:55 ERROR [inventory-api]: Error retrieving all inventory items: Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema) 
+MissingSchemaError: Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema)
+    at NativeConnection.model (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\connection.js:1491:13)
+    at _getModelFromConn (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:579:15)
+    at addModelNamesToMap (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:507:17)
+    at getModelsMapForPopulate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:208:7)
+    at _populatePath (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4446:21)
+    at Function.populate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4413:21)
+    at model.Query._find (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2407:20)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at model.Query.exec (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:4456:63)
+    at getAllInventoryService (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\inventory.service.js:57:28)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\inventory.controller.js:29:20
+2025-04-14 19:52:55 INFO [inventory-api]: getAllInventory called 
+2025-04-14 19:52:55 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 19:52:55 DEBUG [inventory-api]: getAllInventoryService called with query: 
+2025-04-14 19:52:55 DEBUG [inventory-api]: Built filter: 
+2025-04-14 19:52:55 INFO [inventory-api]: getAllSuppliers called 
+2025-04-14 19:52:55 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 19:52:55 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 19:52:55 DEBUG [inventory-api]: Built filter: 
+2025-04-14 19:52:56 INFO [inventory-api]: getSupplierById called with ID: 67fd3d67d5d161aa3763a12a 
+2025-04-14 19:52:56 DEBUG [inventory-api]: getSupplierByIdService called with ID: 67fd3d67d5d161aa3763a12a 
+2025-04-14 19:52:56 INFO [inventory-api]: getInventoryById called with ID: 67fd3d689e0416c651c3234f 
+2025-04-14 19:52:56 ERROR [inventory-api]: Error in getInventoryByIdService for ID 67fd3d689e0416c651c3234f: Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema) 
+MissingSchemaError: Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema)
+    at NativeConnection.model (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\connection.js:1491:13)
+    at _getModelFromConn (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:579:15)
+    at addModelNamesToMap (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:507:17)
+    at getModelsMapForPopulate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:208:7)
+    at _populatePath (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4446:21)
+    at Function.populate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4413:21)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2605:11
+    at _init (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:3275:5)
+    at model.Object.<anonymous>.Document.init (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:654:5)
+    at model.Object.<anonymous>.Document.$init (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:667:42)
+    at Object.createModelAndInit (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\queryHelpers.js:119:12)
+    at completeOne (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:3253:11)
+    at model.Query.Object.<anonymous>.Query._completeOne (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2601:3)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2663:10
+    at new Promise (<anonymous>)
+    at model.Query._findOne (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2662:10)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at model.Query.exec (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:4456:63)
+    at getInventoryByIdService (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\inventory.service.js:82:23)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\inventory.controller.js:54:23
+2025-04-14 19:52:56 ERROR [inventory-api]: Error retrieving inventory item with ID: 67fd3d689e0416c651c3234f Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema) 
+MissingSchemaError: Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema)
+    at NativeConnection.model (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\connection.js:1491:13)
+    at _getModelFromConn (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:579:15)
+    at addModelNamesToMap (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:507:17)
+    at getModelsMapForPopulate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:208:7)
+    at _populatePath (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4446:21)
+    at Function.populate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4413:21)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2605:11
+    at _init (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:3275:5)
+    at model.Object.<anonymous>.Document.init (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:654:5)
+    at model.Object.<anonymous>.Document.$init (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:667:42)
+    at Object.createModelAndInit (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\queryHelpers.js:119:12)
+    at completeOne (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:3253:11)
+    at model.Query.Object.<anonymous>.Query._completeOne (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2601:3)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2663:10
+    at new Promise (<anonymous>)
+    at model.Query._findOne (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2662:10)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at model.Query.exec (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:4456:63)
+    at getInventoryByIdService (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\inventory.service.js:82:23)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\inventory.controller.js:54:23
+2025-04-14 19:52:56 INFO [inventory-api]: getInventoryById called with ID: 67fd3d689e0416c651c3235b 
+2025-04-14 19:52:56 INFO [inventory-api]: getSupplierById called with ID: 67fd3d68d5d161aa3763a137 
+2025-04-14 19:52:56 DEBUG [inventory-api]: getSupplierByIdService called with ID: 67fd3d68d5d161aa3763a137 
+2025-04-14 19:52:56 WARN [inventory-api]: Validation failed 
+2025-04-14 19:52:56 WARN [inventory-api]: Validation failed 
+2025-04-14 19:52:56 INFO [inventory-api]: createSupplier called 
+2025-04-14 19:52:56 DEBUG [inventory-api]: Request body: 
+2025-04-14 19:52:56 DEBUG [inventory-api]: Supplier data with generated ID: 
+2025-04-14 19:52:56 DEBUG [inventory-api]: createSupplierService called with data: 
+2025-04-14 19:52:56 INFO [inventory-api]: updateInventoryById called with ID: 67fd3d689e0416c651c3237d 
+2025-04-14 19:52:56 DEBUG [inventory-api]: Update data: 
+2025-04-14 19:52:56 ERROR [inventory-api]: Error in updateInventoryService for ID 67fd3d689e0416c651c3237d: Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema) 
+MissingSchemaError: Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema)
+    at NativeConnection.model (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\connection.js:1491:13)
+    at _getModelFromConn (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:579:15)
+    at addModelNamesToMap (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:507:17)
+    at getModelsMapForPopulate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:208:7)
+    at _populatePath (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4446:21)
+    at Function.populate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4413:21)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2605:11
+    at _init (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:3275:5)
+    at model.Object.<anonymous>.Document.init (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:654:5)
+    at model.Object.<anonymous>.Document.$init (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:667:42)
+    at Object.createModelAndInit (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\queryHelpers.js:119:12)
+    at completeOne (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:3253:11)
+    at model.Query.Object.<anonymous>.Query._completeOne (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2601:3)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:3484:10
+    at new Promise (<anonymous>)
+    at model.Query._findOneAndUpdate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:3483:10)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at model.Query.exec (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:4456:63)
+    at updateInventoryService (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\inventory.service.js:288:23)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\inventory.controller.js:243:23
+2025-04-14 19:52:56 ERROR [inventory-api]: Error updating inventory item with ID: 67fd3d689e0416c651c3237d Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema) 
+MissingSchemaError: Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema)
+    at NativeConnection.model (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\connection.js:1491:13)
+    at _getModelFromConn (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:579:15)
+    at addModelNamesToMap (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:507:17)
+    at getModelsMapForPopulate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:208:7)
+    at _populatePath (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4446:21)
+    at Function.populate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4413:21)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2605:11
+    at _init (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:3275:5)
+    at model.Object.<anonymous>.Document.init (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:654:5)
+    at model.Object.<anonymous>.Document.$init (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:667:42)
+    at Object.createModelAndInit (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\queryHelpers.js:119:12)
+    at completeOne (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:3253:11)
+    at model.Query.Object.<anonymous>.Query._completeOne (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2601:3)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:3484:10
+    at new Promise (<anonymous>)
+    at model.Query._findOneAndUpdate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:3483:10)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at model.Query.exec (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:4456:63)
+    at updateInventoryService (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\inventory.service.js:288:23)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\inventory.controller.js:243:23
+2025-04-14 19:52:56 WARN [inventory-api]: Validation failed 
+2025-04-14 19:52:56 INFO [inventory-api]: updateSupplierById called with ID: 67fd3d68d5d161aa3763a162 
+2025-04-14 19:52:56 DEBUG [inventory-api]: Update data: 
+2025-04-14 19:52:56 DEBUG [inventory-api]: updateSupplierService called with ID: 67fd3d68d5d161aa3763a162 
+2025-04-14 19:52:56 INFO [inventory-api]: updateSupplierById called with ID: 67fd3d68d5d161aa3763a16e 
+2025-04-14 19:52:56 DEBUG [inventory-api]: Update data: 
+2025-04-14 19:52:56 DEBUG [inventory-api]: updateSupplierService called with ID: 67fd3d68d5d161aa3763a16e 
+2025-04-14 19:52:56 INFO [inventory-api]: deleteSupplierById called with ID: 67fd3d68d5d161aa3763a174 
+2025-04-14 19:52:56 DEBUG [inventory-api]: deleteSupplierService called with ID: 67fd3d68d5d161aa3763a174 
+2025-04-14 19:52:56 INFO [inventory-api]: deleteSupplierById called with ID: 67fd3d68d5d161aa3763a180 
+2025-04-14 19:52:56 DEBUG [inventory-api]: deleteSupplierService called with ID: 67fd3d68d5d161aa3763a180 
+2025-04-14 19:52:56 INFO [inventory-api]: updateInventoryById called with ID: 67fd3d689e0416c651c3238a 
+2025-04-14 19:52:56 DEBUG [inventory-api]: Update data: 
+2025-04-14 19:52:56 INFO [inventory-api]: deleteInventoryById called with ID: 67fd3d689e0416c651c32390 
+2025-04-14 19:52:56 INFO [inventory-api]: getAllSuppliers called 
+2025-04-14 19:52:56 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 19:52:56 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 19:52:56 DEBUG [inventory-api]: Built filter: 
+2025-04-14 19:52:56 INFO [inventory-api]: deleteInventoryById called with ID: 67fd3d689e0416c651c3239c 
+2025-04-14 19:52:56 INFO [inventory-api]: getInventoryByProduct called with product ID: 67fd3d679e0416c651c32336 
+2025-04-14 19:52:56 DEBUG [inventory-api]: getInventoryByProductService called with product ID: 67fd3d679e0416c651c32336 
+2025-04-14 19:52:56 DEBUG [inventory-api]: Built filter: 
+2025-04-14 19:52:56 ERROR [inventory-api]: Error in getInventoryByProductService: Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema) 
+2025-04-14 19:52:56 ERROR [inventory-api]: Error retrieving inventory for product ID: 67fd3d679e0416c651c32336 Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema) 
+MissingSchemaError: Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema)
+    at NativeConnection.model (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\connection.js:1491:13)
+    at _getModelFromConn (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:579:15)
+    at addModelNamesToMap (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:507:17)
+    at getModelsMapForPopulate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:208:7)
+    at _populatePath (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4446:21)
+    at Function.populate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4413:21)
+    at model.Query._find (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2407:20)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at model.Query.exec (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:4456:63)
+    at getInventoryByProductService (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\inventory.service.js:195:28)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\inventory.controller.js:147:20
+2025-04-14 19:52:56 INFO [inventory-api]: getInventoryByProduct called with product ID: 67fd3d689e0416c651c323ad 
+2025-04-14 19:52:56 DEBUG [inventory-api]: getInventoryByProductService called with product ID: 67fd3d689e0416c651c323ad 
+2025-04-14 19:52:56 DEBUG [inventory-api]: Built filter: 
+2025-04-14 19:52:56 INFO [inventory-api]: getAllSuppliers called 
+2025-04-14 19:52:56 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 19:52:56 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 19:52:56 DEBUG [inventory-api]: Built filter: 
+2025-04-14 19:52:57 INFO [inventory-api]: getInventoryByWarehouse called with warehouse ID: 67fd3d679e0416c651c32338 
+2025-04-14 19:52:57 INFO [inventory-api]: searchSuppliers called 
+2025-04-14 19:52:57 DEBUG [inventory-api]: getInventoryByWarehouseService called with warehouse ID: 67fd3d679e0416c651c32338 
+2025-04-14 19:52:57 DEBUG [inventory-api]: Built filter: 
+2025-04-14 19:52:57 DEBUG [inventory-api]: Search term: 
+2025-04-14 19:52:57 DEBUG [inventory-api]: searchSuppliersService called with term: tech 
+2025-04-14 19:52:57 ERROR [inventory-api]: Error in getInventoryByWarehouseService: Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema) 
+2025-04-14 19:52:57 ERROR [inventory-api]: Error retrieving inventory for warehouse ID: 67fd3d679e0416c651c32338 Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema) 
+MissingSchemaError: Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema)
+    at NativeConnection.model (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\connection.js:1491:13)
+    at _getModelFromConn (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:579:15)
+    at addModelNamesToMap (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:507:17)
+    at getModelsMapForPopulate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:208:7)
+    at _populatePath (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4446:21)
+    at Function.populate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4413:21)
+    at model.Query._find (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2407:20)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at model.Query.exec (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:4456:63)
+    at getInventoryByWarehouseService (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\inventory.service.js:141:28)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\inventory.controller.js:114:20
+2025-04-14 19:52:57 INFO [inventory-api]: getInventoryByWarehouse called with warehouse ID: 67fd3d699e0416c651c323bf 
+2025-04-14 19:52:57 DEBUG [inventory-api]: getInventoryByWarehouseService called with warehouse ID: 67fd3d699e0416c651c323bf 
+2025-04-14 19:52:57 DEBUG [inventory-api]: Built filter: 
+2025-04-14 19:52:57 INFO [inventory-api]: searchSuppliers called 
+2025-04-14 19:52:57 DEBUG [inventory-api]: Search term: 
+2025-04-14 19:52:57 DEBUG [inventory-api]: searchSuppliersService called with term: nonexistent 
+2025-04-14 19:52:57 INFO [inventory-api]: getInventoryByStockStatus called with status: undefined 
+2025-04-14 19:52:57 DEBUG [inventory-api]: getInventoryByStockStatusService called with status: undefined 
+2025-04-14 19:52:57 DEBUG [inventory-api]: Built filter: 
+2025-04-14 19:52:57 WARN [inventory-api]: Validation failed 
+2025-04-14 19:52:57 INFO [inventory-api]: getUserProfile called for user testadmin (ID: 67fd3d697b5927eb01751dca, userID: SM-00001) 
+2025-04-14 19:52:57 DEBUG [inventory-api]: getUserByIdService called with ID: 67fd3d697b5927eb01751dca 
+2025-04-14 19:52:58 INFO [inventory-api]: getAllUsers called 
+2025-04-14 19:52:58 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 19:52:58 DEBUG [inventory-api]: getAllUsersService called with query: 
+2025-04-14 19:52:58 DEBUG [inventory-api]: Built filter: 
+2025-04-14 19:52:58 INFO [inventory-api]: getAllUsers called 
+2025-04-14 19:52:58 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 19:52:58 DEBUG [inventory-api]: getAllUsersService called with query: 
+2025-04-14 19:52:58 DEBUG [inventory-api]: Built filter: 
+2025-04-14 19:52:58 INFO [inventory-api]: getUsersByRole called with role: ADMIN 
+2025-04-14 19:52:58 DEBUG [inventory-api]: getUsersByRoleService called with role: ADMIN 
+2025-04-14 19:52:59 INFO [inventory-api]: getUsersByRole called with role: SUPERADMIN 
+2025-04-14 19:52:59 DEBUG [inventory-api]: getUsersByRoleService called with role: SUPERADMIN 
+2025-04-14 19:52:59 INFO [inventory-api]: getUserById called with ID: SM-00002 
+2025-04-14 19:52:59 DEBUG [inventory-api]: Request body: 
+2025-04-14 19:52:59 DEBUG [inventory-api]: getUserByUserIdService called with userID: SM-00002 
+2025-04-14 19:52:59 INFO [inventory-api]: getUserById called with ID: SM-99999 
+2025-04-14 19:52:59 DEBUG [inventory-api]: Request body: 
+2025-04-14 19:52:59 DEBUG [inventory-api]: getUserByUserIdService called with userID: SM-99999 
+2025-04-14 19:52:59 INFO [inventory-api]: getUserByUsername called with username: testadmin 
+2025-04-14 19:53:00 INFO [inventory-api]: getUserByEmail called with email: user@example.com 
+2025-04-14 19:53:00 INFO [inventory-api]: updateUserProfile called for user testadmin (ID: 67fd3d6c7b5927eb01751e10, userID: SM-00001) 
+2025-04-14 19:53:00 DEBUG [inventory-api]: Request body: 
+2025-04-14 19:53:00 DEBUG [inventory-api]: updateUserProfileService called with ID: 67fd3d6c7b5927eb01751e10 
+2025-04-14 19:53:32 INFO [inventory-api]: getAllCustomers called 
+2025-04-14 19:53:32 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 19:53:32 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 19:53:32 DEBUG [inventory-api]: Built filter: 
+2025-04-14 19:53:32 INFO [inventory-api]: getAllCustomers called 
+2025-04-14 19:53:32 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 19:53:32 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 19:53:32 DEBUG [inventory-api]: Built filter: 
+2025-04-14 19:53:32 INFO [inventory-api]: getCustomerById called with customer_Id: 67fd3d8c01ce837cef259c40 
+2025-04-14 19:53:32 DEBUG [inventory-api]: getCustomerByIdService called with customer_Id: 67fd3d8c01ce837cef259c40 
+2025-04-14 19:53:32 INFO [inventory-api]: getCustomerById called with customer_Id: 67fd3d8c01ce837cef259c51 
+2025-04-14 19:53:32 DEBUG [inventory-api]: getCustomerByIdService called with customer_Id: 67fd3d8c01ce837cef259c51 
+2025-04-14 19:53:32 INFO [inventory-api]: createCustomer called 
+2025-04-14 19:53:32 DEBUG [inventory-api]: Request body: 
+2025-04-14 19:53:33 DEBUG [inventory-api]: Generated customerID: CU-00003 
+2025-04-14 19:53:33 DEBUG [inventory-api]: createCustomerService called with data: 
+2025-04-14 19:53:33 WARN [inventory-api]: Validation failed 
+2025-04-14 19:53:33 INFO [inventory-api]: updateCustomerById called with customer_Id: 67fd3d8d01ce837cef259c7f 
+2025-04-14 19:53:33 DEBUG [inventory-api]: Update data: 
+2025-04-14 19:53:33 DEBUG [inventory-api]: updateCustomerService called with customer_Id: 67fd3d8d01ce837cef259c7f 
+2025-04-14 19:53:33 INFO [inventory-api]: updateCustomerById called with customer_Id: 67fd3d8d01ce837cef259c8f 
+2025-04-14 19:53:33 DEBUG [inventory-api]: Update data: 
+2025-04-14 19:53:33 DEBUG [inventory-api]: updateCustomerService called with customer_Id: 67fd3d8d01ce837cef259c8f 
+2025-04-14 19:53:33 INFO [inventory-api]: deleteCustomerById called with customer_Id: 67fd3d8d01ce837cef259c95 
+2025-04-14 19:53:33 DEBUG [inventory-api]: deleteCustomerService called with customer_Id: 67fd3d8d01ce837cef259c95 
+2025-04-14 19:53:33 INFO [inventory-api]: deleteCustomerById called with customer_Id: 67fd3d8d01ce837cef259ca5 
+2025-04-14 19:53:33 DEBUG [inventory-api]: deleteCustomerService called with customer_Id: 67fd3d8d01ce837cef259ca5 
+2025-04-14 19:53:33 INFO [inventory-api]: searchCustomers called 
+2025-04-14 19:53:33 DEBUG [inventory-api]: Search term: 
+2025-04-14 19:53:33 DEBUG [inventory-api]: searchCustomersService called with term: business 
+2025-04-14 19:53:33 INFO [inventory-api]: searchCustomers called 
+2025-04-14 19:53:33 DEBUG [inventory-api]: Search term: 
+2025-04-14 19:53:33 DEBUG [inventory-api]: searchCustomersService called with term: nonexistent 
+2025-04-14 19:53:39 INFO [inventory-api]: getAllInventory called 
+2025-04-14 19:53:39 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 19:53:39 DEBUG [inventory-api]: getAllInventoryService called with query: 
+2025-04-14 19:53:39 DEBUG [inventory-api]: Built filter: 
+2025-04-14 19:53:39 ERROR [inventory-api]: Error in getAllInventoryService: Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema) 
+MissingSchemaError: Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema)
+    at NativeConnection.model (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\connection.js:1491:13)
+    at _getModelFromConn (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:579:15)
+    at addModelNamesToMap (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:507:17)
+    at getModelsMapForPopulate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:208:7)
+    at _populatePath (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4446:21)
+    at Function.populate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4413:21)
+    at model.Query._find (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2407:20)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at model.Query.exec (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:4456:63)
+    at getAllInventoryService (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\inventory.service.js:57:28)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\inventory.controller.js:29:20
+2025-04-14 19:53:39 ERROR [inventory-api]: Error retrieving all inventory items: Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema) 
+MissingSchemaError: Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema)
+    at NativeConnection.model (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\connection.js:1491:13)
+    at _getModelFromConn (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:579:15)
+    at addModelNamesToMap (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:507:17)
+    at getModelsMapForPopulate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:208:7)
+    at _populatePath (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4446:21)
+    at Function.populate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4413:21)
+    at model.Query._find (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2407:20)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at model.Query.exec (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:4456:63)
+    at getAllInventoryService (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\inventory.service.js:57:28)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\inventory.controller.js:29:20
+2025-04-14 19:53:39 INFO [inventory-api]: getAllInventory called 
+2025-04-14 19:53:39 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 19:53:39 DEBUG [inventory-api]: getAllInventoryService called with query: 
+2025-04-14 19:53:39 DEBUG [inventory-api]: Built filter: 
+2025-04-14 19:53:39 INFO [inventory-api]: getInventoryById called with ID: 67fd3d93edb40ba89e82fc08 
+2025-04-14 19:53:39 INFO [inventory-api]: getAllSuppliers called 
+2025-04-14 19:53:39 ERROR [inventory-api]: Error in getInventoryByIdService for ID 67fd3d93edb40ba89e82fc08: Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema) 
+MissingSchemaError: Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema)
+    at NativeConnection.model (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\connection.js:1491:13)
+    at _getModelFromConn (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:579:15)
+    at addModelNamesToMap (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:507:17)
+    at getModelsMapForPopulate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:208:7)
+    at _populatePath (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4446:21)
+    at Function.populate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4413:21)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2605:11
+    at _init (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:3275:5)
+    at model.Object.<anonymous>.Document.init (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:654:5)
+    at model.Object.<anonymous>.Document.$init (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:667:42)
+    at Object.createModelAndInit (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\queryHelpers.js:119:12)
+    at completeOne (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:3253:11)
+    at model.Query.Object.<anonymous>.Query._completeOne (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2601:3)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2663:10
+    at new Promise (<anonymous>)
+    at model.Query._findOne (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2662:10)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at model.Query.exec (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:4456:63)
+    at getInventoryByIdService (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\inventory.service.js:82:23)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\inventory.controller.js:54:23
+2025-04-14 19:53:39 ERROR [inventory-api]: Error retrieving inventory item with ID: 67fd3d93edb40ba89e82fc08 Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema) 
+MissingSchemaError: Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema)
+    at NativeConnection.model (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\connection.js:1491:13)
+    at _getModelFromConn (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:579:15)
+    at addModelNamesToMap (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:507:17)
+    at getModelsMapForPopulate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:208:7)
+    at _populatePath (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4446:21)
+    at Function.populate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4413:21)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2605:11
+    at _init (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:3275:5)
+    at model.Object.<anonymous>.Document.init (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:654:5)
+    at model.Object.<anonymous>.Document.$init (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:667:42)
+    at Object.createModelAndInit (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\queryHelpers.js:119:12)
+    at completeOne (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:3253:11)
+    at model.Query.Object.<anonymous>.Query._completeOne (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2601:3)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2663:10
+    at new Promise (<anonymous>)
+    at model.Query._findOne (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2662:10)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at model.Query.exec (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:4456:63)
+    at getInventoryByIdService (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\inventory.service.js:82:23)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\inventory.controller.js:54:23
+2025-04-14 19:53:39 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 19:53:39 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 19:53:39 DEBUG [inventory-api]: Built filter: 
+2025-04-14 19:53:39 INFO [inventory-api]: getInventoryById called with ID: 67fd3d93edb40ba89e82fc15 
+2025-04-14 19:53:39 WARN [inventory-api]: Validation failed 
+2025-04-14 19:53:39 INFO [inventory-api]: getAllSuppliers called 
+2025-04-14 19:53:39 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 19:53:39 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 19:53:39 DEBUG [inventory-api]: Built filter: 
+2025-04-14 19:53:39 INFO [inventory-api]: getUserProfile called for user testadmin (ID: 67fd3d92820ce37dc776d6e8, userID: SM-00001) 
+2025-04-14 19:53:39 DEBUG [inventory-api]: getUserByIdService called with ID: 67fd3d92820ce37dc776d6e8 
+2025-04-14 19:53:39 WARN [inventory-api]: Validation failed 
+2025-04-14 19:53:39 INFO [inventory-api]: updateInventoryById called with ID: 67fd3d93edb40ba89e82fc37 
+2025-04-14 19:53:39 DEBUG [inventory-api]: Update data: 
+2025-04-14 19:53:39 ERROR [inventory-api]: Error in updateInventoryService for ID 67fd3d93edb40ba89e82fc37: Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema) 
+MissingSchemaError: Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema)
+    at NativeConnection.model (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\connection.js:1491:13)
+    at _getModelFromConn (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:579:15)
+    at addModelNamesToMap (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:507:17)
+    at getModelsMapForPopulate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:208:7)
+    at _populatePath (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4446:21)
+    at Function.populate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4413:21)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2605:11
+    at _init (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:3275:5)
+    at model.Object.<anonymous>.Document.init (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:654:5)
+    at model.Object.<anonymous>.Document.$init (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:667:42)
+    at Object.createModelAndInit (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\queryHelpers.js:119:12)
+    at completeOne (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:3253:11)
+    at model.Query.Object.<anonymous>.Query._completeOne (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2601:3)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:3484:10
+    at new Promise (<anonymous>)
+    at model.Query._findOneAndUpdate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:3483:10)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at model.Query.exec (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:4456:63)
+    at updateInventoryService (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\inventory.service.js:288:23)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\inventory.controller.js:243:23
+2025-04-14 19:53:39 ERROR [inventory-api]: Error updating inventory item with ID: 67fd3d93edb40ba89e82fc37 Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema) 
+MissingSchemaError: Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema)
+    at NativeConnection.model (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\connection.js:1491:13)
+    at _getModelFromConn (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:579:15)
+    at addModelNamesToMap (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:507:17)
+    at getModelsMapForPopulate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:208:7)
+    at _populatePath (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4446:21)
+    at Function.populate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4413:21)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2605:11
+    at _init (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:3275:5)
+    at model.Object.<anonymous>.Document.init (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:654:5)
+    at model.Object.<anonymous>.Document.$init (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:667:42)
+    at Object.createModelAndInit (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\queryHelpers.js:119:12)
+    at completeOne (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:3253:11)
+    at model.Query.Object.<anonymous>.Query._completeOne (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2601:3)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:3484:10
+    at new Promise (<anonymous>)
+    at model.Query._findOneAndUpdate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:3483:10)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at model.Query.exec (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:4456:63)
+    at updateInventoryService (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\inventory.service.js:288:23)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\inventory.controller.js:243:23
+2025-04-14 19:53:39 INFO [inventory-api]: updateInventoryById called with ID: 67fd3d93edb40ba89e82fc43 
+2025-04-14 19:53:39 DEBUG [inventory-api]: Update data: 
+2025-04-14 19:53:39 INFO [inventory-api]: getSupplierById called with ID: 67fd3d930b833a4e19c4ba2f 
+2025-04-14 19:53:39 INFO [inventory-api]: deleteInventoryById called with ID: 67fd3d93edb40ba89e82fc49 
+2025-04-14 19:53:39 DEBUG [inventory-api]: getSupplierByIdService called with ID: 67fd3d930b833a4e19c4ba2f 
+2025-04-14 19:53:39 INFO [inventory-api]: deleteInventoryById called with ID: 67fd3d93edb40ba89e82fc55 
+2025-04-14 19:53:39 INFO [inventory-api]: getSupplierById called with ID: 67fd3d930b833a4e19c4ba3c 
+2025-04-14 19:53:39 DEBUG [inventory-api]: getSupplierByIdService called with ID: 67fd3d930b833a4e19c4ba3c 
+2025-04-14 19:53:39 INFO [inventory-api]: getInventoryByProduct called with product ID: 67fd3d92edb40ba89e82fbef 
+2025-04-14 19:53:39 DEBUG [inventory-api]: getInventoryByProductService called with product ID: 67fd3d92edb40ba89e82fbef 
+2025-04-14 19:53:39 DEBUG [inventory-api]: Built filter: 
+2025-04-14 19:53:39 ERROR [inventory-api]: Error in getInventoryByProductService: Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema) 
+2025-04-14 19:53:39 ERROR [inventory-api]: Error retrieving inventory for product ID: 67fd3d92edb40ba89e82fbef Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema) 
+MissingSchemaError: Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema)
+    at NativeConnection.model (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\connection.js:1491:13)
+    at _getModelFromConn (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:579:15)
+    at addModelNamesToMap (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:507:17)
+    at getModelsMapForPopulate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:208:7)
+    at _populatePath (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4446:21)
+    at Function.populate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4413:21)
+    at model.Query._find (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2407:20)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at model.Query.exec (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:4456:63)
+    at getInventoryByProductService (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\inventory.service.js:195:28)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\inventory.controller.js:147:20
+2025-04-14 19:53:39 INFO [inventory-api]: getInventoryByProduct called with product ID: 67fd3d93edb40ba89e82fc66 
+2025-04-14 19:53:39 DEBUG [inventory-api]: getInventoryByProductService called with product ID: 67fd3d93edb40ba89e82fc66 
+2025-04-14 19:53:39 DEBUG [inventory-api]: Built filter: 
+2025-04-14 19:53:39 INFO [inventory-api]: getInventoryByWarehouse called with warehouse ID: 67fd3d92edb40ba89e82fbf1 
+2025-04-14 19:53:39 DEBUG [inventory-api]: getInventoryByWarehouseService called with warehouse ID: 67fd3d92edb40ba89e82fbf1 
+2025-04-14 19:53:39 DEBUG [inventory-api]: Built filter: 
+2025-04-14 19:53:39 ERROR [inventory-api]: Error in getInventoryByWarehouseService: Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema) 
+2025-04-14 19:53:39 ERROR [inventory-api]: Error retrieving inventory for warehouse ID: 67fd3d92edb40ba89e82fbf1 Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema) 
+MissingSchemaError: Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema)
+    at NativeConnection.model (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\connection.js:1491:13)
+    at _getModelFromConn (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:579:15)
+    at addModelNamesToMap (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:507:17)
+    at getModelsMapForPopulate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:208:7)
+    at _populatePath (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4446:21)
+    at Function.populate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4413:21)
+    at model.Query._find (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2407:20)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at model.Query.exec (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:4456:63)
+    at getInventoryByWarehouseService (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\inventory.service.js:141:28)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\inventory.controller.js:114:20
+2025-04-14 19:53:39 INFO [inventory-api]: getInventoryByWarehouse called with warehouse ID: 67fd3d93edb40ba89e82fc78 
+2025-04-14 19:53:39 DEBUG [inventory-api]: getInventoryByWarehouseService called with warehouse ID: 67fd3d93edb40ba89e82fc78 
+2025-04-14 19:53:39 DEBUG [inventory-api]: Built filter: 
+2025-04-14 19:53:39 INFO [inventory-api]: createSupplier called 
+2025-04-14 19:53:39 INFO [inventory-api]: getInventoryByStockStatus called with status: undefined 
+2025-04-14 19:53:39 DEBUG [inventory-api]: getInventoryByStockStatusService called with status: undefined 
+2025-04-14 19:53:39 DEBUG [inventory-api]: Built filter: 
+2025-04-14 19:53:39 DEBUG [inventory-api]: Request body: 
+2025-04-14 19:53:39 DEBUG [inventory-api]: Supplier data with generated ID: 
+2025-04-14 19:53:39 DEBUG [inventory-api]: createSupplierService called with data: 
+2025-04-14 19:53:39 WARN [inventory-api]: Validation failed 
+2025-04-14 19:53:40 WARN [inventory-api]: Validation failed 
+2025-04-14 19:53:40 INFO [inventory-api]: updateSupplierById called with ID: 67fd3d940b833a4e19c4ba63 
+2025-04-14 19:53:40 DEBUG [inventory-api]: Update data: 
+2025-04-14 19:53:40 DEBUG [inventory-api]: updateSupplierService called with ID: 67fd3d940b833a4e19c4ba63 
+2025-04-14 19:53:40 INFO [inventory-api]: updateSupplierById called with ID: 67fd3d940b833a4e19c4ba6f 
+2025-04-14 19:53:40 DEBUG [inventory-api]: Update data: 
+2025-04-14 19:53:40 DEBUG [inventory-api]: updateSupplierService called with ID: 67fd3d940b833a4e19c4ba6f 
+2025-04-14 19:53:40 INFO [inventory-api]: deleteSupplierById called with ID: 67fd3d940b833a4e19c4ba75 
+2025-04-14 19:53:40 DEBUG [inventory-api]: deleteSupplierService called with ID: 67fd3d940b833a4e19c4ba75 
+2025-04-14 19:53:40 INFO [inventory-api]: deleteSupplierById called with ID: 67fd3d940b833a4e19c4ba81 
+2025-04-14 19:53:40 DEBUG [inventory-api]: deleteSupplierService called with ID: 67fd3d940b833a4e19c4ba81 
+2025-04-14 19:53:40 INFO [inventory-api]: getAllSuppliers called 
+2025-04-14 19:53:40 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 19:53:40 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 19:53:40 DEBUG [inventory-api]: Built filter: 
+2025-04-14 19:53:40 INFO [inventory-api]: getAllSuppliers called 
+2025-04-14 19:53:40 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 19:53:40 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 19:53:40 DEBUG [inventory-api]: Built filter: 
+2025-04-14 19:53:40 INFO [inventory-api]: getAllUsers called 
+2025-04-14 19:53:40 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 19:53:40 DEBUG [inventory-api]: getAllUsersService called with query: 
+2025-04-14 19:53:40 DEBUG [inventory-api]: Built filter: 
+2025-04-14 19:53:40 INFO [inventory-api]: searchSuppliers called 
+2025-04-14 19:53:40 DEBUG [inventory-api]: Search term: 
+2025-04-14 19:53:40 DEBUG [inventory-api]: searchSuppliersService called with term: tech 
+2025-04-14 19:53:40 INFO [inventory-api]: searchSuppliers called 
+2025-04-14 19:53:40 DEBUG [inventory-api]: Search term: 
+2025-04-14 19:53:40 DEBUG [inventory-api]: searchSuppliersService called with term: nonexistent 
+2025-04-14 19:53:40 INFO [inventory-api]: getAllUsers called 
+2025-04-14 19:53:40 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 19:53:40 DEBUG [inventory-api]: getAllUsersService called with query: 
+2025-04-14 19:53:40 DEBUG [inventory-api]: Built filter: 
+2025-04-14 19:53:41 INFO [inventory-api]: getUsersByRole called with role: ADMIN 
+2025-04-14 19:53:41 DEBUG [inventory-api]: getUsersByRoleService called with role: ADMIN 
+2025-04-14 19:53:41 INFO [inventory-api]: getUsersByRole called with role: SUPERADMIN 
+2025-04-14 19:53:41 DEBUG [inventory-api]: getUsersByRoleService called with role: SUPERADMIN 
+2025-04-14 19:53:42 INFO [inventory-api]: getUserById called with ID: SM-00002 
+2025-04-14 19:53:42 DEBUG [inventory-api]: Request body: 
+2025-04-14 19:53:42 DEBUG [inventory-api]: getUserByUserIdService called with userID: SM-00002 
+2025-04-14 19:53:42 INFO [inventory-api]: getUserById called with ID: SM-99999 
+2025-04-14 19:53:42 DEBUG [inventory-api]: Request body: 
+2025-04-14 19:53:42 DEBUG [inventory-api]: getUserByUserIdService called with userID: SM-99999 
+2025-04-14 19:53:43 INFO [inventory-api]: getUserByUsername called with username: testadmin 
+2025-04-14 19:53:43 INFO [inventory-api]: getUserByEmail called with email: user@example.com 
+2025-04-14 19:53:44 INFO [inventory-api]: updateUserProfile called for user testadmin (ID: 67fd3d97820ce37dc776d72e, userID: SM-00001) 
+2025-04-14 19:53:44 DEBUG [inventory-api]: Request body: 
+2025-04-14 19:53:44 DEBUG [inventory-api]: updateUserProfileService called with ID: 67fd3d97820ce37dc776d72e 
+2025-04-14 19:54:27 INFO [inventory-api]: Server running on at http://localhost:3000 in development mode 
+2025-04-14 19:54:33 INFO [inventory-api]: getAllCustomers called 
+2025-04-14 19:54:33 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 19:54:33 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 19:54:33 DEBUG [inventory-api]: Built filter: 
+2025-04-14 19:54:33 INFO [inventory-api]: getAllCustomers called 
+2025-04-14 19:54:33 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 19:54:33 DEBUG [inventory-api]: getAllCustomersService called with query: 
+2025-04-14 19:54:33 DEBUG [inventory-api]: Built filter: 
+2025-04-14 19:54:33 INFO [inventory-api]: getCustomerById called with customer_Id: 67fd3dc919e373212a0a3ea2 
+2025-04-14 19:54:33 DEBUG [inventory-api]: getCustomerByIdService called with customer_Id: 67fd3dc919e373212a0a3ea2 
+2025-04-14 19:54:33 INFO [inventory-api]: getCustomerById called with customer_Id: 67fd3dc919e373212a0a3eb2 
+2025-04-14 19:54:33 DEBUG [inventory-api]: getCustomerByIdService called with customer_Id: 67fd3dc919e373212a0a3eb2 
+2025-04-14 19:54:33 INFO [inventory-api]: createCustomer called 
+2025-04-14 19:54:33 DEBUG [inventory-api]: Request body: 
+2025-04-14 19:54:33 DEBUG [inventory-api]: Generated customerID: CU-00003 
+2025-04-14 19:54:33 DEBUG [inventory-api]: createCustomerService called with data: 
+2025-04-14 19:54:33 WARN [inventory-api]: Validation failed 
+2025-04-14 19:54:33 INFO [inventory-api]: updateCustomerById called with customer_Id: 67fd3dc919e373212a0a3ee0 
+2025-04-14 19:54:33 DEBUG [inventory-api]: Update data: 
+2025-04-14 19:54:33 DEBUG [inventory-api]: updateCustomerService called with customer_Id: 67fd3dc919e373212a0a3ee0 
+2025-04-14 19:54:34 INFO [inventory-api]: updateCustomerById called with customer_Id: 67fd3dca19e373212a0a3ef0 
+2025-04-14 19:54:34 DEBUG [inventory-api]: Update data: 
+2025-04-14 19:54:34 DEBUG [inventory-api]: updateCustomerService called with customer_Id: 67fd3dca19e373212a0a3ef0 
+2025-04-14 19:54:34 INFO [inventory-api]: deleteCustomerById called with customer_Id: 67fd3dca19e373212a0a3ef6 
+2025-04-14 19:54:34 DEBUG [inventory-api]: deleteCustomerService called with customer_Id: 67fd3dca19e373212a0a3ef6 
+2025-04-14 19:54:34 INFO [inventory-api]: deleteCustomerById called with customer_Id: 67fd3dca19e373212a0a3f06 
+2025-04-14 19:54:34 DEBUG [inventory-api]: deleteCustomerService called with customer_Id: 67fd3dca19e373212a0a3f06 
+2025-04-14 19:54:34 INFO [inventory-api]: searchCustomers called 
+2025-04-14 19:54:34 DEBUG [inventory-api]: Search term: 
+2025-04-14 19:54:34 DEBUG [inventory-api]: searchCustomersService called with term: business 
+2025-04-14 19:54:34 INFO [inventory-api]: searchCustomers called 
+2025-04-14 19:54:34 DEBUG [inventory-api]: Search term: 
+2025-04-14 19:54:34 DEBUG [inventory-api]: searchCustomersService called with term: nonexistent 
+2025-04-14 19:54:34 INFO [inventory-api]: MongoDB Connected: cluster0-shard-00-00.wncfx.mongodb.net 
+2025-04-14 19:54:38 INFO [inventory-api]: getUserProfile called for user testadmin (ID: 67fd3dcd678f2e7487af5a07, userID: SM-00001) 
+2025-04-14 19:54:38 DEBUG [inventory-api]: getUserByIdService called with ID: 67fd3dcd678f2e7487af5a07 
+2025-04-14 19:54:38 INFO [inventory-api]: getAllInventory called 
+2025-04-14 19:54:38 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 19:54:38 DEBUG [inventory-api]: getAllInventoryService called with query: 
+2025-04-14 19:54:38 DEBUG [inventory-api]: Built filter: 
+2025-04-14 19:54:38 ERROR [inventory-api]: Error in getAllInventoryService: Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema) 
+MissingSchemaError: Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema)
+    at NativeConnection.model (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\connection.js:1491:13)
+    at _getModelFromConn (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:579:15)
+    at addModelNamesToMap (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:507:17)
+    at getModelsMapForPopulate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:208:7)
+    at _populatePath (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4446:21)
+    at Function.populate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4413:21)
+    at model.Query._find (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2407:20)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at model.Query.exec (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:4456:63)
+    at getAllInventoryService (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\inventory.service.js:57:28)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\inventory.controller.js:29:20
+2025-04-14 19:54:38 ERROR [inventory-api]: Error retrieving all inventory items: Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema) 
+MissingSchemaError: Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema)
+    at NativeConnection.model (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\connection.js:1491:13)
+    at _getModelFromConn (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:579:15)
+    at addModelNamesToMap (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:507:17)
+    at getModelsMapForPopulate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:208:7)
+    at _populatePath (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4446:21)
+    at Function.populate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4413:21)
+    at model.Query._find (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2407:20)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at model.Query.exec (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:4456:63)
+    at getAllInventoryService (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\inventory.service.js:57:28)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\inventory.controller.js:29:20
+2025-04-14 19:54:38 INFO [inventory-api]: getAllSuppliers called 
+2025-04-14 19:54:38 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 19:54:38 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 19:54:38 DEBUG [inventory-api]: Built filter: 
+2025-04-14 19:54:38 INFO [inventory-api]: getAllInventory called 
+2025-04-14 19:54:38 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 19:54:38 DEBUG [inventory-api]: getAllInventoryService called with query: 
+2025-04-14 19:54:38 DEBUG [inventory-api]: Built filter: 
+2025-04-14 19:54:38 INFO [inventory-api]: getInventoryById called with ID: 67fd3dce570c43f6b4ce281a 
+2025-04-14 19:54:38 ERROR [inventory-api]: Error in getInventoryByIdService for ID 67fd3dce570c43f6b4ce281a: Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema) 
+MissingSchemaError: Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema)
+    at NativeConnection.model (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\connection.js:1491:13)
+    at _getModelFromConn (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:579:15)
+    at addModelNamesToMap (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:507:17)
+    at getModelsMapForPopulate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:208:7)
+    at _populatePath (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4446:21)
+    at Function.populate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4413:21)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2605:11
+    at _init (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:3275:5)
+    at model.Object.<anonymous>.Document.init (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:654:5)
+    at model.Object.<anonymous>.Document.$init (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:667:42)
+    at Object.createModelAndInit (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\queryHelpers.js:119:12)
+    at completeOne (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:3253:11)
+    at model.Query.Object.<anonymous>.Query._completeOne (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2601:3)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2663:10
+    at new Promise (<anonymous>)
+    at model.Query._findOne (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2662:10)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at model.Query.exec (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:4456:63)
+    at getInventoryByIdService (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\inventory.service.js:82:23)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\inventory.controller.js:54:23
+2025-04-14 19:54:38 ERROR [inventory-api]: Error retrieving inventory item with ID: 67fd3dce570c43f6b4ce281a Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema) 
+MissingSchemaError: Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema)
+    at NativeConnection.model (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\connection.js:1491:13)
+    at _getModelFromConn (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:579:15)
+    at addModelNamesToMap (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:507:17)
+    at getModelsMapForPopulate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:208:7)
+    at _populatePath (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4446:21)
+    at Function.populate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4413:21)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2605:11
+    at _init (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:3275:5)
+    at model.Object.<anonymous>.Document.init (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:654:5)
+    at model.Object.<anonymous>.Document.$init (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:667:42)
+    at Object.createModelAndInit (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\queryHelpers.js:119:12)
+    at completeOne (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:3253:11)
+    at model.Query.Object.<anonymous>.Query._completeOne (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2601:3)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2663:10
+    at new Promise (<anonymous>)
+    at model.Query._findOne (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2662:10)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at model.Query.exec (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:4456:63)
+    at getInventoryByIdService (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\inventory.service.js:82:23)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\inventory.controller.js:54:23
+2025-04-14 19:54:38 INFO [inventory-api]: getInventoryById called with ID: 67fd3dce570c43f6b4ce2826 
+2025-04-14 19:54:38 INFO [inventory-api]: getAllSuppliers called 
+2025-04-14 19:54:38 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 19:54:38 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 19:54:38 DEBUG [inventory-api]: Built filter: 
+2025-04-14 19:54:38 INFO [inventory-api]: getSupplierById called with ID: 67fd3dce76d2fc81abb883d1 
+2025-04-14 19:54:38 DEBUG [inventory-api]: getSupplierByIdService called with ID: 67fd3dce76d2fc81abb883d1 
+2025-04-14 19:54:38 INFO [inventory-api]: getSupplierById called with ID: 67fd3dce76d2fc81abb883dd 
+2025-04-14 19:54:38 DEBUG [inventory-api]: getSupplierByIdService called with ID: 67fd3dce76d2fc81abb883dd 
+2025-04-14 19:54:38 WARN [inventory-api]: Validation failed 
+2025-04-14 19:54:38 WARN [inventory-api]: Validation failed 
+2025-04-14 19:54:38 INFO [inventory-api]: getAllUsers called 
+2025-04-14 19:54:38 INFO [inventory-api]: updateInventoryById called with ID: 67fd3dce570c43f6b4ce2848 
+2025-04-14 19:54:38 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 19:54:38 DEBUG [inventory-api]: getAllUsersService called with query: 
+2025-04-14 19:54:38 DEBUG [inventory-api]: Built filter: 
+2025-04-14 19:54:38 INFO [inventory-api]: createSupplier called 
+2025-04-14 19:54:38 DEBUG [inventory-api]: Update data: 
+2025-04-14 19:54:38 ERROR [inventory-api]: Error in updateInventoryService for ID 67fd3dce570c43f6b4ce2848: Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema) 
+MissingSchemaError: Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema)
+    at NativeConnection.model (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\connection.js:1491:13)
+    at _getModelFromConn (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:579:15)
+    at addModelNamesToMap (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:507:17)
+    at getModelsMapForPopulate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:208:7)
+    at _populatePath (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4446:21)
+    at Function.populate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4413:21)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2605:11
+    at _init (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:3275:5)
+    at model.Object.<anonymous>.Document.init (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:654:5)
+    at model.Object.<anonymous>.Document.$init (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:667:42)
+    at Object.createModelAndInit (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\queryHelpers.js:119:12)
+    at completeOne (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:3253:11)
+    at model.Query.Object.<anonymous>.Query._completeOne (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2601:3)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:3484:10
+    at new Promise (<anonymous>)
+    at model.Query._findOneAndUpdate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:3483:10)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at model.Query.exec (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:4456:63)
+    at updateInventoryService (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\inventory.service.js:288:23)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\inventory.controller.js:243:23
+2025-04-14 19:54:38 ERROR [inventory-api]: Error updating inventory item with ID: 67fd3dce570c43f6b4ce2848 Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema) 
+MissingSchemaError: Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema)
+    at NativeConnection.model (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\connection.js:1491:13)
+    at _getModelFromConn (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:579:15)
+    at addModelNamesToMap (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:507:17)
+    at getModelsMapForPopulate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:208:7)
+    at _populatePath (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4446:21)
+    at Function.populate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4413:21)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2605:11
+    at _init (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:3275:5)
+    at model.Object.<anonymous>.Document.init (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:654:5)
+    at model.Object.<anonymous>.Document.$init (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:667:42)
+    at Object.createModelAndInit (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\queryHelpers.js:119:12)
+    at completeOne (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:3253:11)
+    at model.Query.Object.<anonymous>.Query._completeOne (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2601:3)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:3484:10
+    at new Promise (<anonymous>)
+    at model.Query._findOneAndUpdate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:3483:10)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at model.Query.exec (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:4456:63)
+    at updateInventoryService (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\inventory.service.js:288:23)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\inventory.controller.js:243:23
+2025-04-14 19:54:38 DEBUG [inventory-api]: Request body: 
+2025-04-14 19:54:38 DEBUG [inventory-api]: Supplier data with generated ID: 
+2025-04-14 19:54:38 DEBUG [inventory-api]: createSupplierService called with data: 
+2025-04-14 19:54:38 INFO [inventory-api]: updateInventoryById called with ID: 67fd3dce570c43f6b4ce2854 
+2025-04-14 19:54:38 DEBUG [inventory-api]: Update data: 
+2025-04-14 19:54:38 INFO [inventory-api]: deleteInventoryById called with ID: 67fd3dce570c43f6b4ce285a 
+2025-04-14 19:54:38 WARN [inventory-api]: Validation failed 
+2025-04-14 19:54:38 INFO [inventory-api]: deleteInventoryById called with ID: 67fd3dce570c43f6b4ce2866 
+2025-04-14 19:54:38 INFO [inventory-api]: getInventoryByProduct called with product ID: 67fd3dce570c43f6b4ce2800 
+2025-04-14 19:54:38 DEBUG [inventory-api]: getInventoryByProductService called with product ID: 67fd3dce570c43f6b4ce2800 
+2025-04-14 19:54:38 DEBUG [inventory-api]: Built filter: 
+2025-04-14 19:54:38 ERROR [inventory-api]: Error in getInventoryByProductService: Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema) 
+2025-04-14 19:54:38 INFO [inventory-api]: updateSupplierById called with ID: 67fd3dce76d2fc81abb88407 
+2025-04-14 19:54:38 ERROR [inventory-api]: Error retrieving inventory for product ID: 67fd3dce570c43f6b4ce2800 Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema) 
+MissingSchemaError: Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema)
+    at NativeConnection.model (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\connection.js:1491:13)
+    at _getModelFromConn (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:579:15)
+    at addModelNamesToMap (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:507:17)
+    at getModelsMapForPopulate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:208:7)
+    at _populatePath (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4446:21)
+    at Function.populate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4413:21)
+    at model.Query._find (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2407:20)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at model.Query.exec (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:4456:63)
+    at getInventoryByProductService (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\inventory.service.js:195:28)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\inventory.controller.js:147:20
+2025-04-14 19:54:38 DEBUG [inventory-api]: Update data: 
+2025-04-14 19:54:38 DEBUG [inventory-api]: updateSupplierService called with ID: 67fd3dce76d2fc81abb88407 
+2025-04-14 19:54:38 INFO [inventory-api]: getInventoryByProduct called with product ID: 67fd3dce570c43f6b4ce2877 
+2025-04-14 19:54:38 DEBUG [inventory-api]: getInventoryByProductService called with product ID: 67fd3dce570c43f6b4ce2877 
+2025-04-14 19:54:38 DEBUG [inventory-api]: Built filter: 
+2025-04-14 19:54:38 INFO [inventory-api]: updateSupplierById called with ID: 67fd3dce76d2fc81abb88413 
+2025-04-14 19:54:38 DEBUG [inventory-api]: Update data: 
+2025-04-14 19:54:38 DEBUG [inventory-api]: updateSupplierService called with ID: 67fd3dce76d2fc81abb88413 
+2025-04-14 19:54:38 INFO [inventory-api]: getInventoryByWarehouse called with warehouse ID: 67fd3dce570c43f6b4ce2802 
+2025-04-14 19:54:38 DEBUG [inventory-api]: getInventoryByWarehouseService called with warehouse ID: 67fd3dce570c43f6b4ce2802 
+2025-04-14 19:54:38 DEBUG [inventory-api]: Built filter: 
+2025-04-14 19:54:38 ERROR [inventory-api]: Error in getInventoryByWarehouseService: Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema) 
+2025-04-14 19:54:38 ERROR [inventory-api]: Error retrieving inventory for warehouse ID: 67fd3dce570c43f6b4ce2802 Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema) 
+MissingSchemaError: Schema hasn't been registered for model "Product".
+Use mongoose.model(name, schema)
+    at NativeConnection.model (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\connection.js:1491:13)
+    at _getModelFromConn (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:579:15)
+    at addModelNamesToMap (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:507:17)
+    at getModelsMapForPopulate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:208:7)
+    at _populatePath (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4446:21)
+    at Function.populate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\model.js:4413:21)
+    at model.Query._find (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:2407:20)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at model.Query.exec (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\query.js:4456:63)
+    at getInventoryByWarehouseService (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\inventory.service.js:141:28)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\inventory.controller.js:114:20
+2025-04-14 19:54:38 INFO [inventory-api]: deleteSupplierById called with ID: 67fd3dce76d2fc81abb88419 
+2025-04-14 19:54:38 INFO [inventory-api]: getInventoryByWarehouse called with warehouse ID: 67fd3dce570c43f6b4ce2889 
+2025-04-14 19:54:38 DEBUG [inventory-api]: deleteSupplierService called with ID: 67fd3dce76d2fc81abb88419 
+2025-04-14 19:54:38 DEBUG [inventory-api]: getInventoryByWarehouseService called with warehouse ID: 67fd3dce570c43f6b4ce2889 
+2025-04-14 19:54:38 DEBUG [inventory-api]: Built filter: 
+2025-04-14 19:54:38 INFO [inventory-api]: getInventoryByStockStatus called with status: undefined 
+2025-04-14 19:54:38 INFO [inventory-api]: deleteSupplierById called with ID: 67fd3dce76d2fc81abb88425 
+2025-04-14 19:54:38 DEBUG [inventory-api]: deleteSupplierService called with ID: 67fd3dce76d2fc81abb88425 
+2025-04-14 19:54:38 DEBUG [inventory-api]: getInventoryByStockStatusService called with status: undefined 
+2025-04-14 19:54:38 DEBUG [inventory-api]: Built filter: 
+2025-04-14 19:54:38 WARN [inventory-api]: Validation failed 
+2025-04-14 19:54:38 INFO [inventory-api]: getAllSuppliers called 
+2025-04-14 19:54:38 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 19:54:38 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 19:54:38 DEBUG [inventory-api]: Built filter: 
+2025-04-14 19:54:38 INFO [inventory-api]: getAllSuppliers called 
+2025-04-14 19:54:38 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 19:54:38 DEBUG [inventory-api]: getAllSuppliersService called with query: 
+2025-04-14 19:54:38 DEBUG [inventory-api]: Built filter: 
+2025-04-14 19:54:39 INFO [inventory-api]: searchSuppliers called 
+2025-04-14 19:54:39 DEBUG [inventory-api]: Search term: 
+2025-04-14 19:54:39 DEBUG [inventory-api]: searchSuppliersService called with term: tech 
+2025-04-14 19:54:39 INFO [inventory-api]: searchSuppliers called 
+2025-04-14 19:54:39 DEBUG [inventory-api]: Search term: 
+2025-04-14 19:54:39 DEBUG [inventory-api]: searchSuppliersService called with term: nonexistent 
+2025-04-14 19:54:39 INFO [inventory-api]: getAllUsers called 
+2025-04-14 19:54:39 DEBUG [inventory-api]: Query parameters: 
+2025-04-14 19:54:39 DEBUG [inventory-api]: getAllUsersService called with query: 
+2025-04-14 19:54:39 DEBUG [inventory-api]: Built filter: 
+2025-04-14 19:54:39 INFO [inventory-api]: getUsersByRole called with role: ADMIN 
+2025-04-14 19:54:39 DEBUG [inventory-api]: getUsersByRoleService called with role: ADMIN 
+2025-04-14 19:54:39 INFO [inventory-api]: getUsersByRole called with role: SUPERADMIN 
+2025-04-14 19:54:39 DEBUG [inventory-api]: getUsersByRoleService called with role: SUPERADMIN 
+2025-04-14 19:54:40 INFO [inventory-api]: getUserById called with ID: SM-00002 
+2025-04-14 19:54:40 DEBUG [inventory-api]: Request body: 
+2025-04-14 19:54:40 DEBUG [inventory-api]: getUserByUserIdService called with userID: SM-00002 
+2025-04-14 19:54:40 INFO [inventory-api]: getUserById called with ID: SM-99999 
+2025-04-14 19:54:40 DEBUG [inventory-api]: Request body: 
+2025-04-14 19:54:40 DEBUG [inventory-api]: getUserByUserIdService called with userID: SM-99999 
+2025-04-14 19:54:40 INFO [inventory-api]: getUserByUsername called with username: testadmin 
+2025-04-14 19:54:40 INFO [inventory-api]: getUserByEmail called with email: user@example.com 
+2025-04-14 19:54:41 INFO [inventory-api]: updateUserProfile called for user testadmin (ID: 67fd3dd0678f2e7487af5a4d, userID: SM-00001) 
+2025-04-14 19:54:41 DEBUG [inventory-api]: Request body: 
+2025-04-14 19:54:41 DEBUG [inventory-api]: updateUserProfileService called with ID: 67fd3dd0678f2e7487af5a4d 
+2025-04-14 19:54:45 DEBUG [inventory-api]: Deserialized user: superadmin (67fbe2be7b9b324c6c2da998) 
+2025-04-14 19:54:45 DEBUG [inventory-api]: Session: 
+2025-04-14 19:54:56 WARN [inventory-api]: Validation failed 
+2025-04-14 19:54:56 ERROR [inventory-api]: Error caught in middleware: ValidationError - Validation failed for field: username 
+2025-04-14 19:54:56 DEBUG [inventory-api]: Deserialized user: superadmin (67fbe2be7b9b324c6c2da998) 
+2025-04-14 19:54:56 DEBUG [inventory-api]: Session: 
+2025-04-14 19:54:58 WARN [inventory-api]: Validation failed 
+2025-04-14 19:54:58 ERROR [inventory-api]: Error caught in middleware: ValidationError - Validation failed for field: username 

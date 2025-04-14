@@ -1,8 +1,8 @@
 // src/middlewares/validation.middleware.js
 
 const { validationResult } = require("express-validator");
-const sendResponse = require("../utils/response.js");
 const logger = require("../utils/logger.js");
+const { ValidationError } = require("../utils/errors");
 
 const validate = (validations) => {
   return async (req, res, next) => {
@@ -15,19 +15,26 @@ const validate = (validations) => {
         return next();
       }
 
-      // Get validation errors
-      const errorMessages = errors.array().map((err) => ({
-        field: err.path,
-        message: err.msg,
-      }));
-
       logger.warn("Validation failed", {
         path: req.path,
-        errors: errorMessages,
+        method: req.method,
+        errors: errors.array()
       });
 
-      sendResponse(res, 400, "Validation failed", null, errorMessages);
+      // Convert express-validator errors to our format
+      const validationErrors = errors.array().map(err => ({
+        field: err.path,
+        value: err.value,
+        constraint: err.msg
+      }));
+      
+      // Create ValidationError with multiple errors
+      const validationError = ValidationError.withErrors(validationErrors);
+      
+      // Pass the error to the error handling middleware
+      return next(validationError);
     } catch (err) {
+      logger.error("Unexpected error in validation middleware", err);
       next(err);
     }
   };

@@ -1,7 +1,7 @@
 const Product = require("../models/product.model");
 const logger = require("../utils/logger");
 const APIFeatures = require("../utils/apiFeatures.js");
-const { ValidationError, DatabaseError } = require("../utils/errors.js");
+const { ValidationError } = require("../utils/errors.js");
 
 /**
  * Get all products with optional filtering, pagination, and sorting
