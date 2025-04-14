@@ -9,7 +9,7 @@ Content-Type: application/json
   "fullName": "Super Admin",
   "username": "superadmin",
   "password": "SuperAdmin1234!",
-  "email": "superadmin@example.com",  
+  "email": "superadmin@example.com" 
 }
 
 ### Login User
