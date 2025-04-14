@@ -1,20 +1,20 @@
 const sendResponse = require("../utils/response.js");
 const asyncHandler = require("express-async-handler");
 const logger = require("../utils/logger.js");
-const { DatabaseError, ValidationError } = require("../utils/errors");
+const { ValidationError, DatabaseError } = require("../utils/errors.js");
 const {
   getAllProductsService,
   getProductByIdService,
+  getProductByProductIDService,
   getProductsByCategoryService,
-  getProductByProductIDService,  
+  getProductsBySupplierService,
+  searchProductsService,
   createProductService,
   updateProductService,
   deleteProductService,
   deleteAllProductsService,
-  searchProductsService,
-  getProductsBySupplierService,
 } = require("../services/products.service.js");
-const { transformProduct, generateProductId } = require("../utils/product.utils.js");
+const { transformProduct } = require("../utils/product.utils.js");
 
 /**
  * @desc    Get all products
@@ -23,56 +23,57 @@ const { transformProduct, generateProductId } = require("../utils/product.utils.
  */
 const getAllProducts = asyncHandler(async (req, res, next) => {
   logger.info("getAllProducts called");
+  logger.debug("Query parameters:", req.query);
+  
   try {
-    // Get query parameters for filtering
-    const filters = req.query;
-    logger.debug("Filters applied:", filters);
-
-    // Call the service to get products
-    const result = await getAllProductsService(filters);
+    const result = await getAllProductsService(req.query);
     
-    // Ensure result is properly structured with an array of products
-    if (!result || !result.products || !Array.isArray(result.products)) {
-      logger.error("Products data is not in expected format:", result);
-      return next(DatabaseError.dataError("Products data is not in expected format"));
+    if (!result.products.length) {
+      return sendResponse(res, 200, "No products found", {
+        products: [],
+        pagination: result.pagination
+      });
     }
     
-    // Transform each product in the array
     const transformedProducts = result.products.map(transformProduct);
-
-    sendResponse(res, 200, "Products retrieved successfully", {
-      products: transformedProducts,
-      pagination: result.pagination
-    });
+    sendResponse(
+      res,
+      200,
+      "Products retrieved successfully",
+      { products: transformedProducts, pagination: result.pagination }
+    );
   } catch (error) {
-    logger.error("Error retrieving all products:", error);
-    next(error);
+    logger.error("Error retrieving products:", error);
+    next(error); // Pass to error middleware
   }
 });
 
 /**
- * @desc    Get product by ID
+ * @desc    Get product by MongoDB ID
  * @route   GET /products/:product_Id
  * @access  Public
  */
 const getProductById = asyncHandler(async (req, res, next) => {
-  logger.info(`getProductById called with ID: ${req.params.product_Id}`);
+  const id = req.params.product_Id;
+  logger.info(`getProductById called with ID: ${id}`);
+  
   try {
-    const product = await getProductByIdService(req.params.product_Id);
-    if (product) {
-      const transformedProduct = transformProduct(product);
-      sendResponse(
-        res,
-        200,
-        "Product retrieved successfully",
-        transformedProduct
-      );
-    } else {
-      return next(DatabaseError.notFound("Product"));
+    const product = await getProductByIdService(id);
+    
+    if (!product) {
+      return next(new DatabaseError('notFound', 'Product', id));
     }
+    
+    const transformedProduct = transformProduct(product);
+    sendResponse(
+      res,
+      200,
+      "Product retrieved successfully",
+      transformedProduct
+    );
   } catch (error) {
-    logger.error(`Error retrieving product with ID: ${req.params.product_Id}`, error);
-    next(error);
+    logger.error(`Error retrieving product with ID: ${id}`, error);
+    next(error); // Let the error middleware handle it
   }
 });
 
@@ -84,113 +85,27 @@ const getProductById = asyncHandler(async (req, res, next) => {
 const getProductsByCategory = asyncHandler(async (req, res, next) => {
   const category = req.params.category;
   logger.info(`getProductsByCategory called with category: ${category}`);
+  logger.debug("Query parameters:", req.query);
   
   try {
-    // Pass query parameters for pagination and sorting
     const result = await getProductsByCategoryService(category, req.query);
     
-    if (!result || !result.products || result.products.length === 0) {
-      logger.warn(`No products found in category: ${category}`);
-      return next(DatabaseError.notFound(`Products in category '${category}'`));
-    }
-    
-    // Transform each product
-    const transformedProducts = result.products.map(transformProduct);
-    
-    sendResponse(
-      res,
-      200,
-      `Found ${transformedProducts.length} products in category '${category}'`,
-      {
-        products: transformedProducts,
-        pagination: result.pagination
-      }
-    );
-  } catch (error) {
-    logger.error(
-      `Error retrieving products in category: ${category}`,
-      error
-    );
-    next(error);
-  }
-});
-
-/**
- * @desc    Get product by product ID (PR-XXXXX format)
- * @route   GET /products/productID/:productID
- * @access  Public
- */
-const getProductByProductID = asyncHandler(async (req, res, next) => {
-  logger.info(
-    `getProductByProductId called with product ID: ${req.params.productID}`
-  );
-  try {
-    const product = await getProductByProductIDService(req.params.productID);
-    if (product) {
-      const transformedProduct = transformProduct(product);
-      sendResponse(
-        res,
-        200,
-        "Product retrieved successfully",
-        transformedProduct
-      );
-    } else {
-      return next(DatabaseError.notFound("Product"));
-    }
-  } catch (error) {
-    logger.error(
-      `Error retrieving product with product ID: ${req.params.productID}`,
-      error
-    );
-    next(error);
-  }
-});
-
-/**
- * @desc    Search products by text
- * @route   GET /products/search
- * @access  Public
- */
-const searchProducts = asyncHandler(async (req, res, next) => {
-  const term = req.query.term;
-  logger.info(`searchProducts called with term: ${term}`);
-  
-  if (!term) {
-    logger.warn("Search attempted without search term");
-    return next(ValidationError.badRequest("Search term is required"));
-  }
-
-  try {
-    // Pass both search term and query parameters for pagination
-    const result = await searchProductsService(term, req.query);
-    
-    if (!result || !result.products) {
-      logger.error("Search returned invalid result structure");
-      return next(DatabaseError.dataError("Search result is not in expected format"));
-    }
-    
-    if (result.products.length === 0) {
-      logger.info(`No products found for search term: ${term}`);
-      return sendResponse(res, 200, "No products found matching your search", {
+    if (!result.products.length) {
+      return sendResponse(res, 200, `No products found in category: ${category}`, {
         products: [],
         pagination: result.pagination
       });
     }
     
-    // Transform each product
     const transformedProducts = result.products.map(transformProduct);
-    
     sendResponse(
       res,
       200,
-      `Found ${transformedProducts.length} products matching "${term}"`,
-      {
-        products: transformedProducts,
-        pagination: result.pagination
-      }
+      `Products in category "${category}" retrieved successfully`,
+      { products: transformedProducts, pagination: result.pagination }
     );
   } catch (error) {
-    logger.error(`Error searching products for term: ${term}`, error);
+    logger.error(`Error retrieving products for category ${category}:`, error);
     next(error);
   }
 });
@@ -201,40 +116,103 @@ const searchProducts = asyncHandler(async (req, res, next) => {
  * @access  Public
  */
 const getProductsBySupplier = asyncHandler(async (req, res, next) => {
-  logger.info(
-    `getProductsBySupplier called with supplier ID: ${req.params.supplierId}`
-  );
+  const supplierId = req.params.supplierId;
+  logger.info(`getProductsBySupplier called with supplier ID: ${supplierId}`);
+  logger.debug("Query parameters:", req.query);
+  
   try {
-    // Pass both supplierId and query parameters for filtering/pagination
-    const result = await getProductsBySupplierService(req.params.supplierId, req.query);
+    const result = await getProductsBySupplierService(supplierId, req.query);
     
-    // The service now returns a structured object with products and pagination
-    if (!result || !result.products) {
-      logger.error("Supplier products returned invalid result structure");
-      return next(DatabaseError.dataError("Result is not in expected format"));
+    if (!result.products.length) {
+      return sendResponse(res, 200, `No products found for supplier ID: ${supplierId}`, {
+        products: [],
+        pagination: result.pagination
+      });
     }
     
-    // Even if no products are found, return a 200 OK with empty array
     const transformedProducts = result.products.map(transformProduct);
-    
-    const message = result.products.length > 0 
-      ? "Products for supplier retrieved successfully" 
-      : "No products found for this supplier";
-    
     sendResponse(
       res,
       200,
-      message,
-      {
-        products: transformedProducts,
-        pagination: result.pagination
-      }
+      `Products for supplier ID "${supplierId}" retrieved successfully`,
+      { products: transformedProducts, pagination: result.pagination }
     );
   } catch (error) {
-    logger.error(
-      `Error retrieving products for supplier: ${req.params.supplierId}`,
-      error
+    logger.error(`Error retrieving products for supplier ${supplierId}:`, error);
+    next(error);
+  }
+});
+
+/**
+ * @desc    Get product by product ID (PR-XXXXX format)
+ * @route   GET /products/productID/:productID
+ * @access  Public
+ */
+const getProductByProductID = asyncHandler(async (req, res, next) => {
+  const productID = req.params.productID;
+  logger.info(`getProductByProductID called with product ID: ${productID}`);
+  
+  try {
+    // Validate product ID format
+    if (!productID.match(/^PR-\d{5}$/)) {
+      return next(new ValidationError(
+        'productID', 
+        productID, 
+        'Product ID must be in the format PR-XXXXX where X is a digit'
+      ));
+    }
+    
+    const product = await getProductByProductIDService(productID);
+    
+    if (!product) {
+      return next(new DatabaseError('notFound', 'Product', null, { productID }));
+    }
+    
+    const transformedProduct = transformProduct(product);
+    sendResponse(
+      res,
+      200,
+      "Product retrieved successfully",
+      transformedProduct
     );
+  } catch (error) {
+    logger.error(`Error retrieving product with product ID: ${productID}`, error);
+    next(error);
+  }
+});
+
+/**
+ * @desc    Search products
+ * @route   GET /products/search
+ * @access  Public
+ */
+const searchProducts = asyncHandler(async (req, res, next) => {
+  const searchTerm = req.query.term;
+  logger.info(`searchProducts called with term: ${searchTerm}`);
+  
+  try {
+    if (!searchTerm) {
+      return next(new ValidationError('term', searchTerm, 'Search term is required'));
+    }
+    
+    const result = await searchProductsService(searchTerm, req.query);
+    
+    if (!result.products.length) {
+      return sendResponse(res, 200, "No products found matching search criteria", {
+        products: [],
+        pagination: result.pagination
+      });
+    }
+    
+    const transformedProducts = result.products.map(transformProduct);
+    sendResponse(
+      res,
+      200,
+      "Products retrieved successfully",
+      { products: transformedProducts, pagination: result.pagination }
+    );
+  } catch (error) {
+    logger.error(`Error searching products with term: ${searchTerm}`, error);
     next(error);
   }
 });
@@ -246,22 +224,40 @@ const getProductsBySupplier = asyncHandler(async (req, res, next) => {
  */
 const createProduct = asyncHandler(async (req, res, next) => {
   logger.info("createProduct called");
-  logger.debug("Request body:", req.body);
+  logger.debug("Product data:", req.body);
+  
   try {
-    // Generate productID for the new product
-    const productID = await generateProductId();
-    
-    // Add productID to request body
-    const productData = {
-      ...req.body,
-      productID
-    };
-    
-    const product = await createProductService(productData);
+    const product = await createProductService(req.body);
     const transformedProduct = transformProduct(product);
     sendResponse(res, 201, "Product created successfully", transformedProduct);
   } catch (error) {
     logger.error("Error creating product:", error);
+    
+    // Handle MongoDB validation errors
+    if (error.name === 'ValidationError') {
+      const firstErrorKey = Object.keys(error.errors)[0];
+      const firstError = error.errors[firstErrorKey];
+      
+      return next(new ValidationError(
+        firstErrorKey,
+        firstError.value,
+        firstError.message
+      ));
+    }
+    
+    // Handle duplicate key errors
+    if (error.code === 11000) {
+      const field = Object.keys(error.keyPattern)[0];
+      const value = error.keyValue[field];
+      
+      return next(new DatabaseError(
+        'duplicate',
+        'Product',
+        null,
+        { field, value }
+      ));
+    }
+    
     next(error);
   }
 });
@@ -272,23 +268,57 @@ const createProduct = asyncHandler(async (req, res, next) => {
  * @access  Private
  */
 const updateProductById = asyncHandler(async (req, res, next) => {
-  logger.info(`updateProduct called with ID: ${req.params.product_Id}`);
+  const id = req.params.product_Id;
+  logger.info(`updateProduct called with ID: ${id}`);
   logger.debug("Update data:", req.body);
+  
   try {
-    const product = await updateProductService(req.params.product_Id, req.body);
-    if (product) {
-      const transformedProduct = transformProduct(product);
-      sendResponse(
-        res,
-        200,
-        "Product updated successfully",
-        transformedProduct
-      );
-    } else {
-      return next(DatabaseError.notFound("Product"));
+    const product = await updateProductService(id, req.body);
+    
+    if (!product) {
+      return next(new DatabaseError('notFound', 'Product', id));
     }
+    
+    const transformedProduct = transformProduct(product);
+    sendResponse(
+      res,
+      200,
+      "Product updated successfully",
+      transformedProduct
+    );
   } catch (error) {
-    logger.error(`Error updating product with ID: ${req.params.product_Id}`, error);
+    logger.error(`Error updating product with ID: ${id}`, error);
+    
+    // Handle MongoDB validation errors
+    if (error.name === 'ValidationError') {
+      const firstErrorKey = Object.keys(error.errors)[0];
+      const firstError = error.errors[firstErrorKey];
+      
+      return next(new ValidationError(
+        firstErrorKey,
+        firstError.value,
+        firstError.message
+      ));
+    }
+    
+    // Handle CastError for invalid ObjectId
+    if (error.name === 'CastError' && error.kind === 'ObjectId') {
+      return next(new ValidationError('id', id, 'Invalid product ID format'));
+    }
+    
+    // Handle duplicate key errors
+    if (error.code === 11000) {
+      const field = Object.keys(error.keyPattern)[0];
+      const value = error.keyValue[field];
+      
+      return next(new DatabaseError(
+        'duplicate',
+        'Product',
+        null,
+        { field, value }
+      ));
+    }
+    
     next(error);
   }
 });
@@ -299,16 +329,25 @@ const updateProductById = asyncHandler(async (req, res, next) => {
  * @access  Private
  */
 const deleteProductById = asyncHandler(async (req, res, next) => {
-  logger.info(`deleteProduct called with ID: ${req.params.product_Id}`);
+  const id = req.params.product_Id;
+  logger.info(`deleteProduct called with ID: ${id}`);
+  
   try {
-    const result = await deleteProductService(req.params.product_Id);
-    if (result.deletedCount > 0) {
-      sendResponse(res, 200, "Product deleted successfully");
-    } else {
-      return next(DatabaseError.notFound("Product"));
+    const result = await deleteProductService(id);
+    
+    if (result.deletedCount === 0) {
+      return next(new DatabaseError('notFound', 'Product', id));
     }
+    
+    sendResponse(res, 200, "Product deleted successfully");
   } catch (error) {
-    logger.error(`Error deleting product with ID: ${req.params.product_Id}`, error);
+    logger.error(`Error deleting product with ID: ${id}`, error);
+    
+    // Handle CastError for invalid ObjectId
+    if (error.name === 'CastError' && error.kind === 'ObjectId') {
+      return next(new ValidationError('id', id, 'Invalid product ID format'));
+    }
+    
     next(error);
   }
 });
@@ -320,6 +359,7 @@ const deleteProductById = asyncHandler(async (req, res, next) => {
  */
 const deleteAllProducts = asyncHandler(async (req, res, next) => {
   logger.info("deleteAllProducts called");
+  
   try {
     const result = await deleteAllProductsService();
     sendResponse(

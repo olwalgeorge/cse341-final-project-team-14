@@ -29,7 +29,7 @@ const supplierSchema = new Schema(
         type: String,
         trim: true,
         lowercase: true,
-        unique: true,
+    
       },
     },
     address: {
@@ -76,7 +76,8 @@ const supplierSchema = new Schema(
 
 // Define indexes for the fields we'll often query by
 supplierSchema.index({ name: 1 });
-supplierSchema.index({ "contact.email": 1 });
+// Add unique: true to the explicit index rather than the field definition
+supplierSchema.index({ "contact.email": 1 }, { unique: true });
 supplierSchema.index({ "address.city": 1 });
 supplierSchema.index({ "address.state": 1 });
 supplierSchema.index({ "address.country": 1 });

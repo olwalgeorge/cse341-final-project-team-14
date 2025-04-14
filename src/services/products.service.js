@@ -1,6 +1,7 @@
 const Product = require("../models/product.model");
 const logger = require("../utils/logger");
 const APIFeatures = require("../utils/apiFeatures.js");
+const { ValidationError, DatabaseError } = require("../utils/errors.js");
 
 /**
  * Get all products with optional filtering, pagination, and sorting
@@ -72,7 +73,18 @@ const getAllProductsService = async (query = {}) => {
  */
 const getProductByIdService = async (id) => {
   logger.debug(`getProductByIdService called with ID: ${id}`);
-  return await Product.findById(id);
+  try {
+    return await Product.findById(id);
+  } catch (error) {
+    logger.error(`Error in getProductByIdService for ID ${id}:`, error);
+    
+    // Convert Mongoose CastError to ValidationError for invalid IDs
+    if (error.name === 'CastError' && error.kind === 'ObjectId') {
+      throw new ValidationError('id', id, 'Invalid product ID format');
+    }
+    
+    throw error;
+  }
 };
 
 /**
@@ -142,7 +154,7 @@ const getProductByProductIDService = async (productID) => {
     // Check if the productID matches the expected format (PR-XXXXX)
     if (!productID || !productID.match(/^PR-\d{5}$/)) {
       logger.warn(`Invalid productID format: ${productID}`);
-      return null;
+      throw new ValidationError('productID', productID, 'Product ID must be in the format PR-XXXXX where X is a digit');
     }
 
     // Find the product by productID
@@ -150,7 +162,7 @@ const getProductByProductIDService = async (productID) => {
     
     if (!product) {
       logger.warn(`No product found with productID: ${productID}`);
-      return null;
+      return null; // Let controller handle the "not found" case
     }
     
     logger.debug(`Product found with productID: ${productID}`);
@@ -267,8 +279,15 @@ const getProductsBySupplierService = async (supplierId, query = {}) => {
  */
 const createProductService = async (productData) => {
   logger.debug("createProductService called with data:", productData);
-  const product = new Product(productData);
-  return await product.save();
+  try {
+    const product = new Product(productData);
+    return await product.save();
+  } catch (error) {
+    logger.error("Error in createProductService:", error);
+    
+    // Let the error middleware handle specific database errors
+    throw error;
+  }
 };
 
 /**
@@ -276,11 +295,16 @@ const createProductService = async (productData) => {
  */
 const updateProductService = async (id, updateData) => {
   logger.debug(`updateProductService called with ID: ${id}`, updateData);
-  return await Product.findByIdAndUpdate(
-    id, 
-    { ...updateData, updatedAt: Date.now() }, 
-    { new: true, runValidators: true }
-  );
+  try {
+    return await Product.findByIdAndUpdate(
+      id, 
+      { ...updateData, updatedAt: Date.now() }, 
+      { new: true, runValidators: true }
+    );
+  } catch (error) {
+    logger.error(`Error in updateProductService for ID ${id}:`, error);
+    throw error;
+  }
 };
 
 /**
@@ -288,7 +312,18 @@ const updateProductService = async (id, updateData) => {
  */
 const deleteProductService = async (id) => {
   logger.debug(`deleteProductService called with ID: ${id}`);
-  return await Product.deleteOne({ _id: id });
+  try {
+    return await Product.deleteOne({ _id: id });
+  } catch (error) {
+    logger.error(`Error in deleteProductService for ID ${id}:`, error);
+    
+    // Convert Mongoose CastError to ValidationError for invalid IDs
+    if (error.name === 'CastError' && error.kind === 'ObjectId') {
+      throw new ValidationError('id', id, 'Invalid product ID format');
+    }
+    
+    throw error;
+  }
 };
 
 /**
@@ -296,7 +331,12 @@ const deleteProductService = async (id) => {
  */
 const deleteAllProductsService = async () => {
   logger.debug("deleteAllProductsService called");
-  return await Product.deleteMany({});
+  try {
+    return await Product.deleteMany({});
+  } catch (error) {
+    logger.error("Error in deleteAllProductsService:", error);
+    throw error;
+  }
 };
 
 module.exports = {

@@ -47,7 +47,8 @@ GET {{baseUrl}}/products/search?term=laptop&sort=-sellingPrice
 GET {{baseUrl}}/products/67f8ec8aaf6bfc397a056b7f
 
 ### Get Product by Product ID
-GET {{baseUrl}}/products/productID/PR-00001
+
+GET {{baseUrl}}/products/productID/PR-0001133
 
 ### Get Products by Category
 GET {{baseUrl}}/products/category/Electronics

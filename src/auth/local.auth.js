@@ -4,7 +4,8 @@ const passport = require("passport");
 const { Strategy: LocalStrategy } = require("passport-local");
 const User = require("../models/user.model.js");
 const logger = require("../utils/logger");
-const AuthError = require("../utils/errors/AuthError");
+// Fix: Import AuthError from the consolidated errors utility
+const { AuthError } = require("../utils/errors");
 
 const localStrategy = new LocalStrategy(
   {

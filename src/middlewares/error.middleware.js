@@ -1,91 +1,167 @@
-// middleware/error.middleware.js
+const logger = require('../utils/logger');
+const { ValidationError, DatabaseError, AuthError, ApiError } = require('../utils/errors');
+const mongoose = require('mongoose');
 
-const logger = require("../utils/logger.js");
-const sendResponse = require("../utils/response.js");
-
+/**
+ * Central error handling middleware
+ * Maps different errors to appropriate responses with detailed information
+ */
 // eslint-disable-next-line no-unused-vars
 const errorHandler = (err, req, res, next) => {
-  // Basic error details
   let statusCode = err.statusCode || 500;
-  let message = err.message || "Internal Server Error";
-  let errorDetails = null;
+  let errorType = err.name || 'Error';
+  let errorMessage = err.message || 'Internal Server Error';
+  let errorDetails = {};
+  let errorSource = err.source || 'server';
 
-  // Handle common error types
-  switch (err.name) {
-    case "ValidationError":
-      statusCode = 400;
-      message = "Validation Error";
-      errorDetails = Object.values(err.errors).map((e) => e.message);
-      break;
+  // Log the error for debugging
+  logger.error(`Error caught in middleware: ${errorType} - ${errorMessage}`, {
+    path: req.path,
+    method: req.method,
+    error: err.stack,
+    body: req.body
+  });
 
-    case "CastError":
-      statusCode = 400;
-      message = "Invalid ID Format";
-      break;
-
-    case "MongoError":
-    case "MongoServerError":
-      if (err.code === 11000) {
-        statusCode = 409;
-        message = "Duplicate Entry";
-      }
-      break;
-
-    case "AuthError":
-      statusCode = err.statusCode || 401;
-      message = err.message;
+  // Handle specific error types
+  if (err instanceof ValidationError) {
+    statusCode = err.statusCode;
+    errorType = 'ValidationError';
+    errorSource = 'validation';
+    errorDetails = {
+      field: err.field,
+      value: err.value,
+      constraint: err.constraint
+    };
+  } 
+  else if (err instanceof DatabaseError) {
+    statusCode = err.statusCode;
+    errorType = 'DatabaseError';
+    errorSource = 'database';
+    errorDetails = {
+      entity: err.entity,
+      operation: err.operation,
+      code: err.code
+    };
+  }
+  else if (err instanceof AuthError) {
+    statusCode = err.statusCode;
+    errorType = 'AuthError';
+    errorSource = 'authentication';
+    errorDetails = err.details || {};
+  }
+  else if (err instanceof ApiError) {
+    statusCode = err.statusCode;
+    errorType = 'ApiError';
+    errorSource = 'api';
+    errorDetails = err.details || {};
+  }
+  // Handle Express Validator errors
+  else if (err.array && typeof err.array === 'function') {
+    // Express validator errors
+    statusCode = 400;
+    errorType = 'ExpressValidationError';
+    errorSource = 'validation';
+    errorMessage = 'Validation failed';
+    
+    errorDetails = err.array().map(e => ({
+      field: e.path,
+      value: e.value,
+      message: e.msg
+    }));
+  }
+  // Handle Mongoose validation errors
+  else if (err instanceof mongoose.Error.ValidationError) {
+    statusCode = 400;
+    errorType = 'MongooseValidationError';
+    errorSource = 'database';
+    errorDetails = {};
+    
+    // Extract validation error details from all fields
+    Object.keys(err.errors).forEach(key => {
+      errorDetails[key] = {
+        message: err.errors[key].message,
+        value: err.errors[key].value,
+        kind: err.errors[key].kind
+      };
+    });
+  }
+  // Handle Mongoose cast errors (like invalid ObjectId)
+  else if (err instanceof mongoose.Error.CastError) {
+    statusCode = 400;
+    errorType = 'CastError';
+    errorSource = 'database';
+    errorDetails = {
+      field: err.path,
+      value: err.value,
+      kind: err.kind
+    };
+  }
+  // Handle MongoDB server errors
+  else if (err.name === 'MongoServerError') {
+    statusCode = 500;
+    errorType = 'MongoServerError';
+    errorSource = 'database';
+    
+    // Handle duplicate key errors specifically
+    if (err.code === 11000) {
+      statusCode = 409;
+      errorMessage = 'Duplicate key error';
+      errorDetails = {
+        keyPattern: err.keyPattern,
+        keyValue: err.keyValue
+      };
+    } else {
       errorDetails = {
         code: err.code,
-        type: "Authentication",
-        reason: getAuthErrorReason(err.code),
+        codeName: err.codeName
       };
-      break;
-
-    case "TokenExpiredError":
-      statusCode = 401;
-      message = "Token expired";
-      errorDetails = {
-        code: "TOKEN_EXPIRED",
-        type: "Authentication",
-      };
-      break;
-
-    case "JsonWebTokenError":
-      statusCode = 401;
-      message = "Invalid token";
-      errorDetails = {
-        code: "INVALID_TOKEN",
-        type: "Authentication",
-      };
-      break;
+    }
+  }
+  // JSON parsing errors
+  else if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
+    statusCode = 400;
+    errorType = 'SyntaxError';
+    errorSource = 'request';
+    errorMessage = 'Invalid JSON payload';
+    errorDetails = {
+      body: err.body
+    };
+  }
+  // Node.js system errors
+  else if (err.code && typeof err.code === 'string' && err.syscall) {
+    statusCode = 500;
+    errorType = 'SystemError';
+    errorSource = 'system';
+    errorMessage = `System error: ${err.syscall} failed`;
+    errorDetails = {
+      code: err.code,
+      syscall: err.syscall,
+      address: err.address,
+      port: err.port
+    };
+  }
+  // General application errors
+  else if (err instanceof Error) {
+    statusCode = err.statusCode || 500;
+    errorType = err.constructor.name;
+    errorSource = 'application';
+    errorDetails = {
+      stack: process.env.NODE_ENV === 'production' ? undefined : err.stack
+    };
   }
 
-  // Add authentication context to logs if present
-  const logContext = {
-    error: err.stack,
-    user: req.user?._id,
-    body: req.body,
-    authError: err.name === "AuthError" ? err.code : undefined,
-  };
-
-  // Log error
-  logger.error(`${message} - ${req.method} ${req.url}`, logContext);
-
-  // Send response
-  sendResponse(res, statusCode, message, null, errorDetails);
+  // Respond with the error information
+  res.status(statusCode).json({
+    success: false,
+    error: {
+      type: errorType,
+      message: errorMessage,
+      source: errorSource,
+      details: errorDetails,
+      path: req.path,
+      timestamp: new Date().toISOString()
+    }
+  });
 };
-
-function getAuthErrorReason(code) {
-  switch (code) {
-    case "INVALID_CREDENTIALS":
-      return "Invalid email or password";
-    case "LOGIN_ERROR":
-      return "Login service temporarily unavailable";
-    case "MAX_ATTEMPTS":
-      return "Too many failed attempts";
-    default:
-      return "Authentication failed";
-  }
-}
 
 module.exports = errorHandler;
