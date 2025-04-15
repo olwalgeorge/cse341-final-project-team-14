@@ -314,15 +314,19 @@ const getInventoryTransactionsByTypeService = async (transactionType, query = {}
 /**
  * Create a new inventory transaction
  */
-const createInventoryTransactionService = async (transactionData, userId) => {
+const createTransactionService = async (transactionData) => {
   try {
     // Generate transaction ID if not provided
     if (!transactionData.transactionID) {
       transactionData.transactionID = await generateTransactionId();
+      logger.debug(`Generated transactionID: ${transactionData.transactionID}`);
     }
     
-    // Add the user who performed the transaction
-    transactionData.performedBy = userId;
+    // Use the performedBy from transactionData if provided
+    // Don't overwrite it with undefined userId
+    if (!transactionData.performedBy) {
+      logger.warn("performedBy field not provided for inventory transaction");
+    }
     
     // If inventory reference is provided, get current quantity
     if (transactionData.inventory && !transactionData.quantityBefore) {
@@ -370,7 +374,7 @@ const createInventoryTransactionService = async (transactionData, userId) => {
       .populate("toWarehouse", "name warehouseID")
       .populate("performedBy", "fullName email username");
   } catch (error) {
-    logger.error("Error in createInventoryTransactionService:", error);
+    logger.error("Error in createTransactionService:", error);
     throw error;
   }
 };
@@ -406,7 +410,7 @@ module.exports = {
   getInventoryTransactionsByProductService,
   getInventoryTransactionsByWarehouseService,
   getInventoryTransactionsByTypeService,
-  createInventoryTransactionService,
+  createTransactionService,
   deleteInventoryTransactionService,
   deleteAllInventoryTransactionsService
 };

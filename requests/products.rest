@@ -68,14 +68,14 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-  "name": "iPhone 14 Pro Max",
-  "description": "6.7-inch phone with A16 Bionic chip, 6GB RAM, 256GB Storage",
-  "sellingPrice": 1099.99,
-  "costPrice": 879.99,
+  "name": "iPad Air 5th Generation",
+  "description": "10.9-inch tablet with A14 Bionic chip, 4GB RAM, 64GB Storage",
+  "sellingPrice": 649.99,
+  "costPrice": 549.99,
   "category": "Electronics",
   "supplier": "67fbe670ca7dc6f6163af2b7",
-  "sku": "APPL123456",
-  "tags": ["phone", "apple", "ios"],
+  "sku": "APPL789012",
+  "tags": ["tablet", "apple", "ios"],
   "unit": "pcs"  
 }
 

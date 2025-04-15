@@ -1,54 +1,98 @@
-const sendResponse = require("../utils/response.js");
+// eslint-disable-next-line no-unused-vars
+const passport = require('passport');
 const asyncHandler = require("express-async-handler");
-const logger = require("../utils/logger.js");
-const { AuthError, ApiError } = require("../utils/errors");
-const { transformUser } = require("../utils/user.utils.js");
-const authService = require("../services/auth.service.js");
+const { registerService, authenticateUserService } = require("../services/auth.service.js");
+const sendResponse = require("../utils/response");
+const { AuthError } = require("../utils/errors");
+const logger = require("../utils/logger");
 
 /**
- * @desc    Register new user
+ * @desc    Register a new user
  * @route   POST /auth/register
  * @access  Public
  */
 const register = asyncHandler(async (req, res, next) => {
-  logger.info("Register endpoint called");
-  logger.debug("Request body:", req.body);
-
+  logger.info("register controller called");
+  
   try {
-    const user = await authService.registerUser(req.body);
-    // Log in the user after registration
+    const { user } = await registerService(req.body);
+    
+    // Remove password from response
+    const userData = { ...user.toObject() };
+    delete userData.password;
+    
+    // Log in the user automatically after registration
     req.login(user, (err) => {
       if (err) {
-        logger.error("Error logging in after registration:", err);
-        return next(
-          ApiError.serverError("Registration successful but login failed")
-        );
+        logger.error("Error during automatic login after registration:", err);
+        return next(AuthError.loginError('Registration successful but could not log in automatically'));
       }
-      // Log the user ID being used
-      logger.info(`User ${user.username} (ID: ${user._id}, userID: ${user.userID}) logged in after registration`);
-      const transformedUser = transformUser(user);
-      sendResponse(res, 201, "Registration successful", {
-        user: transformedUser,
-      });
+      
+      sendResponse(
+        res,
+        201,
+        "User registered successfully",
+        { user: userData }
+      );
     });
   } catch (error) {
-    logger.error("Error during registration:", error);
-    // Pass raw validation errors to middleware
+    logger.error("Error in register controller:", error);
     next(error);
   }
 });
 
 /**
- * @desc    Login user
+ * @desc    Login a user
  * @route   POST /auth/login
  * @access  Public
  */
-const loginSuccess = (req, res) => {
-  // Log the user ID being returned
-  logger.info(`User ${req.user.username} (ID: ${req.user._id}, userID: ${req.user.userID}) login success response`);
-  const transformedUser = transformUser(req.user);
-  sendResponse(res, 200, "Login successful", { user: transformedUser });
-};
+const login = asyncHandler(async (req, res, next) => {
+  logger.info("login controller called");
+  
+  try {
+    // Authenticate directly using the service
+    const user = await authenticateUserService(req.body.email, req.body.password);
+    
+    // Log in the user with passport session
+    req.login(user, (loginErr) => {
+      if (loginErr) {
+        logger.error('Session login error:', loginErr);
+        return next(AuthError.loginError('Could not create login session'));
+      }
+      
+      // Login successful, send response
+      return loginSuccess(req, res, next);
+    });
+  } catch (error) {
+    logger.error("Error in login controller:", error);
+    next(error);
+  }
+});
+
+/**
+ * @desc    Login success handler
+ * @access  Private
+ */
+const loginSuccess = asyncHandler(async (req, res) => {
+  // User is already authenticated at this point
+  if (!req.user) {
+    throw AuthError.unauthorized("User not authenticated");
+  }
+  
+  // Create a sanitized user object without sensitive data
+  const userData = { ...req.user.toObject() };
+  delete userData.password;
+  delete userData.resetPasswordToken;
+  delete userData.resetPasswordExpires;
+  
+  // Send successful response
+  sendResponse(
+    res,
+    200,
+    "Login successful",
+    { user: userData }
+  );
+});
 
 /**
  * @desc    Logout user
@@ -68,6 +112,7 @@ const logout = (req, res, next) => {
 
 module.exports = {
   register,
+  login,
   loginSuccess,
   logout,
 };

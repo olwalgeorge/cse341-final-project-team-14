@@ -1,25 +1,27 @@
-const Purchase = require("../models/purchase.model");
-const asyncHandler = require("express-async-handler");
+const Counter = require("../models/counter.model");
+const logger = require("./logger");
 
-const generatePurchaseId = asyncHandler(async () => {
-  const prefix = "PU-";
-  const paddedLength = 5;
-
-  const lastPurchase = await Purchase.findOne(
-    { purchaseID: { $regex: `^${prefix}` } },
-    { purchaseID: 1 },
-    { sort: { purchaseID: -1 } }
-  );
-
-  let nextNumber = 1;
-  if (lastPurchase) {
-    const lastNumber = parseInt(lastPurchase.purchaseID.slice(prefix.length), 10);
-    nextNumber = lastNumber + 1;
+/**
+ * Generate a unique purchase ID in the format PU-XXXXX
+ * @returns {Promise<string>} - Generated purchase ID
+ */
+const generatePurchaseId = async () => {
+  logger.debug("Generating purchaseID");
+  
+  try {
+    // Use the Counter.getNextId method
+    const purchaseID = await Counter.getNextId('purchaseID', { 
+      prefix: 'PU-', 
+      padLength: 5
+    });
+    
+    logger.debug(`Generated purchaseID: ${purchaseID}`);
+    return purchaseID;
+  } catch (error) {
+    logger.error("Error generating purchaseID:", error);
+    throw error;
   }
-
-  const paddedNumber = nextNumber.toString().padStart(paddedLength, "0");
-  return `${prefix}${paddedNumber}`;
-});
+};
 
 const transformPurchase = (purchase) => {
   if (!purchase) return null;

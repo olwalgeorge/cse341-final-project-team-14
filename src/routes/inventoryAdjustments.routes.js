@@ -1,18 +1,20 @@
 const express = require("express");
 const router = express.Router();
 const {
-  getAllInventoryAdjustments,
-  getInventoryAdjustmentById,
-  getInventoryAdjustmentByAdjustmentID,
-  getInventoryAdjustmentsByWarehouse,
-  getInventoryAdjustmentsByReason,
-  getInventoryAdjustmentsByStatus,
-  createInventoryAdjustment,
-  updateInventoryAdjustmentById,
-  approveInventoryAdjustment,
-  completeInventoryAdjustment,
-  deleteInventoryAdjustmentById,
-  deleteAllInventoryAdjustments
+  getAllAdjustments,
+  getAdjustmentById,
+  getAdjustmentByAdjustmentID,
+  getAdjustmentsByWarehouse,
+  getAdjustmentsByReason,
+  getAdjustmentsByStatus,
+  getAdjustmentsByDateRange,
+  getAdjustmentsByProduct,
+  createAdjustment,
+  updateAdjustment,
+  approveAdjustment,
+  completeAdjustment,
+  deleteAdjustment,
+  deleteAllAdjustments,
 } = require("../controllers/inventoryAdjustments.controller");
 const isAuthenticated = require("../middlewares/auth.middleware");
 const validate = require("../middlewares/validation.middleware");
@@ -30,68 +32,71 @@ const {
 
 // All routes require authentication for inventory adjustments
 router.use(isAuthenticated);
-
 // Main routes
-router.get("/", getAllInventoryAdjustments);
-router.post("/", validate(createAdjustmentValidationRules()), createInventoryAdjustment);
-router.delete("/", deleteAllInventoryAdjustments);
+router.get("/", getAllAdjustments);
+router.post("/", validate(createAdjustmentValidationRules()), createAdjustment);
+router.delete("/", deleteAllAdjustments);
 
 // Routes with parameters
 router.get(
   "/adjustmentID/:adjustmentID", 
   validate(adjustmentIDValidationRules()),
-  getInventoryAdjustmentByAdjustmentID
+  getAdjustmentByAdjustmentID
 );
 
 router.get(
   "/warehouse/:warehouseId",
   validate(warehouseIdValidationRules()),
-  getInventoryAdjustmentsByWarehouse
+  getAdjustmentsByWarehouse
 );
+
+router.get("/date-range", getAdjustmentsByDateRange);
+router.get("/product/:productId", validate(warehouseIdValidationRules()), getAdjustmentsByProduct);
 
 router.get(
   "/reason/:reason",
   validate(reasonValidationRules()),
-  getInventoryAdjustmentsByReason
+  getAdjustmentsByReason
 );
 
 router.get(
   "/status/:status",
   validate(statusValidationRules()),
-  getInventoryAdjustmentsByStatus
+  getAdjustmentsByStatus
 );
 
 router.get(
   "/:adjustment_Id",
   validate(adjustment_IdValidationRules()),
-  getInventoryAdjustmentById
+  getAdjustmentById
 );
 
 router.put(
   "/:adjustment_Id",
   validate(adjustment_IdValidationRules()),
   validate(updateAdjustmentValidationRules()),
-  updateInventoryAdjustmentById
+  updateAdjustment
 );
 
 router.put(
   "/:adjustment_Id/approve",
   validate(adjustment_IdValidationRules()),
   validate(approveAdjustmentValidationRules()),
-  approveInventoryAdjustment
+  approveAdjustment
 );
 
 router.put(
   "/:adjustment_Id/complete",
   validate(adjustment_IdValidationRules()),
   validate(completeAdjustmentValidationRules()),
-  completeInventoryAdjustment
+  completeAdjustment
 );
 
 router.delete(
   "/:adjustment_Id",
   validate(adjustment_IdValidationRules()),
-  deleteInventoryAdjustmentById
+  deleteAdjustment
 );
 
 module.exports = router;
+

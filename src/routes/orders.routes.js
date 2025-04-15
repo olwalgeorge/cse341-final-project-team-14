@@ -4,68 +4,122 @@ const {
   getAllOrders,
   getOrderById,
   getOrderByOrderID,
-  getOrdersByCustomerId,
+  getOrdersByCustomer,
   getOrdersByStatus,
+  getOrdersByDateRange,
   createOrder,
-  updateOrderById,
-  deleteOrderById,
+  updateOrder,
+  processOrder,
+  completeOrder,
+  cancelOrder,
+  deleteOrder,
   deleteAllOrders,
-} = require("../controllers/orders.controller.js");
-const validate = require("../middlewares/validation.middleware.js");
-const isAuthenticated = require("../middlewares/auth.middleware.js");
+} = require("../controllers/orders.controller");
+const isAuthenticated = require("../middlewares/auth.middleware");
+const validate = require("../middlewares/validation.middleware");
 const {
-  orderIDValidationRules,
-  order_IdValidationRules,
+  orderIdValidationRules,
+  orderIDFormatValidationRules,
   customerIdValidationRules,
-  orderStatusValidationRules,
-  orderCreateValidationRules,
-  orderUpdateValidationRules,
-} = require("../validators/order.validator.js");
+  statusValidationRules,
+  dateRangeValidationRules,
+  createOrderValidationRules,
+  updateOrderValidationRules,
+  cancelOrderValidationRules
+} = require("../validators/order.validator");
 
+// Get all orders
 router.get("/", isAuthenticated, getAllOrders);
+
+// Get order by MongoDB ID
 router.get(
-  "/orderID/:orderID",
-  isAuthenticated,
-  validate(orderIDValidationRules()),
-  getOrderByOrderID
-);
-router.get(
-  "/customer/:customerId",
-  isAuthenticated,
-  validate(customerIdValidationRules()),
-  getOrdersByCustomerId
-);
-router.get(
-  "/status/:status",
-  isAuthenticated,
-  validate(orderStatusValidationRules()),
-  getOrdersByStatus
-);
-router.get(
-  "/:order_Id",
-  isAuthenticated,
-  validate(order_IdValidationRules()),
+  "/:order_Id", 
+  isAuthenticated, 
+  validate(orderIdValidationRules()),
   getOrderById
 );
+
+// Get order by order ID (OR-XXXXX format)
+router.get(
+  "/orderID/:orderID", 
+  isAuthenticated, 
+  validate(orderIDFormatValidationRules()),
+  getOrderByOrderID
+);
+
+// Get orders by customer
+router.get(
+  "/customer/:customerId", 
+  isAuthenticated, 
+  validate(customerIdValidationRules()),
+  getOrdersByCustomer
+);
+
+// Get orders by status
+router.get(
+  "/status/:status", 
+  isAuthenticated, 
+  validate(statusValidationRules()),
+  getOrdersByStatus
+);
+
+// Get orders by date range
+router.get(
+  "/date-range", 
+  isAuthenticated, 
+  validate(dateRangeValidationRules()),
+  getOrdersByDateRange
+);
+
+// Create a new order
 router.post(
-  "/",
-  isAuthenticated,
-  validate(orderCreateValidationRules()),
+  "/", 
+  isAuthenticated, 
+  validate(createOrderValidationRules()),
   createOrder
 );
+
+// Update an order
 router.put(
-  "/:order_Id",
-  isAuthenticated,
-  validate(order_IdValidationRules()),
-  validate(orderUpdateValidationRules()),
-  updateOrderById
+  "/:order_Id", 
+  isAuthenticated, 
+  validate([...orderIdValidationRules(), ...updateOrderValidationRules()]),
+  updateOrder
 );
+
+// Process an order
+router.put(
+  "/:order_Id/process", 
+  isAuthenticated, 
+  validate(orderIdValidationRules()),
+  processOrder
+);
+
+// Complete an order
+router.put(
+  "/:order_Id/complete", 
+  isAuthenticated, 
+  validate(orderIdValidationRules()),
+  completeOrder
+);
+
+// Cancel an order
+router.put(
+  "/:order_Id/cancel", 
+  isAuthenticated, 
+  validate([...orderIdValidationRules(), ...cancelOrderValidationRules()]),
+  cancelOrder
+);
+
+// Delete an order
 router.delete(
-  "/:order_Id",
-  isAuthenticated,
-  validate(order_IdValidationRules()),
-  deleteOrderById
+  "/:order_Id", 
+  isAuthenticated, 
+  validate(orderIdValidationRules()),
+  deleteOrder
 );
+
+// Delete all orders (dev/test only)
 router.delete("/", isAuthenticated, deleteAllOrders);
 
 module.exports = router;

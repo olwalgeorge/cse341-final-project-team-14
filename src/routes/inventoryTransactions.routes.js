@@ -1,15 +1,16 @@
 const express = require("express");
 const router = express.Router();
 const {
-  getAllInventoryTransactions,
-  getInventoryTransactionById,
-  getInventoryTransactionByTransactionID,
-  getInventoryTransactionsByProduct,
-  getInventoryTransactionsByWarehouse,
-  getInventoryTransactionsByType,
-  createInventoryTransaction,
-  deleteInventoryTransactionById,
-  deleteAllInventoryTransactions
+  getAllTransactions,
+  getTransactionById,
+  getTransactionsByWarehouse,
+  getTransactionsByProduct,
+  getTransactionsByReference,
+  getTransactionsByType,
+  getTransactionsByDateRange,
+  createTransaction,
+  deleteTransaction,
+  deleteAllTransactions
 } = require("../controllers/inventoryTransactions.controller");
 const isAuthenticated = require("../middlewares/auth.middleware");
 const validate = require("../middlewares/validation.middleware");
@@ -19,18 +20,20 @@ const {
   productIdValidationRules,
   warehouseIdValidationRules,
   transactionTypeValidationRules,
-  createTransactionValidationRules
+  dateRangeValidationRules,
+  createTransactionValidationRules,
+  referenceValidationRules  
 } = require("../validators/inventoryTransaction.validator");
 
 // Get all inventory transactions
-router.get("/", isAuthenticated, getAllInventoryTransactions);
+router.get("/", isAuthenticated, getAllTransactions);
 
 // Get transaction by MongoDB ID
 router.get(
   "/:transaction_Id", 
   isAuthenticated, 
   validate(transaction_IdValidationRules()),
-  getInventoryTransactionById
+  getTransactionById
 );
 
 // Get transaction by transaction ID (IT-XXXXX format)
@@ -38,7 +41,7 @@ router.get(
   "/transactionID/:transactionID", 
   isAuthenticated, 
   validate(transactionIDValidationRules()),
-  getInventoryTransactionByTransactionID
+  getTransactionsByReference
 );
 
 // Get transactions by product
@@ -46,7 +49,7 @@ router.get(
   "/product/:productId", 
   isAuthenticated, 
   validate(productIdValidationRules()),
-  getInventoryTransactionsByProduct
+  getTransactionsByProduct
 );
 
 // Get transactions by warehouse
@@ -54,7 +57,7 @@ router.get(
   "/warehouse/:warehouseId", 
   isAuthenticated, 
   validate(warehouseIdValidationRules()),
-  getInventoryTransactionsByWarehouse
+  getTransactionsByWarehouse
 );
 
 // Get transactions by transaction type
@@ -62,7 +65,23 @@ router.get(
   "/type/:transactionType", 
   isAuthenticated, 
   validate(transactionTypeValidationRules()),
-  getInventoryTransactionsByType
+  getTransactionsByType
+);
+
+// Get transactions by date range
+router.get(
+  "/dateRange/:startDate/:endDate", 
+  isAuthenticated, 
+  validate(dateRangeValidationRules()),
+  getTransactionsByDateRange
+);
+
+// Get transactions by reference
+router.get(
+  "/reference/:referenceType/:referenceId",
+  isAuthenticated,
+  validate(referenceValidationRules()),
+  getTransactionsByReference
 );
 
 // Create new transaction
@@ -70,7 +89,7 @@ router.post(
   "/", 
   isAuthenticated, 
   validate(createTransactionValidationRules()),
-  createInventoryTransaction
+  createTransaction
 );
 
 // Delete transaction by ID
@@ -78,10 +97,11 @@ router.delete(
   "/:transaction_Id", 
   isAuthenticated, 
   validate(transaction_IdValidationRules()),
-  deleteInventoryTransactionById
+  deleteTransaction
 );
 
 // Delete all transactions
-router.delete("/", isAuthenticated, deleteAllInventoryTransactions);
+router.delete("/", isAuthenticated, deleteAllTransactions);
 
 module.exports = router;
+

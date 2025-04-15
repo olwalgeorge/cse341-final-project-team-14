@@ -1,173 +1,106 @@
-const InventoryTransfer = require("../models/transfer.model");
-const asyncHandler = require("express-async-handler");
+const Counter = require("../models/counter.model");
+const logger = require("./logger");
 
 /**
- * Generate a unique transfer ID in the format TR-XXXXX
+ * Generate a unique inventory transfer ID in the format TF-XXXXX
  * @returns {Promise<string>} - Generated transfer ID
  */
-const generateTransferId = asyncHandler(async () => {
-  const prefix = "TR-";
-  const paddedLength = 5;
-
-  const lastTransfer = await InventoryTransfer.findOne(
-    { transferID: { $regex: `^${prefix}` } },
-    { transferID: 1 },
-    { sort: { transferID: -1 } }
-  );
-
-  let nextNumber = 1;
-  if (lastTransfer) {
-    const lastNumber = parseInt(lastTransfer.transferID.slice(prefix.length), 10);
-    nextNumber = lastNumber + 1;
+const generateTransferId = async () => {
+  logger.debug("Generating transferID");
+  
+  try {
+    // Use the Counter.getNextId method
+    const transferID = await Counter.getNextId('transferID', { 
+      prefix: 'TF-', 
+      padLength: 5
+    });
+    
+    logger.debug(`Generated transferID: ${transferID}`);
+    return transferID;
+  } catch (error) {
+    logger.error("Error generating transferID:", error);
+    throw error;
   }
-
-  const paddedNumber = nextNumber.toString().padStart(paddedLength, "0");
-  return `${prefix}${paddedNumber}`;
-});
+};
 
 /**
- * Transform inventory transfer document to API response format
- * @param {Object} inventoryTransfer - Inventory transfer document from database
- * @returns {Object} - Transformed inventory transfer object
+ * Transform inventory transfer data for API response
+ * @param {Object} transfer - Inventory transfer document from database
+ * @returns {Object} - Transformed transfer object
  */
-const transformInventoryTransfer = (inventoryTransfer) => {
-  if (!inventoryTransfer) return null;
+const transformTransfer = (transfer) => {
+  if (!transfer) return null;
   
-  // Transform fromWarehouse
-  let fromWarehouseData = null;
-  if (inventoryTransfer.fromWarehouse) {
-    if (typeof inventoryTransfer.fromWarehouse === 'object' && inventoryTransfer.fromWarehouse._id) {
-      fromWarehouseData = {
-        warehouse_id: inventoryTransfer.fromWarehouse._id,
-        warehouseID: inventoryTransfer.fromWarehouse.warehouseID || '',
-        name: inventoryTransfer.fromWarehouse.name || ''
+  // Transform source warehouse
+  let sourceWarehouseData = null;
+  if (transfer.sourceWarehouse) {
+    if (typeof transfer.sourceWarehouse === 'object' && transfer.sourceWarehouse._id) {
+      sourceWarehouseData = {
+        warehouse_id: transfer.sourceWarehouse._id,
+        warehouseID: transfer.sourceWarehouse.warehouseID || '',
+        name: transfer.sourceWarehouse.name || ''
       };
     } else {
-      fromWarehouseData = inventoryTransfer.fromWarehouse;
+      sourceWarehouseData = transfer.sourceWarehouse;
     }
   }
   
-  // Transform toWarehouse
-  let toWarehouseData = null;
-  if (inventoryTransfer.toWarehouse) {
-    if (typeof inventoryTransfer.toWarehouse === 'object' && inventoryTransfer.toWarehouse._id) {
-      toWarehouseData = {
-        warehouse_id: inventoryTransfer.toWarehouse._id,
-        warehouseID: inventoryTransfer.toWarehouse.warehouseID || '',
-        name: inventoryTransfer.toWarehouse.name || ''
+  // Transform destination warehouse
+  let destinationWarehouseData = null;
+  if (transfer.destinationWarehouse) {
+    if (typeof transfer.destinationWarehouse === 'object' && transfer.destinationWarehouse._id) {
+      destinationWarehouseData = {
+        warehouse_id: transfer.destinationWarehouse._id,
+        warehouseID: transfer.destinationWarehouse.warehouseID || '',
+        name: transfer.destinationWarehouse.name || ''
       };
     } else {
-      toWarehouseData = inventoryTransfer.toWarehouse;
+      destinationWarehouseData = transfer.destinationWarehouse;
     }
   }
   
-  // Transform items (products)
+  // Transform items
   let itemsData = [];
-  if (inventoryTransfer.items && inventoryTransfer.items.length > 0) {
-    itemsData = inventoryTransfer.items.map(item => {
-      let productData = null;
+  if (transfer.items && Array.isArray(transfer.items)) {
+    itemsData = transfer.items.map(item => {
+      const itemInfo = { quantity: item.quantity };
+      
+      // Handle product data
       if (item.product) {
         if (typeof item.product === 'object' && item.product._id) {
-          productData = {
+          itemInfo.product = {
             product_id: item.product._id,
             productID: item.product.productID || '',
             name: item.product.name || '',
-            category: item.product.category || ''
+            sku: item.product.sku || ''
           };
         } else {
-          productData = item.product;
+          itemInfo.product = item.product;
         }
       }
       
-      return {
-        product: productData,
-        quantity: item.quantity,
-        receivedQuantity: item.receivedQuantity || 0,
-        notes: item.notes
-      };
+      return itemInfo;
     });
   }
   
-  // Transform requestedBy user
-  let requestedByData = null;
-  if (inventoryTransfer.requestedBy) {
-    if (typeof inventoryTransfer.requestedBy === 'object' && inventoryTransfer.requestedBy._id) {
-      requestedByData = {
-        user_id: inventoryTransfer.requestedBy._id,
-        fullName: inventoryTransfer.requestedBy.fullName || '',
-        username: inventoryTransfer.requestedBy.username || '',
-        email: inventoryTransfer.requestedBy.email || ''
-      };
-    } else {
-      requestedByData = inventoryTransfer.requestedBy;
-    }
-  }
-  
-  // Transform approvedBy user
-  let approvedByData = null;
-  if (inventoryTransfer.approvedBy) {
-    if (typeof inventoryTransfer.approvedBy === 'object' && inventoryTransfer.approvedBy._id) {
-      approvedByData = {
-        user_id: inventoryTransfer.approvedBy._id,
-        fullName: inventoryTransfer.approvedBy.fullName || '',
-        username: inventoryTransfer.approvedBy.username || '',
-        email: inventoryTransfer.approvedBy.email || ''
-      };
-    } else {
-      approvedByData = inventoryTransfer.approvedBy;
-    }
-  }
-  
-  // Transform receivedBy user
-  let receivedByData = null;
-  if (inventoryTransfer.receivedBy) {
-    if (typeof inventoryTransfer.receivedBy === 'object' && inventoryTransfer.receivedBy._id) {
-      receivedByData = {
-        user_id: inventoryTransfer.receivedBy._id,
-        fullName: inventoryTransfer.receivedBy.fullName || '',
-        username: inventoryTransfer.receivedBy.username || '',
-        email: inventoryTransfer.receivedBy.email || ''
-      };
-    } else {
-      receivedByData = inventoryTransfer.receivedBy;
-    }
-  }
-  
-  // Calculate completion percentage
-  const totalQuantity = inventoryTransfer.items ? 
-    inventoryTransfer.items.reduce((sum, item) => sum + item.quantity, 0) : 0;
-  
-  const totalReceived = inventoryTransfer.items ? 
-    inventoryTransfer.items.reduce((sum, item) => sum + (item.receivedQuantity || 0), 0) : 0;
-  
-  const completionPercentage = totalQuantity > 0 ? 
-    Math.round((totalReceived / totalQuantity) * 100) : 0;
-  
   return {
-    transfer_id: inventoryTransfer._id,
-    transferID: inventoryTransfer.transferID,
-    fromWarehouse: fromWarehouseData,
-    toWarehouse: toWarehouseData,
+    transfer_id: transfer._id,
+    transferID: transfer.transferID,
+    sourceWarehouse: sourceWarehouseData,
+    destinationWarehouse: destinationWarehouseData,
     items: itemsData,
-    requestDate: inventoryTransfer.requestDate,
-    expectedDeliveryDate: inventoryTransfer.expectedDeliveryDate,
-    completionDate: inventoryTransfer.completionDate,
-    status: inventoryTransfer.status,
-    requestedBy: requestedByData,
-    approvedBy: approvedByData,
-    receivedBy: receivedByData,
-    transportInfo: inventoryTransfer.transportInfo,
-    notes: inventoryTransfer.notes,
-    createdAt: inventoryTransfer.createdAt,
-    updatedAt: inventoryTransfer.updatedAt,
-    totalItems: inventoryTransfer.items ? inventoryTransfer.items.length : 0,
-    totalQuantity: totalQuantity,
-    totalReceivedQuantity: totalReceived,
-    completionPercentage: completionPercentage
+    transferDate: transfer.transferDate,
+    status: transfer.status,
+    initiatedBy: transfer.initiatedBy,
+    approvedBy: transfer.approvedBy,
+    completedBy: transfer.completedBy,
+    notes: transfer.notes,
+    createdAt: transfer.createdAt,
+    updatedAt: transfer.updatedAt
   };
 };
 
 module.exports = {
   generateTransferId,
-  transformInventoryTransfer
+  transformTransfer
 };

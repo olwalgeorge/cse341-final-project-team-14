@@ -1,41 +1,52 @@
-const Supplier = require("../models/supplier.model");
-const asyncHandler = require("express-async-handler");
+const Counter = require("../models/counter.model");
+const logger = require("./logger");
 
-const generateSupplierId = asyncHandler(async () => {
-  const prefix = "SP-";
-  const paddedLength = 5;
-
-  const lastSupplier = await Supplier.findOne(
-    { supplierID: { $regex: `^${prefix}` } },
-    { supplierID: 1 },
-    { sort: { supplierID: -1 } }
-  );
-
-  let nextNumber = 1;
-  if (lastSupplier) {
-    const lastNumber = parseInt(
-      lastSupplier.supplierID.slice(prefix.length),
-      10
-    );
-    nextNumber = lastNumber + 1;
+/**
+ * Generate a unique supplier ID in the format SUP-XXXXX
+ * @returns {Promise<string>} - Generated supplier ID
+ */
+const generateSupplierId = async () => {
+  logger.debug("Generating supplierID");
+  
+  try {
+    // Use the Counter.getNextId method
+    const supplierID = await Counter.getNextId('supplierID', { 
+      prefix: 'SUP-', 
+      padLength: 5
+    });
+    
+    logger.debug(`Generated supplierID: ${supplierID}`);
+    return supplierID;
+  } catch (error) {
+    logger.error("Error generating supplierID:", error);
+    throw error;
   }
+};
 
-  const paddedNumber = nextNumber.toString().padStart(paddedLength, "0");
-  return `${prefix}${paddedNumber}`;
-});
-
+/**
+ * Transform supplier data for API response
+ * @param {Object} supplier - Supplier document from database
+ * @returns {Object} - Transformed supplier object
+ */
 const transformSupplier = (supplier) => {
   if (!supplier) return null;
+  
   return {
-    supplier_Id: supplier._id,
+    supplier_id: supplier._id,
     supplierID: supplier.supplierID,
     name: supplier.name,
-    contact: supplier.contact,
+    contactPerson: supplier.contactPerson,
+    email: supplier.email,
+    phone: supplier.phone,
     address: supplier.address,
+    products: supplier.products,
+    status: supplier.status,
+    createdAt: supplier.createdAt,
+    updatedAt: supplier.updatedAt
   };
 };
 
 module.exports = {
   generateSupplierId,
-  transformSupplier,
+  transformSupplier
 };

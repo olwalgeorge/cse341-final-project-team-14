@@ -1,6 +1,7 @@
 const Inventory = require("../models/inventory.model");
-const APIFeatures = require("../utils/apiFeatures");
 const logger = require("../utils/logger");
+const APIFeatures = require("../utils/apiFeatures");
+const { generateInventoryId } = require("../utils/inventory.utils");
 
 /**
  * Get all inventory items with filtering, pagination and sorting
@@ -9,7 +10,6 @@ const getAllInventoryService = async (query = {}) => {
   logger.debug("getAllInventoryService called with query:", query);
   
   try {
-    // Define custom filters mapping
     const customFilters = {
       product: 'product',
       warehouse: 'warehouse',
@@ -54,7 +54,7 @@ const getAllInventoryService = async (query = {}) => {
     const sort = APIFeatures.getSort(query, 'inventoryID');
 
     // Execute query with pagination and sorting
-    const inventoryItems = await Inventory.find(filter)
+    const inventory = await Inventory.find(filter)
       .sort(sort)
       .skip(pagination.skip)
       .limit(pagination.limit)
@@ -65,7 +65,7 @@ const getAllInventoryService = async (query = {}) => {
     const total = await Inventory.countDocuments(filter);
     
     return {
-      inventoryItems,
+      inventory,
       pagination: APIFeatures.paginationResult(total, pagination)
     };
   } catch (error) {
@@ -78,30 +78,22 @@ const getAllInventoryService = async (query = {}) => {
  * Get inventory item by MongoDB ID
  */
 const getInventoryByIdService = async (id) => {
-  try {
-    const inventory = await Inventory.findById(id)
-      .populate("product", "name productID sku category")
-      .populate("warehouse", "name warehouseID");
-    return inventory;
-  } catch (error) {
-    logger.error(`Error in getInventoryByIdService for ID ${id}:`, error);
-    throw error;
-  }
+  logger.debug(`getInventoryByIdService called with ID: ${id}`);
+  
+  return await Inventory.findById(id)
+    .populate("product", "name productID sku category")
+    .populate("warehouse", "name warehouseID");
 };
 
 /**
  * Get inventory item by inventory ID (IN-XXXXX format)
  */
 const getInventoryByInventoryIDService = async (inventoryID) => {
-  try {
-    const inventory = await Inventory.findOne({ inventoryID })
-      .populate("product", "name productID sku category")
-      .populate("warehouse", "name warehouseID");
-    return inventory;
-  } catch (error) {
-    logger.error(`Error in getInventoryByInventoryIDService for inventoryID ${inventoryID}:`, error);
-    throw error;
-  }
+  logger.debug(`getInventoryByInventoryIDService called with inventoryID: ${inventoryID}`);
+  
+  return await Inventory.findOne({ inventoryID })
+    .populate("product", "name productID sku category")
+    .populate("warehouse", "name warehouseID");
 };
 
 /**
@@ -110,52 +102,47 @@ const getInventoryByInventoryIDService = async (inventoryID) => {
 const getInventoryByWarehouseService = async (warehouseId, query = {}) => {
   logger.debug(`getInventoryByWarehouseService called with warehouse ID: ${warehouseId}`);
   
-  try {
-    // Get pagination parameters
-    const pagination = APIFeatures.getPagination(query);
-    
-    // Get sort parameters with default sort by inventoryID
-    const sort = APIFeatures.getSort(query, 'inventoryID');
+  // Get pagination parameters
+  const pagination = APIFeatures.getPagination(query);
+  
+  // Get sort parameters with default sort by inventoryID
+  const sort = APIFeatures.getSort(query, 'inventoryID');
 
-    // Create the warehouse filter
-    const filter = { warehouse: warehouseId };
-    
-    // Apply any additional filters from query if needed
-    const additionalFilters = APIFeatures.buildFilter(query, {
-      product: 'product',
-      stockStatus: 'stockStatus',
-      minQuantity: {
-        field: 'quantity',
-        transform: (value) => ({ $gte: parseInt(value) })
-      },
-      maxQuantity: {
-        field: 'quantity',
-        transform: (value) => ({ $lte: parseInt(value) })
-      }
-    });
-    
-    // Combine filters
-    const combinedFilter = { ...filter, ...additionalFilters };
+  // Create the warehouse filter
+  const filter = { warehouse: warehouseId };
+  
+  // Apply any additional filters from query if needed
+  const additionalFilters = APIFeatures.buildFilter(query, {
+    product: 'product',
+    stockStatus: 'stockStatus',
+    minQuantity: {
+      field: 'quantity',
+      transform: (value) => ({ $gte: parseInt(value) })
+    },
+    maxQuantity: {
+      field: 'quantity',
+      transform: (value) => ({ $lte: parseInt(value) })
+    }
+  });
+  
+  // Combine filters
+  const combinedFilter = { ...filter, ...additionalFilters };
 
-    // Execute query with pagination and sorting
-    const inventoryItems = await Inventory.find(combinedFilter)
-      .sort(sort)
-      .skip(pagination.skip)
-      .limit(pagination.limit)
-      .populate("product", "name description sellingPrice category sku productID")
-      .populate("warehouse", "name warehouseID status");
-    
-    // Get total count for pagination
-    const total = await Inventory.countDocuments(combinedFilter);
-    
-    return {
-      inventoryItems,
-      pagination: APIFeatures.paginationResult(total, pagination)
-    };
-  } catch (error) {
-    logger.error(`Error in getInventoryByWarehouseService: ${error.message}`);
-    throw error;
-  }
+  // Execute query with pagination and sorting
+  const inventory = await Inventory.find(combinedFilter)
+    .sort(sort)
+    .skip(pagination.skip)
+    .limit(pagination.limit)
+    .populate("product", "name description sellingPrice category sku productID")
+    .populate("warehouse", "name warehouseID status");
+  
+  // Get total count for pagination
+  const total = await Inventory.countDocuments(combinedFilter);
+  
+  return {
+    inventory,
+    pagination: APIFeatures.paginationResult(total, pagination)
+  };
 };
 
 /**
@@ -192,7 +179,7 @@ const getInventoryByProductService = async (productId, query = {}) => {
     const combinedFilter = { ...filter, ...additionalFilters };
 
     // Execute query with pagination and sorting
-    const inventoryItems = await Inventory.find(combinedFilter)
+    const inventory = await Inventory.find(combinedFilter)
       .sort(sort)
       .skip(pagination.skip)
       .limit(pagination.limit)
@@ -203,11 +190,11 @@ const getInventoryByProductService = async (productId, query = {}) => {
     const total = await Inventory.countDocuments(combinedFilter);
     
     return {
-      inventoryItems,
+      inventory,
       pagination: APIFeatures.paginationResult(total, pagination)
     };
   } catch (error) {
-    logger.error(`Error in getInventoryByProductService: ${error.message}`);
+    logger.error(`Error in getInventoryByProductService for product ${productId}:`, error);
     throw error;
   }
 };
@@ -246,7 +233,7 @@ const getInventoryByStockStatusService = async (stockStatus, query = {}) => {
     const combinedFilter = { ...filter, ...additionalFilters };
 
     // Execute query with pagination and sorting
-    const inventoryItems = await Inventory.find(combinedFilter)
+    const inventory = await Inventory.find(combinedFilter)
       .sort(sort)
       .skip(pagination.skip)
       .limit(pagination.limit)
@@ -257,7 +244,7 @@ const getInventoryByStockStatusService = async (stockStatus, query = {}) => {
     const total = await Inventory.countDocuments(combinedFilter);
     
     return {
-      inventoryItems,
+      inventory,
       pagination: APIFeatures.paginationResult(total, pagination)
     };
   } catch (error) {
@@ -267,63 +254,338 @@ const getInventoryByStockStatusService = async (stockStatus, query = {}) => {
 };
 
 /**
- * Create a new inventory item
+ * Get low stock inventory (quantity > 0 but below threshold)
  */
-const createInventoryService = async (inventoryData) => {
-  try {
-    const inventory = new Inventory(inventoryData);
+const getLowStockInventoryService = async (threshold = 10, query = {}) => {
+  logger.debug(`getLowStockInventoryService called with threshold: ${threshold}`);
+  
+  // Get pagination parameters
+  const pagination = APIFeatures.getPagination(query);
+  
+  // Get sort parameters with default sort by quantity
+  const sort = APIFeatures.getSort(query, 'quantity');
+
+  // Create the low stock filter
+  const filter = { 
+    quantity: { $gt: 0, $lte: threshold },
+    stockStatus: 'Low Stock'
+  };
+  
+  // Execute query with pagination and sorting
+  const inventory = await Inventory.find(filter)
+    .sort(sort)
+    .skip(pagination.skip)
+    .limit(pagination.limit)
+    .populate("product", "name description sellingPrice category sku productID")
+    .populate("warehouse", "name warehouseID status");
+  
+  // Get total count for pagination
+  const total = await Inventory.countDocuments(filter);
+  
+  return {
+    inventory,
+    pagination: APIFeatures.paginationResult(total, pagination)
+  };
+};
+
+/**
+ * Get out of stock inventory
+ */
+const getOutOfStockInventoryService = async (query = {}) => {
+  logger.debug("getOutOfStockInventoryService called");
+  
+  // Get pagination parameters
+  const pagination = APIFeatures.getPagination(query);
+  
+  // Get sort parameters with default sort by inventoryID
+  const sort = APIFeatures.getSort(query, 'inventoryID');
+
+  // Create the out of stock filter
+  const filter = { 
+    quantity: 0,
+    stockStatus: 'Out of Stock'
+  };
+  
+  // Execute query with pagination and sorting
+  const inventory = await Inventory.find(filter)
+    .sort(sort)
+    .skip(pagination.skip)
+    .limit(pagination.limit)
+    .populate("product", "name description sellingPrice category sku productID")
+    .populate("warehouse", "name warehouseID status");
+  
+  // Get total count for pagination
+  const total = await Inventory.countDocuments(filter);
+  
+  return {
+    inventory,
+    pagination: APIFeatures.paginationResult(total, pagination)
+  };
+};
+
+/**
+ * Search inventory items
+ */
+const searchInventoryService = async (searchTerm, query = {}) => {
+  logger.debug(`searchInventoryService called with term: ${searchTerm}`);
+  
+  // Get pagination parameters
+  const pagination = APIFeatures.getPagination(query);
+  
+  // Get sort parameters with default sort
+  const sort = APIFeatures.getSort(query, 'inventoryID');
+
+  // Create search criteria
+  const Product = require("../models/product.model");
+  const Warehouse = require("../models/warehouse.model");
+  
+  // Find products that match the search term
+  const products = await Product.find({
+    $or: [
+      { name: { $regex: searchTerm, $options: 'i' } },
+      { sku: { $regex: searchTerm, $options: 'i' } },
+      { productID: { $regex: searchTerm, $options: 'i' } },
+      { category: { $regex: searchTerm, $options: 'i' } }
+    ]
+  }).select('_id');
+  
+  // Find warehouses that match the search term
+  const warehouses = await Warehouse.find({
+    $or: [
+      { name: { $regex: searchTerm, $options: 'i' } },
+      { warehouseID: { $regex: searchTerm, $options: 'i' } }
+    ]
+  }).select('_id');
+  
+  // Build search filter
+  const filter = {
+    $or: [
+      { inventoryID: { $regex: searchTerm, $options: 'i' } },
+      { "location.aisle": { $regex: searchTerm, $options: 'i' } },
+      { "location.rack": { $regex: searchTerm, $options: 'i' } },
+      { "location.bin": { $regex: searchTerm, $options: 'i' } },
+      { product: { $in: products.map(p => p._id) } },
+      { warehouse: { $in: warehouses.map(w => w._id) } }
+    ]
+  };
+  
+  // Execute query with pagination and sorting
+  const inventory = await Inventory.find(filter)
+    .sort(sort)
+    .skip(pagination.skip)
+    .limit(pagination.limit)
+    .populate("product", "name description sellingPrice category sku productID")
+    .populate("warehouse", "name warehouseID status");
+  
+  // Get total count for pagination
+  const total = await Inventory.countDocuments(filter);
+  
+  return {
+    inventory,
+    pagination: APIFeatures.paginationResult(total, pagination)
+  };
+};
+
+/**
+ * Create or update inventory item
+ */
+const createOrUpdateInventoryService = async (inventoryData) => {
+  logger.debug("createOrUpdateInventoryService called with data:", inventoryData);
+  
+  // Generate inventory ID if not provided
+  if (!inventoryData.inventoryID) {
+    inventoryData.inventoryID = await generateInventoryId();
+    logger.debug(`Generated inventoryID: ${inventoryData.inventoryID}`);
+  }
+  
+  // Check if inventory item exists for this product/warehouse combo
+  let inventory = await Inventory.findOne({
+    product: inventoryData.product,
+    warehouse: inventoryData.warehouse
+  });
+  
+  if (inventory) {
+    // Update existing inventory
+    Object.keys(inventoryData).forEach(key => {
+      if (key !== 'product' && key !== 'warehouse') {
+        inventory[key] = inventoryData[key];
+      }
+    });
+    
+    inventory.updatedAt = Date.now();
     await inventory.save();
-    return inventory;
-  } catch (error) {
-    logger.error("Error in createInventoryService:", error);
-    throw error;
+  } else {
+    // Create new inventory
+    inventory = new Inventory(inventoryData);
+    await inventory.save();
   }
+  
+  // Return populated inventory
+  return await Inventory.findById(inventory._id)
+    .populate("product", "name productID sku category")
+    .populate("warehouse", "name warehouseID");
 };
 
 /**
- * Update an inventory item by ID
+ * Update inventory quantities and handle stock status changes
  */
-const updateInventoryService = async (id, updateData) => {
-  try {
-    const inventory = await Inventory.findByIdAndUpdate(
-      id,
-      { ...updateData, updatedAt: Date.now() },
-      { new: true, runValidators: true }
-    )
-      .populate("product", "name productID sku category")
-      .populate("warehouse", "name warehouseID");
-      
-    return inventory;
-  } catch (error) {
-    logger.error(`Error in updateInventoryService for ID ${id}:`, error);
-    throw error;
+const adjustInventoryService = async (adjustmentData) => {
+  logger.debug("adjustInventoryService called with data:", adjustmentData);
+  
+  // Find the inventory item
+  const inventory = await Inventory.findOne({
+    product: adjustmentData.product,
+    warehouse: adjustmentData.warehouse
+  });
+  
+  if (!inventory) {
+    return null; // Controller will handle the error
   }
+  
+  // Calculate new quantity
+  const currentQuantity = inventory.quantity || 0;
+  const adjustmentQuantity = parseInt(adjustmentData.adjustmentQuantity);
+  const newQuantity = currentQuantity + adjustmentQuantity;
+  
+  // Update inventory quantity
+  inventory.quantity = newQuantity;
+  
+  // Update stock status based on newQuantity and reorder point
+  const reorderLevel = inventory.reorderPoint || 10;
+  if (newQuantity === 0) {
+    inventory.stockStatus = 'Out of Stock';
+  } else if (newQuantity <= reorderLevel) {
+    inventory.stockStatus = 'Low Stock';
+  } else {
+    inventory.stockStatus = 'In Stock';
+  }
+  
+  // Record adjustment info
+  inventory.lastAdjustmentDate = Date.now();
+  inventory.lastAdjustmentReason = adjustmentData.reason;
+  
+  if (adjustmentData.adjustedBy) {
+    inventory.lastUpdatedBy = adjustmentData.adjustedBy;
+  }
+  
+  inventory.updatedAt = Date.now();
+  await inventory.save();
+  
+  // Return the updated inventory
+  return await Inventory.findById(inventory._id)
+    .populate("product", "name productID sku category")
+    .populate("warehouse", "name warehouseID");
 };
 
 /**
- * Delete an inventory item by ID
+ * Transfer inventory between warehouses
+ */
+const transferInventoryService = async (transferData) => {
+  logger.debug("transferInventoryService called with data:", transferData);
+  
+  // Find source inventory
+  const sourceInventory = await Inventory.findOne({
+    product: transferData.product,
+    warehouse: transferData.sourceWarehouse
+  });
+  
+  if (!sourceInventory) {
+    return null; // Controller will handle not found error
+  }
+  
+  // Calculate transfer amount
+  const transferQuantity = parseInt(transferData.quantity);
+  
+  // Find or create destination inventory
+  let destinationInventory = await Inventory.findOne({
+    product: transferData.product,
+    warehouse: transferData.destinationWarehouse
+  });
+  
+  // Create destination inventory if it doesn't exist
+  if (!destinationInventory) {
+    destinationInventory = new Inventory({
+      product: transferData.product,
+      warehouse: transferData.destinationWarehouse,
+      quantity: 0,
+      stockStatus: 'Out of Stock',
+      inventoryID: await generateInventoryId() // Generate ID for new inventory
+    });
+  }
+  
+  // Update source inventory
+  sourceInventory.quantity -= transferQuantity;
+  
+  // Update stock status based on new quantity
+  const sourceReorderLevel = sourceInventory.reorderPoint || 10;
+  if (sourceInventory.quantity === 0) {
+    sourceInventory.stockStatus = 'Out of Stock';
+  } else if (sourceInventory.quantity <= sourceReorderLevel) {
+    sourceInventory.stockStatus = 'Low Stock';
+  } else {
+    sourceInventory.stockStatus = 'In Stock';
+  }
+  
+  sourceInventory.lastAdjustmentDate = Date.now();
+  sourceInventory.lastAdjustmentReason = `Transfer to ${transferData.destinationWarehouse}`;
+  
+  if (transferData.transferredBy) {
+    sourceInventory.lastUpdatedBy = transferData.transferredBy;
+  }
+  
+  sourceInventory.updatedAt = Date.now();
+  
+  // Update destination inventory
+  destinationInventory.quantity += transferQuantity;
+  
+  // Update stock status based on new quantity
+  const destReorderLevel = destinationInventory.reorderPoint || 10;
+  if (destinationInventory.quantity === 0) {
+    destinationInventory.stockStatus = 'Out of Stock';
+  } else if (destinationInventory.quantity <= destReorderLevel) {
+    destinationInventory.stockStatus = 'Low Stock';
+  } else {
+    destinationInventory.stockStatus = 'In Stock';
+  }
+  
+  destinationInventory.lastAdjustmentDate = Date.now();
+  destinationInventory.lastAdjustmentReason = `Transfer from ${transferData.sourceWarehouse}`;
+  
+  if (transferData.transferredBy) {
+    destinationInventory.lastUpdatedBy = transferData.transferredBy;
+  }
+  
+  destinationInventory.updatedAt = Date.now();
+  
+  // Save both inventories
+  await sourceInventory.save();
+  await destinationInventory.save();
+  
+  // Return both updated inventories
+  return {
+    sourceInventory: await Inventory.findById(sourceInventory._id)
+      .populate("product", "name productID sku category")
+      .populate("warehouse", "name warehouseID"),
+    destinationInventory: await Inventory.findById(destinationInventory._id)
+      .populate("product", "name productID sku category")
+      .populate("warehouse", "name warehouseID")
+  };
+};
+
+/**
+ * Delete inventory by ID
  */
 const deleteInventoryService = async (id) => {
-  try {
-    const result = await Inventory.deleteOne({ _id: id });
-    return result;
-  } catch (error) {
-    logger.error(`Error in deleteInventoryService for ID ${id}:`, error);
-    throw error;
-  }
+  logger.debug(`deleteInventoryService called with ID: ${id}`);
+  return await Inventory.deleteOne({ _id: id });
 };
 
 /**
- * Delete all inventory items
+ * Delete all inventory
  */
 const deleteAllInventoryService = async () => {
-  try {
-    const result = await Inventory.deleteMany({});
-    return result;
-  } catch (error) {
-    logger.error("Error in deleteAllInventoryService:", error);
-    throw error;
-  }
+  logger.debug("deleteAllInventoryService called");
+  return await Inventory.deleteMany({});
 };
 
 module.exports = {
@@ -333,8 +595,12 @@ module.exports = {
   getInventoryByWarehouseService,
   getInventoryByProductService,
   getInventoryByStockStatusService,
-  createInventoryService,
-  updateInventoryService,
+  getLowStockInventoryService,
+  getOutOfStockInventoryService,
+  searchInventoryService,
+  createOrUpdateInventoryService,
+  adjustInventoryService,
+  transferInventoryService,
   deleteInventoryService,
-  deleteAllInventoryService,
+  deleteAllInventoryService
 };

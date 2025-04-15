@@ -30,13 +30,16 @@ const customerSchema = new Schema(
       },
     },
     phone: {
-      type: String,
+      type: String,     
+      unique: true,
       validate: {
-        validator: function (v) {
-          return /^[0-9]{10,15}$/.test(v);
+        validator: async function (v) {
+          const customer = await this.constructor.findOne({ phone: v });
+          return !customer;
         },
-        message: "Please enter a valid phone number",
+        message: "Phone number already exists",
       },
+     
     },
     address: {
       street: {

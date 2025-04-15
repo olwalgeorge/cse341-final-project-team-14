@@ -258,6 +258,7 @@ const createInventoryAdjustmentService = async (adjustmentData) => {
     // Generate adjustment ID if not provided
     if (!adjustmentData.adjustmentID) {
       adjustmentData.adjustmentID = await generateAdjustmentId();
+      logger.debug(`Generated adjustmentID: ${adjustmentData.adjustmentID}`);
     }
     
     // Create and save the adjustment

@@ -90,6 +90,7 @@ const createPurchaseService = async (purchaseData) => {
   // Generate purchase ID if not provided
   if (!purchaseData.purchaseID) {
     purchaseData.purchaseID = await generatePurchaseId();
+    logger.debug(`Generated purchaseID: ${purchaseData.purchaseID}`);
   }
 
   // If supplier is provided as just an ID, fetch supplier details

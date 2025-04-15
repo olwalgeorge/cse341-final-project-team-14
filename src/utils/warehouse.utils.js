@@ -1,5 +1,6 @@
-const Warehouse = require("../models/warehouse.model.js");
-const logger = require("./logger.js");
+
+const Counter = require("../models/counter.model");
+const logger = require("./logger");
 
 /**
  * Transform warehouse document to API response format
@@ -10,16 +11,11 @@ const transformWarehouse = (warehouse) => {
   if (!warehouse) return null;
 
   const transformed = {
-    _id: warehouse._id,
+    id: warehouse._id,
     warehouseID: warehouse.warehouseID,
     name: warehouse.name,
-    description: warehouse.description,
-    capacity: warehouse.capacity,
-    capacityUnit: warehouse.capacityUnit,
+    location: warehouse.location,
     status: warehouse.status,
-    contact: warehouse.contact,
-    address: warehouse.address,
-    manager: warehouse.manager,
     createdAt: warehouse.createdAt,
     updatedAt: warehouse.updatedAt,
   };
@@ -32,28 +28,19 @@ const transformWarehouse = (warehouse) => {
  * @returns {Promise<string>} - Generated warehouse ID
  */
 const generateWarehouseId = async () => {
+  logger.debug("Generating warehouseID");
+
   try {
-    // Find the highest existing warehouse ID
-    const lastWarehouse = await Warehouse.findOne(
-      { warehouseID: { $regex: /^WH-\d{5}$/ } },
-      { warehouseID: 1 }
-    )
-      .sort({ warehouseID: -1 })
-      .lean();
+    // Use the Counter.getNextId method
+    const warehouseID = await Counter.getNextId("warehouseID", {
+      prefix: "WH-",
+      padLength: 5,
+    });
 
-    let nextId = 1;
-    if (lastWarehouse) {
-      // Extract the number part and increment by 1
-      const lastIdNumber = parseInt(lastWarehouse.warehouseID.split("-")[1]);
-      nextId = lastIdNumber + 1;
-    }
-
-    // Format the ID to ensure it has 5 digits with leading zeros
-    const formattedId = `WH-${nextId.toString().padStart(5, "0")}`;
-    logger.debug(`Generated warehouse ID: ${formattedId}`);
-    return formattedId;
+    logger.debug(`Generated warehouseID: ${warehouseID}`);
+    return warehouseID;
   } catch (error) {
-    logger.error("Error generating warehouse ID:", error);
+    logger.error("Error generating warehouseID:", error);
     throw error;
   }
 };

@@ -1,7 +1,7 @@
 const sendResponse = require("../utils/response.js");
 const asyncHandler = require("express-async-handler");
 const logger = require("../utils/logger.js");
-const { DatabaseError } = require("../utils/errors");
+const { ValidationError, DatabaseError } = require("../utils/errors");
 const {
   getAllInventoryTransfersService,
   getInventoryTransferByIdService,
@@ -53,22 +53,30 @@ const getAllInventoryTransfers = asyncHandler(async (req, res, next) => {
  * @access  Private
  */
 const getInventoryTransferById = asyncHandler(async (req, res, next) => {
-  logger.info(`getInventoryTransferById called with ID: ${req.params.transfer_Id}`);
+  const id = req.params.transfer_Id;
+  logger.info(`getInventoryTransferById called with ID: ${id}`);
+  
   try {
-    const inventoryTransfer = await getInventoryTransferByIdService(req.params.transfer_Id);
-    if (inventoryTransfer) {
-      const transformedTransfer = transformInventoryTransfer(inventoryTransfer);
-      sendResponse(
-        res,
-        200,
-        "Inventory transfer retrieved successfully",
-        transformedTransfer
-      );
-    } else {
-      return next(DatabaseError.notFound("Inventory transfer"));
+    const inventoryTransfer = await getInventoryTransferByIdService(id);
+    
+    if (!inventoryTransfer) {
+      return next(new DatabaseError('notFound', 'Inventory Transfer', id));
     }
+    
+    const transformedTransfer = transformInventoryTransfer(inventoryTransfer);
+    sendResponse(
+      res,
+      200,
+      "Inventory transfer retrieved successfully",
+      transformedTransfer
+    );
   } catch (error) {
-    logger.error(`Error retrieving inventory transfer with ID: ${req.params.transfer_Id}`, error);
+    logger.error(`Error retrieving inventory transfer with ID: ${id}`, error);
+    
+    if (error.name === 'CastError' && error.kind === 'ObjectId') {
+      return next(new ValidationError('id', id, 'Invalid inventory transfer ID format'));
+    }
+    
     next(error);
   }
 });
@@ -79,22 +87,33 @@ const getInventoryTransferById = asyncHandler(async (req, res, next) => {
  * @access  Private
  */
 const getInventoryTransferByTransferID = asyncHandler(async (req, res, next) => {
-  logger.info(`getInventoryTransferByTransferID called with transfer ID: ${req.params.transferID}`);
+  const transferID = req.params.transferID;
+  logger.info(`getInventoryTransferByTransferID called with transfer ID: ${transferID}`);
+  
   try {
-    const inventoryTransfer = await getInventoryTransferByTransferIDService(req.params.transferID);
-    if (inventoryTransfer) {
-      const transformedTransfer = transformInventoryTransfer(inventoryTransfer);
-      sendResponse(
-        res,
-        200,
-        "Inventory transfer retrieved successfully",
-        transformedTransfer
-      );
-    } else {
-      return next(DatabaseError.notFound("Inventory transfer"));
+    if (!transferID.match(/^TR-\d{5}$/)) {
+      return next(new ValidationError(
+        'transferID', 
+        transferID, 
+        'Transfer ID must be in the format TR-XXXXX where X is a digit'
+      ));
     }
+    
+    const inventoryTransfer = await getInventoryTransferByTransferIDService(transferID);
+    
+    if (!inventoryTransfer) {
+      return next(new DatabaseError('notFound', 'Inventory Transfer', null, { transferID }));
+    }
+    
+    const transformedTransfer = transformInventoryTransfer(inventoryTransfer);
+    sendResponse(
+      res,
+      200,
+      "Inventory transfer retrieved successfully",
+      transformedTransfer
+    );
   } catch (error) {
-    logger.error(`Error retrieving inventory transfer with transfer ID: ${req.params.transferID}`, error);
+    logger.error(`Error retrieving inventory transfer with transfer ID: ${transferID}`, error);
     next(error);
   }
 });
@@ -105,11 +124,12 @@ const getInventoryTransferByTransferID = asyncHandler(async (req, res, next) => 
  * @access  Private
  */
 const getInventoryTransfersByFromWarehouse = asyncHandler(async (req, res, next) => {
-  logger.info(`getInventoryTransfersByFromWarehouse called with warehouse ID: ${req.params.warehouseId}`);
+  const warehouseId = req.params.warehouseId;
+  logger.info(`getInventoryTransfersByFromWarehouse called with warehouse ID: ${warehouseId}`);
   logger.debug("Query parameters:", req.query);
   
   try {
-    const result = await getInventoryTransfersByFromWarehouseService(req.params.warehouseId, req.query);
+    const result = await getInventoryTransfersByFromWarehouseService(warehouseId, req.query);
     
     if (!result.transfers.length) {
       return sendResponse(res, 200, "No inventory transfers found from this warehouse", {
@@ -129,7 +149,7 @@ const getInventoryTransfersByFromWarehouse = asyncHandler(async (req, res, next)
       }
     );
   } catch (error) {
-    logger.error(`Error retrieving inventory transfers from warehouse: ${req.params.warehouseId}`, error);
+    logger.error(`Error retrieving inventory transfers from warehouse: ${warehouseId}`, error);
     next(error);
   }
 });
@@ -140,11 +160,12 @@ const getInventoryTransfersByFromWarehouse = asyncHandler(async (req, res, next)
  * @access  Private
  */
 const getInventoryTransfersByToWarehouse = asyncHandler(async (req, res, next) => {
-  logger.info(`getInventoryTransfersByToWarehouse called with warehouse ID: ${req.params.warehouseId}`);
+  const warehouseId = req.params.warehouseId;
+  logger.info(`getInventoryTransfersByToWarehouse called with warehouse ID: ${warehouseId}`);
   logger.debug("Query parameters:", req.query);
   
   try {
-    const result = await getInventoryTransfersByToWarehouseService(req.params.warehouseId, req.query);
+    const result = await getInventoryTransfersByToWarehouseService(warehouseId, req.query);
     
     if (!result.transfers.length) {
       return sendResponse(res, 200, "No inventory transfers found to this warehouse", {
@@ -164,7 +185,7 @@ const getInventoryTransfersByToWarehouse = asyncHandler(async (req, res, next) =
       }
     );
   } catch (error) {
-    logger.error(`Error retrieving inventory transfers to warehouse: ${req.params.warehouseId}`, error);
+    logger.error(`Error retrieving inventory transfers to warehouse: ${warehouseId}`, error);
     next(error);
   }
 });
@@ -175,14 +196,20 @@ const getInventoryTransfersByToWarehouse = asyncHandler(async (req, res, next) =
  * @access  Private
  */
 const getInventoryTransfersByStatus = asyncHandler(async (req, res, next) => {
-  logger.info(`getInventoryTransfersByStatus called with status: ${req.params.status}`);
+  const status = req.params.status;
+  logger.info(`getInventoryTransfersByStatus called with status: ${status}`);
   logger.debug("Query parameters:", req.query);
   
   try {
-    const result = await getInventoryTransfersByStatusService(req.params.status, req.query);
+    const validStatuses = ['Draft', 'Pending', 'Approved', 'Shipped', 'Received', 'Completed', 'Cancelled'];
+    if (!validStatuses.includes(status)) {
+      return next(new ValidationError('status', status, `Status must be one of: ${validStatuses.join(', ')}`));
+    }
+    
+    const result = await getInventoryTransfersByStatusService(status, req.query);
     
     if (!result.transfers.length) {
-      return sendResponse(res, 200, `No inventory transfers found with status: ${req.params.status}`, {
+      return sendResponse(res, 200, `No inventory transfers found with status: ${status}`, {
         transfers: [],
         pagination: result.pagination
       });
@@ -199,7 +226,7 @@ const getInventoryTransfersByStatus = asyncHandler(async (req, res, next) => {
       }
     );
   } catch (error) {
-    logger.error(`Error retrieving inventory transfers with status: ${req.params.status}`, error);
+    logger.error(`Error retrieving inventory transfers with status: ${status}`, error);
     next(error);
   }
 });
@@ -213,19 +240,26 @@ const createInventoryTransfer = asyncHandler(async (req, res, next) => {
   logger.info("createInventoryTransfer called");
   logger.debug("Request body:", req.body);
   try {
-    // Generate transferID if not provided
-    if (!req.body.transferID) {
-      const transferID = await generateTransferId();
-      logger.debug(`Generated transferID: ${transferID}`);
-      req.body.transferID = transferID;
+    const transferData = { ...req.body };
+    delete transferData.transferID;
+    
+    transferData.transferID = await generateTransferId();
+    logger.debug(`Generated transferID: ${transferData.transferID}`);
+    
+    if (!transferData.requestedBy && req.user) {
+      transferData.requestedBy = req.user._id;
     }
     
-    // Add the user who requested the transfer
-    if (!req.body.requestedBy) {
-      req.body.requestedBy = req.user._id;
+    if (transferData.fromWarehouse && transferData.toWarehouse && 
+        transferData.fromWarehouse.toString() === transferData.toWarehouse.toString()) {
+      return next(new ValidationError(
+        'warehouses', 
+        `${transferData.fromWarehouse} -> ${transferData.toWarehouse}`, 
+        'Source and destination warehouses must be different'
+      ));
     }
     
-    const inventoryTransfer = await createInventoryTransferService(req.body);
+    const inventoryTransfer = await createInventoryTransferService(transferData);
     const transformedTransfer = transformInventoryTransfer(inventoryTransfer);
     sendResponse(
       res,
@@ -235,6 +269,30 @@ const createInventoryTransfer = asyncHandler(async (req, res, next) => {
     );
   } catch (error) {
     logger.error("Error creating inventory transfer:", error);
+    
+    if (error.name === 'ValidationError') {
+      const firstErrorKey = Object.keys(error.errors)[0];
+      const firstError = error.errors[firstErrorKey];
+      
+      return next(new ValidationError(
+        firstErrorKey,
+        firstError.value,
+        firstError.message
+      ));
+    }
+    
+    if (error.code === 11000) {
+      const field = Object.keys(error.keyPattern)[0];
+      const value = error.keyValue[field];
+      
+      return next(new DatabaseError(
+        'duplicate',
+        'Inventory Transfer',
+        null,
+        { field, value }
+      ));
+    }
+    
     next(error);
   }
 });
@@ -245,23 +303,73 @@ const createInventoryTransfer = asyncHandler(async (req, res, next) => {
  * @access  Private
  */
 const updateInventoryTransferById = asyncHandler(async (req, res, next) => {
-  logger.info(`updateInventoryTransferById called with ID: ${req.params.transfer_Id}`);
+  const id = req.params.transfer_Id;
+  logger.info(`updateInventoryTransferById called with ID: ${id}`);
   logger.debug("Update data:", req.body);
   try {
-    const inventoryTransfer = await updateInventoryTransferService(req.params.transfer_Id, req.body);
-    if (inventoryTransfer) {
-      const transformedTransfer = transformInventoryTransfer(inventoryTransfer);
-      sendResponse(
-        res,
-        200,
-        "Inventory transfer updated successfully",
-        transformedTransfer
-      );
-    } else {
-      return next(DatabaseError.notFound("Inventory transfer"));
+    const updateData = { ...req.body };
+    delete updateData.transferID;
+    
+    const currentTransfer = await getInventoryTransferByIdService(id);
+    if (!currentTransfer) {
+      return next(new DatabaseError('notFound', 'Inventory Transfer', id));
     }
+    
+    const nonEditableStatuses = ['Shipped', 'Received', 'Completed', 'Cancelled'];
+    if (nonEditableStatuses.includes(currentTransfer.status)) {
+      return next(new ValidationError(
+        'status',
+        currentTransfer.status,
+        `Transfers with status '${currentTransfer.status}' cannot be edited`
+      ));
+    }
+    
+    if (updateData.status) {
+      const validTransitions = {
+        'Draft': ['Pending', 'Cancelled'],
+        'Pending': ['Draft', 'Approved', 'Cancelled'],
+        'Approved': ['Pending', 'Shipped', 'Cancelled']
+      };
+      
+      const currentStatus = currentTransfer.status;
+      const newStatus = updateData.status;
+      
+      if (!validTransitions[currentStatus] || !validTransitions[currentStatus].includes(newStatus)) {
+        return next(new ValidationError(
+          'status',
+          newStatus,
+          `Invalid status transition from '${currentStatus}' to '${newStatus}'`
+        ));
+      }
+    }
+    
+    const inventoryTransfer = await updateInventoryTransferService(id, updateData);
+    
+    const transformedTransfer = transformInventoryTransfer(inventoryTransfer);
+    sendResponse(
+      res,
+      200,
+      "Inventory transfer updated successfully",
+      transformedTransfer
+    );
   } catch (error) {
-    logger.error(`Error updating inventory transfer with ID: ${req.params.transfer_Id}`, error);
+    logger.error(`Error updating inventory transfer with ID: ${id}`, error);
+    
+    if (error.name === 'ValidationError') {
+      const firstErrorKey = Object.keys(error.errors)[0];
+      const firstError = error.errors[firstErrorKey];
+      
+      return next(new ValidationError(
+        firstErrorKey,
+        firstError.value,
+        firstError.message
+      ));
+    }
+    
+    if (error.name === 'CastError' && error.kind === 'ObjectId') {
+      return next(new ValidationError('id', id, 'Invalid inventory transfer ID format'));
+    }
+    
     next(error);
   }
 });
@@ -272,26 +380,44 @@ const updateInventoryTransferById = asyncHandler(async (req, res, next) => {
  * @access  Private
  */
 const approveInventoryTransfer = asyncHandler(async (req, res, next) => {
-  logger.info(`approveInventoryTransfer called with ID: ${req.params.transfer_Id}`);
+  const id = req.params.transfer_Id;
+  logger.info(`approveInventoryTransfer called with ID: ${id}`);
   logger.debug("Approval data:", req.body);
   try {
-    // Add the user who approved the transfer
-    req.body.approvedBy = req.user._id;
-    
-    const inventoryTransfer = await approveInventoryTransferService(req.params.transfer_Id, req.body);
-    if (inventoryTransfer) {
-      const transformedTransfer = transformInventoryTransfer(inventoryTransfer);
-      sendResponse(
-        res,
-        200,
-        "Inventory transfer approved successfully",
-        transformedTransfer
-      );
-    } else {
-      return next(DatabaseError.notFound("Inventory transfer"));
+    const currentTransfer = await getInventoryTransferByIdService(id);
+    if (!currentTransfer) {
+      return next(new DatabaseError('notFound', 'Inventory Transfer', id));
     }
+    
+    if (currentTransfer.status !== 'Pending') {
+      return next(new ValidationError(
+        'status', 
+        currentTransfer.status, 
+        `Only transfers with 'Pending' status can be approved. Current status: ${currentTransfer.status}`
+      ));
+    }
+    
+    const approvalData = { ...req.body };
+    if (!approvalData.approvedBy && req.user) {
+      approvalData.approvedBy = req.user._id;
+    }
+    
+    const inventoryTransfer = await approveInventoryTransferService(id, approvalData);
+    
+    const transformedTransfer = transformInventoryTransfer(inventoryTransfer);
+    sendResponse(
+      res,
+      200,
+      "Inventory transfer approved successfully",
+      transformedTransfer
+    );
   } catch (error) {
-    logger.error(`Error approving inventory transfer with ID: ${req.params.transfer_Id}`, error);
+    logger.error(`Error approving inventory transfer with ID: ${id}`, error);
+    
+    if (error.name === 'CastError' && error.kind === 'ObjectId') {
+      return next(new ValidationError('id', id, 'Invalid inventory transfer ID format'));
+    }
+    
     next(error);
   }
 });
@@ -302,23 +428,44 @@ const approveInventoryTransfer = asyncHandler(async (req, res, next) => {
  * @access  Private
  */
 const shipInventoryTransfer = asyncHandler(async (req, res, next) => {
-  logger.info(`shipInventoryTransfer called with ID: ${req.params.transfer_Id}`);
+  const id = req.params.transfer_Id;
+  logger.info(`shipInventoryTransfer called with ID: ${id}`);
   logger.debug("Shipping data:", req.body);
   try {
-    const inventoryTransfer = await shipInventoryTransferService(req.params.transfer_Id, req.body, req.user._id);
-    if (inventoryTransfer) {
-      const transformedTransfer = transformInventoryTransfer(inventoryTransfer);
-      sendResponse(
-        res,
-        200,
-        "Inventory transfer shipped successfully",
-        transformedTransfer
-      );
-    } else {
-      return next(DatabaseError.notFound("Inventory transfer"));
+    const currentTransfer = await getInventoryTransferByIdService(id);
+    if (!currentTransfer) {
+      return next(new DatabaseError('notFound', 'Inventory Transfer', id));
     }
+    
+    if (currentTransfer.status !== 'Approved') {
+      return next(new ValidationError(
+        'status', 
+        currentTransfer.status, 
+        `Only transfers with 'Approved' status can be shipped. Current status: ${currentTransfer.status}`
+      ));
+    }
+    
+    const shippingData = { ...req.body };
+    if (!shippingData.shippedBy && req.user) {
+      shippingData.shippedBy = req.user._id;
+    }
+    
+    const inventoryTransfer = await shipInventoryTransferService(id, shippingData, req.user ? req.user._id : null);
+    
+    const transformedTransfer = transformInventoryTransfer(inventoryTransfer);
+    sendResponse(
+      res,
+      200,
+      "Inventory transfer shipped successfully",
+      transformedTransfer
+    );
   } catch (error) {
-    logger.error(`Error shipping inventory transfer with ID: ${req.params.transfer_Id}`, error);
+    logger.error(`Error shipping inventory transfer with ID: ${id}`, error);
+    
+    if (error.name === 'CastError' && error.kind === 'ObjectId') {
+      return next(new ValidationError('id', id, 'Invalid inventory transfer ID format'));
+    }
+    
     next(error);
   }
 });
@@ -329,26 +476,44 @@ const shipInventoryTransfer = asyncHandler(async (req, res, next) => {
  * @access  Private
  */
 const receiveInventoryTransfer = asyncHandler(async (req, res, next) => {
-  logger.info(`receiveInventoryTransfer called with ID: ${req.params.transfer_Id}`);
+  const id = req.params.transfer_Id;
+  logger.info(`receiveInventoryTransfer called with ID: ${id}`);
   logger.debug("Receiving data:", req.body);
   try {
-    // Add the user who received the transfer
-    req.body.receivedBy = req.user._id;
-    
-    const inventoryTransfer = await receiveInventoryTransferService(req.params.transfer_Id, req.body);
-    if (inventoryTransfer) {
-      const transformedTransfer = transformInventoryTransfer(inventoryTransfer);
-      sendResponse(
-        res,
-        200,
-        "Inventory transfer received successfully",
-        transformedTransfer
-      );
-    } else {
-      return next(DatabaseError.notFound("Inventory transfer"));
+    const currentTransfer = await getInventoryTransferByIdService(id);
+    if (!currentTransfer) {
+      return next(new DatabaseError('notFound', 'Inventory Transfer', id));
     }
+    
+    if (currentTransfer.status !== 'Shipped') {
+      return next(new ValidationError(
+        'status', 
+        currentTransfer.status, 
+        `Only transfers with 'Shipped' status can be received. Current status: ${currentTransfer.status}`
+      ));
+    }
+    
+    const receivingData = { ...req.body };
+    if (!receivingData.receivedBy && req.user) {
+      receivingData.receivedBy = req.user._id;
+    }
+    
+    const inventoryTransfer = await receiveInventoryTransferService(id, receivingData);
+    
+    const transformedTransfer = transformInventoryTransfer(inventoryTransfer);
+    sendResponse(
+      res,
+      200,
+      "Inventory transfer received successfully",
+      transformedTransfer
+    );
   } catch (error) {
-    logger.error(`Error receiving inventory transfer with ID: ${req.params.transfer_Id}`, error);
+    logger.error(`Error receiving inventory transfer with ID: ${id}`, error);
+    
+    if (error.name === 'CastError' && error.kind === 'ObjectId') {
+      return next(new ValidationError('id', id, 'Invalid inventory transfer ID format'));
+    }
+    
     next(error);
   }
 });
@@ -359,16 +524,33 @@ const receiveInventoryTransfer = asyncHandler(async (req, res, next) => {
  * @access  Private
  */
 const deleteInventoryTransferById = asyncHandler(async (req, res, next) => {
-  logger.info(`deleteInventoryTransferById called with ID: ${req.params.transfer_Id}`);
+  const id = req.params.transfer_Id;
+  logger.info(`deleteInventoryTransferById called with ID: ${id}`);
   try {
-    const result = await deleteInventoryTransferService(req.params.transfer_Id);
-    if (result.deletedCount > 0) {
-      sendResponse(res, 200, "Inventory transfer deleted successfully");
-    } else {
-      return next(DatabaseError.notFound("Inventory transfer"));
+    const currentTransfer = await getInventoryTransferByIdService(id);
+    if (!currentTransfer) {
+      return next(new DatabaseError('notFound', 'Inventory Transfer', id));
     }
+    
+    const nonDeletableStatuses = ['Shipped', 'Received', 'Completed'];
+    if (nonDeletableStatuses.includes(currentTransfer.status)) {
+      return next(new ValidationError(
+        'status',
+        currentTransfer.status,
+        `Transfers with status '${currentTransfer.status}' cannot be deleted for audit purposes`
+      ));
+    }
+    
+    const result = await deleteInventoryTransferService(id);
+    
+    sendResponse(res, 200, "Inventory transfer deleted successfully");
   } catch (error) {
-    logger.error(`Error deleting inventory transfer with ID: ${req.params.transfer_Id}`, error);
+    logger.error(`Error deleting inventory transfer with ID: ${id}`, error);
+    
+    if (error.name === 'CastError' && error.kind === 'ObjectId') {
+      return next(new ValidationError('id', id, 'Invalid inventory transfer ID format'));
+    }
+    
     next(error);
   }
 });

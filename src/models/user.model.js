@@ -1,136 +1,152 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
-const bcrypt = require("bcryptjs");
+const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 
-const UserSchema = new Schema(
-  {
-    username: {
-      type: String,
-      required: [true, "Username is required"],
-      unique: true,
-      trim: true,
-      minlength: [3, "Username must be at least 3 characters"],
-      maxlength: [20, "Username must be at most 20 characters"],
-      match: [
-        /^(?!\d)[a-zA-Z0-9_]+$/,
-        "Username must not start with a number and must contain only alphanumeric characters and underscores",
-      ],
-      index: true,
-    },
-    email: {
-      type: String,
-      required: [true, "Email is required"],
-      unique: true,
-      trim: true,
-      match: [/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Email is not valid"],
-      index: true,
-      lowercase: true,
-    },
-    password: {
-      type: String,
-      trim: true,
-      match: [
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,50}$/,
-        "Password must contain at least one lowercase letter, one uppercase letter, one number, and one special character",
-      ],
-      select: false,
-      required: false,
-    },
-
-    fullName: {
-      type: String,
-      trim: true,
-      minlength: [3, "Full name must be at least 3 characters"],
-      maxlength: [50, "Full name must be at most 50 characters"],
-    },
-    facebookId: {
-      type: String,
-      default: null,
-    },
-    googleId: {
-      type: String,
-      default: null,
-    },
-    twitterId: {
-      type: String,
-      default: null,
-    },
-    githubId: {
-      type: String,
-      default: null,
-    },
-    profilePicture: {
-      type: String,
-    },
-    bio: {
-      type: String,
-    },
-    website: {
-      type: String,
-    },
-    location: {
-      type: String,
-    },
-
-    isVerified: {
-      type: Boolean,
-      default: false,
-    },
-    role: {
-      type: String,
-      enum: ["SUPERADMIN", "ADMIN", "USER", "ORG"],
-      default: "USER",
-    },
-    userID: {
-      type: String,
-      unique: true,
-      match: [/^SM-\d{5}$/],
-      index: true,
-    },
-    phoneNumber: {
-      type: String,
-    },
-    preferences: {
-      type: Object,
-    },
-    githubAccessToken: {
-      type: String,
-    },
-    githubRefreshToken: {
-      type: String,
-    },
-    googleAccessToken: {
-      type: String,
-    },
-    googleRefreshToken: {
-      type: String,
-    },
+/**
+ * User Schema
+ */
+const userSchema = new mongoose.Schema({
+  // Basic Information
+  userID: {
+    type: String,
+    required: true,
+    unique: true,
+    trim: true,
+    // The format USR-00001 is now handled by the Counter-based ID generation
   },
-  {
-    timestamps: true,
-    toJSON: { virtuals: true },
-    toObject: { virtuals: true },
+  username: {
+    type: String,
+    required: [true, 'Username is required'],
+    unique: true,
+    trim: true,
+    minlength: [3, 'Username must be at least 3 characters long'],
+    maxlength: [30, 'Username cannot exceed 30 characters']
+  },
+  email: {
+    type: String,
+    required: [true, 'Email is required'],
+    unique: true,
+    trim: true,
+    lowercase: true,
+    match: [
+      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+      'Please provide a valid email address'
+    ]
+  },
+  password: {
+    type: String,
+    required: [true, 'Password is required'],
+    minlength: [8, 'Password must be at least 8 characters long']
+    // Password will be hashed before saving
+  },
+  
+  // Personal Information
+  fullName: {
+    type: String,
+    required: [true, 'Full name is required'],
+    trim: true,
+    minlength: [2, 'Full name must be at least 2 characters long'],
+    maxlength: [100, 'Full name cannot exceed 100 characters']
+  },
+  avatar: {
+    type: String,
+    default: ''
+  },
+  
+  // Role and Permissions
+  role: {
+    type: String,
+    enum: ['USER', 'ADMIN', 'MANAGER', 'SUPERADMIN'],
+    default: 'USER'
+  },
+  permissions: {
+    type: [String],
+    default: []
+  },
+  
+  // Status and Verification
+  isActive: {
+    type: Boolean,
+    default: true
+  },
+  isVerified: {
+    type: Boolean,
+    default: false
+  },
+  verificationToken: String,
+  verificationExpires: Date,
+  
+  // Password Reset
+  resetPasswordToken: String,
+  resetPasswordExpires: Date,
+  
+  // Security and Login
+  lastLogin: {
+    type: Date,
+    default: null
+  },
+  failedLoginAttempts: {
+    type: Number,
+    default: 0
+  },
+  lockedUntil: {
+    type: Date,
+    default: null
+  },
+  
+  // Metadata and Tracking
+  createdAt: {
+    type: Date,
+    default: Date.now,
+    immutable: true
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now
   }
-);
+}, { timestamps: false });
 
-// Hash the password before saving
-UserSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) return next();
+/**
+ * Middleware to update timestamps
+ */
+userSchema.pre('save', function(next) {
+  this.updatedAt = new Date();
+  next();
+});
 
-  try {
-    const salt = await bcrypt.genSalt(10);
-    this.password = await bcrypt.hash(this.password, salt);
-    return next();
-  } catch (error) {
-    return next(error);
+/**
+ * Method to compare passwords
+ */
+userSchema.methods.comparePassword = async function(candidatePassword) {
+  return await bcrypt.compare(candidatePassword, this.password);
+};
+
+// Add an alias for backward compatibility
+userSchema.methods.isPasswordMatch = async function(candidatePassword) {
+  return await this.comparePassword(candidatePassword);
+};
+
+/**
+ * Virtual for user's full name
+ */
+userSchema.virtual('name').get(function() {
+  return this.fullName;
+});
+
+/**
+ * Remove password and sensitive fields when converting to JSON
+ */
+userSchema.set('toJSON', {
+  transform: (doc, ret) => {
+    delete ret.password;
+    delete ret.verificationToken;
+    delete ret.resetPasswordToken;
+    delete ret.resetPasswordExpires;
+    delete ret.failedLoginAttempts;
+    delete ret.__v;
+    return ret;
   }
 });
 
-// Method to compare passwords
-UserSchema.methods.isPasswordMatch = async function (password) {
-  return bcrypt.compare(password, this.password);
-};
-
-const User = mongoose.model("User", UserSchema);
+const User = mongoose.model('User', userSchema);
 
 module.exports = User;

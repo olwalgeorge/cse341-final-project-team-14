@@ -1,247 +1,202 @@
-const { check, param } = require("express-validator");
+const { body, param} = require("express-validator");
 
 /**
- * Validation for transaction MongoDB ID in route params
+ * Validates if the parameter is a valid date in YYYY-MM-DD format
+ */
+const isDateRule = (fieldName) => {
+  return param(fieldName)
+    .exists()
+    .withMessage(`${fieldName} is required`)
+    .isString()
+    .withMessage(`${fieldName} must be a string`)
+    .matches(/^\d{4}-\d{2}-\d{2}$/)
+    .withMessage(`${fieldName} must be in YYYY-MM-DD format`)
+    .custom((value) => {
+      const date = new Date(value);
+      if (isNaN(date.getTime())) {
+        throw new Error(`${fieldName} is not a valid date`);
+      }
+      return true;
+    });
+};
+
+/**
+ * Validates transaction MongoDB ID format
  */
 const transaction_IdValidationRules = () => {
   return [
     param("transaction_Id")
-      .notEmpty()
+      .exists()
       .withMessage("Transaction ID is required")
+      .isString()
+      .withMessage("Transaction ID must be a string")
       .isMongoId()
-      .withMessage("Invalid Transaction ID format")
+      .withMessage("Invalid transaction ID format")
   ];
 };
 
 /**
- * Validation for transaction ID (IT-XXXXX format) in route params
+ * Validates transaction ID format (IT-XXXXX)
  */
 const transactionIDValidationRules = () => {
   return [
     param("transactionID")
-      .notEmpty()
+      .exists()
       .withMessage("Transaction ID is required")
+      .isString()
+      .withMessage("Transaction ID must be a string")
       .matches(/^IT-\d{5}$/)
       .withMessage("Transaction ID must be in the format IT-XXXXX where X is a digit")
   ];
 };
 
 /**
- * Validation for product ID in route params
+ * Validates product ID format
  */
 const productIdValidationRules = () => {
   return [
     param("productId")
-      .notEmpty()
+      .exists()
       .withMessage("Product ID is required")
+      .isString()
+      .withMessage("Product ID must be a string")
       .isMongoId()
-      .withMessage("Invalid Product ID format")
+      .withMessage("Invalid product ID format")
   ];
 };
 
 /**
- * Validation for warehouse ID in route params
+ * Validates warehouse ID format
  */
 const warehouseIdValidationRules = () => {
   return [
     param("warehouseId")
-      .notEmpty()
+      .exists()
       .withMessage("Warehouse ID is required")
+      .isString()
+      .withMessage("Warehouse ID must be a string")
       .isMongoId()
-      .withMessage("Invalid Warehouse ID format")
+      .withMessage("Invalid warehouse ID format")
   ];
 };
 
 /**
- * Validation for transaction type in route params
+ * Validates transaction type
  */
 const transactionTypeValidationRules = () => {
+  const validTypes = ['Inbound', 'Outbound', 'Adjustment', 'Transfer In', 'Transfer Out', 'Return'];
+  
   return [
     param("transactionType")
-      .notEmpty()
+      .exists()
       .withMessage("Transaction type is required")
-      .isIn([
-        "Adjustment", 
-        "Purchase", 
-        "Sale", 
-        "Return", 
-        "Transfer In", 
-        "Transfer Out", 
-        "Damaged",
-        "Expired",
-        "Initial"
-      ])
-      .withMessage("Invalid transaction type. Must be one of: Adjustment, Purchase, Sale, Return, Transfer In, Transfer Out, Damaged, Expired, Initial")
+      .isString()
+      .withMessage("Transaction type must be a string")
+      .isIn(validTypes)
+      .withMessage(`Transaction type must be one of: ${validTypes.join(', ')}`)
   ];
 };
 
 /**
- * Validation for creating a new transaction
+ * Validates date range parameters
+ */
+const dateRangeValidationRules = () => {
+  return [
+    isDateRule("startDate"),
+    isDateRule("endDate"),
+    param()
+      .custom((value) => {
+        const startDate = new Date(value.startDate);
+        const endDate = new Date(value.endDate);
+        
+        if (startDate > endDate) {
+          throw new Error("Start date must be before or equal to end date");
+        }
+        return true;
+      })
+  ];
+};
+
+/**
+ * Validates reference data
+ */
+const referenceValidationRules = () => {
+  const validReferenceTypes = ['Order', 'Transfer', 'Adjustment', 'Return', 'Manual'];
+  
+  return [
+    param("referenceType")
+      .exists()
+      .withMessage("Reference type is required")
+      .isString()
+      .withMessage("Reference type must be a string")
+      .isIn(validReferenceTypes)
+      .withMessage(`Reference type must be one of: ${validReferenceTypes.join(', ')}`),
+      
+    param("referenceId")
+      .exists()
+      .withMessage("Reference ID is required")
+      .isString()
+      .withMessage("Reference ID must be a string")
+      .custom((value, { req }) => {
+        // If referenceType is Manual, we don't need to validate as MongoId
+        if (req.params.referenceType !== 'Manual' && !value.match(/^[0-9a-fA-F]{24}$/)) {
+          throw new Error("Invalid reference ID format");
+        }
+        return true;
+      })
+  ];
+};
+
+/**
+ * Validates transaction creation data
  */
 const createTransactionValidationRules = () => {
+  const validTypes = ['Inbound', 'Outbound', 'Adjustment', 'Transfer In', 'Transfer Out', 'Return'];
+  
   return [
-    check("inventory")
-      .optional()  // Made optional as it might be auto-populated
-      .isMongoId()
-      .withMessage("Invalid Inventory ID format"),
-    
-    check("product")
-      .notEmpty()
-      .withMessage("Product is required")
-      .isMongoId()
-      .withMessage("Invalid Product ID format"),
-    
-    check("warehouse")
-      .notEmpty()
+    body("warehouse")
+      .exists()
       .withMessage("Warehouse is required")
       .isMongoId()
-      .withMessage("Invalid Warehouse ID format"),
+      .withMessage("Invalid warehouse ID format"),
       
-    check("transactionType")
-      .notEmpty()
-      .withMessage("Transaction type is required")
-      .isIn([
-        "Adjustment", 
-        "Purchase", 
-        "Sale", 
-        "Return", 
-        "Transfer In", 
-        "Transfer Out", 
-        "Damaged",
-        "Expired",
-        "Initial"
-      ])
-      .withMessage("Invalid transaction type"),
-      
-    check("quantityBefore")
-      .optional()  // Can be auto-populated from current inventory
-      .isNumeric()
-      .withMessage("Previous quantity must be a number")
-      .custom((value) => value >= 0)
-      .withMessage("Previous quantity cannot be negative"),
-    
-    check("quantityChange")
-      .notEmpty()
-      .withMessage("Quantity change is required")
-      .isNumeric()
-      .withMessage("Quantity change must be a number")
-      .custom((value, { req }) => {
-        // Specific validation based on transaction type
-        const type = req.body.transactionType;
-        
-        if (value === 0) {
-          throw new Error("Quantity change cannot be zero");
-        }
-        
-        // Sale, Transfer Out, Damaged, and Expired should have negative quantity change
-        if (["Sale", "Transfer Out", "Damaged", "Expired"].includes(type) && Number(value) > 0) {
-          throw new Error(`${type} transactions must have a negative quantity change`);
-        }
-        
-        // Purchase, Transfer In, Initial should have positive quantity change
-        if (["Purchase", "Transfer In", "Initial"].includes(type) && Number(value) < 0) {
-          throw new Error(`${type} transactions must have a positive quantity change`);
-        }
-        
-        return true;
-      }),
-      
-    check("quantityAfter")
-      .optional()  // Can be calculated
-      .isNumeric()
-      .withMessage("New quantity must be a number")
-      .custom((value) => value >= 0)
-      .withMessage("New quantity cannot be negative"),
-      
-    // Reference validation (optional but structured if provided)
-    check("reference")
-      .optional()
-      .custom((value, { req }) => {
-        if (value) {
-          // If reference is provided, validate its structure
-          if (typeof value !== 'object') {
-            throw new Error("Reference must be an object");
-          }
-          
-          // Custom validation based on transaction type
-          const type = req.body.transactionType;
-          
-          // Check if reference is appropriate for the transaction type
-          if (type === "Purchase" && value.documentType !== "Purchase") {
-            throw new Error("Purchase transactions must reference a Purchase document");
-          }
-          
-          if (type === "Sale" && value.documentType !== "Order") {
-            throw new Error("Sale transactions must reference an Order document");
-          }
-        }
-        return true;
-      }),
-      
-    check("reference.documentType")
-      .optional()
-      .isIn(["Purchase", "Order", "Adjustment", "Transfer", "Return"])
-      .withMessage("Invalid document type. Must be one of: Purchase, Order, Adjustment, Transfer, Return"),
-      
-    check("reference.documentId")
-      .optional()
+    body("product")
+      .exists()
+      .withMessage("Product is required")
       .isMongoId()
-      .withMessage("Document ID must be a valid MongoDB ID"),
+      .withMessage("Invalid product ID format"),
       
-    check("reference.documentCode")
+    body("type")
+      .exists()
+      .withMessage("Transaction type is required")
+      .isString()
+      .withMessage("Transaction type must be a string")
+      .isIn(validTypes)
+      .withMessage(`Transaction type must be one of: ${validTypes.join(', ')}`),
+      
+    body("quantity")
+      .exists()
+      .withMessage("Quantity is required")
+      .isNumeric()
+      .withMessage("Quantity must be a number"),
+      
+    body("referenceType")
       .optional()
       .isString()
-      .withMessage("Document code must be a string")
-      .isLength({ min: 3, max: 20 })
-      .withMessage("Document code must be between 3 and 20 characters"),
+      .withMessage("Reference type must be a string")
+      .isIn(['Order', 'Transfer', 'Adjustment', 'Return', 'Manual'])
+      .withMessage("Invalid reference type"),
       
-    // Warehouse validations for transfers
-    check("fromWarehouse")
-      .custom((value, { req }) => {
-        if (req.body.transactionType === "Transfer Out" && !value) {
-          throw new Error("From warehouse is required for Transfer Out transactions");
-        }
-        if (value && !value.match(/^[0-9a-fA-F]{24}$/)) {
-          throw new Error("From warehouse must be a valid MongoDB ID");
-        }
-        return true;
-      }),
-      
-    check("toWarehouse")
-      .custom((value, { req }) => {
-        if (req.body.transactionType === "Transfer In" && !value) {
-          throw new Error("To warehouse is required for Transfer In transactions");
-        }
-        if (value && !value.match(/^[0-9a-fA-F]{24}$/)) {
-          throw new Error("To warehouse must be a valid MongoDB ID");
-        }
-        return true;
-      }),
-      
-    check("toWarehouse")
-      .custom((value, { req }) => {
-        if (value && req.body.fromWarehouse && value === req.body.fromWarehouse) {
-          throw new Error("From and To warehouses cannot be the same");
-        }
-        return true;
-      }),
-      
-    check("notes")
+    body("referenceId")
       .optional()
       .isString()
-      .withMessage("Notes must be a string")
-      .isLength({ max: 500 })
-      .withMessage("Notes cannot exceed 500 characters"),
-      
-    check("transactionDate")
-      .optional()
-      .isISO8601()
-      .withMessage("Transaction date must be a valid ISO 8601 date")
-      .custom((value) => {
-        const transactionDate = new Date(value);
-        const now = new Date();
-        if (transactionDate > now) {
-          throw new Error("Transaction date cannot be in the future");
+      .withMessage("Reference ID must be a string")
+      .custom((value, { req }) => {
+        // If referenceType is Manual, we don't need to validate as MongoId
+        if (req.body.referenceType && 
+            req.body.referenceType !== 'Manual' && 
+            !value.match(/^[0-9a-fA-F]{24}$/)) {
+          throw new Error("Invalid reference ID format");
         }
         return true;
       })
@@ -254,5 +209,8 @@ module.exports = {
   productIdValidationRules,
   warehouseIdValidationRules,
   transactionTypeValidationRules,
-  createTransactionValidationRules
+  dateRangeValidationRules,
+  referenceValidationRules,
+  createTransactionValidationRules,
+  isDateRule
 };

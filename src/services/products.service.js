@@ -2,6 +2,7 @@ const Product = require("../models/product.model");
 const logger = require("../utils/logger");
 const APIFeatures = require("../utils/apiFeatures.js");
 const { ValidationError } = require("../utils/errors.js");
+const { generateProductId } = require("../utils/product.utils.js");
 
 /**
  * Get all products with optional filtering, pagination, and sorting
@@ -279,15 +280,13 @@ const getProductsBySupplierService = async (supplierId, query = {}) => {
  */
 const createProductService = async (productData) => {
   logger.debug("createProductService called with data:", productData);
-  try {
-    const product = new Product(productData);
-    return await product.save();
-  } catch (error) {
-    logger.error("Error in createProductService:", error);
-    
-    // Let the error middleware handle specific database errors
-    throw error;
-  }
+  
+  // Always generate a new productID, ignoring any provided in the input
+  productData.productID = await generateProductId();
+  logger.debug(`Generated productID: ${productData.productID}`);
+  
+  const product = new Product(productData);
+  return await product.save();
 };
 
 /**

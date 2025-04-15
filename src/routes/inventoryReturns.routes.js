@@ -1,18 +1,19 @@
 const express = require("express");
 const router = express.Router();
 const {
-  getAllInventoryReturns,
-  getInventoryReturnById,
-  getInventoryReturnByReturnID,
-  getInventoryReturnsByWarehouse,
-  getInventoryReturnsBySource,
-  getInventoryReturnsByStatus,
-  createInventoryReturn,
-  updateInventoryReturnById,
-  approveInventoryReturn,
-  processInventoryReturn,
-  deleteInventoryReturnById,
-  deleteAllInventoryReturns
+   getAllReturns,
+    getReturnById,
+    getReturnByReturnID,
+    getReturnsBySupplier,
+    getReturnsByWarehouse,
+    getReturnsByDateRange,
+    getReturnsByStatus,
+    createReturn,
+    updateReturn,
+    approveReturn,
+    completeReturn,
+    deleteReturn,
+    deleteAllReturns,
 } = require("../controllers/inventoryReturns.controller");
 const isAuthenticated = require("../middlewares/auth.middleware");
 const validate = require("../middlewares/validation.middleware");
@@ -32,66 +33,73 @@ const {
 router.use(isAuthenticated);
 
 // Main routes
-router.get("/", getAllInventoryReturns);
-router.post("/", validate(createReturnValidationRules()), createInventoryReturn);
-router.delete("/", deleteAllInventoryReturns);
+router.get("/", getAllReturns);
+router.post("/", validate(createReturnValidationRules()), createReturn);
+router.delete("/", deleteAllReturns);
 
 // Routes with parameters
 router.get(
   "/returnID/:returnID", 
   validate(returnIDValidationRules()),
-  getInventoryReturnByReturnID
+  getReturnByReturnID
+);
+
+router.get(
+  "/supplier/:supplierId",
+  validate(warehouseIdValidationRules()),
+  getReturnsBySupplier
 );
 
 router.get(
   "/warehouse/:warehouseId",
   validate(warehouseIdValidationRules()),
-  getInventoryReturnsByWarehouse
+  getReturnsByWarehouse
 );
 
 router.get(
-  "/source/:sourceType/:sourceId?",
+  "/date-range/:fromDate/:toDate",
   validate(sourceValidationRules()),
-  getInventoryReturnsBySource
+  getReturnsByDateRange
 );
 
 router.get(
   "/status/:status",
   validate(statusValidationRules()),
-  getInventoryReturnsByStatus
+  getReturnsByStatus
 );
 
 router.get(
   "/:return_Id",
   validate(return_IdValidationRules()),
-  getInventoryReturnById
+  getReturnById
 );
 
 router.put(
   "/:return_Id",
   validate(return_IdValidationRules()),
   validate(updateReturnValidationRules()),
-  updateInventoryReturnById
+  updateReturn
 );
 
 router.put(
   "/:return_Id/approve",
   validate(return_IdValidationRules()),
   validate(approveReturnValidationRules()),
-  approveInventoryReturn
+  approveReturn
 );
 
 router.put(
-  "/:return_Id/process",
+  "/:return_Id/complete",
   validate(return_IdValidationRules()),
   validate(processReturnValidationRules()),
-  processInventoryReturn
+  completeReturn
 );
 
 router.delete(
   "/:return_Id",
   validate(return_IdValidationRules()),
-  deleteInventoryReturnById
+  deleteReturn
 );
 
 module.exports = router;
+

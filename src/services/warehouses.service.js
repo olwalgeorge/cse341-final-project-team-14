@@ -1,9 +1,10 @@
 const Warehouse = require("../models/warehouse.model");
 const logger = require("../utils/logger");
-const APIFeatures = require("../utils/apiFeatures");
+const APIFeatures = require("../utils/apiFeatures.js");
+const { generateWarehouseId } = require("../utils/warehouse.utils.js");
 
 /**
- * Get all warehouses with filtering, pagination, and sorting
+ * Get all warehouses with pagination and filtering
  */
 const getAllWarehousesService = async (query = {}) => {
   logger.debug("getAllWarehousesService called with query:", query);
@@ -15,19 +16,6 @@ const getAllWarehousesService = async (query = {}) => {
         field: 'name',
         transform: (value) => ({ $regex: value, $options: 'i' })
       },
-      status: 'status',
-      minCapacity: {
-        field: 'capacity',
-        transform: (value) => ({ $gte: parseInt(value) })
-      },
-      maxCapacity: {
-        field: 'capacity',
-        transform: (value) => ({ $lte: parseInt(value) })
-      },
-      street: {
-        field: 'address.street',
-        transform: (value) => ({ $regex: value, $options: 'i' })
-      },
       city: {
         field: 'address.city',
         transform: (value) => ({ $regex: value, $options: 'i' })
@@ -36,20 +24,24 @@ const getAllWarehousesService = async (query = {}) => {
         field: 'address.state',
         transform: (value) => ({ $regex: value, $options: 'i' })
       },
-      postalCode: 'address.postalCode',
       country: {
         field: 'address.country',
         transform: (value) => ({ $regex: value, $options: 'i' })
       },
-      contactName: {
-        field: 'contact.name',
+      postalCode: {
+        field: 'address.postalCode',
         transform: (value) => ({ $regex: value, $options: 'i' })
       },
-      contactEmail: {
-        field: 'contact.email',
-        transform: (value) => ({ $regex: value, $options: 'i' })
+      minCapacity: {
+        field: 'capacity',
+        transform: (value) => ({ $gte: parseInt(value) })
       },
-      contactPhone: 'contact.phone'
+      maxCapacity: {
+        field: 'capacity',
+        transform: (value) => ({ $lte: parseInt(value) })
+      },
+      type: 'type',
+      status: 'status'
     };
     
     // Build filter using APIFeatures utility
@@ -65,7 +57,8 @@ const getAllWarehousesService = async (query = {}) => {
     const warehouses = await Warehouse.find(filter)
       .sort(sort)
       .skip(pagination.skip)
-      .limit(pagination.limit);
+      .limit(pagination.limit)
+      .populate('manager', 'fullName email');
     
     // Get total count for pagination
     const total = await Warehouse.countDocuments(filter);
@@ -83,17 +76,14 @@ const getAllWarehousesService = async (query = {}) => {
 /**
  * Get warehouse by MongoDB ID
  */
-const getWarehouseByIdService = async (warehouse_Id) => {
-  logger.debug(`getWarehouseByIdService called with warehouse_Id: ${warehouse_Id}`);
-  return await Warehouse.findById(warehouse_Id);
-};
-
-/**
- * Get warehouse by warehouse ID (WH-XXXXX format)
- */
-const getWarehouseByWarehouseIDService = async (warehouseID) => {
-  logger.debug(`getWarehouseByWarehouseIDService called with warehouseID: ${warehouseID}`);
-  return await Warehouse.findOne({ warehouseID: warehouseID });
+const getWarehouseByIdService = async (id) => {
+  logger.debug(`getWarehouseByIdService called with ID: ${id}`);
+  try {
+    return await Warehouse.findById(id).populate('manager', 'fullName email');
+  } catch (error) {
+    logger.error(`Error in getWarehouseByIdService for ID ${id}:`, error);
+    throw error;
+  }
 };
 
 /**
@@ -101,7 +91,29 @@ const getWarehouseByWarehouseIDService = async (warehouseID) => {
  */
 const getWarehouseByNameService = async (name) => {
   logger.debug(`getWarehouseByNameService called with name: ${name}`);
-  return await Warehouse.findOne({ name: name });
+  
+  try {
+    return await Warehouse.findOne({ 
+      name: { $regex: new RegExp(`^${name}$`, 'i') } 
+    }).populate('manager', 'fullName email');
+  } catch (error) {
+    logger.error(`Error in getWarehouseByNameService for name ${name}:`, error);
+    throw error;
+  }
+};
+
+/**
+ * Get warehouse by warehouse ID (WH-XXXXX format)
+ */
+const getWarehouseByWarehouseIDService = async (warehouseID) => {
+  logger.debug(`getWarehouseByWarehouseIDService called with warehouseID: ${warehouseID}`);
+  
+  try {
+    return await Warehouse.findOne({ warehouseID }).populate('manager', 'fullName email');
+  } catch (error) {
+    logger.error(`Error in getWarehouseByWarehouseIDService for warehouseID ${warehouseID}:`, error);
+    throw error;
+  }
 };
 
 /**
@@ -109,27 +121,54 @@ const getWarehouseByNameService = async (name) => {
  */
 const createWarehouseService = async (warehouseData) => {
   logger.debug("createWarehouseService called with data:", warehouseData);
-  const warehouse = new Warehouse(warehouseData);
-  return await warehouse.save();
+  try {
+    // Generate warehouse ID if not provided
+    if (!warehouseData.warehouseID) {
+      warehouseData.warehouseID = await generateWarehouseId();
+      logger.debug(`Generated warehouseID: ${warehouseData.warehouseID}`);
+    }
+    
+    const warehouse = new Warehouse(warehouseData);
+    return await warehouse.save();
+  } catch (error) {
+    logger.error("Error in createWarehouseService:", error);
+    throw error;
+  }
 };
 
 /**
- * Update warehouse by MongoDB ID
+ * Update warehouse by ID
  */
-const updateWarehouseService = async (warehouse_Id, updateData) => {
-  logger.debug(`updateWarehouseService called with warehouse_Id: ${warehouse_Id}`, updateData);
-  return await Warehouse.findByIdAndUpdate(warehouse_Id, updateData, { 
-    new: true,
-    runValidators: true  // Ensure validators run on update
-  });
+const updateWarehouseService = async (id, updateData) => {
+  logger.debug(`updateWarehouseService called with ID: ${id}`, updateData);
+  try {
+    // Prevent updating warehouseID
+    if (updateData.warehouseID) {
+      delete updateData.warehouseID;
+    }
+    
+    return await Warehouse.findByIdAndUpdate(
+      id, 
+      { ...updateData, updatedAt: Date.now() }, 
+      { new: true, runValidators: true }
+    ).populate('manager', 'fullName email');
+  } catch (error) {
+    logger.error(`Error in updateWarehouseService for ID ${id}:`, error);
+    throw error;
+  }
 };
 
 /**
- * Delete warehouse by MongoDB ID
+ * Delete warehouse by ID
  */
-const deleteWarehouseService = async (warehouse_Id) => {
-  logger.debug(`deleteWarehouseService called with warehouse_Id: ${warehouse_Id}`);
-  return await Warehouse.deleteOne({ _id: warehouse_Id });
+const deleteWarehouseService = async (id) => {
+  logger.debug(`deleteWarehouseService called with ID: ${id}`);
+  try {
+    return await Warehouse.deleteOne({ _id: id });
+  } catch (error) {
+    logger.error(`Error in deleteWarehouseService for ID ${id}:`, error);
+    throw error;
+  }
 };
 
 /**
@@ -137,49 +176,10 @@ const deleteWarehouseService = async (warehouse_Id) => {
  */
 const deleteAllWarehousesService = async () => {
   logger.debug("deleteAllWarehousesService called");
-  return await Warehouse.deleteMany({});
-};
-
-/**
- * Search warehouses by term (name, city, country, etc.)
- */
-const searchWarehousesService = async (searchTerm, query = {}) => {
-  logger.debug(`searchWarehousesService called with term: ${searchTerm}`);
-  
   try {
-    // Get pagination parameters
-    const pagination = APIFeatures.getPagination(query);
-    
-    // Get sort parameters with default sort by name
-    const sort = APIFeatures.getSort(query, 'name');
-
-    // Create text search criteria
-    const searchCriteria = {
-      $or: [
-        { name: { $regex: searchTerm, $options: 'i' } },
-        { description: { $regex: searchTerm, $options: 'i' } },
-        { 'address.city': { $regex: searchTerm, $options: 'i' } },
-        { 'address.state': { $regex: searchTerm, $options: 'i' } },
-        { 'address.country': { $regex: searchTerm, $options: 'i' } },
-        { 'contact.name': { $regex: searchTerm, $options: 'i' } }
-      ]
-    };
-
-    // Execute search query with pagination and sorting
-    const warehouses = await Warehouse.find(searchCriteria)
-      .sort(sort)
-      .skip(pagination.skip)
-      .limit(pagination.limit);
-    
-    // Get total count for pagination
-    const total = await Warehouse.countDocuments(searchCriteria);
-    
-    return {
-      warehouses,
-      pagination: APIFeatures.paginationResult(total, pagination)
-    };
+    return await Warehouse.deleteMany({});
   } catch (error) {
-    logger.error("Error in searchWarehousesService:", error);
+    logger.error("Error in deleteAllWarehousesService:", error);
     throw error;
   }
 };
@@ -187,11 +187,10 @@ const searchWarehousesService = async (searchTerm, query = {}) => {
 module.exports = {
   getAllWarehousesService,
   getWarehouseByIdService,
-  getWarehouseByWarehouseIDService,
   getWarehouseByNameService,
+  getWarehouseByWarehouseIDService,
   createWarehouseService,
   updateWarehouseService,
   deleteWarehouseService,
   deleteAllWarehousesService,
-  searchWarehousesService
 };

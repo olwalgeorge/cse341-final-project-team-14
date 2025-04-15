@@ -1,65 +1,54 @@
-const Inventory = require("../models/inventory.model.js");
-const logger = require("./logger.js");
+// Description: Utility functions for inventory management, including transforming inventory data and generating unique inventory IDs.
+const Counter = require("../models/counter.model");
+const logger = require("./logger");
 
 /**
- * Transform inventory document to API response format
- * @param {Object} inventory - Inventory document from database
- * @returns {Object} - Transformed inventory object
+ * Transform inventory data for API response
  */
 const transformInventory = (inventory) => {
   if (!inventory) return null;
-
+  
   const transformed = {
-    _id: inventory._id,
+    id: inventory._id,
     inventoryID: inventory.inventoryID,
     product: inventory.product,
     warehouse: inventory.warehouse,
     quantity: inventory.quantity,
-    minStockLevel: inventory.minStockLevel,
-    maxStockLevel: inventory.maxStockLevel,
     stockStatus: inventory.stockStatus,
     location: inventory.location,
+    reorderPoint: inventory.reorderPoint,
     lastStockCheck: inventory.lastStockCheck,
-    notes: inventory.notes,
+    lastAdjustmentDate: inventory.lastAdjustmentDate,
+    lastAdjustmentReason: inventory.lastAdjustmentReason,
     createdAt: inventory.createdAt,
-    updatedAt: inventory.updatedAt,
+    updatedAt: inventory.updatedAt
   };
-
+  
   return transformed;
 };
 
 /**
- * Generate a unique inventory ID in the format IN-XXXXX
- * @returns {Promise<string>} - Generated inventory ID
+ * Generate unique inventory ID (IN-XXXXX format)
  */
 const generateInventoryId = async () => {
+  logger.debug("Generating inventoryID");
+  
   try {
-    // Find the highest existing inventory ID
-    const lastInventory = await Inventory.findOne(
-      { inventoryID: { $regex: /^IN-\d{5}$/ } },
-      { inventoryID: 1 }
-    )
-      .sort({ inventoryID: -1 })
-      .lean();
-
-    let nextId = 1;
-    if (lastInventory) {
-      // Extract the number part and increment by 1
-      const lastIdNumber = parseInt(lastInventory.inventoryID.split("-")[1]);
-      nextId = lastIdNumber + 1;
-    }
-
-    // Format the ID to ensure it has 5 digits with leading zeros
-    const formattedId = `IN-${nextId.toString().padStart(5, "0")}`;
-    logger.debug(`Generated inventory ID: ${formattedId}`);
-    return formattedId;
+    // Use the new Counter.getNextId method
+    const inventoryID = await Counter.getNextId('inventoryID', { 
+      prefix: 'IN-', 
+      padLength: 5
+    });
+    
+    logger.debug(`Generated inventoryID: ${inventoryID}`);
+    return inventoryID;
   } catch (error) {
-    logger.error("Error generating inventory ID:", error);
+    logger.error("Error generating inventoryID:", error);
     throw error;
   }
 };
 
 module.exports = {
   transformInventory,
-  generateInventoryId,
+  generateInventoryId
 };

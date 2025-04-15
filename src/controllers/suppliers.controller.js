@@ -1,19 +1,19 @@
 const sendResponse = require("../utils/response.js");
 const asyncHandler = require("express-async-handler");
 const logger = require("../utils/logger.js");
-const { DatabaseError } = require("../utils/errors");
+const { ValidationError, DatabaseError } = require("../utils/errors.js");
 const {
   getAllSuppliersService,
   getSupplierByIdService,
   getSupplierBySupplierIDService,
   getSupplierByEmailService,
+  searchSuppliersService,
   createSupplierService,
   updateSupplierService,
   deleteSupplierService,
   deleteAllSuppliersService,
-  searchSuppliersService,
-} = require("../services/suppliers.service");
-const { transformSupplier, generateSupplierId } = require("../utils/supplier.utils");
+} = require("../services/suppliers.service.js");
+const { transformSupplier } = require("../utils/supplier.utils.js");
 
 /**
  * @desc    Get all suppliers
@@ -23,21 +23,134 @@ const { transformSupplier, generateSupplierId } = require("../utils/supplier.uti
 const getAllSuppliers = asyncHandler(async (req, res, next) => {
   logger.info("getAllSuppliers called");
   logger.debug("Query parameters:", req.query);
+  
   try {
     const result = await getAllSuppliersService(req.query);
-    const transformedSuppliers = result.suppliers.map(transformSupplier);
     
+    if (!result.suppliers.length) {
+      return sendResponse(res, 200, "No suppliers found", {
+        suppliers: [],
+        pagination: result.pagination
+      });
+    }
+    
+    const transformedSuppliers = result.suppliers.map(transformSupplier);
     sendResponse(
       res,
       200,
       "Suppliers retrieved successfully",
-      {
-        suppliers: transformedSuppliers,
-        pagination: result.pagination
-      }
+      { suppliers: transformedSuppliers, pagination: result.pagination }
     );
   } catch (error) {
-    logger.error("Error retrieving all suppliers:", error);
+    logger.error("Error retrieving suppliers:", error);
+    next(error);
+  }
+});
+
+/**
+ * @desc    Get supplier by MongoDB ID
+ * @route   GET /suppliers/:supplier_Id
+ * @access  Private
+ */
+const getSupplierById = asyncHandler(async (req, res, next) => {
+  const id = req.params.supplier_Id;
+  logger.info(`getSupplierById called with ID: ${id}`);
+  
+  try {
+    const supplier = await getSupplierByIdService(id);
+    
+    if (!supplier) {
+      return next(new DatabaseError('notFound', 'Supplier', id));
+    }
+    
+    const transformedSupplier = transformSupplier(supplier);
+    sendResponse(
+      res,
+      200,
+      "Supplier retrieved successfully",
+      transformedSupplier
+    );
+  } catch (error) {
+    logger.error(`Error retrieving supplier with ID: ${id}`, error);
+    
+    // Handle CastError for invalid ObjectId
+    if (error.name === 'CastError' && error.kind === 'ObjectId') {
+      return next(new ValidationError('id', id, 'Invalid supplier ID format'));
+    }
+    
+    next(error);
+  }
+});
+
+/**
+ * @desc    Get supplier by supplier ID (SP-XXXXX format)
+ * @route   GET /suppliers/supplierID/:supplierID
+ * @access  Private
+ */
+const getSupplierBySupplierID = asyncHandler(async (req, res, next) => {
+  const supplierID = req.params.supplierID;
+  logger.info(`getSupplierBySupplierID called with supplier ID: ${supplierID}`);
+  
+  try {
+    // Validate supplier ID format
+    if (!supplierID.match(/^SP-\d{5}$/)) {
+      return next(new ValidationError(
+        'supplierID', 
+        supplierID, 
+        'Supplier ID must be in the format SP-XXXXX where X is a digit'
+      ));
+    }
+    
+    const supplier = await getSupplierBySupplierIDService(supplierID);
+    
+    if (!supplier) {
+      return next(new DatabaseError('notFound', 'Supplier', null, { supplierID }));
+    }
+    
+    const transformedSupplier = transformSupplier(supplier);
+    sendResponse(
+      res,
+      200,
+      "Supplier retrieved successfully",
+      transformedSupplier
+    );
+  } catch (error) {
+    logger.error(`Error retrieving supplier with supplier ID: ${supplierID}`, error);
+    next(error);
+  }
+});
+
+/**
+ * @desc    Get supplier by email
+ * @route   GET /suppliers/email/:email
+ * @access  Private
+ */
+const getSupplierByEmail = asyncHandler(async (req, res, next) => {
+  const email = req.params.email;
+  logger.info(`getSupplierByEmail called with email: ${email}`);
+  
+  try {
+    // Basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return next(new ValidationError('email', email, 'Invalid email format'));
+    }
+    
+    const supplier = await getSupplierByEmailService(email);
+    
+    if (!supplier) {
+      return next(new DatabaseError('notFound', 'Supplier', null, { email }));
+    }
+    
+    const transformedSupplier = transformSupplier(supplier);
+    sendResponse(
+      res,
+      200,
+      "Supplier retrieved successfully",
+      transformedSupplier
+    );
+  } catch (error) {
+    logger.error(`Error retrieving supplier with email: ${email}`, error);
     next(error);
   }
 });
@@ -48,113 +161,32 @@ const getAllSuppliers = asyncHandler(async (req, res, next) => {
  * @access  Private
  */
 const searchSuppliers = asyncHandler(async (req, res, next) => {
-  logger.info("searchSuppliers called");
-  logger.debug("Search term:", req.query.term);
+  const searchTerm = req.query.term;
+  logger.info(`searchSuppliers called with term: ${searchTerm}`);
+  
   try {
-    if (!req.query.term) {
-      return next(new Error("Search term is required"));
+    if (!searchTerm) {
+      return next(new ValidationError('term', searchTerm, 'Search term is required'));
     }
     
-    const result = await searchSuppliersService(req.query.term, req.query);
-    const transformedSuppliers = result.suppliers.map(transformSupplier);
+    const result = await searchSuppliersService(searchTerm, req.query);
     
+    if (!result.suppliers.length) {
+      return sendResponse(res, 200, "No suppliers found matching search criteria", {
+        suppliers: [],
+        pagination: result.pagination
+      });
+    }
+    
+    const transformedSuppliers = result.suppliers.map(transformSupplier);
     sendResponse(
       res,
       200,
-      "Suppliers search results",
-      {
-        suppliers: transformedSuppliers,
-        pagination: result.pagination
-      }
+      "Suppliers retrieved successfully",
+      { suppliers: transformedSuppliers, pagination: result.pagination }
     );
   } catch (error) {
-    logger.error("Error searching suppliers:", error);
-    next(error);
-  }
-});
-
-/**
- * @desc    Get supplier by ID
- * @route   GET /suppliers/:supplier_Id
- * @access  Private
- */
-const getSupplierById = asyncHandler(async (req, res, next) => {
-  logger.info(`getSupplierById called with ID: ${req.params.supplier_Id}`);
-  try {
-    const supplier = await getSupplierByIdService(req.params.supplier_Id);
-    if (supplier) {
-      const transformedSupplier = transformSupplier(supplier);
-      sendResponse(
-        res,
-        200,
-        "Supplier retrieved successfully",
-        transformedSupplier
-      );
-    } else {
-      return next(DatabaseError.notFound("Supplier"));
-    }
-  } catch (error) {
-    logger.error(`Error retrieving supplier with ID: ${req.params.supplier_Id}`, error);
-    next(error);
-  }
-});
-
-
-/**
- * @desc    Get supplier by supplier ID (SP-XXXXX format)
- * @route   GET /suppliers/supplierID/:supplierID
- * @access  Private
- */
-const getSupplierBySupplierID = asyncHandler(async (req, res, next) => {
-  logger.info(
-    `getSupplierBySupplierID called with supplier ID: ${req.params.supplierID}`
-  );
-  try {
-    const supplier = await getSupplierBySupplierIDService(
-      req.params.supplierID
-    );
-    if (supplier) {
-      const transformedSupplier = transformSupplier(supplier);
-      sendResponse(
-        res,
-        200,
-        "Supplier retrieved successfully",
-        transformedSupplier
-      );
-    } else {
-      return next(DatabaseError.notFound("Supplier"));
-    }
-  } catch (error) {
-    logger.error(
-      `Error retrieving supplier with supplier ID: ${req.params.supplierID}`,
-      error
-    );
-    next(error);
-  }
-});
-
-/**
- * @desc    Get supplier by email
- * @route   GET /suppliers/email/:email
- * @access  Public
- */
-const getSupplierByEmail = asyncHandler(async (req, res, next) => {
-  logger.info(`getSupplierByEmail called with email: ${req.params.email}`);
-  try {
-    const supplier = await getSupplierByEmailService(req.params.email);
-    if (supplier) {
-      const transformedSupplier = transformSupplier(supplier);
-      sendResponse(
-        res,
-        200,
-        "Supplier retrieved successfully",
-        transformedSupplier
-      );
-    } else {
-      return next(DatabaseError.notFound("Supplier"));
-    }
-  } catch (error) {
-    logger.error(`Error retrieving supplier with email: ${req.params.email}`, error);
+    logger.error(`Error searching suppliers with term: ${searchTerm}`, error);
     next(error);
   }
 });
@@ -166,23 +198,44 @@ const getSupplierByEmail = asyncHandler(async (req, res, next) => {
  */
 const createSupplier = asyncHandler(async (req, res, next) => {
   logger.info("createSupplier called");
-  logger.debug("Request body:", req.body);
+  logger.debug("Supplier data:", req.body);
+  
   try {
-    // Generate a supplier ID and add it to the request body
-    const supplierID = await generateSupplierId();
-    const supplierData = { ...req.body, supplierID };
-    logger.debug("Supplier data with generated ID:", supplierData);
-
+    // Ensure we're not using any user-provided supplierID to force generation
+    const supplierData = { ...req.body };
+    delete supplierData.supplierID;
+    
     const supplier = await createSupplierService(supplierData);
     const transformedSupplier = transformSupplier(supplier);
-    sendResponse(
-      res,
-      201,
-      "Supplier created successfully",
-      transformedSupplier
-    );
+    sendResponse(res, 201, "Supplier created successfully", transformedSupplier);
   } catch (error) {
     logger.error("Error creating supplier:", error);
+    
+    // Handle MongoDB validation errors
+    if (error.name === 'ValidationError') {
+      const firstErrorKey = Object.keys(error.errors)[0];
+      const firstError = error.errors[firstErrorKey];
+      
+      return next(new ValidationError(
+        firstErrorKey,
+        firstError.value,
+        firstError.message
+      ));
+    }
+    
+    // Handle duplicate key errors
+    if (error.code === 11000) {
+      const field = Object.keys(error.keyPattern)[0];
+      const value = error.keyValue[field];
+      
+      return next(new DatabaseError(
+        'duplicate',
+        'Supplier',
+        null,
+        { field, value }
+      ));
+    }
+    
     next(error);
   }
 });
@@ -193,23 +246,62 @@ const createSupplier = asyncHandler(async (req, res, next) => {
  * @access  Private
  */
 const updateSupplierById = asyncHandler(async (req, res, next) => {
-  logger.info(`updateSupplierById called with ID: ${req.params.supplier_Id}`);
+  const id = req.params.supplier_Id;
+  logger.info(`updateSupplier called with ID: ${id}`);
   logger.debug("Update data:", req.body);
+  
   try {
-    const supplier = await updateSupplierService(req.params.supplier_Id, req.body);
-    if (supplier) {
-      const transformedSupplier = transformSupplier(supplier);
-      sendResponse(
-        res,
-        200,
-        "Supplier updated successfully",
-        transformedSupplier
-      );
-    } else {
-      return next(DatabaseError.notFound("Supplier"));
+    // Prevent updating the supplierID
+    if (req.body.supplierID) {
+      delete req.body.supplierID;
     }
+    
+    const supplier = await updateSupplierService(id, req.body);
+    
+    if (!supplier) {
+      return next(new DatabaseError('notFound', 'Supplier', id));
+    }
+    
+    const transformedSupplier = transformSupplier(supplier);
+    sendResponse(
+      res,
+      200,
+      "Supplier updated successfully",
+      transformedSupplier
+    );
   } catch (error) {
-    logger.error(`Error updating supplier with ID: ${req.params.supplier_Id}`, error);
+    logger.error(`Error updating supplier with ID: ${id}`, error);
+    
+    // Handle MongoDB validation errors
+    if (error.name === 'ValidationError') {
+      const firstErrorKey = Object.keys(error.errors)[0];
+      const firstError = error.errors[firstErrorKey];
+      
+      return next(new ValidationError(
+        firstErrorKey,
+        firstError.value,
+        firstError.message
+      ));
+    }
+    
+    // Handle CastError for invalid ObjectId
+    if (error.name === 'CastError' && error.kind === 'ObjectId') {
+      return next(new ValidationError('id', id, 'Invalid supplier ID format'));
+    }
+    
+    // Handle duplicate key errors
+    if (error.code === 11000) {
+      const field = Object.keys(error.keyPattern)[0];
+      const value = error.keyValue[field];
+      
+      return next(new DatabaseError(
+        'duplicate',
+        'Supplier',
+        null,
+        { field, value }
+      ));
+    }
+    
     next(error);
   }
 });
@@ -220,16 +312,25 @@ const updateSupplierById = asyncHandler(async (req, res, next) => {
  * @access  Private
  */
 const deleteSupplierById = asyncHandler(async (req, res, next) => {
-  logger.info(`deleteSupplierById called with ID: ${req.params.supplier_Id}`);
+  const id = req.params.supplier_Id;
+  logger.info(`deleteSupplier called with ID: ${id}`);
+  
   try {
-    const result = await deleteSupplierService(req.params.supplier_Id);
-    if (result.deletedCount > 0) {
-      sendResponse(res, 200, "Supplier deleted successfully");
-    } else {
-      return next(DatabaseError.notFound("Supplier"));
+    const result = await deleteSupplierService(id);
+    
+    if (result.deletedCount === 0) {
+      return next(new DatabaseError('notFound', 'Supplier', id));
     }
+    
+    sendResponse(res, 200, "Supplier deleted successfully");
   } catch (error) {
-    logger.error(`Error deleting supplier with ID: ${req.params.supplier_Id}`, error);
+    logger.error(`Error deleting supplier with ID: ${id}`, error);
+    
+    // Handle CastError for invalid ObjectId
+    if (error.name === 'CastError' && error.kind === 'ObjectId') {
+      return next(new ValidationError('id', id, 'Invalid supplier ID format'));
+    }
+    
     next(error);
   }
 });
@@ -241,6 +342,7 @@ const deleteSupplierById = asyncHandler(async (req, res, next) => {
  */
 const deleteAllSuppliers = asyncHandler(async (req, res, next) => {
   logger.info("deleteAllSuppliers called");
+  
   try {
     const result = await deleteAllSuppliersService();
     sendResponse(
@@ -256,12 +358,12 @@ const deleteAllSuppliers = asyncHandler(async (req, res, next) => {
 
 module.exports = {
   getAllSuppliers,
-  getSupplierById, 
+  getSupplierById,
   getSupplierBySupplierID,
   getSupplierByEmail,
+  searchSuppliers,
   createSupplier,
   updateSupplierById,
   deleteSupplierById,
   deleteAllSuppliers,
-  searchSuppliers,
 };

@@ -1,32 +1,32 @@
 // src/utils/user.utils.js
 
-const User = require("../models/user.model.js");
-const asyncHandler = require("express-async-handler");
+
+const Counter = require("../models/counter.model");
+const logger = require("./logger");
+
 
 /**
- * Transforms a user object into a standardized format for API responses.
- * @param {Object} user - The user object to transform.
- * @returns {Object} - The transformed user object.
+ * Transform user data for API response (removes sensitive data)
+ * @param {Object} user - User document from database
+ * @returns {Object} - Transformed user object without sensitive data
  */
 const transformUser = (user) => {
-  if (!user) {
-    return null;
-  }
+  if (!user) return null;
 
+  // Create a safe user object without password and other sensitive data
   return {
     user_id: user._id,
     userID: user.userID,
     username: user.username,
     email: user.email,
-    fullName: user.fullName,
-    profilePicture: user.profilePicture,
-    bio: user.bio,
-    website: user.website,
-    location: user.location,
-    isVerified: user.isVerified,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    fullName: `${user.firstName || ''} ${user.lastName || ''}`.trim(),
     role: user.role,
-    phoneNumber: user.phoneNumber,
-    preferences: user.preferences,
+    status: user.status,
+    lastLogin: user.lastLogin,
+    createdAt: user.createdAt,
+    updatedAt: user.updatedAt
   };
 };
 
@@ -50,35 +50,30 @@ const transformUserData = (data) => {
   return transformedData;
 };
 
-const generateuserID = asyncHandler(async () => {
-  const prefix = "SM-";
-  const paddedLength = 5;
-
-  // 1. Find the highest existing sequential number
-  const lastUser = await User.findOne(
-    { userID: { $regex: `^${prefix}` } },
-    { userID: 1 },
-    { sort: { userID: -1 } }
-  );
-
-  let nextNumber = 1;
-
-  if (lastUser) {
-    const lastNumber = parseInt(lastUser.userID.slice(prefix.length), 10);
-    nextNumber = lastNumber + 1;
+/**
+ * Generate a unique user ID in the format USR-XXXXX
+ * @returns {Promise<string>} - Generated user ID
+ */
+const generateUserId = async () => {
+  logger.debug("Generating userID");
+  
+  try {
+    // Use the Counter.getNextId method
+    const userID = await Counter.getNextId('userID', { 
+      prefix: 'USR-', 
+      padLength: 5
+    });
+    
+    logger.debug(`Generated userID: ${userID}`);
+    return userID;
+  } catch (error) {
+    logger.error("Error generating userID:", error);
+    throw error;
   }
-
-  // 2. Pad the number with leading zeros
-  const paddedNumber = nextNumber.toString().padStart(paddedLength, "0");
-
-  // 3. Combine the prefix and padded number
-  const userID = `${prefix}${paddedNumber}`;
-
-  return userID;
-});
+};
 
 module.exports = {
   transformUser,
-  generateuserID,
+  generateUserId,
   transformUserData,
 };

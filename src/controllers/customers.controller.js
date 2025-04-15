@@ -1,19 +1,19 @@
 const sendResponse = require("../utils/response.js");
 const asyncHandler = require("express-async-handler");
 const logger = require("../utils/logger.js");
-const { DatabaseError } = require("../utils/errors");
+const { ValidationError, DatabaseError } = require("../utils/errors.js");
 const {
   getAllCustomersService,
-  getCustomerByEmailService,
   getCustomerByIdService,
   getCustomerByCustomerIDService,
+  getCustomerByEmailService,
+  searchCustomersService,
   createCustomerService,
   updateCustomerService,
   deleteCustomerService,
   deleteAllCustomersService,
-  searchCustomersService, // Add the new service import
-} = require("../services/customers.service");
-const { transformCustomer, generateCustomerId } = require("../utils/customer.utils");
+} = require("../services/customers.service.js");
+const { transformCustomer } = require("../utils/customer.utils.js");
 
 /**
  * @desc    Get all customers
@@ -23,22 +23,99 @@ const { transformCustomer, generateCustomerId } = require("../utils/customer.uti
 const getAllCustomers = asyncHandler(async (req, res, next) => {
   logger.info("getAllCustomers called");
   logger.debug("Query parameters:", req.query);
+  
   try {
     const result = await getAllCustomersService(req.query);
-    // Transform customers before sending response
-    const transformedCustomers = result.customers.map(transformCustomer);
     
+    if (!result.customers.length) {
+      return sendResponse(res, 200, "No customers found", {
+        customers: [],
+        pagination: result.pagination
+      });
+    }
+    
+    const transformedCustomers = result.customers.map(transformCustomer);
     sendResponse(
       res,
       200,
       "Customers retrieved successfully",
-      {
-        customers: transformedCustomers,
-        pagination: result.pagination
-      }
+      { customers: transformedCustomers, pagination: result.pagination }
     );
   } catch (error) {
-    logger.error("Error retrieving all customers:", error);
+    logger.error("Error retrieving customers:", error);
+    next(error);
+  }
+});
+
+/**
+ * @desc    Get customer by MongoDB ID
+ * @route   GET /customers/:customer_Id
+ * @access  Private
+ */
+const getCustomerById = asyncHandler(async (req, res, next) => {
+  const id = req.params.customer_Id;
+  logger.info(`getCustomerById called with ID: ${id}`);
+  
+  try {
+    const customer = await getCustomerByIdService(id);
+    
+    if (!customer) {
+      return next(new DatabaseError('notFound', 'Customer', id));
+    }
+    
+    const transformedCustomer = transformCustomer(customer);
+    sendResponse(
+      res,
+      200,
+      "Customer retrieved successfully",
+      transformedCustomer
+    );
+  } catch (error) {
+    logger.error(`Error retrieving customer with ID: ${id}`, error);
+    
+    // Handle CastError for invalid ObjectId
+    if (error.name === 'CastError' && error.kind === 'ObjectId') {
+      return next(new ValidationError('id', id, 'Invalid customer ID format'));
+    }
+    
+    next(error);
+  }
+});
+
+/**
+ * @desc    Get customer by customer ID (CM-XXXXX format)
+ * @route   GET /customers/customerID/:customerID
+ * @access  Private
+ */
+const getCustomerByCustomerID = asyncHandler(async (req, res, next) => {
+  const customerID = req.params.customerID;
+  logger.info(`getCustomerByCustomerID called with customer ID: ${customerID}`);
+  
+  try {
+    // Validate customer ID format
+    if (!customerID.match(/^CM-\d{5}$/)) {
+      return next(new ValidationError(
+        'customerID', 
+        customerID, 
+        'Customer ID must be in the format CM-XXXXX where X is a digit'
+      ));
+    }
+    
+    const customer = await getCustomerByCustomerIDService(customerID);
+    
+    if (!customer) {
+      return next(new DatabaseError('notFound', 'Customer', null, { customerID }));
+    }
+    
+    const transformedCustomer = transformCustomer(customer);
+    sendResponse(
+      res,
+      200,
+      "Customer retrieved successfully",
+      transformedCustomer
+    );
+  } catch (error) {
+    logger.error(`Error retrieving customer with customer ID: ${customerID}`, error);
     next(error);
   }
 });
@@ -49,84 +126,67 @@ const getAllCustomers = asyncHandler(async (req, res, next) => {
  * @access  Private
  */
 const getCustomerByEmail = asyncHandler(async (req, res, next) => {
-  logger.info(`getCustomerByEmail called with email: ${req.params.email}`);
+  const email = req.params.email;
+  logger.info(`getCustomerByEmail called with email: ${email}`);
+  
   try {
-    const customer = await getCustomerByEmailService(req.params.email);
-    if (customer) {
-      const transformedCustomer = transformCustomer(customer);
-      sendResponse(
-        res,
-        200,
-        "Customer retrieved successfully",
-        transformedCustomer
-      );
-    } else {
-      return next(DatabaseError.notFound("Customer"));
+    // Basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return next(new ValidationError('email', email, 'Invalid email format'));
     }
-  } catch (error) {
-    logger.error(
-      `Error retrieving customer with email: ${req.params.email}`,
-      error
+    
+    const customer = await getCustomerByEmailService(email);
+    
+    if (!customer) {
+      return next(new DatabaseError('notFound', 'Customer', null, { email }));
+    }
+    
+    const transformedCustomer = transformCustomer(customer);
+    sendResponse(
+      res,
+      200,
+      "Customer retrieved successfully",
+      transformedCustomer
     );
+  } catch (error) {
+    logger.error(`Error retrieving customer with email: ${email}`, error);
     next(error);
   }
 });
 
 /**
- * @desc    Get customer by customer's MongoDB ID
- * @route   GET /customers/:customer_Id
+ * @desc    Search customers
+ * @route   GET /customers/search
  * @access  Private
  */
-const getCustomerById = asyncHandler(async (req, res, next) => {
-  logger.info(`getCustomerById called with customer_Id: ${req.params.customer_Id}`);
+const searchCustomers = asyncHandler(async (req, res, next) => {
+  const searchTerm = req.query.term;
+  logger.info(`searchCustomers called with term: ${searchTerm}`);
+  
   try {
-    const customer = await getCustomerByIdService(req.params.customer_Id);
-    if (customer) {
-      const transformedCustomer = transformCustomer(customer);
-      sendResponse(
-        res,
-        200,
-        "Customer retrieved successfully",
-        transformedCustomer
-      );
-    } else {
-      return next(DatabaseError.notFound("Customer"));
+    if (!searchTerm) {
+      return next(new ValidationError('term', searchTerm, 'Search term is required'));
     }
-  } catch (error) {
-    logger.error(`Error retrieving customer with customer_Id: ${req.params.customer_Id}`, error);
-    next(error);
-  }
-});
-
-/**
- * @desc    Get customer by customer ID (CU-XXXXX format)
- * @route   GET /customers/customerID/:customerID
- * @access  Private
- */
-const getCustomerByCustomerID = asyncHandler(async (req, res, next) => {
-  logger.info(
-    `getCustomerByCustomerID called with customerID: ${req.params.customerID}`
-  );
-  try {
-    const customer = await getCustomerByCustomerIDService(
-      req.params.customerID
-    );
-    if (customer) {
-      const transformedCustomer = transformCustomer(customer);
-      sendResponse(
-        res,
-        200,
-        "Customer retrieved successfully",
-        transformedCustomer
-      );
-    } else {
-      return next(DatabaseError.notFound("Customer"));
+    
+    const result = await searchCustomersService(searchTerm, req.query);
+    
+    if (!result.customers.length) {
+      return sendResponse(res, 200, "No customers found matching search criteria", {
+        customers: [],
+        pagination: result.pagination
+      });
     }
-  } catch (error) {
-    logger.error(
-      `Error retrieving customer with customerID: ${req.params.customerID}`,
-      error
+    
+    const transformedCustomers = result.customers.map(transformCustomer);
+    sendResponse(
+      res,
+      200,
+      "Customers retrieved successfully",
+      { customers: transformedCustomers, pagination: result.pagination }
     );
+  } catch (error) {
+    logger.error(`Error searching customers with term: ${searchTerm}`, error);
     next(error);
   }
 });
@@ -138,73 +198,139 @@ const getCustomerByCustomerID = asyncHandler(async (req, res, next) => {
  */
 const createCustomer = asyncHandler(async (req, res, next) => {
   logger.info("createCustomer called");
-  logger.debug("Request body:", req.body);
+  logger.debug("Customer data:", req.body);
+  
   try {
-    // Generate a unique customerID before saving
-    const customerID = await generateCustomerId();
-    const customerData = {
-      ...req.body,
-      customerID: customerID
-    };
+    // Ensure we're not using any user-provided customerID to force generation
+    const customerData = { ...req.body };
+    delete customerData.customerID;
     
-    logger.debug(`Generated customerID: ${customerID}`);
     const customer = await createCustomerService(customerData);
     const transformedCustomer = transformCustomer(customer);
-    sendResponse(
-      res,
-      201,
-      "Customer created successfully",
-      transformedCustomer
-    );
+    sendResponse(res, 201, "Customer created successfully", transformedCustomer);
   } catch (error) {
     logger.error("Error creating customer:", error);
+    
+    // Handle MongoDB validation errors
+    if (error.name === 'ValidationError') {
+      const firstErrorKey = Object.keys(error.errors)[0];
+      const firstError = error.errors[firstErrorKey];
+      
+      return next(new ValidationError(
+        firstErrorKey,
+        firstError.value,
+        firstError.message
+      ));
+    }
+    
+    // Handle duplicate key errors
+    if (error.code === 11000) {
+      const field = Object.keys(error.keyPattern)[0];
+      const value = error.keyValue[field];
+      
+      return next(new DatabaseError(
+        'duplicate',
+        'Customer',
+        null,
+        { field, value }
+      ));
+    }
+    
     next(error);
   }
 });
 
 /**
- * @desc    Update customer by customer's MongoDB ID
+ * @desc    Update customer by ID
  * @route   PUT /customers/:customer_Id
  * @access  Private
  */
 const updateCustomerById = asyncHandler(async (req, res, next) => {
-  logger.info(`updateCustomerById called with customer_Id: ${req.params.customer_Id}`);
+  const id = req.params.customer_Id;
+  logger.info(`updateCustomer called with ID: ${id}`);
   logger.debug("Update data:", req.body);
+  
   try {
-    const customer = await updateCustomerService(req.params.customer_Id, req.body);
-    if (customer) {
-      const transformedCustomer = transformCustomer(customer);
-      sendResponse(
-        res,
-        200,
-        "Customer updated successfully",
-        transformedCustomer
-      );
-    } else {
-      return next(DatabaseError.notFound("Customer"));
+    // Prevent updating the customerID
+    if (req.body.customerID) {
+      delete req.body.customerID;
     }
+    
+    const customer = await updateCustomerService(id, req.body);
+    
+    if (!customer) {
+      return next(new DatabaseError('notFound', 'Customer', id));
+    }
+    
+    const transformedCustomer = transformCustomer(customer);
+    sendResponse(
+      res,
+      200,
+      "Customer updated successfully",
+      transformedCustomer
+    );
   } catch (error) {
-    logger.error(`Error updating customer with customer_Id: ${req.params.customer_Id}`, error);
+    logger.error(`Error updating customer with ID: ${id}`, error);
+    
+    // Handle MongoDB validation errors
+    if (error.name === 'ValidationError') {
+      const firstErrorKey = Object.keys(error.errors)[0];
+      const firstError = error.errors[firstErrorKey];
+      
+      return next(new ValidationError(
+        firstErrorKey,
+        firstError.value,
+        firstError.message
+      ));
+    }
+    
+    // Handle CastError for invalid ObjectId
+    if (error.name === 'CastError' && error.kind === 'ObjectId') {
+      return next(new ValidationError('id', id, 'Invalid customer ID format'));
+    }
+    
+    // Handle duplicate key errors
+    if (error.code === 11000) {
+      const field = Object.keys(error.keyPattern)[0];
+      const value = error.keyValue[field];
+      
+      return next(new DatabaseError(
+        'duplicate',
+        'Customer',
+        null,
+        { field, value }
+      ));
+    }
+    
     next(error);
   }
 });
 
 /**
- * @desc    Delete customer by customer's MongoDB ID
+ * @desc    Delete customer by ID
  * @route   DELETE /customers/:customer_Id
  * @access  Private
  */
 const deleteCustomerById = asyncHandler(async (req, res, next) => {
-  logger.info(`deleteCustomerById called with customer_Id: ${req.params.customer_Id}`);
+  const id = req.params.customer_Id;
+  logger.info(`deleteCustomer called with ID: ${id}`);
+  
   try {
-    const result = await deleteCustomerService(req.params.customer_Id);
-    if (result.deletedCount > 0) {
-      sendResponse(res, 200, "Customer deleted successfully");
-    } else {
-      return next(DatabaseError.notFound("Customer"));
+    const result = await deleteCustomerService(id);
+    
+    if (result.deletedCount === 0) {
+      return next(new DatabaseError('notFound', 'Customer', id));
     }
+    
+    sendResponse(res, 200, "Customer deleted successfully");
   } catch (error) {
-    logger.error(`Error deleting customer with customer_Id: ${req.params.customer_Id}`, error);
+    logger.error(`Error deleting customer with ID: ${id}`, error);
+    
+    // Handle CastError for invalid ObjectId
+    if (error.name === 'CastError' && error.kind === 'ObjectId') {
+      return next(new ValidationError('id', id, 'Invalid customer ID format'));
+    }
+    
     next(error);
   }
 });
@@ -216,6 +342,7 @@ const deleteCustomerById = asyncHandler(async (req, res, next) => {
  */
 const deleteAllCustomers = asyncHandler(async (req, res, next) => {
   logger.info("deleteAllCustomers called");
+  
   try {
     const result = await deleteAllCustomersService();
     sendResponse(
@@ -229,45 +356,14 @@ const deleteAllCustomers = asyncHandler(async (req, res, next) => {
   }
 });
 
-/**
- * @desc    Search customers by term
- * @route   GET /customers/search
- * @access  Private
- */
-const searchCustomers = asyncHandler(async (req, res, next) => {
-  logger.info("searchCustomers called");
-  logger.debug("Search term:", req.query.term);
-  try {
-    if (!req.query.term) {
-      return next(new Error("Search term is required"));
-    }
-    
-    const result = await searchCustomersService(req.query.term, req.query);
-    const transformedCustomers = result.customers.map(transformCustomer);
-    
-    sendResponse(
-      res,
-      200,
-      "Customers search results",
-      {
-        customers: transformedCustomers,
-        pagination: result.pagination
-      }
-    );
-  } catch (error) {
-    logger.error("Error searching customers:", error);
-    next(error);
-  }
-});
-
 module.exports = {
   getAllCustomers,
-  getCustomerByEmail,
   getCustomerById,
   getCustomerByCustomerID,
+  getCustomerByEmail,
+  searchCustomers,
   createCustomer,
   updateCustomerById,
-  deleteCustomerById, 
+  deleteCustomerById,
   deleteAllCustomers,
-  searchCustomers, // Add the new controller to exports
 };

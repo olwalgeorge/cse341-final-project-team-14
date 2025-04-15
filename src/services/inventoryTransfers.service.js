@@ -1,4 +1,4 @@
-const InventoryTransfer = require("../models/transfer.model.js");
+const InventoryTransfer = require("../models/transfer.model");
 const Inventory = require("../models/inventory.model.js");
 const { generateTransferId } = require("../utils/inventoryTransfer.utils.js");
 const inventoryTransactionManager = require("../managers/inventoryTransaction.manager.js");
@@ -284,6 +284,7 @@ const createInventoryTransferService = async (transferData) => {
     // Generate transfer ID if not provided
     if (!transferData.transferID) {
       transferData.transferID = await generateTransferId();
+      logger.debug(`Generated transferID: ${transferData.transferID}`);
     }
     
     // Create and save the transfer

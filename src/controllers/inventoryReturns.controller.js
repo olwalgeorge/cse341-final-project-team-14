@@ -1,47 +1,53 @@
 const sendResponse = require("../utils/response.js");
 const asyncHandler = require("express-async-handler");
 const logger = require("../utils/logger.js");
-const { DatabaseError } = require("../utils/errors");
+const mongoose = require("mongoose");
+const { ValidationError, DatabaseError } = require("../utils/errors");
 const {
-  getAllInventoryReturnsService,
-  getInventoryReturnByIdService,
-  getInventoryReturnByReturnIDService,
-  getInventoryReturnsByWarehouseService,
-  getInventoryReturnsBySourceService,
-  getInventoryReturnsByStatusService,
-  createInventoryReturnService,
-  updateInventoryReturnService,
-  approveInventoryReturnService,
-  processInventoryReturnService,
-  deleteInventoryReturnService,
-  deleteAllInventoryReturnsService
+  getAllReturnsService,
+  getReturnByIdService,
+  getReturnByReturnIDService,
+  getReturnsBySupplierService,
+  getReturnsByWarehouseService,
+  getReturnsByDateRangeService,
+  getReturnsByStatusService,
+  createReturnService,
+  updateReturnService,
+  approveReturnService,
+  completeReturnService,
+  deleteReturnService,
+  deleteAllReturnsService,
 } = require("../services/inventoryReturns.service");
-const { transformInventoryReturn, generateReturnId } = require("../utils/inventoryReturn.utils");
+const { transformReturn } = require("../utils/inventoryReturn.utils");
 
 /**
  * @desc    Get all inventory returns
  * @route   GET /inventory-returns
  * @access  Private
  */
-const getAllInventoryReturns = asyncHandler(async (req, res, next) => {
-  logger.info("getAllInventoryReturns called");
+const getAllReturns = asyncHandler(async (req, res, next) => {
+  logger.info("getAllReturns called");
   logger.debug("Query parameters:", req.query);
   
   try {
-    const result = await getAllInventoryReturnsService(req.query);
-    const transformedReturns = result.returns.map(transformInventoryReturn);
+    const result = await getAllReturnsService(req.query);
     
+    if (!result.returns.length) {
+      return sendResponse(res, 200, "No inventory returns found", {
+        returns: [],
+        pagination: result.pagination
+      });
+    }
+    
+    const transformedReturns = result.returns.map(transformReturn);
     sendResponse(
       res,
       200,
       "Inventory returns retrieved successfully",
-      {
-        returns: transformedReturns,
-        pagination: result.pagination
-      }
+      { returns: transformedReturns, pagination: result.pagination }
     );
   } catch (error) {
-    logger.error("Error retrieving all inventory returns:", error);
+    logger.error("Error retrieving inventory returns:", error);
     next(error);
   }
 });
@@ -51,155 +57,229 @@ const getAllInventoryReturns = asyncHandler(async (req, res, next) => {
  * @route   GET /inventory-returns/:return_Id
  * @access  Private
  */
-const getInventoryReturnById = asyncHandler(async (req, res, next) => {
-  logger.info(`getInventoryReturnById called with ID: ${req.params.return_Id}`);
+const getReturnById = asyncHandler(async (req, res, next) => {
+  const id = req.params.return_Id;
+  logger.info(`getReturnById called with ID: ${id}`);
+  
   try {
-    const inventoryReturn = await getInventoryReturnByIdService(req.params.return_Id);
-    if (inventoryReturn) {
-      const transformedReturn = transformInventoryReturn(inventoryReturn);
-      sendResponse(
-        res,
-        200,
-        "Inventory return retrieved successfully",
-        transformedReturn
-      );
-    } else {
-      return next(DatabaseError.notFound("Inventory return"));
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return next(new ValidationError('id', id, 'Invalid return ID format'));
     }
+    
+    const inventoryReturn = await getReturnByIdService(id);
+    
+    if (!inventoryReturn) {
+      return next(new DatabaseError('notFound', 'Inventory Return', id));
+    }
+    
+    const transformedReturn = transformReturn(inventoryReturn);
+    sendResponse(
+      res,
+      200,
+      "Inventory return retrieved successfully",
+      transformedReturn
+    );
   } catch (error) {
-    logger.error(`Error retrieving inventory return with ID: ${req.params.return_Id}`, error);
+    logger.error(`Error retrieving inventory return with ID: ${id}`, error);
     next(error);
   }
 });
 
 /**
- * @desc    Get inventory return by return ID (RET-XXXXX format)
+ * @desc    Get inventory return by return ID
  * @route   GET /inventory-returns/returnID/:returnID
  * @access  Private
  */
-const getInventoryReturnByReturnID = asyncHandler(async (req, res, next) => {
-  logger.info(`getInventoryReturnByReturnID called with return ID: ${req.params.returnID}`);
+const getReturnByReturnID = asyncHandler(async (req, res, next) => {
+  const returnID = req.params.returnID;
+  logger.info(`getReturnByReturnID called with return ID: ${returnID}`);
+  
   try {
-    const inventoryReturn = await getInventoryReturnByReturnIDService(req.params.returnID);
-    if (inventoryReturn) {
-      const transformedReturn = transformInventoryReturn(inventoryReturn);
-      sendResponse(
-        res,
-        200,
-        "Inventory return retrieved successfully",
-        transformedReturn
-      );
-    } else {
-      return next(DatabaseError.notFound("Inventory return"));
+    // Validate return ID format
+    if (!returnID.match(/^RET-\d{5}$/)) {
+      return next(new ValidationError(
+        'returnID', 
+        returnID, 
+        'Return ID must be in the format RET-XXXXX where X is a digit'
+      ));
     }
+    
+    const inventoryReturn = await getReturnByReturnIDService(returnID);
+    
+    if (!inventoryReturn) {
+      return next(new DatabaseError('notFound', 'Inventory Return', null, { returnID }));
+    }
+    
+    const transformedReturn = transformReturn(inventoryReturn);
+    sendResponse(
+      res,
+      200,
+      "Inventory return retrieved successfully",
+      transformedReturn
+    );
   } catch (error) {
-    logger.error(`Error retrieving inventory return with return ID: ${req.params.returnID}`, error);
+    logger.error(`Error retrieving inventory return with return ID: ${returnID}`, error);
     next(error);
   }
 });
 
 /**
- * @desc    Get inventory returns by warehouse
+ * @desc    Get returns by supplier
+ * @route   GET /inventory-returns/supplier/:supplierId
+ * @access  Private
+ */
+const getReturnsBySupplier = asyncHandler(async (req, res, next) => {
+  const supplierId = req.params.supplierId;
+  logger.info(`getReturnsBySupplier called with supplier ID: ${supplierId}`);
+  
+  try {
+    if (!mongoose.Types.ObjectId.isValid(supplierId)) {
+      return next(new ValidationError('supplierId', supplierId, 'Invalid supplier ID format'));
+    }
+    
+    const result = await getReturnsBySupplierService(supplierId, req.query);
+    
+    if (!result.returns.length) {
+      return sendResponse(res, 200, `No returns found for supplier ID: ${supplierId}`, {
+        returns: [],
+        pagination: result.pagination
+      });
+    }
+    
+    const transformedReturns = result.returns.map(transformReturn);
+    sendResponse(
+      res,
+      200,
+      `Returns for supplier ID "${supplierId}" retrieved successfully`,
+      { returns: transformedReturns, pagination: result.pagination }
+    );
+  } catch (error) {
+    logger.error(`Error retrieving returns for supplier ${supplierId}:`, error);
+    next(error);
+  }
+});
+
+/**
+ * @desc    Get returns by warehouse
  * @route   GET /inventory-returns/warehouse/:warehouseId
  * @access  Private
  */
-const getInventoryReturnsByWarehouse = asyncHandler(async (req, res, next) => {
-  logger.info(`getInventoryReturnsByWarehouse called with warehouse ID: ${req.params.warehouseId}`);
-  logger.debug("Query parameters:", req.query);
+const getReturnsByWarehouse = asyncHandler(async (req, res, next) => {
+  const warehouseId = req.params.warehouseId;
+  logger.info(`getReturnsByWarehouse called with warehouse ID: ${warehouseId}`);
   
   try {
-    const result = await getInventoryReturnsByWarehouseService(req.params.warehouseId, req.query);
+    if (!mongoose.Types.ObjectId.isValid(warehouseId)) {
+      return next(new ValidationError('warehouseId', warehouseId, 'Invalid warehouse ID format'));
+    }
+    
+    const result = await getReturnsByWarehouseService(warehouseId, req.query);
     
     if (!result.returns.length) {
-      return sendResponse(res, 200, "No inventory returns found for this warehouse", {
+      return sendResponse(res, 200, `No returns found for warehouse ID: ${warehouseId}`, {
         returns: [],
         pagination: result.pagination
       });
     }
     
-    const transformedReturns = result.returns.map(transformInventoryReturn);
+    const transformedReturns = result.returns.map(transformReturn);
     sendResponse(
       res,
       200,
-      "Inventory returns retrieved successfully",
-      {
-        returns: transformedReturns,
-        pagination: result.pagination
-      }
+      `Returns for warehouse ID "${warehouseId}" retrieved successfully`,
+      { returns: transformedReturns, pagination: result.pagination }
     );
   } catch (error) {
-    logger.error(`Error retrieving inventory returns for warehouse: ${req.params.warehouseId}`, error);
+    logger.error(`Error retrieving returns for warehouse ${warehouseId}:`, error);
     next(error);
   }
 });
 
 /**
- * @desc    Get inventory returns by source (customer, supplier, etc.)
- * @route   GET /inventory-returns/source/:sourceType/:sourceId?
+ * @desc    Get returns by date range
+ * @route   GET /inventory-returns/date-range
  * @access  Private
  */
-const getInventoryReturnsBySource = asyncHandler(async (req, res, next) => {
-  const { sourceType, sourceId } = req.params;
-  logger.info(`getInventoryReturnsBySource called with sourceType: ${sourceType}, sourceId: ${sourceId || 'all'}`);
-  logger.debug("Query parameters:", req.query);
+const getReturnsByDateRange = asyncHandler(async (req, res, next) => {
+  const { fromDate, toDate } = req.query;
+  logger.info(`getReturnsByDateRange called with dates: ${fromDate} to ${toDate}`);
   
   try {
-    const result = await getInventoryReturnsBySourceService(sourceType, sourceId, req.query);
+    // Validate date format
+    const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+    if (!fromDate || !dateRegex.test(fromDate)) {
+      return next(new ValidationError('fromDate', fromDate, 'From date must be in YYYY-MM-DD format'));
+    }
+    if (!toDate || !dateRegex.test(toDate)) {
+      return next(new ValidationError('toDate', toDate, 'To date must be in YYYY-MM-DD format'));
+    }
+    
+    // Validate date range
+    const start = new Date(fromDate);
+    const end = new Date(toDate);
+    if (isNaN(start.getTime()) || isNaN(end.getTime())) {
+      return next(new ValidationError('date', `${fromDate} - ${toDate}`, 'Invalid date format'));
+    }
+    if (start > end) {
+      return next(new ValidationError('dateRange', `${fromDate} - ${toDate}`, 'From date must be before or equal to to date'));
+    }
+    
+    const result = await getReturnsByDateRangeService(start, end, req.query);
     
     if (!result.returns.length) {
-      return sendResponse(res, 200, `No inventory returns found for ${sourceType}${sourceId ? ' ID: ' + sourceId : ''}`, {
+      return sendResponse(res, 200, `No returns found between ${fromDate} and ${toDate}`, {
         returns: [],
         pagination: result.pagination
       });
     }
     
-    const transformedReturns = result.returns.map(transformInventoryReturn);
+    const transformedReturns = result.returns.map(transformReturn);
     sendResponse(
       res,
       200,
-      "Inventory returns retrieved successfully",
-      {
-        returns: transformedReturns,
-        pagination: result.pagination
-      }
+      `Returns from ${fromDate} to ${toDate} retrieved successfully`,
+      { returns: transformedReturns, pagination: result.pagination }
     );
   } catch (error) {
-    logger.error(`Error retrieving inventory returns for ${sourceType}${sourceId ? ' ID: ' + sourceId : ''}`, error);
+    logger.error(`Error retrieving returns by date range:`, error);
     next(error);
   }
 });
 
 /**
- * @desc    Get inventory returns by status
+ * @desc    Get returns by status
  * @route   GET /inventory-returns/status/:status
  * @access  Private
  */
-const getInventoryReturnsByStatus = asyncHandler(async (req, res, next) => {
-  logger.info(`getInventoryReturnsByStatus called with status: ${req.params.status}`);
-  logger.debug("Query parameters:", req.query);
+const getReturnsByStatus = asyncHandler(async (req, res, next) => {
+  const status = req.params.status;
+  logger.info(`getReturnsByStatus called with status: ${status}`);
   
   try {
-    const result = await getInventoryReturnsByStatusService(req.params.status, req.query);
+    // Validate status
+    const validStatuses = ['Draft', 'Pending', 'Pending Approval', 'Approved', 'In Progress', 'Completed', 'Rejected', 'Cancelled'];
+    if (!validStatuses.includes(status)) {
+      return next(new ValidationError('status', status, `Status must be one of: ${validStatuses.join(', ')}`));
+    }
+    
+    const result = await getReturnsByStatusService(status, req.query);
     
     if (!result.returns.length) {
-      return sendResponse(res, 200, `No inventory returns found with status: ${req.params.status}`, {
+      return sendResponse(res, 200, `No returns found with status: ${status}`, {
         returns: [],
         pagination: result.pagination
       });
     }
     
-    const transformedReturns = result.returns.map(transformInventoryReturn);
+    const transformedReturns = result.returns.map(transformReturn);
     sendResponse(
       res,
       200,
-      "Inventory returns retrieved successfully",
-      {
-        returns: transformedReturns,
-        pagination: result.pagination
-      }
+      `Returns with status "${status}" retrieved successfully`,
+      { returns: transformedReturns, pagination: result.pagination }
     );
   } catch (error) {
-    logger.error(`Error retrieving inventory returns with status: ${req.params.status}`, error);
+    logger.error(`Error retrieving returns with status ${status}:`, error);
     next(error);
   }
 });
@@ -209,59 +289,109 @@ const getInventoryReturnsByStatus = asyncHandler(async (req, res, next) => {
  * @route   POST /inventory-returns
  * @access  Private
  */
-const createInventoryReturn = asyncHandler(async (req, res, next) => {
-  logger.info("createInventoryReturn called");
-  logger.debug("Request body:", req.body);
+const createReturn = asyncHandler(async (req, res, next) => {
+  logger.info("createReturn called");
+  logger.debug("Return data:", req.body);
+  
   try {
-    // Generate returnID if not provided
-    if (!req.body.returnID) {
-      const returnID = await generateReturnId();
-      logger.debug(`Generated returnID: ${returnID}`);
-      req.body.returnID = returnID;
+    // Additional validations can be done here if needed
+    
+    // Set creator if available
+    const returnData = { ...req.body };
+    if (req.user) {
+      returnData.createdBy = req.user._id;
     }
     
-    // Add the user who requested the return
-    if (!req.body.requestedBy) {
-      req.body.requestedBy = req.user._id;
-    }
+    const inventoryReturn = await createReturnService(returnData);
+    const transformedReturn = transformReturn(inventoryReturn);
     
-    const inventoryReturn = await createInventoryReturnService(req.body);
-    const transformedReturn = transformInventoryReturn(inventoryReturn);
-    sendResponse(
-      res,
-      201,
-      "Inventory return created successfully",
-      transformedReturn
-    );
+    sendResponse(res, 201, "Inventory return created successfully", transformedReturn);
   } catch (error) {
     logger.error("Error creating inventory return:", error);
+    
+    // Handle MongoDB validation errors
+    if (error.name === 'ValidationError') {
+      const firstErrorKey = Object.keys(error.errors)[0];
+      const firstError = error.errors[firstErrorKey];
+      
+      return next(new ValidationError(
+        firstErrorKey,
+        firstError.value,
+        firstError.message
+      ));
+    }
+    
+    // Handle duplicate key errors
+    if (error.code === 11000) {
+      const field = Object.keys(error.keyPattern)[0];
+      const value = error.keyValue[field];
+      
+      return next(new DatabaseError(
+        'duplicate',
+        'Inventory Return',
+        null,
+        { field, value }
+      ));
+    }
+    
     next(error);
   }
 });
 
 /**
- * @desc    Update inventory return by ID
+ * @desc    Update inventory return
  * @route   PUT /inventory-returns/:return_Id
  * @access  Private
  */
-const updateInventoryReturnById = asyncHandler(async (req, res, next) => {
-  logger.info(`updateInventoryReturnById called with ID: ${req.params.return_Id}`);
+const updateReturn = asyncHandler(async (req, res, next) => {
+  const id = req.params.return_Id;
+  logger.info(`updateReturn called with ID: ${id}`);
   logger.debug("Update data:", req.body);
+  
   try {
-    const inventoryReturn = await updateInventoryReturnService(req.params.return_Id, req.body);
-    if (inventoryReturn) {
-      const transformedReturn = transformInventoryReturn(inventoryReturn);
-      sendResponse(
-        res,
-        200,
-        "Inventory return updated successfully",
-        transformedReturn
-      );
-    } else {
-      return next(DatabaseError.notFound("Inventory return"));
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return next(new ValidationError('id', id, 'Invalid return ID format'));
     }
+    
+    // Get current return to check status
+    const currentReturn = await getReturnByIdService(id);
+    if (!currentReturn) {
+      return next(new DatabaseError('notFound', 'Inventory Return', id));
+    }
+    
+    // Prevent updates to completed returns
+    if (currentReturn.status === 'Completed') {
+      return next(new ValidationError(
+        'status',
+        'Completed',
+        'Completed returns cannot be modified'
+      ));
+    }
+    
+    const inventoryReturn = await updateReturnService(id, req.body);
+    const transformedReturn = transformReturn(inventoryReturn);
+    
+    sendResponse(
+      res,
+      200,
+      "Inventory return updated successfully",
+      transformedReturn
+    );
   } catch (error) {
-    logger.error(`Error updating inventory return with ID: ${req.params.return_Id}`, error);
+    logger.error(`Error updating inventory return with ID: ${id}`, error);
+    
+    // Handle MongoDB validation errors
+    if (error.name === 'ValidationError') {
+      const firstErrorKey = Object.keys(error.errors)[0];
+      const firstError = error.errors[firstErrorKey];
+      
+      return next(new ValidationError(
+        firstErrorKey,
+        firstError.value,
+        firstError.message
+      ));
+    }
+    
     next(error);
   }
 });
@@ -271,77 +401,135 @@ const updateInventoryReturnById = asyncHandler(async (req, res, next) => {
  * @route   PUT /inventory-returns/:return_Id/approve
  * @access  Private
  */
-const approveInventoryReturn = asyncHandler(async (req, res, next) => {
-  logger.info(`approveInventoryReturn called with ID: ${req.params.return_Id}`);
-  logger.debug("Approval data:", req.body);
+const approveReturn = asyncHandler(async (req, res, next) => {
+  const id = req.params.return_Id;
+  logger.info(`approveReturn called with ID: ${id}`);
+  
   try {
-    // Add the user who approved the return
-    req.body.approvedBy = req.user._id;
-    
-    const inventoryReturn = await approveInventoryReturnService(req.params.return_Id, req.body);
-    if (inventoryReturn) {
-      const transformedReturn = transformInventoryReturn(inventoryReturn);
-      sendResponse(
-        res,
-        200,
-        "Inventory return approved successfully",
-        transformedReturn
-      );
-    } else {
-      return next(DatabaseError.notFound("Inventory return"));
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return next(new ValidationError('id', id, 'Invalid return ID format'));
     }
+    
+    // Get current return to check status
+    const currentReturn = await getReturnByIdService(id);
+    if (!currentReturn) {
+      return next(new DatabaseError('notFound', 'Inventory Return', id));
+    }
+    
+    // Check if return can be approved (must be in Pending Approval status)
+    if (currentReturn.status !== 'Pending Approval') {
+      return next(new ValidationError(
+        'status', 
+        currentReturn.status, 
+        `Only returns with 'Pending Approval' status can be approved. Current status: ${currentReturn.status}`
+      ));
+    }
+    
+    // Prepare approval data
+    const approvalData = {
+      approvedBy: req.user ? req.user._id : null,
+      approvalNotes: req.body.approvalNotes || '',
+    };
+    
+    const inventoryReturn = await approveReturnService(id, approvalData);
+    const transformedReturn = transformReturn(inventoryReturn);
+    
+    sendResponse(
+      res,
+      200,
+      "Inventory return approved successfully",
+      transformedReturn
+    );
   } catch (error) {
-    logger.error(`Error approving inventory return with ID: ${req.params.return_Id}`, error);
+    logger.error(`Error approving inventory return with ID: ${id}`, error);
     next(error);
   }
 });
 
 /**
- * @desc    Process inventory return (complete the return process)
- * @route   PUT /inventory-returns/:return_Id/process
+ * @desc    Complete inventory return
+ * @route   PUT /inventory-returns/:return_Id/complete
  * @access  Private
  */
-const processInventoryReturn = asyncHandler(async (req, res, next) => {
-  logger.info(`processInventoryReturn called with ID: ${req.params.return_Id}`);
-  logger.debug("Processing data:", req.body);
+const completeReturn = asyncHandler(async (req, res, next) => {
+  const id = req.params.return_Id;
+  logger.info(`completeReturn called with ID: ${id}`);
+  
   try {
-    // Add the user who processed the return
-    req.body.processedBy = req.user._id;
-    
-    const inventoryReturn = await processInventoryReturnService(req.params.return_Id, req.body);
-    if (inventoryReturn) {
-      const transformedReturn = transformInventoryReturn(inventoryReturn);
-      sendResponse(
-        res,
-        200,
-        "Inventory return processed successfully",
-        transformedReturn
-      );
-    } else {
-      return next(DatabaseError.notFound("Inventory return"));
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return next(new ValidationError('id', id, 'Invalid return ID format'));
     }
+    
+    // Get current return to check status
+    const currentReturn = await getReturnByIdService(id);
+    if (!currentReturn) {
+      return next(new DatabaseError('notFound', 'Inventory Return', id));
+    }
+    
+    // Check if return can be completed (must be in Approved status)
+    if (currentReturn.status !== 'Approved') {
+      return next(new ValidationError(
+        'status', 
+        currentReturn.status, 
+        `Only returns with 'Approved' status can be completed. Current status: ${currentReturn.status}`
+      ));
+    }
+    
+    // Prepare completion data
+    const completionData = {
+      completedBy: req.user ? req.user._id : null,
+      completionNotes: req.body.completionNotes || '',
+    };
+    
+    const inventoryReturn = await completeReturnService(id, completionData);
+    const transformedReturn = transformReturn(inventoryReturn);
+    
+    sendResponse(
+      res,
+      200,
+      "Inventory return completed successfully",
+      transformedReturn
+    );
   } catch (error) {
-    logger.error(`Error processing inventory return with ID: ${req.params.return_Id}`, error);
+    logger.error(`Error completing inventory return with ID: ${id}`, error);
     next(error);
   }
 });
 
 /**
- * @desc    Delete inventory return by ID
+ * @desc    Delete inventory return
  * @route   DELETE /inventory-returns/:return_Id
  * @access  Private
  */
-const deleteInventoryReturnById = asyncHandler(async (req, res, next) => {
-  logger.info(`deleteInventoryReturnById called with ID: ${req.params.return_Id}`);
+const deleteReturn = asyncHandler(async (req, res, next) => {
+  const id = req.params.return_Id;
+  logger.info(`deleteReturn called with ID: ${id}`);
+  
   try {
-    const result = await deleteInventoryReturnService(req.params.return_Id);
-    if (result.deletedCount > 0) {
-      sendResponse(res, 200, "Inventory return deleted successfully");
-    } else {
-      return next(DatabaseError.notFound("Inventory return"));
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return next(new ValidationError('id', id, 'Invalid return ID format'));
     }
+    
+    // Get current return to check status
+    const currentReturn = await getReturnByIdService(id);
+    if (!currentReturn) {
+      return next(new DatabaseError('notFound', 'Inventory Return', id));
+    }
+    
+    // Prevent deletion of completed returns
+    if (currentReturn.status === 'Completed') {
+      return next(new ValidationError(
+        'status',
+        'Completed',
+        'Completed returns cannot be deleted for audit purposes'
+      ));
+    }
+    
+    const result = await deleteReturnService(id);
+    
+    sendResponse(res, 200, "Inventory return deleted successfully");
   } catch (error) {
-    logger.error(`Error deleting inventory return with ID: ${req.params.return_Id}`, error);
+    logger.error(`Error deleting inventory return with ID: ${id}`, error);
     next(error);
   }
 });
@@ -351,10 +539,21 @@ const deleteInventoryReturnById = asyncHandler(async (req, res, next) => {
  * @route   DELETE /inventory-returns
  * @access  Private
  */
-const deleteAllInventoryReturns = asyncHandler(async (req, res, next) => {
-  logger.info("deleteAllInventoryReturns called");
+const deleteAllReturns = asyncHandler(async (req, res, next) => {
+  logger.info("deleteAllReturns called");
+  
   try {
-    const result = await deleteAllInventoryReturnsService();
+    // Only allow in development/test environments for safety
+    const env = process.env.NODE_ENV || 'development';
+    if (env === 'production') {
+      return next(new ValidationError(
+        'environment',
+        env,
+        'Mass deletion of inventory returns is not allowed in production environment'
+      ));
+    }
+    
+    const result = await deleteAllReturnsService();
     sendResponse(
       res,
       200,
@@ -367,16 +566,17 @@ const deleteAllInventoryReturns = asyncHandler(async (req, res, next) => {
 });
 
 module.exports = {
-  getAllInventoryReturns,
-  getInventoryReturnById,
-  getInventoryReturnByReturnID,
-  getInventoryReturnsByWarehouse,
-  getInventoryReturnsBySource,
-  getInventoryReturnsByStatus,
-  createInventoryReturn,
-  updateInventoryReturnById,
-  approveInventoryReturn,
-  processInventoryReturn,
-  deleteInventoryReturnById,
-  deleteAllInventoryReturns
+  getAllReturns,
+  getReturnById,
+  getReturnByReturnID,
+  getReturnsBySupplier,
+  getReturnsByWarehouse,
+  getReturnsByDateRange,
+  getReturnsByStatus,
+  createReturn,
+  updateReturn,
+  approveReturn,
+  completeReturn,
+  deleteReturn,
+  deleteAllReturns,
 };

@@ -191,6 +191,26 @@ const deleteAllUsersService = async () => {
   return await User.deleteMany({});
 };
 
+/**
+ * Create a new user - DEPRECATED, use auth.service's registerService instead
+ * This is kept for backward compatibility
+ */
+const createUserService = async (userData) => {
+  logger.warn("createUserService in users.service is deprecated. Use auth.service's registerService instead");
+  
+  // Import the auth service to delegate user creation
+  const { registerService } = require("./auth.service");
+  
+  try {
+    // Remove password hashing as auth service handles it
+    const { user } = await registerService(userData);
+    return user;
+  } catch (error) {
+    logger.error("Error in createUserService:", error);
+    throw error;
+  }
+};
+
 module.exports = {
   getUserByIdService,
   getUserByUserIdService,
@@ -202,4 +222,5 @@ module.exports = {
   deleteAllUsersService,
   updateUserService,
   searchUsersService,
+  createUserService, // Keep for backward compatibility
 };

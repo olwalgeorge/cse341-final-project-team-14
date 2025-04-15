@@ -71,11 +71,11 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-  "name": "Ben",
-  "email": "ben@example.com",
-  "phone": "9876543210",
+  "name": "Tom Omondi",
+  "email": "tom.omondi@example.com",
+  "phone": "9876543290",
   "address": {
-    "street": "456 Nairobi Ave",
+    "street": "456 Nairobi St",
     "city": "Nairobi",
     "state": "Nairobi",
     "postalCode": "00100",

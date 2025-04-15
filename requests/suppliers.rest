@@ -67,17 +67,17 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-  "name": "Tanzania Electronics Ltd",
+  "name": "Kenya Electronics Ltd",
   "contact": {
-    "phone": "2552221234567",
-    "email": "info@tanzaniaelectronics.co.tz"
+    "phone": "254712345678",
+    "email": "info@kenyaelectronics.co.ke"
   },
   "address": {
-    "street": "456 Dar es Salaam Business Park",
-    "city": "Dar es Salaam",
-    "state": "Dar es Salaam",
-    "postalCode": "14114",
-    "country": "Tanzania"
+    "street": "789 Nairobi Tech Hub",
+    "city": "Nairobi",
+    "state": "Nairobi",
+    "postalCode": "00100",
+    "country": "Kenya"
   },
   "status": "Active"
 }

@@ -1,29 +1,29 @@
-const InventoryReturn = require("../models/return.model");
-const asyncHandler = require("express-async-handler");
+
+const Counter = require("../models/counter.model");
+const logger = require("./logger");
+
 
 /**
  * Generate a unique return ID in the format RET-XXXXX
  * @returns {Promise<string>} - Generated return ID
  */
-const generateReturnId = asyncHandler(async () => {
-  const prefix = "RET-";
-  const paddedLength = 5;
-
-  const lastReturn = await InventoryReturn.findOne(
-    { returnID: { $regex: `^${prefix}` } },
-    { returnID: 1 },
-    { sort: { returnID: -1 } }
-  );
-
-  let nextNumber = 1;
-  if (lastReturn) {
-    const lastNumber = parseInt(lastReturn.returnID.slice(prefix.length), 10);
-    nextNumber = lastNumber + 1;
+const generateReturnId = async () => {
+  logger.debug("Generating returnID");
+  
+  try {
+    // Use the Counter.getNextId method
+    const returnID = await Counter.getNextId('returnID', { 
+      prefix: 'RET-', 
+      padLength: 5
+    });
+    
+    logger.debug(`Generated returnID: ${returnID}`);
+    return returnID;
+  } catch (error) {
+    logger.error("Error generating returnID:", error);
+    throw error;
   }
-
-  const paddedNumber = nextNumber.toString().padStart(paddedLength, "0");
-  return `${prefix}${paddedNumber}`;
-});
+};
 
 /**
  * Transform inventory return document to API response format
@@ -144,7 +144,31 @@ const transformInventoryReturn = (inventoryReturn) => {
   };
 };
 
+/**
+ * Transform return data for API response
+ */
+const transformReturn = (returnData) => {
+  if (!returnData) return null;
+  
+  // Keep existing transformation logic if any, or implement a basic transform
+  const transformed = {
+    id: returnData._id,
+    returnID: returnData.returnID,
+    supplier: returnData.supplier,
+    warehouse: returnData.warehouse,
+    items: returnData.items,
+    status: returnData.status,
+    reason: returnData.reason,
+    // Include other fields as needed
+    createdAt: returnData.createdAt,
+    updatedAt: returnData.updatedAt
+  };
+  
+  return transformed;
+};
+
 module.exports = {
   generateReturnId,
-  transformInventoryReturn
+  transformInventoryReturn,
+  transformReturn
 };

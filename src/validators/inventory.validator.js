@@ -1,160 +1,225 @@
-const { check, param } = require("express-validator");
+const { body, param, query } = require("express-validator");
 
-const isMongoIdParam = (paramName, errorMessage) => {
-  return param(paramName, errorMessage).isMongoId();
-};
-
-const inventoryIDValidationRules = () => {
+/**
+ * Validates inventory MongoDB ID in route params
+ */
+const inventoryIdValidationRules = () => {
   return [
-    param("inventoryID", "Inventory ID should be in the format IN-xxxxx").matches(
-      /^IN-\d{5}$/
-    ),
+    param("inventory_Id")
+      .exists()
+      .withMessage("Inventory ID is required")
+      .isMongoId()
+      .withMessage("Invalid inventory ID format")
   ];
 };
 
-const inventory_IdValidationRules = () => {
-  return [isMongoIdParam("inventory_Id", "Invalid Inventory ID format")];
+/**
+ * Validates inventory ID format (IN-XXXXX)
+ */
+const inventoryIDFormatValidationRules = () => {
+  return [
+    param("inventoryID")
+      .exists()
+      .withMessage("Inventory ID is required")
+      .matches(/^IN-\d{5}$/)
+      .withMessage("Inventory ID must be in the format IN-XXXXX where X is a digit")
+  ];
 };
 
+/**
+ * Validates warehouse ID format
+ */
 const warehouseIdValidationRules = () => {
-  return [isMongoIdParam("warehouseId", "Invalid Warehouse ID format")];
+  return [
+    param("warehouseId")
+      .exists()
+      .withMessage("Warehouse ID is required")
+      .isMongoId()
+      .withMessage("Invalid warehouse ID format")
+  ];
 };
 
+/**
+ * Validates product ID format
+ */
 const productIdValidationRules = () => {
-  return [isMongoIdParam("productId", "Invalid Product ID format")];
+  return [
+    param("productId")
+      .exists()
+      .withMessage("Product ID is required")
+      .isMongoId()
+      .withMessage("Invalid product ID format")
+  ];
 };
 
+/**
+ * Validates stock status
+ */
 const stockStatusValidationRules = () => {
+  const validStatuses = ['In Stock', 'Low Stock', 'Out of Stock'];
+  
   return [
-    param("status")
+    param("stockStatus")
+      .exists()
+      .withMessage("Stock status is required")
+      .isIn(validStatuses)
+      .withMessage(`Stock status must be one of: ${validStatuses.join(', ')}`)
+  ];
+};
+
+/**
+ * Validates search term
+ */
+const searchValidationRules = () => {
+  return [
+    query("term")
+      .exists()
+      .withMessage("Search term is required")
+      .isString()
+      .withMessage("Search term must be a string")
       .trim()
-      .isIn(["In Stock", "Low Stock", "Out of Stock", "Overstocked"])
-      .withMessage("Invalid status. Must be one of: In Stock, Low Stock, Out of Stock, Overstocked"),
+      .notEmpty()
+      .withMessage("Search term cannot be empty")
   ];
 };
 
-const inventoryCreateValidationRules = () => {
+/**
+ * Validates inventory creation/update data
+ */
+const createInventoryValidationRules = () => {
   return [
-    check("product")
+    body("product")
+      .exists()
+      .withMessage("Product is required")
       .isMongoId()
-      .withMessage("Product must be a valid MongoDB ID"),
-    
-    check("warehouse")
+      .withMessage("Invalid product ID format"),
+      
+    body("warehouse")
+      .exists()
+      .withMessage("Warehouse is required")
       .isMongoId()
-      .withMessage("Warehouse must be a valid MongoDB ID"),
-    
-    check("quantity")
-      .isNumeric()
-      .withMessage("Quantity must be a number")
-      .custom((value) => value >= 0)
-      .withMessage("Quantity cannot be negative"),
-    
-    check("minStockLevel")
-      .isNumeric()
-      .withMessage("Minimum stock level must be a number")
-      .custom((value) => value >= 0)
-      .withMessage("Minimum stock level cannot be negative"),
-    
-    check("maxStockLevel")
-      .isNumeric()
-      .withMessage("Maximum stock level must be a number")
-      .custom((value) => value >= 0)
-      .withMessage("Maximum stock level cannot be negative")
-      .custom((value, { req }) => {
-        return value >= req.body.minStockLevel;
-      })
-      .withMessage("Maximum stock level must be greater than or equal to minimum stock level"),
-    
-    check("location.aisle")
+      .withMessage("Invalid warehouse ID format"),
+      
+    body("quantity")
+      .exists()
+      .withMessage("Quantity is required")
+      .isInt({ min: 0 })
+      .withMessage("Quantity must be a non-negative integer"),
+      
+    body("reorderPoint")
       .optional()
-      .isLength({ max: 10 })
-      .withMessage("Aisle identifier cannot exceed 10 characters"),
-    
-    check("location.rack")
+      .isInt({ min: 0 })
+      .withMessage("Reorder point must be a non-negative integer"),
+      
+    body("location.aisle")
       .optional()
-      .isLength({ max: 10 })
-      .withMessage("Rack identifier cannot exceed 10 characters"),
-    
-    check("location.bin")
+      .isString()
+      .withMessage("Aisle must be a string")
+      .trim()
+      .isLength({ max: 50 })
+      .withMessage("Aisle cannot exceed 50 characters"),
+      
+    body("location.rack")
       .optional()
-      .isLength({ max: 10 })
-      .withMessage("Bin identifier cannot exceed 10 characters"),
-    
-    check("notes")
+      .isString()
+      .withMessage("Rack must be a string")
+      .trim()
+      .isLength({ max: 50 })
+      .withMessage("Rack cannot exceed 50 characters"),
+      
+    body("location.bin")
       .optional()
-      .isLength({ max: 500 })
-      .withMessage("Notes cannot exceed 500 characters"),
+      .isString()
+      .withMessage("Bin must be a string")
+      .trim()
+      .isLength({ max: 50 })
+      .withMessage("Bin cannot exceed 50 characters")
   ];
 };
 
-const inventoryUpdateValidationRules = () => {
+/**
+ * Validates inventory adjustment data
+ */
+const adjustInventoryValidationRules = () => {
   return [
-    check("product")
-      .optional()
+    body("product")
+      .exists()
+      .withMessage("Product is required")
       .isMongoId()
-      .withMessage("Product must be a valid MongoDB ID"),
-    
-    check("warehouse")
-      .optional()
+      .withMessage("Invalid product ID format"),
+      
+    body("warehouse")
+      .exists()
+      .withMessage("Warehouse is required")
       .isMongoId()
-      .withMessage("Warehouse must be a valid MongoDB ID"),
-    
-    check("quantity")
-      .optional()
+      .withMessage("Invalid warehouse ID format"),
+      
+    body("adjustmentQuantity")
+      .exists()
+      .withMessage("Adjustment quantity is required")
       .isNumeric()
-      .withMessage("Quantity must be a number")
-      .custom((value) => value >= 0)
-      .withMessage("Quantity cannot be negative"),
-    
-    check("minStockLevel")
-      .optional()
-      .isNumeric()
-      .withMessage("Minimum stock level must be a number")
-      .custom((value) => value >= 0)
-      .withMessage("Minimum stock level cannot be negative"),
-    
-    check("maxStockLevel")
-      .optional()
-      .isNumeric()
-      .withMessage("Maximum stock level must be a number")
-      .custom((value) => value >= 0)
-      .withMessage("Maximum stock level cannot be negative")
-      .custom((value, { req }) => {
-        if (req.body.minStockLevel !== undefined) {
-          return value >= req.body.minStockLevel;
+      .withMessage("Adjustment quantity must be a number"),
+      
+    body("reason")
+      .exists()
+      .withMessage("Adjustment reason is required")
+      .isString()
+      .withMessage("Adjustment reason must be a string")
+      .trim()
+      .notEmpty()
+      .withMessage("Adjustment reason cannot be empty")
+      .isLength({ min: 3, max: 200 })
+      .withMessage("Adjustment reason must be between 3 and 200 characters")
+  ];
+};
+
+/**
+ * Validates inventory transfer data
+ */
+const transferInventoryValidationRules = () => {
+  return [
+    body("product")
+      .exists()
+      .withMessage("Product is required")
+      .isMongoId()
+      .withMessage("Invalid product ID format"),
+      
+    body("sourceWarehouse")
+      .exists()
+      .withMessage("Source warehouse is required")
+      .isMongoId()
+      .withMessage("Invalid source warehouse ID format"),
+      
+    body("destinationWarehouse")
+      .exists()
+      .withMessage("Destination warehouse is required")
+      .isMongoId()
+      .withMessage("Invalid destination warehouse ID format"),
+      
+    body("quantity")
+      .exists()
+      .withMessage("Quantity is required")
+      .isInt({ min: 1 })
+      .withMessage("Quantity must be a positive integer"),
+      
+    body()
+      .custom((value) => {
+        if (value.sourceWarehouse === value.destinationWarehouse) {
+          throw new Error("Source and destination warehouses must be different");
         }
         return true;
       })
-      .withMessage("Maximum stock level must be greater than or equal to minimum stock level"),
-    
-    check("location.aisle")
-      .optional()
-      .isLength({ max: 10 })
-      .withMessage("Aisle identifier cannot exceed 10 characters"),
-    
-    check("location.rack")
-      .optional()
-      .isLength({ max: 10 })
-      .withMessage("Rack identifier cannot exceed 10 characters"),
-    
-    check("location.bin")
-      .optional()
-      .isLength({ max: 10 })
-      .withMessage("Bin identifier cannot exceed 10 characters"),
-    
-    check("notes")
-      .optional()
-      .isLength({ max: 500 })
-      .withMessage("Notes cannot exceed 500 characters"),
   ];
 };
 
 module.exports = {
-  inventoryIDValidationRules,
-  inventory_IdValidationRules,
+  inventoryIdValidationRules,
+  inventoryIDFormatValidationRules,
   warehouseIdValidationRules,
   productIdValidationRules,
   stockStatusValidationRules,
-  inventoryCreateValidationRules,
-  inventoryUpdateValidationRules,
+  searchValidationRules,
+  createInventoryValidationRules,
+  adjustInventoryValidationRules,
+  transferInventoryValidationRules
 };

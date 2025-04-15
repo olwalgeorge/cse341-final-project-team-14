@@ -1,8 +1,7 @@
-const Order = require("../models/order.model.js");
-const Product = require("../models/product.model.js");
-const { generateOrderId } = require("../utils/order.utils.js");
+const Order = require("../models/order.model");
 const APIFeatures = require("../utils/apiFeatures.js");
-
+const { generateOrderId } = require("../utils/order.utils");
+const logger = require("../utils/logger.js");
 
 /**
  * Get all orders with optional filtering and pagination
@@ -81,6 +80,7 @@ const createOrderService = async (orderData) => {
   // Generate order ID if not provided
   if (!orderData.orderID) {
     orderData.orderID = await generateOrderId();
+    logger.debug(`Generated orderID: ${orderData.orderID}`);
   }
 
   // If customer is provided as just an ID, fetch customer details
@@ -105,6 +105,7 @@ const createOrderService = async (orderData) => {
   if (orderData.items && !orderData.products) {
     // Set prices from product sellingPrice if not provided
     const productsArray = [];
+    const Product = require('../models/product.model');
     
     for (let i = 0; i < orderData.items.length; i++) {
       const item = orderData.items[i];
@@ -115,15 +116,11 @@ const createOrderService = async (orderData) => {
       
       // If price is not specified, fetch it from product sellingPrice
       if (!item.price || item.price === 0) {
-        try {
-          const product = await Product.findById(item.product);
-          if (product) {
-            orderItem.priceAtOrder = product.sellingPrice;
-          } else {
-            throw new Error(`Product with ID ${item.product} not found`);
-          }
-        } catch (error) {
-          throw new Error(`Error setting product price: ${error.message}`);
+        const product = await Product.findById(item.product);
+        if (product) {
+          orderItem.priceAtOrder = product.sellingPrice;
+        } else {
+          throw new Error(`Product with ID ${item.product} not found`);
         }
       } else {
         orderItem.priceAtOrder = item.price;
@@ -168,6 +165,67 @@ const updateOrderService = async (id, updates) => {
 };
 
 /**
+ * Process an order - update status to Processing
+ */
+const processOrderService = async (id, processData) => {
+  const updateData = {
+    status: 'Processing',
+    processedAt: Date.now(),
+    processedBy: processData.processedBy || null,
+    updatedAt: Date.now()
+  };
+  
+  return await Order.findByIdAndUpdate(
+    id,
+    updateData,
+    { new: true, runValidators: true }
+  )
+    .populate("customer.customerId", "name email phone customerID")
+    .populate("products.product", "name description sellingPrice category sku productID");
+};
+
+/**
+ * Complete an order - update status to Completed
+ */
+const completeOrderService = async (id, completeData) => {
+  const updateData = {
+    status: 'Completed',
+    completedAt: Date.now(),
+    completedBy: completeData.completedBy || null,
+    updatedAt: Date.now()
+  };
+  
+  return await Order.findByIdAndUpdate(
+    id,
+    updateData,
+    { new: true, runValidators: true }
+  )
+    .populate("customer.customerId", "name email phone customerID")
+    .populate("products.product", "name description sellingPrice category sku productID");
+};
+
+/**
+ * Cancel an order - update status to Cancelled
+ */
+const cancelOrderService = async (id, cancelData) => {
+  const updateData = {
+    status: 'Cancelled',
+    cancelledAt: Date.now(),
+    cancelledBy: cancelData.cancelledBy || null,
+    cancellationReason: cancelData.cancellationReason,
+    updatedAt: Date.now()
+  };
+  
+  return await Order.findByIdAndUpdate(
+    id,
+    updateData,
+    { new: true, runValidators: true }
+  )
+    .populate("customer.customerId", "name email phone customerID")
+    .populate("products.product", "name description sellingPrice category sku productID");
+};
+
+/**
  * Delete an order by ID
  */
 const deleteOrderService = async (id) => {
@@ -198,8 +256,6 @@ const getOrdersByCustomerService = async (customerId, query = {}) => {
   };
 };
 
-
-
 /**
  * Get orders by status
  */
@@ -225,6 +281,38 @@ const getOrdersByStatusService = async (status, query = {}) => {
 };
 
 /**
+ * Get orders by date range
+ */
+const getOrdersByDateRangeService = async (startDate, endDate, query = {}) => {
+  // Get pagination and sorting parameters
+  const pagination = APIFeatures.getPagination(query);
+  const sort = APIFeatures.getSort(query, '-orderDate');
+
+  // Create date range filter
+  const filter = {
+    orderDate: {
+      $gte: startDate,
+      $lte: new Date(endDate.setHours(23, 59, 59, 999))
+    }
+  };
+
+  const orders = await Order.find(filter)
+    .sort(sort)
+    .skip(pagination.skip)
+    .limit(pagination.limit)
+    .populate("customer.customerId", "name email phone customerID")
+    .populate("products.product", "name description sellingPrice category sku productID");
+
+  // Get total count for pagination
+  const total = await Order.countDocuments(filter);
+
+  return {
+    orders,
+    pagination: APIFeatures.paginationResult(total, pagination)
+  };
+};
+
+/**
  * Delete all orders - use with caution
  */
 const deleteAllOrdersService = async () => {
@@ -237,8 +325,12 @@ module.exports = {
   getOrderByIdService, 
   createOrderService,
   updateOrderService,
+  processOrderService,
+  completeOrderService,
+  cancelOrderService,
   deleteOrderService,
   getOrdersByCustomerService,
   getOrdersByStatusService,
+  getOrdersByDateRangeService,
   deleteAllOrdersService,
 };

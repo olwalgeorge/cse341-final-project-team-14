@@ -1,29 +1,31 @@
 @baseUrl = http://localhost:3000
-@token = your_auth_token_here
+@token = {{login.response.body.token}}
 
 ### Register User
+# @name register
 POST {{baseUrl}}/auth/register
 Content-Type: application/json
 
 {
-  "fullName": "Super Admin",
-  "username": "superadmin",
-  "password": "SuperAdmin1234!",
-  "email": "superadmin@example.com" 
+  "fullName": "Steve Otieno",
+  "username": "steveotieno",
+  "password": "TestPassword123!",
+  "email": "steve.otieno@example.com" 
 }
 
 ### Login User
+# @name login
 POST {{baseUrl}}/auth/login
 Content-Type: application/json
 
 {
-  "password": "SuperAdmin1234!",
-  "email": "superadmin@example.com"
+  "password": "TestPassword123!",
+  "email": "john.smith@example.com"
 }
 
 ### Get all users
 GET {{baseUrl}}/users
-# No need for Authorization Bearer token with cookie-based auth
+Authorization: Bearer {{token}}
 
 ### Get all users with pagination
 GET {{baseUrl}}/users?page=1&limit=10

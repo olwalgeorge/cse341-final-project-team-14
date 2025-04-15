@@ -1,44 +1,50 @@
-const Customer = require("../models/customer.model");
-const asyncHandler = require("express-async-handler");
+const Counter = require("../models/counter.model");
+const logger = require("./logger");
 
-const generateCustomerId = asyncHandler(async () => {
-  const prefix = "CU-";
-  const paddedLength = 5;
-
-  const lastCustomer = await Customer.findOne(
-    { customerID: { $regex: `^${prefix}` } },
-    { customerID: 1 },
-    { sort: { customerID: -1 } }
-  );
-
-  let nextNumber = 1;
-  if (lastCustomer) {
-    const lastNumber = parseInt(
-      lastCustomer.customerID.slice(prefix.length),
-      10
-    );
-    nextNumber = lastNumber + 1;
+/**
+ * Generate a unique customer ID in the format CUST-XXXXX
+ * @returns {Promise<string>} - Generated customer ID
+ */
+const generateCustomerId = async () => {
+  logger.debug("Generating customerID");
+  
+  try {
+    // Use the Counter.getNextId method
+    const customerID = await Counter.getNextId('customerID', { 
+      prefix: 'CUST-', 
+      padLength: 5
+    });
+    
+    logger.debug(`Generated customerID: ${customerID}`);
+    return customerID;
+  } catch (error) {
+    logger.error("Error generating customerID:", error);
+    throw error;
   }
+};
 
-  const paddedNumber = nextNumber.toString().padStart(paddedLength, "0");
-  return `${prefix}${paddedNumber}`;
-});
-
+/**
+ * Transform customer data for API response
+ * @param {Object} customer - Customer document from database
+ * @returns {Object} - Transformed customer object
+ */
 const transformCustomer = (customer) => {
   if (!customer) return null;
+  
   return {
-    customer_Id: customer._id,
+    customer_id: customer._id,
     customerID: customer.customerID,
-    name: customer.name,
+    firstName: customer.firstName,
+    lastName: customer.lastName,
     email: customer.email,
     phone: customer.phone,
     address: customer.address,
     createdAt: customer.createdAt,
-    updatedAt: customer.updatedAt,
+    updatedAt: customer.updatedAt
   };
 };
 
 module.exports = {
   generateCustomerId,
-  transformCustomer,
+  transformCustomer
 };

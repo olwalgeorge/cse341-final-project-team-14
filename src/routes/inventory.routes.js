@@ -7,71 +7,127 @@ const {
   getInventoryByWarehouse,
   getInventoryByProduct,
   getInventoryByStockStatus,
-  createInventory,
-  updateInventoryById,
-  deleteInventoryById,
+  getLowStockInventory,
+  getOutOfStockInventory,
+  searchInventory,
+  createOrUpdateInventory,
+  adjustInventory,
+  transferInventory,
+  deleteInventory,
   deleteAllInventory,
-} = require("../controllers/inventory.controller.js");
-const validate = require("../middlewares/validation.middleware.js");
-const isAuthenticated = require("../middlewares/auth.middleware.js");
+} = require("../controllers/inventory.controller");
+const isAuthenticated = require("../middlewares/auth.middleware");
+const validate = require("../middlewares/validation.middleware");
 const {
-  inventoryIDValidationRules,
-  inventory_IdValidationRules,
-  inventoryCreateValidationRules,
-  inventoryUpdateValidationRules,
+  inventoryIdValidationRules,
+  inventoryIDFormatValidationRules,
   warehouseIdValidationRules,
   productIdValidationRules,
   stockStatusValidationRules,
-} = require("../validators/inventory.validator.js");
+  searchValidationRules,
+  createInventoryValidationRules,
+  adjustInventoryValidationRules,
+  transferInventoryValidationRules
+} = require("../validators/inventory.validator");
 
-// Public routes (for read operations)
-router.get("/", getAllInventory);
+// Get all inventory
+router.get("/", isAuthenticated, getAllInventory);
+
+// Get inventory by MongoDB ID
 router.get(
-  "/inventoryID/:inventoryID",
-  validate(inventoryIDValidationRules()),
-  getInventoryByInventoryID
-);
-router.get(
-  "/warehouse/:warehouseId",
-  validate(warehouseIdValidationRules()),
-  getInventoryByWarehouse
-);
-router.get(
-  "/product/:productId",
-  validate(productIdValidationRules()),
-  getInventoryByProduct
-);
-router.get(
-  "/status/:status",
-  validate(stockStatusValidationRules()),
-  getInventoryByStockStatus
-);
-router.get(
-  "/:inventory_Id",
-  validate(inventory_IdValidationRules()),
+  "/:inventory_Id", 
+  isAuthenticated, 
+  validate(inventoryIdValidationRules()),
   getInventoryById
 );
 
-// Protected routes (for write operations)
+// Get inventory by inventory ID (IN-XXXXX format)
+router.get(
+  "/inventoryID/:inventoryID", 
+  isAuthenticated, 
+  validate(inventoryIDFormatValidationRules()),
+  getInventoryByInventoryID
+);
+
+// Get inventory by warehouse
+router.get(
+  "/warehouse/:warehouseId", 
+  isAuthenticated, 
+  validate(warehouseIdValidationRules()),
+  getInventoryByWarehouse
+);
+
+// Get inventory by product
+router.get(
+  "/product/:productId", 
+  isAuthenticated, 
+  validate(productIdValidationRules()),
+  getInventoryByProduct
+);
+
+// Get inventory by stock status
+router.get(
+  "/status/:stockStatus", 
+  isAuthenticated, 
+  validate(stockStatusValidationRules()),
+  getInventoryByStockStatus
+);
+
+// Get low stock inventory
+router.get(
+  "/low-stock", 
+  isAuthenticated, 
+  getLowStockInventory
+);
+
+// Get out of stock inventory
+router.get(
+  "/out-of-stock", 
+  isAuthenticated, 
+  getOutOfStockInventory
+);
+
+// Search inventory
+router.get(
+  "/search", 
+  isAuthenticated, 
+  validate(searchValidationRules()),
+  searchInventory
+);
+
+// Create or update inventory
 router.post(
-  "/",
-  isAuthenticated,
-  validate(inventoryCreateValidationRules()),
-  createInventory
+  "/", 
+  isAuthenticated, 
+  validate(createInventoryValidationRules()),
+  createOrUpdateInventory
 );
+
+// Adjust inventory quantity
 router.put(
-  "/:inventory_Id",
-  isAuthenticated,
-  validate(inventory_IdValidationRules()),
-  validate(inventoryUpdateValidationRules()),
-  updateInventoryById
+  "/adjust", 
+  isAuthenticated, 
+  validate(adjustInventoryValidationRules()),
+  adjustInventory
 );
+
+// Transfer inventory between warehouses
+router.put(
+  "/transfer", 
+  isAuthenticated, 
+  validate(transferInventoryValidationRules()),
+  transferInventory
+);
+
+// Delete inventory by ID
 router.delete(
-  "/:inventory_Id",
-  isAuthenticated,
-  validate(inventory_IdValidationRules()),
-  deleteInventoryById
+  "/:inventory_Id", 
+  isAuthenticated, 
+  validate(inventoryIdValidationRules()),
+  deleteInventory
 );
+
+// Delete all inventory (dev/test only)
 router.delete("/", isAuthenticated, deleteAllInventory);
 
 module.exports = router;

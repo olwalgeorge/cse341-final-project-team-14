@@ -18,18 +18,25 @@ const supplierSchema = new Schema(
     contact: {
       phone: {
         type: String,
+        unique: true,
         validate: {
-          validator: function (v) {
-            return /^[0-9]{10,15}$/.test(v);
+          validator: async function (v) {
+            const supplier = await this.constructor.findOne({ "contact.phone": v });
+            return !supplier;
           },
-          message: "Please enter a valid phone number",
+          message: "Phone number already exists",
         },
       },
       email: {
         type: String,
         trim: true,
         lowercase: true,
-    
+        validate: {
+          validator: function(v) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+          },
+          message: "Please enter a valid email address"
+        }
       },
     },
     address: {
