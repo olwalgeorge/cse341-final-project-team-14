@@ -1,0 +1,9 @@
+### Health Check - Basic
+# @name healthCheck
+GET http://localhost:3000/health
+Accept: application/json
+
+### Health Check - Detailed Server Status
+# @name serverStatus
+GET http://localhost:3000/health/status
+Accept: application/json

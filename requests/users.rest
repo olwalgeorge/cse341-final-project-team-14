@@ -9,7 +9,7 @@ Content-Type: application/json
 {
   "fullName": "Tom Harry",
   "username": "tomharry",
-  "password": "TestPassword123!",
+  "password": "TestPasswor",
   "email": "tom.harry@example.com"
 }
 
@@ -66,7 +66,7 @@ Content-Type: application/json
 
 {
   "fullName": "Duplicate Username",
-  "username": "tomharry",  // Use an existing username
+  "username": "tomharry",  
   "password": "TestPassword123!",
   "email": "new.email@example.com"
 }
@@ -80,7 +80,7 @@ Content-Type: application/json
   "fullName": "Duplicate Email",
   "username": "uniqueuser",
   "password": "TestPassword123!",
-  "email": "tom.harry@example.com"  // Use an existing email
+  "email": "tom.harry@example.com"
 }
 
 ### Register User - Invalid Username Format
@@ -90,7 +90,7 @@ Content-Type: application/json
 
 {
   "fullName": "Bad Username",
-  "username": "123invalid",  // Username can't start with numbers
+  "username": "123invalid",
   "password": "TestPassword123!",
   "email": "bad.username@example.com"
 }

@@ -1,7 +1,7 @@
 const bcrypt = require("bcryptjs");
 const User = require("../models/user.model.js");
 const { createLogger } = require("../utils/logger.js");
-const logger = createLogger("auth.service");
+const logger = createLogger("AuthService");
 const { ValidationError, DatabaseError, AuthError } = require("../utils/errors.js");
 const { generateUserId } = require("../utils/user.utils.js");
 

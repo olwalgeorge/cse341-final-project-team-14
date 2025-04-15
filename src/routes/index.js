@@ -13,6 +13,7 @@ const inventoryTransactionRoutes = require("./inventoryTransactions.routes.js");
 const inventoryReturnRoutes = require("./inventoryReturns.routes");
 const inventoryAdjustmentRoutes = require("./inventoryAdjustments.routes");
 const inventoryTransferRoutes = require("./inventoryTransfers.routes");
+const healthRoutes = require("./health.routes");
 
 const path = require("path");
 
@@ -21,6 +22,9 @@ const router = express.Router();
 router.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../public/index.html"));
 });
+
+// Health check routes
+router.use("/health", healthRoutes);
 
 router.use("/auth", authRoutes);
 router.use("/users", userRoutes);

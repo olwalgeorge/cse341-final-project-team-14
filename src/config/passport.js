@@ -3,7 +3,7 @@ const LocalStrategy = require("../auth/local.auth");
 const GitHubStrategy = require("../auth/github");
 const User = require("../models/user.model");
 const { createLogger } = require("../utils/logger");
-const logger = createLogger("passport");
+const logger = createLogger("Passport");
 
 // Strategies
 passport.use(LocalStrategy);

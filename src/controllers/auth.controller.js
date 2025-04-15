@@ -5,7 +5,7 @@ const { registerService, authenticateUserService } = require("../services/auth.s
 const sendResponse = require("../utils/response");
 const { AuthError } = require("../utils/errors");
 const { createLogger} = require("../utils/logger");
-const logger = createLogger("auth.controller.js");
+const logger = createLogger("AuthController");
 
 /**
  * @desc    Register a new user
