@@ -2,7 +2,8 @@ const passport = require("passport");
 const LocalStrategy = require("../auth/local.auth");
 const GitHubStrategy = require("../auth/github");
 const User = require("../models/user.model");
-const logger = require("../utils/logger");
+const { createLogger } = require("../utils/logger");
+const logger = createLogger("passport");
 
 // Strategies
 passport.use(LocalStrategy);

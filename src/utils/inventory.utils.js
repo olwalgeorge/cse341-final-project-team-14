@@ -1,6 +1,7 @@
 // Description: Utility functions for inventory management, including transforming inventory data and generating unique inventory IDs.
 const Counter = require("../models/counter.model");
-const logger = require("./logger");
+const { createLogger} = require("./logger");
+const logger = createLogger("InventoryUtils");
 
 /**
  * Transform inventory data for API response

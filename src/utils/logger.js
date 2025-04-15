@@ -7,38 +7,55 @@ const fileFormat = winston.format.combine(
   }),
   winston.format.errors({ stack: true }),
   winston.format.splat(),
-  winston.format.printf(({ timestamp, level, message, stack, service }) => {
-    return `${timestamp} ${level.toUpperCase()} [${service}]: ${message} ${stack ? `\n${stack}` : ""}`;
+  winston.format.printf(({ timestamp, level, message, stack, service, module }) => {
+    return `${timestamp} ${level.toUpperCase()} [${service}${module ? `:${module}` : ''}]: ${message} ${stack ? `\n${stack}` : ""}`;
   })
 );
 
 const consoleFormat = winston.format.combine(
   winston.format.colorize(),
-  winston.format.simple()
+  winston.format.printf(({ level, message, module, service }) => {
+    return `${level} [${service}${module ? `:${module}` : ''}]: ${message}`;
+  })
 );
 
-const logger = winston.createLogger({
-  level: config.env === "production" ? "info" : "debug",
-  defaultMeta: { service: "inventory-api" },
-  transports: [
-    new winston.transports.File({
-      filename: "error.log",
-      level: "error",
-      format: fileFormat,
-    }),
-    new winston.transports.File({
-      filename: "combined.log",
-      format: fileFormat,
-    }),
-  ],
-});
+const createLogger = (moduleName = null) => {
+  const logger = winston.createLogger({
+    level: config.env === "production" ? "info" : "debug",
+    defaultMeta: { 
+      service: "inventory-api",
+      module: moduleName
+    },
+    transports: [
+      new winston.transports.File({
+        filename: "error.log",
+        level: "error",
+        format: fileFormat,
+      }),
+      new winston.transports.File({
+        filename: "combined.log",
+        format: fileFormat,
+      }),
+    ],
+  });
+  
+  // Add console transport to each logger instance in non-production environments
+  if (config.env !== "production") {
+    logger.add(
+      new winston.transports.Console({
+        format: consoleFormat,
+      })
+    );
+  }
+  
+  return logger;
+};
 
-if (config.env !== "production") {
-  logger.add(
-    new winston.transports.Console({
-      format: consoleFormat,
-    })
-  );
-}
+// Create the default logger instance
+const logger = createLogger();
 
-module.exports = logger;
+// Export both the default logger and the createLogger function
+module.exports = {
+  logger,
+  createLogger
+};

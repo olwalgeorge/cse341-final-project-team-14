@@ -1,7 +1,8 @@
 const Order = require("../models/order.model");
 const APIFeatures = require("../utils/apiFeatures.js");
 const { generateOrderId } = require("../utils/order.utils");
-const logger = require("../utils/logger.js");
+const { createLogger } = require("../utils/logger.js");
+const logger = createLogger('OrdersService');
 
 /**
  * Get all orders with optional filtering and pagination

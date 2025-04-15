@@ -1,6 +1,7 @@
 const sendResponse = require("../utils/response.js");
 const asyncHandler = require("express-async-handler");
-const logger = require("../utils/logger.js");
+const { createLogger } = require("../utils/logger.js");
+const logger = createLogger('PurchasesController');
 const { DatabaseError } = require("../utils/errors");
 const {
   getAllPurchasesService,

@@ -1,7 +1,8 @@
 // src/server.js
 const app = require("./app.js");
 const config = require("./config/config.js");
-const logger = require("./utils/logger.js");
+const { createLogger } = require("./utils/logger.js");
+const logger = createLogger('Server');
 
 /**
  * Starts the server on the configured port and logs the server status.

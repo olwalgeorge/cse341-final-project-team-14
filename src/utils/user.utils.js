@@ -2,7 +2,10 @@
 
 
 const Counter = require("../models/counter.model");
-const logger = require("./logger");
+const { createLogger } = require("./logger");
+
+// Create module-specific logger
+const logger = createLogger('UserUtils');
 
 
 /**

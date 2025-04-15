@@ -1,7 +1,10 @@
 // src/services/user.service.js
 const User = require("../models/user.model.js");
-const logger = require("../utils/logger.js");
+const { createLogger } = require("../utils/logger.js");
 const APIFeatures = require("../utils/apiFeatures.js");
+
+// Create module-specific logger
+const logger = createLogger('UsersService');
 
 const getUserByIdService = async (id) => {
   logger.debug(`getUserByIdService called with ID: ${id}`);

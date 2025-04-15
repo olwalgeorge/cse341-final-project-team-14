@@ -1,5 +1,6 @@
 const Counter = require("../models/counter.model");
-const logger = require("./logger");
+const { createLogger } = require("./logger");
+const logger = createLogger("InventoryTransactionUtils");
 
 /**
  * Generate a unique inventory transaction ID in the format IT-XXXXX

@@ -1,5 +1,6 @@
 const Counter = require("../models/counter.model");
-const logger = require("./logger");
+const { createLogger } = require("./logger");
+const logger = createLogger("InventoryAdjustmentUtils");
 
 /**
  * Generate a unique inventory adjustment ID in the format ADJ-XXXXX

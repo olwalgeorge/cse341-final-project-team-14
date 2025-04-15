@@ -19,6 +19,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
       const formData = new FormData(registerForm);
       const userData = Object.fromEntries(formData);
+      
+      // Client-side validation before sending to server
+      const validationError = validateRegistrationData(userData);
+      if (validationError) {
+        showError(validationError);
+        return;
+      }
 
       try {
         const response = await fetch("/auth/register", {
@@ -34,13 +41,65 @@ document.addEventListener("DOMContentLoaded", function () {
           window.location.href = "/dashboard.html";
         } else {
           const data = await response.json();
-          showError(data.message || "Registration failed.");
+          
+          // Enhanced error handling for various response formats
+          if (data.error && Array.isArray(data.error)) {
+            // Handle array of errors
+            showError(data.error[0]);
+          } else if (data.details && data.details.field) {
+            // Handle field-specific error
+            showError(`${data.details.field}: ${data.message}`);
+          } else {
+            // Handle general error message
+            showError(data.message || "Registration failed.");
+          }
         }
       } catch (error) {
         console.error("Registration error:", error);
         showError("Registration failed. Please try again.");
       }
     });
+  }
+
+  // Function to validate registration data client-side
+  function validateRegistrationData(userData) {
+    // Check for missing required fields
+    if (!userData.email || !userData.password || !userData.username || !userData.fullName) {
+      return "All fields are required";
+    }
+    
+    // Email format validation
+    const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if (!emailRegex.test(userData.email)) {
+      return "Please enter a valid email address";
+    }
+    
+    // Username format validation
+    if (/^\d/.test(userData.username)) {
+      return "Username cannot start with a number";
+    }
+    
+    const usernameRegex = /^[a-zA-Z0-9_]+$/;
+    if (!usernameRegex.test(userData.username)) {
+      return "Username can only contain letters, numbers, and underscores";
+    }
+    
+    if (userData.username.length < 3 || userData.username.length > 20) {
+      return "Username must be between 3 and 20 characters";
+    }
+    
+    // Password complexity validation
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,50}$/;
+    if (!passwordRegex.test(userData.password)) {
+      return "Password must contain at least one lowercase letter, one uppercase letter, one number, one special character, and be 8-50 characters long";
+    }
+    
+    // Full name validation
+    if (userData.fullName.length < 2 || userData.fullName.length > 100) {
+      return "Full name must be between 2 and 100 characters";
+    }
+    
+    return null; // No validation errors
   }
 
   // Handle GitHub OAuth redirect

@@ -1,16 +1,98 @@
 @baseUrl = http://localhost:3000
 @token = {{login.response.body.token}}
 
-### Register User
+### Register User - Successful registration
 # @name register
 POST {{baseUrl}}/auth/register
 Content-Type: application/json
 
 {
-  "fullName": "Steve Otieno",
-  "username": "steveotieno",
+  "fullName": "Tom Harry",
+  "username": "tomharry",
   "password": "TestPassword123!",
-  "email": "steve.otieno@example.com" 
+  "email": "tom.harry@example.com"
+}
+
+### Register User - Missing Required Fields
+# Test error handling for missing required fields
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "username": "missingfields",
+  "password": "TestPassword123!"
+  // Missing email and fullName
+}
+
+### Register User - Invalid Email Format
+# Test error handling for invalid email format
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "fullName": "Invalid Email User",
+  "username": "invalidemail",
+  "password": "TestPassword123!",
+  "email": "not-an-email"
+}
+
+### Register User - Multiple Validation Errors
+# Test handling of multiple validation errors simultaneously
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "username": "123badusername",
+  "password": "weak",
+  "email": "not-valid-email"
+}
+
+### Register User - Weak Password
+# Test error handling for password that doesn't meet complexity requirements
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "fullName": "Weak Password User",
+  "username": "weakpassword",
+  "password": "weak",
+  "email": "weak.password@example.com"
+}
+
+### Register User - Username Already Exists
+# Test error handling for duplicate username
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "fullName": "Duplicate Username",
+  "username": "tomharry",  // Use an existing username
+  "password": "TestPassword123!",
+  "email": "new.email@example.com"
+}
+
+### Register User - Email Already Exists
+# Test error handling for duplicate email
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "fullName": "Duplicate Email",
+  "username": "uniqueuser",
+  "password": "TestPassword123!",
+  "email": "tom.harry@example.com"  // Use an existing email
+}
+
+### Register User - Invalid Username Format
+# Test error handling for username that doesn't meet format requirements
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "fullName": "Bad Username",
+  "username": "123invalid",  // Username can't start with numbers
+  "password": "TestPassword123!",
+  "email": "bad.username@example.com"
 }
 
 ### Login User

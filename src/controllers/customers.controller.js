@@ -1,6 +1,6 @@
 const sendResponse = require("../utils/response.js");
 const asyncHandler = require("express-async-handler");
-const logger = require("../utils/logger.js");
+const { createLogger } = require("../utils/logger.js");
 const { ValidationError, DatabaseError } = require("../utils/errors.js");
 const {
   getAllCustomersService,
@@ -14,6 +14,9 @@ const {
   deleteAllCustomersService,
 } = require("../services/customers.service.js");
 const { transformCustomer } = require("../utils/customer.utils.js");
+
+// Create module-specific logger
+const logger = createLogger('CustomersController');
 
 /**
  * @desc    Get all customers

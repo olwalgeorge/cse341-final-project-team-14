@@ -1,6 +1,8 @@
 const InventoryReturn = require("../models/return.model");
-const logger = require("../utils/logger");
-const APIFeatures = require("../utils/apiFeatures.js");
+const { createLogger } = require("../utils/logger");
+const APIFeatures = require("../utils/apiFeatures");
+
+const logger = createLogger("InventoryReturnsService");
 const { generateReturnId } = require("../utils/inventoryReturn.utils.js");
 
 /**

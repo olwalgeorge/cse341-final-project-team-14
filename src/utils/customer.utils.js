@@ -1,5 +1,6 @@
 const Counter = require("../models/counter.model");
-const logger = require("./logger");
+const { createLogger} = require("./logger");
+const logger = createLogger("CustomerUtils");
 
 /**
  * Generate a unique customer ID in the format CUST-XXXXX

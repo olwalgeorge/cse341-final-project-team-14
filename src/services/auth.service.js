@@ -1,6 +1,7 @@
 const bcrypt = require("bcryptjs");
 const User = require("../models/user.model.js");
-const logger = require("../utils/logger.js");
+const { createLogger } = require("../utils/logger.js");
+const logger = createLogger("auth.service");
 const { ValidationError, DatabaseError, AuthError } = require("../utils/errors.js");
 const { generateUserId } = require("../utils/user.utils.js");
 
@@ -40,11 +41,62 @@ const _createUser = async (userData) => {
       const field = Object.keys(error.keyPattern)[0];
       const value = error.keyValue[field];
       
-      throw new DatabaseError.duplicate('User', field, value);
+      throw new DatabaseError(
+        'duplicate',
+        'User',
+        `A user with this ${field} already exists: ${value}`,
+        'DUPLICATE'
+      );
     }
     
     throw error;
   }
+};
+
+/**
+ * Validate user registration data before database operations
+ * @param {Object} userData - User data to validate
+ * @returns {Array|null} Array of validation errors or null if valid
+ */
+const _validateRegistrationData = (userData) => {
+  const validationErrors = [];
+  
+  // Check for required fields
+  if (!userData.email) validationErrors.push({ field: 'email', message: 'Email is required' });
+  if (!userData.password) validationErrors.push({ field: 'password', message: 'Password is required' });
+  if (!userData.username) validationErrors.push({ field: 'username', message: 'Username is required' });
+  if (!userData.fullName) validationErrors.push({ field: 'fullName', message: 'Full name is required' });
+  
+  // Email format validation
+  if (userData.email && !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(userData.email)) {
+    validationErrors.push({ field: 'email', value: userData.email, message: 'Invalid email format' });
+  }
+  
+  // Password strength validation
+  if (userData.password && !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,50}$/.test(userData.password)) {
+    validationErrors.push({ 
+      field: 'password', 
+      message: 'Password must contain at least one lowercase letter, one uppercase letter, one number, one special character, and be 8-50 characters long' 
+    });
+  }
+  
+  // Username format validation
+  if (userData.username) {
+    if (/^\d/.test(userData.username)) {
+      validationErrors.push({ field: 'username', value: userData.username, message: 'Username cannot start with a number' });
+    } else if (!/^[a-zA-Z0-9_]+$/.test(userData.username)) {
+      validationErrors.push({ field: 'username', value: userData.username, message: 'Username can only contain letters, numbers, and underscores' });
+    } else if (userData.username.length < 3 || userData.username.length > 20) {
+      validationErrors.push({ field: 'username', value: userData.username, message: 'Username must be between 3 and 20 characters' });
+    }
+  }
+  
+  // Full name validation
+  if (userData.fullName && (userData.fullName.length < 2 || userData.fullName.length > 100)) {
+    validationErrors.push({ field: 'fullName', value: userData.fullName, message: 'Full name must be between 2 and 100 characters' });
+  }
+  
+  return validationErrors.length > 0 ? validationErrors : null;
 };
 
 /**
@@ -56,9 +108,18 @@ const registerService = async (userData) => {
   logger.debug("registerService called with data:", userData);
   
   try {
+    // Perform pre-database validation checks
+    const validationErrors = _validateRegistrationData(userData);
+    if (validationErrors) {
+      logger.debug(`Validation errors found during registration: ${JSON.stringify(validationErrors)}`);
+      throw ValidationError.withErrors(validationErrors);
+    }
+    
     // Check if user already exists
     const { email, username } = userData;
     const normalizedEmail = email.toLowerCase();
+    
+    // First check if either email or username exists - using one query for efficiency
     const existingUser = await User.findOne({
       $or: [{ email: normalizedEmail }, { username }],
     });

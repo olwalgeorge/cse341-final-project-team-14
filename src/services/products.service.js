@@ -1,6 +1,7 @@
 const Product = require("../models/product.model");
-const logger = require("../utils/logger");
+const { createLogger } = require("../utils/logger");
 const APIFeatures = require("../utils/apiFeatures.js");
+const logger = createLogger("ProductsService");
 const { ValidationError } = require("../utils/errors.js");
 const { generateProductId } = require("../utils/product.utils.js");
 

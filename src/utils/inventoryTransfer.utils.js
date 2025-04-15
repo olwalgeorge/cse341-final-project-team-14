@@ -1,5 +1,6 @@
 const Counter = require("../models/counter.model");
-const logger = require("./logger");
+const { createLogger } = require("./logger");
+const logger = createLogger("InventoryTransferUtils");
 
 /**
  * Generate a unique inventory transfer ID in the format TF-XXXXX

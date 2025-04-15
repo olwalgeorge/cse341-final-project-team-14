@@ -1,8 +1,9 @@
 // src/middlewares/auth.middleware.js
 
-const logger = require('../utils/logger');
+const {createLogger} = require('../utils/logger');
 // Fix: Import AuthError from the unified errors.js file instead of a separate file
 const { AuthError } = require('../utils/errors');
+const logger = createLogger("auth.middleware.js");
 
 const isAuthenticated = (req, res, next) => {
   logger.debug("Auth check:", {

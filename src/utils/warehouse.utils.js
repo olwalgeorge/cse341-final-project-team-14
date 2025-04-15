@@ -1,6 +1,7 @@
 
 const Counter = require("../models/counter.model");
-const logger = require("./logger");
+const { createLogger } = require("./logger");
+const logger = createLogger("WarehouseUtils");
 
 /**
  * Transform warehouse document to API response format

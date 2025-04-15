@@ -2,8 +2,11 @@
 const GitHubStrategy = require("passport-github2").Strategy;
 const config = require("../config/config");
 const User = require("../models/user.model");
-const logger = require("../utils/logger");
+const { createLogger } = require("../utils/logger");
 const { generateuserID } = require("../utils/user.utils");
+
+// Create module-specific logger
+const logger = createLogger('GitHubAuth');
 
 const githubStrategy = new GitHubStrategy(
   {

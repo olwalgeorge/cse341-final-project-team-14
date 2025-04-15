@@ -1,6 +1,6 @@
 const sendResponse = require("../utils/response.js");
 const asyncHandler = require("express-async-handler");
-const logger = require("../utils/logger.js");
+const { createLogger } = require("../utils/logger.js");
 const { ValidationError, DatabaseError } = require("../utils/errors");
 const {
   getAllOrdersService,
@@ -18,6 +18,7 @@ const {
   deleteAllOrdersService,
 } = require("../services/orders.service");
 const { transformOrder } = require("../utils/order.utils");
+const logger = createLogger("ordersController");
 
 /**
  * @desc    Get all orders

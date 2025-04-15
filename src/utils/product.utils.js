@@ -1,5 +1,6 @@
 const Counter = require("../models/counter.model");
-const logger = require("../utils/logger.js");
+const { createLogger } = require("../utils/logger.js");
+const logger = createLogger("ProductUtils");
 
 /**
  * Transform product data for API response

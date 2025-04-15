@@ -1,6 +1,6 @@
 const sendResponse = require("../utils/response.js");
 const asyncHandler = require("express-async-handler");
-const logger = require("../utils/logger.js");
+const { createLogger } = require("../utils/logger.js");
 const { ValidationError, DatabaseError } = require("../utils/errors");
 const {
   getAllInventoryTransfersService,
@@ -18,7 +18,7 @@ const {
   deleteAllInventoryTransfersService
 } = require("../services/inventoryTransfers.service");
 const { transformInventoryTransfer, generateTransferId } = require("../utils/inventoryTransfer.utils");
-
+const logger = createLogger("inventorTransfersController");
 /**
  * @desc    Get all inventory transfers
  * @route   GET /inventory-transfers

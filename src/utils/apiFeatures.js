@@ -6,7 +6,8 @@
  * for use across all service modules
  */
 
-const logger = require('./logger');
+const { createLogger } = require('./logger');
+const logger = createLogger('APIFeatures');
 
 class APIFeatures {
   /**

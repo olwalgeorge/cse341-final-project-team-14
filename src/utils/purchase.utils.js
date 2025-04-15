@@ -1,5 +1,6 @@
 const Counter = require("../models/counter.model");
-const logger = require("./logger");
+const { createLogger } = require("./logger");
+const logger = createLogger("PurchaseUtils");
 
 /**
  * Generate a unique purchase ID in the format PU-XXXXX

@@ -1,5 +1,6 @@
 const Inventory = require("../models/inventory.model");
-const logger = require("../utils/logger");
+const { createLogger } = require("../utils/logger");
+const logger = createLogger("InventoryService");
 const APIFeatures = require("../utils/apiFeatures");
 const { generateInventoryId } = require("../utils/inventory.utils");
 

@@ -1,6 +1,6 @@
 const sendResponse = require("../utils/response.js");
 const asyncHandler = require("express-async-handler");
-const logger = require("../utils/logger.js");
+const { createLogger } = require("../utils/logger.js");
 const { ValidationError, DatabaseError } = require("../utils/errors.js");
 const {
   getAllProductsService,
@@ -15,6 +15,9 @@ const {
   deleteAllProductsService,
 } = require("../services/products.service.js");
 const { transformProduct } = require("../utils/product.utils.js");
+
+// Create module-specific logger
+const logger = createLogger('ProductsController');
 
 /**
  * @desc    Get all products

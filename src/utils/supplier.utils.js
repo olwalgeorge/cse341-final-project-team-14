@@ -1,5 +1,6 @@
 const Counter = require("../models/counter.model");
-const logger = require("./logger");
+const { createLogger } = require("./logger");
+const logger = createLogger("SupplierUtils");
 
 /**
  * Generate a unique supplier ID in the format SUP-XXXXX

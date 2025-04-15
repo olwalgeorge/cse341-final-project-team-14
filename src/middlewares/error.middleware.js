@@ -1,4 +1,5 @@
-const logger = require('../utils/logger');
+const { createLogger } = require('../utils/logger');
+const logger = createLogger('error.middleware');
 const { ValidationError, DatabaseError, AuthError, ApiError } = require('../utils/errors');
 const mongoose = require('mongoose');
 

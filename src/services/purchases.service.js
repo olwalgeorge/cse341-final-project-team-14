@@ -3,7 +3,8 @@ const Product = require("../models/product.model.js");
 const inventoryTransactionManager = require("../managers/inventoryTransaction.manager.js");
 const APIFeatures = require("../utils/apiFeatures");
 const { generatePurchaseId } = require("../utils/purchase.utils.js");
-const logger = require("../utils/logger.js");
+const { createLogger } = require("../utils/logger");
+const logger = createLogger("PurchasesService");
 
 /**
  * Get all purchases with filtering, pagination and sorting

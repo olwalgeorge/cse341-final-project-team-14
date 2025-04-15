@@ -1,6 +1,8 @@
 const Customer = require("../models/customer.model");
-const logger = require("../utils/logger");
-const APIFeatures = require("../utils/apiFeatures.js");
+const { createLogger } = require("../utils/logger");
+const APIFeatures = require("../utils/apiFeatures");
+
+const logger = createLogger("CustomersService");
 const { generateCustomerId } = require("../utils/customer.utils.js");
 
 /**

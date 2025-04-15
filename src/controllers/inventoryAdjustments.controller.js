@@ -1,6 +1,6 @@
 const sendResponse = require("../utils/response.js");
 const asyncHandler = require("express-async-handler");
-const logger = require("../utils/logger.js");
+const { createLogger } = require("../utils/logger.js");
 const mongoose = require("mongoose");
 const { ValidationError, DatabaseError } = require("../utils/errors");
 const {
@@ -20,6 +20,7 @@ const {
   deleteAllAdjustmentsService,
 } = require("../services/inventoryAdjustments.service");
 const { transformInventoryAdjustment } = require("../utils/inventoryAdjustment.utils");
+const logger = createLogger("InventoryAdjustmentsController");
 
 /**
  * @desc    Get all inventory adjustments

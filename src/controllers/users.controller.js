@@ -1,7 +1,7 @@
 const sendResponse = require("../utils/response.js");
 const asyncHandler = require("express-async-handler");
-const logger = require("../utils/logger.js");
-const { ApiError, DatabaseError } = require("../utils/errors");
+const { createLogger } = require("../utils/logger.js");
+const { ApiError, DatabaseError } = require("../utils/errors.js");
 const {
   getUserByIdService,
   getUserByUserIdService,
@@ -13,8 +13,11 @@ const {
   deleteAllUsersService,
   updateUserService,
   searchUsersService,
-} = require("../services/users.service");
+} = require("../services/users.service.js");
 const { transformUser, transformUserData } = require("../utils/user.utils.js");
+
+// Create module-specific logger
+const logger = createLogger('UsersController');
 
 /**
  * @desc    Get current user profile

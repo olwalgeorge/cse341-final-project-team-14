@@ -2,7 +2,8 @@ const InventoryAdjustment = require("../models/adjustment.model.js");
 const { generateAdjustmentId } = require("../utils/inventoryAdjustment.utils.js");
 const inventoryTransactionManager = require("../managers/inventoryTransaction.manager.js");
 const APIFeatures = require("../utils/apiFeatures.js");
-const logger = require("../utils/logger.js");
+const { createLogger } = require("../utils/logger.js");
+const logger = createLogger("InventoryAdjustmentsService");
 
 /**
  * Get all inventory adjustments with optional filtering and pagination

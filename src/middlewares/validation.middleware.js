@@ -1,7 +1,8 @@
 // src/middlewares/validation.middleware.js
 
 const { validationResult } = require("express-validator");
-const logger = require("../utils/logger.js");
+const { createLogger } = require("../utils/logger");
+const logger = createLogger("validation.middleware");
 const { ValidationError } = require("../utils/errors");
 
 const validate = (validations) => {

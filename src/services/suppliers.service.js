@@ -1,6 +1,7 @@
 const Supplier = require("../models/supplier.model");
-const logger = require("../utils/logger");
+const { createLogger } = require("../utils/logger");
 const APIFeatures = require("../utils/apiFeatures.js");
+const logger = createLogger("SuppliersService");
 const { generateSupplierId } = require("../utils/supplier.utils.js");
 
 /**

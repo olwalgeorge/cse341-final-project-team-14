@@ -3,7 +3,8 @@ const Inventory = require("../models/inventory.model.js");
 const { generateTransferId } = require("../utils/inventoryTransfer.utils.js");
 const inventoryTransactionManager = require("../managers/inventoryTransaction.manager.js");
 const APIFeatures = require("../utils/apiFeatures.js");
-const logger = require("../utils/logger.js");
+const { createLogger } = require("../utils/logger.js");
+const logger = createLogger("InventoryTransfersService");
 
 /**
  * Get all inventory transfers with optional filtering and pagination

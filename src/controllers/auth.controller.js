@@ -4,7 +4,8 @@ const asyncHandler = require("express-async-handler");
 const { registerService, authenticateUserService } = require("../services/auth.service.js");
 const sendResponse = require("../utils/response");
 const { AuthError } = require("../utils/errors");
-const logger = require("../utils/logger");
+const { createLogger} = require("../utils/logger");
+const logger = createLogger("auth.controller.js");
 
 /**
  * @desc    Register a new user

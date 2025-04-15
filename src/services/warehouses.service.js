@@ -1,5 +1,6 @@
 const Warehouse = require("../models/warehouse.model");
-const logger = require("../utils/logger");
+const { createLogger } = require("../utils/logger");
+const logger = createLogger("WarehouseService");
 const APIFeatures = require("../utils/apiFeatures.js");
 const { generateWarehouseId } = require("../utils/warehouse.utils.js");
 

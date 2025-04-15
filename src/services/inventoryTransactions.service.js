@@ -2,7 +2,8 @@ const InventoryTransaction = require("../models/transaction.model.js");
 const Inventory = require("../models/inventory.model.js");
 const { generateTransactionId } = require("../utils/inventoryTransaction.utils.js");
 const APIFeatures = require("../utils/apiFeatures.js");
-const logger = require("../utils/logger.js");
+const { createLogger } = require("../utils/logger");
+const logger = createLogger("InventoryTransactionsService");
 
 /**
  * Get all inventory transactions with optional filtering and pagination
