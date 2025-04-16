@@ -4,73 +4,143 @@ const { db } = require("../config/config.js");
 const { createLogger } = require("../utils/logger.js");
 const logger = createLogger("Database");
 
-// Mongoose connection options with improved resilience
-const mongooseOptions = {
-  serverSelectionTimeoutMS: 5000, // Timeout for server selection
-  socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
-  family: 4, // Use IPv4, skip trying IPv6
-  maxPoolSize: 10, // Maintain up to 10 socket connections
-  autoIndex: false, // Don't build indexes in production
-  retryWrites: true, // Retry failed writes
-};
-
 /**
- * Connect to MongoDB with improved error handling
+ * Singleton database connection manager
  */
-const connectDB = async () => {
-  try {
-    // Connect to MongoDB with better options
-    const conn = await mongoose.connect(db.uri, mongooseOptions);
-    logger.info(`MongoDB Connected: ${conn.connection.host}`);
-    
-    // Set up connection event handlers
+class DatabaseManager {
+  constructor() {
+    this.isConnected = false;
+    this.isShuttingDown = false;
+    this.connectionPromise = null;
+
+    // Mongoose connection options with improved resilience
+    this.connectionOptions = {
+      serverSelectionTimeoutMS: 5000, // Timeout for server selection
+      socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
+      family: 4, // Use IPv4, skip trying IPv6
+      maxPoolSize: 10, // Maintain up to 10 socket connections
+      autoIndex: process.env.NODE_ENV !== 'production', // Only build indexes in development
+      retryWrites: true, // Retry failed writes
+    };
+  }
+
+  /**
+   * Connect to MongoDB with improved error handling
+   * @returns {Promise<mongoose.Connection>} Mongoose connection
+   */
+  async connect() {
+    if (this.isShuttingDown) {
+      logger.warn("Connection attempt during shutdown - ignoring");
+      return null;
+    }
+
+    // If we already have a connection or are in the process of connecting, return it
+    if (this.connectionPromise) {
+      return this.connectionPromise;
+    }
+
+    // Create a new connection promise
+    this.connectionPromise = (async () => {
+      try {
+        // Connect to MongoDB with better options
+        const conn = await mongoose.connect(db.uri, this.connectionOptions);
+        logger.info(`MongoDB Connected: ${conn.connection.host}`);
+        this.isConnected = true;
+        
+        // Set up connection event handlers
+        this._setupEventHandlers();
+        
+        return conn;
+      } catch (err) {
+        logger.error("MongoDB connection error:", err);
+        this.connectionPromise = null;
+        
+        if (process.env.NODE_ENV === 'production') {
+          // In production, retry connection rather than crashing
+          logger.info('Retrying connection in 5 seconds...');
+          setTimeout(() => this.connect(), 5000);
+          return null;
+        } else {
+          // In development, throw the error to make it obvious
+          throw err;
+        }
+      }
+    })();
+
+    return this.connectionPromise;
+  }
+
+  /**
+   * Set up MongoDB connection event handlers
+   * @private
+   */
+  _setupEventHandlers() {
     mongoose.connection.on('error', (err) => {
-      logger.error('MongoDB connection error:', err);
-      // Don't exit process, let reconnection handle it
+      if (!this.isShuttingDown) {
+        logger.error('MongoDB connection error:', err);
+      }
     });
     
     mongoose.connection.on('disconnected', () => {
-      logger.warn('MongoDB disconnected. Attempting to reconnect...');
+      this.isConnected = false;
+      
+      if (!this.isShuttingDown) {
+        logger.warn('MongoDB disconnected. Attempting to reconnect...');
+      }
     });
     
     mongoose.connection.on('reconnected', () => {
+      this.isConnected = true;
       logger.info('MongoDB reconnected successfully');
     });
-    
-    // Handle application termination
-    process.on('SIGINT', async () => {
-      await closeConnection('SIGINT signal');
-    });
-    
-    return conn;
-  } catch (err) {
-    logger.error("MongoDB connection error:", err);
-    
-    // Don't immediately exit on connection errors in production
-    if (process.env.NODE_ENV === 'production') {
-      logger.info('Retrying connection in 5 seconds...');
-      setTimeout(connectDB, 5000); // Try to reconnect after 5 seconds
-    } else {
-      // In development, exit to make the error obvious
-      process.exit(1);
+  }
+
+  /**
+   * Close the MongoDB connection gracefully
+   * @param {string} source - What triggered the close (for logging)
+   * @returns {Promise<void>}
+   */
+  async close(source) {
+    // Prevent duplicate close operations
+    if (this.isShuttingDown) {
+      logger.debug(`Already closing connection, ignoring duplicate request from ${source}`);
+      return Promise.resolve();
     }
-  }
-};
+    
+    this.isShuttingDown = true;
 
-/**
- * Close the MongoDB connection gracefully
- * @param {string} source - What triggered the close (for logging)
- * @returns {Promise<void>}
- */
-const closeConnection = async (source) => {
-  try {
+    // If no connection has been established yet, return immediately
+    if (!mongoose.connection || mongoose.connection.readyState === 0) {
+      logger.info('No active MongoDB connection to close');
+      return Promise.resolve();
+    }
+
     logger.info(`Closing MongoDB connection due to ${source}`);
-    await mongoose.connection.close(false); // false = don't force close
-    logger.info('MongoDB connection closed successfully');
-  } catch (err) {
-    logger.error('Error closing MongoDB connection:', err);
-    // Don't throw, just log the error
+    
+    // Return a promise that resolves when the connection is closed
+    return new Promise((resolve, reject) => {
+      mongoose.connection.close(false) // false = don't force close
+        .then(() => {
+          logger.info('MongoDB connection closed successfully');
+          this.isConnected = false;
+          this.connectionPromise = null;
+          resolve();
+        })
+        .catch((err) => {
+          logger.error('Error closing MongoDB connection:', err);
+          this.connectionPromise = null;
+          // Even if there's an error, we consider the connection closed
+          // This prevents hanging on connection errors during shutdown
+          resolve();
+        });
+    });
   }
-};
+}
 
-module.exports = { connectDB, closeConnection };
+// Create singleton instance
+const dbManager = new DatabaseManager();
+
+module.exports = {
+  connectDB: () => dbManager.connect(),
+  closeConnection: (source) => dbManager.close(source)
+};
