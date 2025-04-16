@@ -4,7 +4,8 @@ const asyncHandler = require("express-async-handler");
 const { registerService, authenticateUserService } = require("../services/auth.service.js");
 const sendResponse = require("../utils/response");
 const { AuthError } = require("../utils/errors");
-const { createLogger} = require("../utils/logger");
+const { createLogger } = require("../utils/logger");
+const { generateToken } = require('../auth/jwt');
 const logger = createLogger("AuthController");
 
 /**
@@ -43,7 +44,7 @@ const register = asyncHandler(async (req, res, next) => {
 });
 
 /**
- * @desc    Login a user
+ * @desc    Login a user and generate JWT
  * @route   POST /auth/login
  * @access  Public
  */
@@ -54,19 +55,60 @@ const login = asyncHandler(async (req, res, next) => {
     // Authenticate directly using the service
     const user = await authenticateUserService(req.body.email, req.body.password);
     
-    // Log in the user with passport session
-    req.login(user, (loginErr) => {
-      if (loginErr) {
-        logger.error('Session login error:', loginErr);
-        return next(AuthError.loginError('Could not create login session'));
+    // Generate a token after successful validation
+    const token = generateToken(user);
+
+    // Return both token and user data
+    return res.status(200).json({
+      success: true,
+      message: 'Login successful',
+      data: {
+        token,
+        user: {
+          _id: user._id,
+          userID: user.userID,
+          username: user.username,
+          email: user.email,
+          role: user.role,
+          fullName: user.fullName
+        }
       }
-      
-      // Login successful, send response
-      return loginSuccess(req, res, next);
     });
   } catch (error) {
     logger.error("Error in login controller:", error);
     next(error);
+  }
+});
+
+/**
+ * @desc    Get JWT token for already authenticated user (via passport)
+ * @route   GET /auth/token
+ * @access  Private
+ */
+const getToken = asyncHandler(async (req, res) => {
+  try {
+    if (!req.user) {
+      return res.status(401).json({
+        success: false,
+        message: 'Not authenticated',
+        error: 'User must be logged in'
+      });
+    }
+
+    const token = generateToken(req.user);
+    
+    return res.status(200).json({
+      success: true,
+      message: 'Token generated successfully',
+      data: { token }
+    });
+  } catch (error) {
+    logger.error('Token generation error:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Failed to generate token',
+      error: error.message
+    });
   }
 });
 
@@ -114,6 +156,7 @@ const logout = (req, res, next) => {
 module.exports = {
   register,
   login,
+  getToken,
   loginSuccess,
   logout,
 };

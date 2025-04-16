@@ -6,6 +6,7 @@ const {
   register,
   login,
   logout,
+  getToken
 } = require("../controllers/auth.controller");
 const validate = require("../middlewares/validation.middleware");
 const {
@@ -25,6 +26,9 @@ router.post("/login", validate(loginValidationRules()), login);
 
 // Logout route
 router.post("/logout", isAuthenticated, logout);
+
+// Get JWT token (for authenticated users via OAuth)
+router.get("/token", isAuthenticated, getToken);
 
 // GitHub OAuth routes
 // GitHub authentication routes

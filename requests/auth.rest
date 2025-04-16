@@ -1,0 +1,70 @@
+### Environment Variables
+@baseUrl = http://localhost:3000
+@authToken = YOUR_JWT_TOKEN_HERE
+
+### Register a new user
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  
+  "username": "testuser",
+  "email": "test@example.com",
+  "password": "Password123!",
+  "fullName": "Test User"
+}
+
+### Login with username and password
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "Password123!"
+}
+
+### Get JWT token (for OAuth authenticated users)
+GET {{baseUrl}}/auth/token
+Authorization: Bearer {{authToken}}
+
+### Logout (invalidate token)
+POST {{baseUrl}}/auth/logout
+Authorization: Bearer {{authToken}}
+
+### GitHub OAuth authentication (opens browser)
+# GET {{baseUrl}}/auth/github
+
+### GitHub OAuth callback URL
+# This is handled by the server - just for documentation
+# GET {{baseUrl}}/auth/github/callback
+
+### Verify token validity
+GET {{baseUrl}}/auth/verify
+Authorization: Bearer {{authToken}}
+
+### Refresh token (if implemented)
+POST {{baseUrl}}/auth/refresh-token
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "refreshToken": "your_refresh_token_here"
+}
+
+### Password reset request
+POST {{baseUrl}}/auth/forgot-password
+Content-Type: application/json
+
+{
+  "email": "test@example.com"
+}
+
+### Password reset with token
+POST {{baseUrl}}/auth/reset-password
+Content-Type: application/json
+
+{
+  "token": "password_reset_token_here",
+  "password": "NewPassword456!",
+  "confirmPassword": "NewPassword456!"
+}
