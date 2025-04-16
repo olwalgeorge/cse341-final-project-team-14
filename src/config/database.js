@@ -129,8 +129,7 @@ class DatabaseManager {
         .catch((err) => {
           logger.error('Error closing MongoDB connection:', err);
           this.connectionPromise = null;
-          // Even if there's an error, we consider the connection closed
-          // This prevents hanging on connection errors during shutdown
+          reject(err);
           resolve();
         });
     });

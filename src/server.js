@@ -161,11 +161,7 @@ class ServerManager {
   exitProcess(code) {
     // Use a longer delay to ensure logs are completely flushed
     // This is particularly important for Winston or other async loggers
-    setTimeout(() => {
-      // Add empty line for cleaner terminal output (especially in Windows)
-      if (process.stdout.isTTY) {
-        process.stdout.write('\n');
-      }
+    setTimeout(() => {   
       
       // Forcibly exit process
       process.exit(code);
