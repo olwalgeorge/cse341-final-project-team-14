@@ -10,6 +10,7 @@ const swaggerConfig = require("./config/swagger.js");
 const passport = require("./config/passport.js");
 const session = require("./config/session.js");
 const { createLogger } = require("./utils/logger.js");
+const config = require("./config/config.js");
 
 // Create module-specific logger
 const logger = createLogger('App');
@@ -20,14 +21,7 @@ const app = express();
 app.use(globalLimiter);
 
 // Middleware
-app.use(
-  cors({
-    origin: true, // Replace with your frontend URL in production
-    credentials: true, // Allow credentials (cookies)
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  })
-);
+app.use(cors(config.cors));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -64,7 +58,7 @@ app.use(
   swaggerUi.setup(swaggerConfig, {
     explorer: true,
     customCss: ".swagger-ui .topbar { display: none }",
-    customSiteTitle: "Inventory API Documentation",
+    customSiteTitle: `Inventory API Documentation - ${config.env.toUpperCase()} Environment`,
   })
 );
 

@@ -29,14 +29,8 @@ const swaggerConfig = {
   },
   servers: [
     {
-      url:
-        config.env === "production"
-          ? "https://cse341-final-project-team-14.onrender.com"
-          : "http://localhost:3000",
-      description:
-        config.env === "production"
-          ? "Production server"
-          : "Development server",
+      url: config.swagger.server,
+      description: `${config.env.charAt(0).toUpperCase() + config.env.slice(1)} server`,
     },
   ],
   tags: [

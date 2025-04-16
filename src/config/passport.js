@@ -1,35 +1,41 @@
 const passport = require("passport");
-const LocalStrategy = require("../auth/local.auth");
-const GitHubStrategy = require("../auth/github");
 const User = require("../models/user.model");
 const { createLogger } = require("../utils/logger");
-const logger = createLogger("Passport");
+const { validateEnvironment, getFeatureStatus } = require("../validators/envValidator");
 
-// Strategies
-passport.use(LocalStrategy);
-passport.use(GitHubStrategy);
+const logger = createLogger('Passport');
 
+// Initialize passport with user serialization/deserialization
 passport.serializeUser((user, done) => {
-  // Log the user ID being serialized for debugging
-  logger.debug(`Serializing user: ${user.id}`);
-  done(null, user.id);
+  done(null, user._id);
 });
 
 passport.deserializeUser(async (id, done) => {
   try {
     const user = await User.findById(id);
-    if (!user) {
-      logger.warn(`Failed to deserialize user: User with ID ${id} not found`);
-      return done(null, false);
-    }
-    
-    // Log successful deserialization
-    logger.debug(`Deserialized user: ${user.username} (${user.id})`);
     done(null, user);
   } catch (error) {
-    logger.error(`Error deserializing user with ID ${id}:`, error);
     done(error);
   }
 });
+
+// Check which authentication strategies are available
+const validationResult = validateEnvironment();
+const features = getFeatureStatus(validationResult);
+
+// Conditionally initialize GitHub strategy
+if (features.githubOAuth) {
+  try {
+    const githubStrategy = require("../auth/github");
+    passport.use(githubStrategy);
+    logger.info('GitHub authentication strategy initialized successfully');
+  } catch (error) {
+    logger.warn(`GitHub authentication strategy could not be initialized: ${error.message}`);
+    logger.debug(error.stack);
+  }
+} else {
+  logger.warn('GitHub authentication is disabled due to missing or invalid configuration');
+}
+
 
 module.exports = passport;

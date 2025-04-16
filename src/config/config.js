@@ -8,8 +8,8 @@ if (!process.env.MONGO_URI) {
   throw new Error("MONGO_URI environment variable is required");
 }
 
-module.exports = {
-  env: process.env.NODE_ENV,
+// Base configuration shared across all environments
+const baseConfig = {
   port: process.env.PORT || 3000,
   sessionSecret: process.env.SESSION_SECRET,
   db: {
@@ -29,4 +29,64 @@ module.exports = {
       max: parseInt(process.env.AUTH_RATE_LIMIT_MAX || 5),                    // 5 requests per minute for auth endpoints
     }
   },
+  jwt: {
+    secret: process.env.JWT_SECRET,
+    expiresIn: process.env.JWT_EXPIRES_IN || '1d'
+  }
 };
+
+// Environment-specific configurations
+const environments = {
+  development: {
+    env: 'development',
+    cors: {
+      origin: ['http://localhost:3000', 'http://localhost:8080'],
+      credentials: true,
+    },
+    swagger: {
+      server: 'http://localhost:3000'
+    }
+  },
+  test: {
+    env: 'test',
+    cors: {
+      origin: ['http://localhost:3001', 'http://localhost:8080'],
+      credentials: true,
+    },
+    swagger: {
+      server: 'http://localhost:3001'
+    }
+  },
+  production: {
+    env: 'production',
+    appUrl: process.env.RENDER_EXTERNAL_HOSTNAME || 'https://cse341-final-project-team-14.onrender.com',
+    cors: {
+      origin: function(origin, callback) {
+        const allowedOrigins = [
+          process.env.RENDER_EXTERNAL_HOSTNAME || 'https://cse341-final-project-team-14.onrender.com'
+        ];
+        // Allow requests with no origin (like mobile apps, curl requests)
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.indexOf(origin) !== -1) {
+          return callback(null, true);
+        }
+        callback(new Error('Not allowed by CORS'));
+      },
+      credentials: true,
+    },
+    swagger: {
+      server: process.env.RENDER_EXTERNAL_HOSTNAME || 'https://cse341-final-project-team-14.onrender.com'
+    }
+  },
+};
+
+// Determine current environment
+const currentEnv = process.env.NODE_ENV || 'development';
+
+// Merge base config with environment-specific config
+const config = {
+  ...baseConfig,
+  ...environments[currentEnv]
+};
+
+module.exports = config;

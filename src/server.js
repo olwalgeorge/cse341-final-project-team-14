@@ -3,6 +3,7 @@ const app = require("./app.js");
 const config = require("./config/config.js");
 const { createLogger } = require("./utils/logger.js");
 const { closeConnection } = require("./config/database.js");
+const { validateEnvironment, logEnvironmentSummary } = require("./validators/envValidator.js");
 const logger = createLogger('Server');
 
 /**
@@ -11,166 +12,119 @@ const logger = createLogger('Server');
 class ServerManager {
   constructor() {
     this.server = null;
-    this.shuttingDown = false;
-    this.initializeServer();
-    this.setupSignalHandlers();
+    this.setupShutdownHandlers();
   }
-  
+
   /**
-   * Initialize the HTTP server
+   * Initialize and start the server
    */
-  initializeServer() {
+  async start() {
     try {
-      // Create HTTP server
-      this.server = app.listen(config.port, () => {
-        logger.info(`Server running at http://localhost:${config.port} in ${config.env} mode`);
+      // Validate environment variables before proceeding
+      const validationResult = validateEnvironment();
+      
+      // Log environment summary regardless of validation result
+      logEnvironmentSummary(validationResult);
+      
+      if (!validationResult.success) {
+        logger.error('Server initialization failed due to invalid environment configuration:');
+        validationResult.errors.forEach(err => {
+          logger.error(`- ${err.name}: ${err.value}`);
+        });
+        
+        // Create a structured error report
+        const errorReport = {
+          timestamp: new Date().toISOString(),
+          environment: process.env.NODE_ENV || 'development',
+          errors: validationResult.errors.map(err => ({
+            variable: err.name,
+            status: err.value
+          })),
+          message: 'Server cannot start with invalid configuration'
+        };
+        
+        // Log structured error for easier parsing
+        logger.error('STRUCTURED_ERROR', errorReport);
+        
+        process.exit(1);
+      }
+
+      // Start the HTTP server
+      const port = config.port;
+      this.server = app.listen(port, () => {
+        logger.info(`Server running on ${config.env === 'production' ? config.appUrl : `http://localhost:${port}`} in ${config.env} mode`);
+        logger.info(`API Documentation: ${config.env === 'production' ? config.appUrl : `http://localhost:${port}`}/api-docs`);
       });
 
-      // Set up server error handler
-      this.server.on('error', (error) => {
-        if (error.code === 'EADDRINUSE') {
-          logger.error(`Port ${config.port} is already in use. Please choose a different port.`);
-        } else {
-          logger.error('Server error:', error);
-        }
-        this.exitProcess(1);
-      });
-      
-      // Track active connections for clean shutdown
-      this.activeConnections = new Set();
-      
-      this.server.on('connection', (connection) => {
-        this.activeConnections.add(connection);
-        connection.on('close', () => {
-          this.activeConnections.delete(connection);
-        });
-      });
     } catch (error) {
-      logger.error("Failed to initialize server:", error);
-      this.exitProcess(1);
+      logger.error("Failed to start server:", error);
+      process.exit(1);
     }
   }
-  
+
   /**
-   * Set up handlers for process signals and uncaught errors
+   * Set up handlers for process termination signals
    */
-  setupSignalHandlers() {
-    // Handle process signals
-    process.on('SIGTERM', () => this.initiateShutdown('SIGTERM signal'));
-    process.on('SIGINT', () => this.initiateShutdown('SIGINT signal (Ctrl+C)'));
-    
-    // Handle uncaught exceptions
-    process.on('uncaughtException', (error) => {
-      logger.error('UNCAUGHT EXCEPTION! 💥', error);
-      this.initiateShutdown('uncaught exception', error);
+  setupShutdownHandlers() {
+    // Handle normal termination
+    process.on("SIGTERM", () => {
+      logger.info("SIGTERM signal received, shutting down gracefully");
+      this.shutdown();
     });
-    
-    // Handle unhandled promise rejections
-    process.on('unhandledRejection', (reason, promise) => {
-      logger.error('UNHANDLED REJECTION! 💥 Shutting down...', reason);
-      logger.error(`Promise: ${promise}`);
-      this.initiateShutdown('unhandled rejection', reason);
+
+    // Handle interrupt (e.g., Ctrl+C)
+    process.on("SIGINT", () => {
+      logger.info("SIGINT signal received, shutting down gracefully");
+      this.shutdown();
+    });
+
+    // Handle unhandled exceptions and rejections
+    process.on("uncaughtException", (err) => {
+      logger.error("Uncaught exception:", err);
+      this.shutdown(1);
+    });
+
+    process.on("unhandledRejection", (reason, promise) => {
+      logger.error("Unhandled Rejection at:", promise, "reason:", reason);
+      this.shutdown(1);
     });
   }
-  
+
   /**
-   * Start the graceful shutdown sequence
-   * @param {string} source - What triggered the shutdown
-   * @param {Error} [error] - Optional error that triggered shutdown
+   * Perform graceful shutdown
    */
-  initiateShutdown(source, error = null) {
-    // Prevent multiple shutdown attempts
-    if (this.shuttingDown) return;
-    this.shuttingDown = true;
-    
-    logger.info(`${source} received. Starting graceful shutdown...`);
-    
-    if (error) {
-      logger.error('Error details:', error);
-    }
-    
-    // Use async/await and wrap in try/catch to ensure we can handle any errors
-    (async () => {
-      try {
-        await this.performShutdown(source, error);
-      } catch (shutdownError) {
-        logger.error('Critical error during shutdown:', shutdownError);
-        // Force exit after a short delay to ensure logs are flushed
-        setTimeout(() => process.exit(1), 1000);
-      }
-    })();
-  }
-  
-  /**
-   * Execute the actual shutdown process in proper sequence
-   * @param {string} source - Shutdown trigger source
-   * @param {Error} error - Optional error object
-   */
-  async performShutdown(source, error) {
-    // 1. Stop accepting new connections
+  async shutdown(exitCode = 0) {
+    logger.info("Shutting down server...");
+
     if (this.server) {
-      logger.info('Closing HTTP server, stopping new connections...');
-      
-      // Close server in a promise to handle both sync and async scenarios
-      await new Promise((resolve) => {
-        this.server.close((err) => {
-          if (err) {
-            logger.error('Error closing HTTP server:', err);
-          } else {
-            logger.info('HTTP server closed successfully');
-          }
+      // Close the HTTP server first
+      await new Promise(resolve => {
+        this.server.close(() => {
+          logger.info("HTTP server closed");
           resolve();
         });
       });
     }
-    
-    // 2. Close any active connections for clean exit
-    if (this.activeConnections.size > 0) {
-      logger.info(`Terminating ${this.activeConnections.size} active connections...`);
-      for (const conn of this.activeConnections) {
-        try {
-          conn.destroy();
-        } catch (err) {
-          /* Silent fail for connection destruction errors */
-        }
-      }
-      this.activeConnections.clear();
+
+    try {
+      // Close database connections
+      await closeConnection();
+      logger.info("Database connections closed");
+    } catch (err) {
+      logger.error("Error closing database connection:", err);
+      exitCode = 1;
     }
-    
-    // 3. Close database connection - MAKE SURE to await this properly
-    logger.info('Closing database connections...');
-    await closeConnection(source);
-    
-    // 4. Additional cleanup in production
-    if (config.env === 'production') {
-      logger.info('Running production-specific cleanup...');
-      // Add any production-specific cleanup here
-    }
-    
-    // Log successful shutdown
-    logger.info('Graceful shutdown completed successfully');
-    
-    // Exit with appropriate code after ensuring logs are flushed
-    this.exitProcess(error ? 1 : 0);
-  }
-  
-  /**
-   * Exit the process safely with proper log flushing
-   * @param {number} code - Exit code (0 = success, 1 = error)
-   */
-  exitProcess(code) {
-    // Use a longer delay to ensure logs are completely flushed
-    // This is particularly important for Winston or other async loggers
-    setTimeout(() => {   
-      
-      // Forcibly exit process
-      process.exit(code);
-    }, 1000);  // 1000ms (1 second) is much safer for ensuring logs flush
+
+    logger.info(`Server shutdown complete with exit code ${exitCode}`);
+    process.exit(exitCode);
   }
 }
 
 // Initialize server manager as the only instance
 const serverManager = new ServerManager();
+
+// Start the server
+serverManager.start();
 
 // Export for testing purposes
 module.exports = serverManager;
