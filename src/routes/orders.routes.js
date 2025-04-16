@@ -16,6 +16,7 @@ const {
   deleteAllOrders,
 } = require("../controllers/orders.controller");
 const isAuthenticated = require("../middlewares/auth.middleware");
+const { authorize } = require("../middlewares/auth.middleware");
 const validate = require("../middlewares/validation.middleware");
 const {
   orderIdValidationRules,
@@ -28,7 +29,8 @@ const {
   cancelOrderValidationRules
 } = require("../validators/order.validator");
 
-// Get all orders
+// Query operations - MANAGER and ADMIN can view all orders, others can only view their own orders
+// This will be enforced at controller level by checking user role and filter accordingly
 router.get("/", isAuthenticated, getAllOrders);
 
 // Get order by MongoDB ID
@@ -71,7 +73,7 @@ router.get(
   getOrdersByDateRange
 );
 
-// Create a new order
+// Create a new order - any authenticated user can create orders
 router.post(
   "/", 
   isAuthenticated, 
@@ -79,18 +81,20 @@ router.post(
   createOrder
 );
 
-// Update an order
+// Update operations - editing orders requires higher permissions
 router.put(
   "/:order_Id", 
-  isAuthenticated, 
+  isAuthenticated,
+  authorize(['ADMIN', 'MANAGER', 'SUPERVISOR']),
   validate([...orderIdValidationRules(), ...updateOrderValidationRules()]),
   updateOrder
 );
 
-// Process an order
+// Workflow operations - these affect order state and require appropriate permissions
 router.put(
   "/:order_Id/process", 
-  isAuthenticated, 
+  isAuthenticated,
+  authorize(['ADMIN', 'MANAGER', 'SUPERVISOR']), 
   validate(orderIdValidationRules()),
   processOrder
 );
@@ -98,12 +102,14 @@ router.put(
 // Complete an order
 router.put(
   "/:order_Id/complete", 
-  isAuthenticated, 
+  isAuthenticated,
+  authorize(['ADMIN', 'MANAGER', 'SUPERVISOR']), 
   validate(orderIdValidationRules()),
   completeOrder
 );
 
-// Cancel an order
+// Cancel an order - users can cancel their own orders, admins can cancel any order
+// Logic to check ownership will be in the controller
 router.put(
   "/:order_Id/cancel", 
   isAuthenticated, 
@@ -111,15 +117,16 @@ router.put(
   cancelOrder
 );
 
-// Delete an order
+// Dangerous operations - restricted to admin only
 router.delete(
   "/:order_Id", 
-  isAuthenticated, 
+  isAuthenticated,
+  authorize('ADMIN'), 
   validate(orderIdValidationRules()),
   deleteOrder
 );
 
-// Delete all orders (dev/test only)
-router.delete("/", isAuthenticated, deleteAllOrders);
+// Delete all orders (dev/test only) - highly restricted operation
+router.delete("/", isAuthenticated, authorize('ADMIN'), deleteAllOrders);
 
 module.exports = router;

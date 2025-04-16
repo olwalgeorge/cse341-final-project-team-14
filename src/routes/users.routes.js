@@ -14,10 +14,9 @@ const {
   updateUserProfile,
   searchUsers
 } = require("../controllers/users.controller");
-const isAuthenticated = require("../middlewares/auth.middleware");
+const { authenticate, authorize } = require("../middlewares/auth.middleware");
 const validate = require("../middlewares/validation.middleware");
 const {
-  
   userUpdateValidationRules,
   userIDValidationRules,
   user_IdValidationRules, 
@@ -38,18 +37,23 @@ const userLimiter = createRateLimiter({
 // Apply rate limiting to user routes
 router.use(userLimiter);
 
-// User routes
-router.get("/", isAuthenticated, getAllUsers);
-router.get("/search", isAuthenticated, validate(searchValidationRules()), searchUsers);
-router.get("/profile", isAuthenticated, getUserProfile);
-router.put("/profile", isAuthenticated, validate(userUpdateValidationRules()), updateUserProfile);
-router.get("/userID/:userID", isAuthenticated, validate(userIDValidationRules()), getUserByUserID);
-router.get("/username/:username", isAuthenticated, validate(usernameValidationRules()), getUserByUsername);
-router.get("/email/:email", isAuthenticated, validate(emailValidationRules()), getUserByEmail);
-router.get("/role/:role", isAuthenticated, validate(roleValidationRules()), getUsersByRole);
-router.get("/:user_Id", isAuthenticated, validate(user_IdValidationRules()), getUserById);
-router.put("/:user_Id", isAuthenticated, validate(user_IdValidationRules()), validate(userUpdateValidationRules()), updateUserById);
-router.delete("/:user_Id", isAuthenticated, validate(user_IdValidationRules()), deleteUserById);
-router.delete("/", isAuthenticated, deleteAllUsers);
+// User routes with role-based authorization
+// Own profile access - any authenticated user can access their own profile
+router.get("/profile", authenticate, getUserProfile);
+router.put("/profile", authenticate, validate(userUpdateValidationRules()), updateUserProfile);
+
+// Administrative routes - restricted to ADMIN role
+router.get("/", authenticate, authorize(['ADMIN', 'MANAGER']), getAllUsers);
+router.get("/search", authenticate, authorize(['ADMIN', 'MANAGER']), validate(searchValidationRules()), searchUsers);
+router.get("/userID/:userID", authenticate, authorize(['ADMIN', 'MANAGER']), validate(userIDValidationRules()), getUserByUserID);
+router.get("/username/:username", authenticate, authorize(['ADMIN', 'MANAGER']), validate(usernameValidationRules()), getUserByUsername);
+router.get("/email/:email", authenticate, authorize(['ADMIN', 'MANAGER']), validate(emailValidationRules()), getUserByEmail);
+router.get("/role/:role", authenticate, authorize(['ADMIN', 'MANAGER']), validate(roleValidationRules()), getUsersByRole);
+router.get("/:user_Id", authenticate, authorize(['ADMIN', 'MANAGER']), validate(user_IdValidationRules()), getUserById);
+router.put("/:user_Id", authenticate, authorize(['ADMIN']), validate(user_IdValidationRules()), validate(userUpdateValidationRules()), updateUserById);
+
+// Dangerous operations - restricted to ADMIN role only
+router.delete("/:user_Id", authenticate, authorize('ADMIN'), validate(user_IdValidationRules()), deleteUserById);
+router.delete("/", authenticate, authorize('ADMIN'), deleteAllUsers);
 
 module.exports = router;

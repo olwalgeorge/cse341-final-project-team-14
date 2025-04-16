@@ -13,6 +13,7 @@ const {
 } = require("../controllers/suppliers.controller.js");
 const validate = require("../middlewares/validation.middleware.js");
 const isAuthenticated = require("../middlewares/auth.middleware.js");
+const { authorize } = require("../middlewares/auth.middleware.js");
 const {
   supplierIDValidationRules,
   supplierCreateValidationRules,
@@ -23,6 +24,7 @@ const {
   supplierEmailValidationRules,
 } = require("../validators/supplier.validator.js");
 
+// Read operations - Available to all authenticated users
 router.get(
   "/search", 
   isAuthenticated,
@@ -58,9 +60,11 @@ router.get(
   getSupplierById
 );
 
+// Create/Update operations - Restricted to management roles
 router.post(
   "/",
   isAuthenticated,
+  authorize(['ADMIN', 'MANAGER']),
   validate(supplierCreateValidationRules()),
   createSupplier
 );
@@ -68,21 +72,25 @@ router.post(
 router.put(
   "/:supplier_Id",
   isAuthenticated,
+  authorize(['ADMIN', 'MANAGER']),
   validate(supplierMongoIdValidationRules()), 
   validate(supplierUpdateValidationRules()),
   updateSupplierById
 );
 
+// Delete operations - Highly restricted to admin only
 router.delete(
   "/:supplier_Id",
   isAuthenticated,
+  authorize('ADMIN'),
   validate(supplierMongoIdValidationRules()), 
   deleteSupplierById
 );
 
 router.delete(
   "/", 
-  isAuthenticated, 
+  isAuthenticated,
+  authorize('ADMIN'), 
   deleteAllSuppliers
 );
 

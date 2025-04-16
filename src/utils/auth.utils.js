@@ -1,15 +1,21 @@
 /**
- * Authentication Utilities
- * 
- * Helper functions for authentication-related operations
+ * Authentication and Authorization Utilities
  */
 const { createLogger } = require('./logger');
-const Token = require('../models/token.model');
-const User = require('../models/user.model');
+const TokenBlacklist = require('../models/tokenBlacklist.model');
 const jwt = require('jsonwebtoken');
 const config = require('../config/config');
+const User = require('../models/user.model');
 
-const logger = createLogger('AuthUtils');
+const logger = createLogger('Utils:Auth');
+
+// Role hierarchy - higher roles inherit permissions from lower roles
+const ROLE_HIERARCHY = {
+  'USER': 0,
+  'SUPERVISOR': 1,
+  'MANAGER': 2, 
+  'ADMIN': 3
+};
 
 // Configuration for token invalidation strategy
 const tokenConfig = {
@@ -18,64 +24,134 @@ const tokenConfig = {
 };
 
 /**
+ * Check if a token is blacklisted
+ * @param {String} token - JWT token
+ * @returns {Boolean} True if token is blacklisted
+ */
+async function isTokenBlacklisted(token) {
+  if (!tokenConfig.useBlacklist) {
+    return false;
+  }
+
+  try {
+    const blacklisted = await TokenBlacklist.findOne({ token });
+    return !!blacklisted;
+  } catch (error) {
+    logger.error('Error checking token blacklist:', error);
+    // If an error occurs, consider token invalid for security reasons
+    return true;
+  }
+}
+
+/**
+ * Check if all tokens for a user are blacklisted
+ * @param {String} userId - User ID
+ * @returns {Boolean} True if all tokens for the user are blacklisted
+ */
+async function areAllUserTokensBlacklisted(userId) {
+  if (!tokenConfig.useBlacklist) {
+    return false;
+  }
+
+  try {
+    const blacklisted = await TokenBlacklist.findOne({ 
+      userId, 
+      blacklistAll: true 
+    });
+    return !!blacklisted;
+  } catch (error) {
+    logger.error('Error checking user token blacklist:', error);
+    // If an error occurs, consider tokens invalid for security reasons
+    return true;
+  }
+}
+
+/**
+ * Check if a user has at least the specified minimum role
+ * @param {String} userRole - User's role
+ * @param {String} requiredRole - Minimum required role
+ * @returns {Boolean} True if user has sufficient permission
+ */
+function hasRole(userRole, requiredRole) {
+  if (!ROLE_HIERARCHY.hasOwnProperty(userRole) || !ROLE_HIERARCHY.hasOwnProperty(requiredRole)) {
+    logger.warn(`Invalid role comparison: ${userRole} vs ${requiredRole}`);
+    return false;
+  }
+  
+  return ROLE_HIERARCHY[userRole] >= ROLE_HIERARCHY[requiredRole];
+}
+
+/**
+ * Check if user is owner of a resource or has admin rights
+ * @param {String} userId - User's ID
+ * @param {String} resourceUserId - Resource owner's ID
+ * @param {String} userRole - User's role
+ * @returns {Boolean} True if user is owner or has admin rights
+ */
+function isOwnerOrAdmin(userId, resourceUserId, userRole) {
+  return userId === resourceUserId || userRole === 'ADMIN';
+}
+
+/**
  * Add a token to the blacklist
  * @param {String} token - JWT token to blacklist
- * @param {String} reason - Reason for blacklisting (logout, password_changed, etc.)
- * @param {String} ipAddress - IP address of the request (for audit purposes)
- * @returns {Promise<Boolean>} - True if token was successfully blacklisted
+ * @param {String} userId - User ID associated with the token
+ * @param {Date} expiresAt - Token expiration date
  */
-async function blacklistToken(token, reason = 'logout', ipAddress = null) {
+async function blacklistToken(token, userId, expiresAt) {
+  if (!tokenConfig.useBlacklist) {
+    logger.debug(`Token blacklisting skipped (disabled in config).`);
+    return true;
+  }
+
   try {
-    // Skip if blacklisting is disabled
-    if (!tokenConfig.useBlacklist) {
-      logger.debug(`Token blacklisting skipped (disabled in config). Reason: ${reason}`);
-      return true;
-    }
-    
-    // Decode token to get expiry and user ID
-    const decoded = jwt.decode(token);
-    if (!decoded) {
-      logger.error('Failed to decode token for blacklisting');
-      return false;
-    }
-    
-    // Add to blacklist in database
-    await Token.create({
-      token: token,
-      userId: decoded.sub,
-      type: 'access', // Adding the required type field
-      expiresAt: new Date(decoded.exp * 1000), // Convert to milliseconds
-      blacklistedAt: new Date(),
-      reason: reason,
-      ipAddress: ipAddress || 'unknown'
+    await TokenBlacklist.create({
+      token,
+      userId,
+      expiresAt,
+      blacklistAll: false
     });
-    
-    logger.info(`Token has been blacklisted. Reason: ${reason}`);
+    logger.info(`Token blacklisted for user ${userId}`);
     return true;
   } catch (error) {
-    logger.error('Failed to blacklist token:', error);
+    logger.error('Error blacklisting token:', error);
     return false;
   }
 }
 
 /**
- * Check if a token is blacklisted
- * @param {String} token - JWT token to check
- * @returns {Promise<Boolean>} - True if token is blacklisted
+ * Blacklist all tokens for a user
+ * @param {String} userId - User ID
  */
-async function isTokenBlacklisted(token) {
-  // Skip check if blacklisting is disabled
-  if (!tokenConfig.useBlacklist) {
-    return false;
-  }
-  
+async function blacklistAllUserTokens(userId) {
   try {
-    // Check if token exists in blacklist
-    const blacklistedToken = await Token.findOne({ token });
-    return !!blacklistedToken; // Convert to boolean
+    // Always increment the token version regardless of blacklist setting
+    if (tokenConfig.useVersioning) {
+      const user = await User.findById(userId);
+      
+      if (!user) {
+        logger.warn(`Attempted to blacklist tokens for non-existent user: ${userId}`);
+        return false;
+      }
+      
+      user.tokenVersion = (user.tokenVersion || 1) + 1;
+      await user.save();
+      
+      logger.info(`All tokens for user ${userId} have been invalidated (version ${user.tokenVersion}).`);
+    }
+
+    if (tokenConfig.useBlacklist) {
+      await TokenBlacklist.create({
+        userId,
+        blacklistAll: true,
+        blacklistedAt: new Date()
+      });
+      logger.info(`All tokens blacklisted for user ${userId}`);
+    }
+
+    return true;
   } catch (error) {
-    logger.error('Error checking token blacklist:', error);
-    // Fail secure - if there's an error checking, assume token is valid
+    logger.error('Error blacklisting all user tokens:', error);
     return false;
   }
 }
@@ -91,8 +167,7 @@ async function cleanupExpiredTokens() {
   }
   
   try {
-    // Remove tokens that have expired
-    const result = await Token.deleteMany({ expiresAt: { $lt: new Date() } });
+    const result = await TokenBlacklist.deleteMany({ expiresAt: { $lt: new Date() } });
     logger.info(`Cleaned up ${result.deletedCount} expired tokens`);
     return result.deletedCount;
   } catch (error) {
@@ -101,82 +176,13 @@ async function cleanupExpiredTokens() {
   }
 }
 
-/**
- * Blacklist all active tokens for a specific user
- * @param {string} userId - The user's ID
- * @param {string} reason - Reason for blacklisting tokens
- * @returns {Promise<boolean>} - Success status
- */
-const blacklistAllUserTokens = async (userId, reason = 'security_measure') => {
-  try {
-    // Always increment the token version regardless of blacklist setting
-    if (tokenConfig.useVersioning) {
-      // Find the user and increment their token version
-      const user = await User.findById(userId);
-      
-      if (!user) {
-        logger.warn(`Attempted to blacklist tokens for non-existent user: ${userId}`);
-        return false;
-      }
-      
-      // Increment the token version
-      user.tokenVersion = (user.tokenVersion || 1) + 1;
-      await user.save();
-      
-      logger.info(`All tokens for user ${userId} have been invalidated (version ${user.tokenVersion}) due to: ${reason}`);
-    }
-    
-    // If using database blacklist, also record a special "blacklist all" entry
-    if (tokenConfig.useBlacklist) {
-      await Token.create({
-        blacklistAll: true,
-        userId: userId,
-        type: 'access', // Adding the required type field
-        expiresAt: new Date(Date.now() + (180 * 24 * 60 * 60 * 1000)), // 180 days
-        blacklistedAt: new Date(),
-        reason: reason
-      });
-      
-      logger.info(`Added "blacklist all" entry for user ${userId} due to: ${reason}`);
-    }
-    
-    return true;
-  } catch (error) {
-    logger.error(`Failed to invalidate tokens for user ${userId}:`, error);
-    return false;
-  }
-};
-
-/**
- * Check if all tokens for a user have been blacklisted
- * @param {string} userId - The user's ID
- * @returns {Promise<boolean>} - True if all tokens are blacklisted
- */
-async function areAllUserTokensBlacklisted(userId) {
-  if (!tokenConfig.useBlacklist) {
-    return false;
-  }
-  
-  try {
-    // Check for a "blacklist all" entry
-    const blacklistAll = await Token.findOne({
-      userId: userId,
-      blacklistAll: true,
-      expiresAt: { $gt: new Date() }
-    });
-    
-    return !!blacklistAll;
-  } catch (error) {
-    logger.error(`Error checking if all tokens are blacklisted for user ${userId}:`, error);
-    // Fail secure - if there's an error, assume not blacklisted
-    return false;
-  }
-}
-
 module.exports = {
-  blacklistToken,
   isTokenBlacklisted,
-  cleanupExpiredTokens,
+  areAllUserTokensBlacklisted,
+  hasRole,
+  isOwnerOrAdmin,
+  blacklistToken,
   blacklistAllUserTokens,
-  areAllUserTokensBlacklisted
+  cleanupExpiredTokens,
+  ROLE_HIERARCHY
 };

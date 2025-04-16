@@ -139,3 +139,142 @@ MongoServerError: E11000 duplicate key error collection: team_14_final_project.t
 2025-04-16 21:47:27 INFO [inventory-api:EnvValidator]: =============================================== 
 2025-04-16 21:47:27 INFO [inventory-api:Server]: API Documentation: https://cse341-final-project-team-14.onrender.com/api-docs 
 2025-04-16 21:47:30 INFO [inventory-api:Database]: MongoDB Connected: cluster0-shard-00-01.wncfx.mongodb.net 
+2025-04-16 21:52:37 INFO [inventory-api:Server]: SIGINT signal received, shutting down gracefully 
+2025-04-16 21:52:37 INFO [inventory-api:Database]: Closing MongoDB connection due to server shutdown 
+2025-04-16 21:55:51 INFO [inventory-api:EnvValidator]: =============== ENVIRONMENT SUMMARY =============== 
+2025-04-16 21:55:51 INFO [inventory-api:Passport]: GitHub authentication strategy initialized successfully 
+2025-04-16 21:55:51 INFO [inventory-api:Server]: Server running on https://cse341-final-project-team-14.onrender.com in production mode 
+2025-04-16 21:55:51 INFO [inventory-api:EnvValidator]: Environment: PRODUCTION 
+2025-04-16 21:55:51 INFO [inventory-api:EnvValidator]: Port: 3000 
+2025-04-16 21:55:51 INFO [inventory-api:EnvValidator]: Database: mongodb+srv://ol****:********@cluster0.wncfx.mongodb.net/team_14_final_project?retryWrites=true&w=majority&appName=Cluster0 
+2025-04-16 21:55:51 INFO [inventory-api:EnvValidator]: External URL: https://cse341-final-project-team-14.onrender.com 
+2025-04-16 21:55:51 INFO [inventory-api:EnvValidator]: ------- Features Status ------- 
+2025-04-16 21:55:51 INFO [inventory-api:EnvValidator]: githubOAuth: Enabled ✅ 
+2025-04-16 21:55:51 INFO [inventory-api:EnvValidator]: =============================================== 
+2025-04-16 21:55:51 INFO [inventory-api:Server]: API Documentation: https://cse341-final-project-team-14.onrender.com/api-docs 
+2025-04-16 21:55:55 INFO [inventory-api:Database]: MongoDB Connected: cluster0-shard-00-00.wncfx.mongodb.net 
+2025-04-16 21:58:59 DEBUG [inventory-api:TokenModel]: Fixed duplicate indexes in Token schema: 
+2025-04-16 21:58:59 INFO [inventory-api:EnvValidator]: =============== ENVIRONMENT SUMMARY =============== 
+2025-04-16 21:58:59 INFO [inventory-api:Passport]: GitHub authentication strategy initialized successfully 
+2025-04-16 21:58:59 INFO [inventory-api:Server]: Server running on http://localhost:3000 in development mode 
+2025-04-16 21:58:59 INFO [inventory-api:EnvValidator]: Environment: DEVELOPMENT 
+2025-04-16 21:58:59 INFO [inventory-api:EnvValidator]: Port: 3000 
+2025-04-16 21:58:59 INFO [inventory-api:EnvValidator]: Database: mongodb+srv://ol****:********@cluster0.wncfx.mongodb.net/team_14_final_project?retryWrites=true&w=majority&appName=Cluster0 
+2025-04-16 21:58:59 INFO [inventory-api:EnvValidator]: ------- Features Status ------- 
+2025-04-16 21:58:59 INFO [inventory-api:EnvValidator]: githubOAuth: Enabled ✅ 
+2025-04-16 21:58:59 INFO [inventory-api:EnvValidator]: =============================================== 
+2025-04-16 21:58:59 INFO [inventory-api:Server]: API Documentation: http://localhost:3000/api-docs 
+2025-04-16 21:59:08 ERROR [inventory-api:Database]: Could not connect to any servers in your MongoDB Atlas cluster. One common reason is that you're trying to access the database from an IP that isn't whitelisted. Make sure your current IP address is on your Atlas cluster's IP whitelist: https://www.mongodb.com/docs/atlas/security-whitelist/ 
+MongooseServerSelectionError: Could not connect to any servers in your MongoDB Atlas cluster. One common reason is that you're trying to access the database from an IP that isn't whitelisted. Make sure your current IP address is on your Atlas cluster's IP whitelist: https://www.mongodb.com/docs/atlas/security-whitelist/
+    at _handleConnectionErrors (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\connection.js:1165:11)
+    at NativeConnection.openUri (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\connection.js:1096:11)
+    at async C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\config\database.js:46:22
+2025-04-16 21:59:08 ERROR [inventory-api:App]: Could not connect to any servers in your MongoDB Atlas cluster. One common reason is that you're trying to access the database from an IP that isn't whitelisted. Make sure your current IP address is on your Atlas cluster's IP whitelist: https://www.mongodb.com/docs/atlas/security-whitelist/ 
+MongooseServerSelectionError: Could not connect to any servers in your MongoDB Atlas cluster. One common reason is that you're trying to access the database from an IP that isn't whitelisted. Make sure your current IP address is on your Atlas cluster's IP whitelist: https://www.mongodb.com/docs/atlas/security-whitelist/
+    at _handleConnectionErrors (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\connection.js:1165:11)
+    at NativeConnection.openUri (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\connection.js:1096:11)
+    at async C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\config\database.js:46:22
+2025-04-16 22:00:03 INFO [inventory-api:Server]: SIGINT signal received, shutting down gracefully 
+2025-04-16 22:00:03 INFO [inventory-api:Database]: No active MongoDB connection to close 
+2025-04-16 22:00:08 DEBUG [inventory-api:TokenModel]: Fixed duplicate indexes in Token schema: 
+2025-04-16 22:00:09 INFO [inventory-api:EnvValidator]: =============== ENVIRONMENT SUMMARY =============== 
+2025-04-16 22:00:08 INFO [inventory-api:Passport]: GitHub authentication strategy initialized successfully 
+2025-04-16 22:00:09 INFO [inventory-api:Server]: Server running on http://localhost:3000 in development mode 
+2025-04-16 22:00:09 INFO [inventory-api:EnvValidator]: Environment: DEVELOPMENT 
+2025-04-16 22:00:09 INFO [inventory-api:EnvValidator]: Port: 3000 
+2025-04-16 22:00:09 INFO [inventory-api:EnvValidator]: Database: mongodb+srv://ol****:********@cluster0.wncfx.mongodb.net/team_14_final_project?retryWrites=true&w=majority&appName=Cluster0 
+2025-04-16 22:00:09 INFO [inventory-api:EnvValidator]: ------- Features Status ------- 
+2025-04-16 22:00:09 INFO [inventory-api:EnvValidator]: githubOAuth: Enabled ✅ 
+2025-04-16 22:00:09 INFO [inventory-api:EnvValidator]: =============================================== 
+2025-04-16 22:00:09 INFO [inventory-api:Server]: API Documentation: http://localhost:3000/api-docs 
+2025-04-16 22:00:12 INFO [inventory-api:Database]: MongoDB Connected: cluster0-shard-00-01.wncfx.mongodb.net 
+2025-04-16 22:00:34 DEBUG [inventory-api:App]: Session: 
+2025-04-16 22:00:34 DEBUG [inventory-api:App]: Session: 
+2025-04-16 22:00:34 DEBUG [inventory-api:App]: Session: 
+2025-04-16 22:00:34 DEBUG [inventory-api:App]: Session: 
+2025-04-16 22:00:34 DEBUG [inventory-api:App]: Session: 
+2025-04-16 22:07:02 DEBUG [inventory-api:App]: Session: 
+2025-04-16 22:07:02 INFO [inventory-api:AuthController]: login controller called 
+2025-04-16 22:07:02 DEBUG [inventory-api:AuthService]: authenticateUserService called for email: olwalgeorge15@gmail.com 
+2025-04-16 22:07:03 INFO [inventory-api:AuthService]: User authenticated successfully: olwalgeorge15@gmail.com 
+2025-04-16 22:07:17 DEBUG [inventory-api:App]: Session: 
+2025-04-16 22:07:18 WARN [inventory-api:AuthMiddleware]: Attempt to use blacklisted token 
+2025-04-16 22:07:18 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: AuthError - Token has been invalidated. Please log in again. 
+2025-04-16 22:16:03 INFO [inventory-api:Server]: SIGINT signal received, shutting down gracefully 
+2025-04-16 22:16:03 INFO [inventory-api:Database]: Closing MongoDB connection due to server shutdown 
+2025-04-16 22:22:30 INFO [inventory-api:EnvValidator]: =============== ENVIRONMENT SUMMARY =============== 
+2025-04-16 22:22:30 INFO [inventory-api:Passport]: GitHub authentication strategy initialized successfully 
+2025-04-16 22:22:30 INFO [inventory-api:EnvValidator]: Environment: DEVELOPMENT 
+2025-04-16 22:22:30 INFO [inventory-api:EnvValidator]: Port: 3000 
+2025-04-16 22:22:30 INFO [inventory-api:EnvValidator]: Database: mongodb+srv://ol****:********@cluster0.wncfx.mongodb.net/team_14_final_project?retryWrites=true&w=majority&appName=Cluster0 
+2025-04-16 22:22:30 INFO [inventory-api:EnvValidator]: ------- Features Status ------- 
+2025-04-16 22:22:30 INFO [inventory-api:EnvValidator]: githubOAuth: Enabled ✅ 
+2025-04-16 22:22:30 INFO [inventory-api:EnvValidator]: =============================================== 
+2025-04-16 22:22:30 INFO [inventory-api:Server]: Server running on http://localhost:3000 in development mode 
+2025-04-16 22:22:30 INFO [inventory-api:Server]: API Documentation: http://localhost:3000/api-docs 
+2025-04-16 22:22:33 INFO [inventory-api:Database]: MongoDB Connected: cluster0-shard-00-00.wncfx.mongodb.net 
+2025-04-16 22:24:49 DEBUG [inventory-api:App]: Session: 
+2025-04-16 22:24:49 INFO [inventory-api:AuthController]: login controller called 
+2025-04-16 22:24:49 DEBUG [inventory-api:AuthService]: authenticateUserService called for email: olwalgeorge15@gmail.com 
+2025-04-16 22:24:50 INFO [inventory-api:AuthService]: User authenticated successfully: olwalgeorge15@gmail.com 
+2025-04-16 22:29:19 DEBUG [inventory-api:App]: Session: 
+2025-04-16 22:29:48 DEBUG [inventory-api:App]: Session: 
+2025-04-16 22:29:49 WARN [inventory-api:AuthController]: Error processing token during logout: 
+2025-04-16 22:29:49 ERROR [inventory-api:Server]: Uncaught exception: Cannot read properties of undefined (reading 'regenerate') 
+TypeError: Cannot read properties of undefined (reading 'regenerate')
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\passport\lib\sessionmanager.js:83:17
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\connect-mongodb-session\index.js:222:44
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+2025-04-16 22:29:49 INFO [inventory-api:Database]: Closing MongoDB connection due to server shutdown 
+2025-04-16 22:30:47 INFO [inventory-api:EnvValidator]: =============== ENVIRONMENT SUMMARY =============== 
+2025-04-16 22:30:46 INFO [inventory-api:Passport]: GitHub authentication strategy initialized successfully 
+2025-04-16 22:30:47 INFO [inventory-api:EnvValidator]: Environment: DEVELOPMENT 
+2025-04-16 22:30:47 INFO [inventory-api:EnvValidator]: Port: 3000 
+2025-04-16 22:30:47 INFO [inventory-api:EnvValidator]: Database: mongodb+srv://ol****:********@cluster0.wncfx.mongodb.net/team_14_final_project?retryWrites=true&w=majority&appName=Cluster0 
+2025-04-16 22:30:47 INFO [inventory-api:EnvValidator]: ------- Features Status ------- 
+2025-04-16 22:30:47 INFO [inventory-api:EnvValidator]: githubOAuth: Enabled ✅ 
+2025-04-16 22:30:47 INFO [inventory-api:EnvValidator]: =============================================== 
+2025-04-16 22:30:47 INFO [inventory-api:Server]: Server running on http://localhost:3000 in development mode 
+2025-04-16 22:30:47 INFO [inventory-api:Server]: API Documentation: http://localhost:3000/api-docs 
+2025-04-16 22:30:50 INFO [inventory-api:Database]: MongoDB Connected: cluster0-shard-00-00.wncfx.mongodb.net 
+2025-04-16 22:30:53 DEBUG [inventory-api:App]: Session: 
+2025-04-16 22:31:06 DEBUG [inventory-api:App]: Session: 
+2025-04-16 22:31:08 WARN [inventory-api:AuthController]: Error processing token during logout: 
+2025-04-16 22:31:08 ERROR [inventory-api:Server]: Uncaught exception: Cannot read properties of undefined (reading 'regenerate') 
+TypeError: Cannot read properties of undefined (reading 'regenerate')
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\passport\lib\sessionmanager.js:83:17
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\connect-mongodb-session\index.js:222:44
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+2025-04-16 22:31:08 INFO [inventory-api:Database]: Closing MongoDB connection due to server shutdown 
+2025-04-16 22:40:12 DEBUG [inventory-api:TokenModel]: Fixed duplicate indexes in Token schema: 
+2025-04-16 22:40:13 INFO [inventory-api:EnvValidator]: =============== ENVIRONMENT SUMMARY =============== 
+2025-04-16 22:40:13 INFO [inventory-api:Passport]: GitHub authentication strategy initialized successfully 
+2025-04-16 22:40:13 INFO [inventory-api:EnvValidator]: Environment: DEVELOPMENT 
+2025-04-16 22:40:13 INFO [inventory-api:EnvValidator]: Port: 3000 
+2025-04-16 22:40:13 INFO [inventory-api:EnvValidator]: Database: mongodb+srv://ol****:********@cluster0.wncfx.mongodb.net/team_14_final_project?retryWrites=true&w=majority&appName=Cluster0 
+2025-04-16 22:40:13 INFO [inventory-api:EnvValidator]: ------- Features Status ------- 
+2025-04-16 22:40:13 INFO [inventory-api:EnvValidator]: githubOAuth: Enabled ✅ 
+2025-04-16 22:40:13 INFO [inventory-api:EnvValidator]: =============================================== 
+2025-04-16 22:40:13 INFO [inventory-api:Server]: Server running on http://localhost:3000 in development mode 
+2025-04-16 22:40:13 INFO [inventory-api:Server]: API Documentation: http://localhost:3000/api-docs 
+2025-04-16 22:40:17 INFO [inventory-api:Database]: MongoDB Connected: cluster0-shard-00-01.wncfx.mongodb.net 
+2025-04-16 22:40:45 DEBUG [inventory-api:App]: Session: 
+2025-04-16 22:40:51 DEBUG [inventory-api:App]: Session: 
+2025-04-16 22:40:53 INFO [inventory-api:TokenModel]: Token blacklisted for user 67ffb16c3aa8bfc49a5dd1f7 
+2025-04-16 22:40:53 INFO [inventory-api:AuthController]: Token blacklisted for user 67ffb16c3aa8bfc49a5dd1f7 
+2025-04-16 22:41:09 DEBUG [inventory-api:App]: Session: 
+2025-04-16 22:41:09 WARN [inventory-api:Auth:JWT]: Token was found in blacklist during verification 
+2025-04-16 22:41:09 WARN [inventory-api:Middleware:Auth]: Invalid or expired token provided 
+2025-04-16 22:41:31 DEBUG [inventory-api:App]: Session: 
+2025-04-16 22:41:33 WARN [inventory-api:Auth:JWT]: Token was found in blacklist during verification 
+2025-04-16 22:41:33 WARN [inventory-api:Middleware:Auth]: Invalid or expired token provided 
+2025-04-16 22:42:16 DEBUG [inventory-api:App]: Session: 
+2025-04-16 22:42:25 WARN [inventory-api:Middleware:Auth]: Access denied for user USR-00009 with role USER 
+2025-04-16 22:42:38 DEBUG [inventory-api:App]: Session: 
+2025-04-16 22:42:38 WARN [inventory-api:Middleware:Auth]: No authentication token provided 
+2025-04-16 22:42:52 DEBUG [inventory-api:App]: Session: 
+2025-04-16 22:42:52 INFO [inventory-api:AuthController]: login controller called 
+2025-04-16 22:42:52 DEBUG [inventory-api:AuthService]: authenticateUserService called for email: olwalgeorge15@gmail.com 
+2025-04-16 22:42:52 INFO [inventory-api:AuthService]: User authenticated successfully: olwalgeorge15@gmail.com 
+2025-04-16 22:43:47 DEBUG [inventory-api:App]: Session: 
+2025-04-16 22:43:47 WARN [inventory-api:Middleware:Auth]: Access denied for user USR-00009 with role USER 

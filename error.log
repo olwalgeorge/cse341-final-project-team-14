@@ -14,3 +14,24 @@ MongoServerError: E11000 duplicate key error collection: team_14_final_project.t
 2025-04-16 21:18:51 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: DatabaseError - User not found 
 2025-04-16 21:31:33 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: AuthError - Token has been invalidated. Please log in again. 
 2025-04-16 21:36:40 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: AuthError - Token has been invalidated. Please log in again. 
+2025-04-16 21:59:08 ERROR [inventory-api:Database]: Could not connect to any servers in your MongoDB Atlas cluster. One common reason is that you're trying to access the database from an IP that isn't whitelisted. Make sure your current IP address is on your Atlas cluster's IP whitelist: https://www.mongodb.com/docs/atlas/security-whitelist/ 
+MongooseServerSelectionError: Could not connect to any servers in your MongoDB Atlas cluster. One common reason is that you're trying to access the database from an IP that isn't whitelisted. Make sure your current IP address is on your Atlas cluster's IP whitelist: https://www.mongodb.com/docs/atlas/security-whitelist/
+    at _handleConnectionErrors (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\connection.js:1165:11)
+    at NativeConnection.openUri (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\connection.js:1096:11)
+    at async C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\config\database.js:46:22
+2025-04-16 21:59:08 ERROR [inventory-api:App]: Could not connect to any servers in your MongoDB Atlas cluster. One common reason is that you're trying to access the database from an IP that isn't whitelisted. Make sure your current IP address is on your Atlas cluster's IP whitelist: https://www.mongodb.com/docs/atlas/security-whitelist/ 
+MongooseServerSelectionError: Could not connect to any servers in your MongoDB Atlas cluster. One common reason is that you're trying to access the database from an IP that isn't whitelisted. Make sure your current IP address is on your Atlas cluster's IP whitelist: https://www.mongodb.com/docs/atlas/security-whitelist/
+    at _handleConnectionErrors (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\connection.js:1165:11)
+    at NativeConnection.openUri (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\connection.js:1096:11)
+    at async C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\config\database.js:46:22
+2025-04-16 22:07:18 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: AuthError - Token has been invalidated. Please log in again. 
+2025-04-16 22:29:49 ERROR [inventory-api:Server]: Uncaught exception: Cannot read properties of undefined (reading 'regenerate') 
+TypeError: Cannot read properties of undefined (reading 'regenerate')
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\passport\lib\sessionmanager.js:83:17
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\connect-mongodb-session\index.js:222:44
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+2025-04-16 22:31:08 ERROR [inventory-api:Server]: Uncaught exception: Cannot read properties of undefined (reading 'regenerate') 
+TypeError: Cannot read properties of undefined (reading 'regenerate')
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\passport\lib\sessionmanager.js:83:17
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\connect-mongodb-session\index.js:222:44
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)

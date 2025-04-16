@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 const config = require('../config/config');
 const { createLogger } = require('../utils/logger');
 const User = require('../models/user.model');
-const { isTokenBlacklisted, areAllUserTokensBlacklisted } = require('../utils/auth.utils');
+const Token = require('../models/token.model');
 
 const logger = createLogger('Auth:JWT');
 
@@ -39,15 +39,15 @@ async function verifyToken(token) {
     // First verify the token's signature
     const decoded = jwt.verify(token, config.jwt.secret);
     
-    // Check if the specific token is blacklisted
-    const isBlacklisted = await isTokenBlacklisted(token);
+    // Check if the specific token is blacklisted using the Token model
+    const isBlacklisted = await Token.isTokenBlacklisted(token);
     if (isBlacklisted) {
       logger.warn('Token was found in blacklist during verification');
       return null;
     }
     
     // Check if all tokens for this user are blacklisted
-    const allBlacklisted = await areAllUserTokensBlacklisted(decoded.sub);
+    const allBlacklisted = await Token.areAllUserTokensBlacklisted(decoded.sub);
     if (allBlacklisted) {
       logger.warn(`All tokens for user ${decoded.sub} have been blacklisted`);
       return null;

@@ -1,5 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 const passport = require('passport');
+const jwt = require('jsonwebtoken');
+const config = require('../config/config');
 const asyncHandler = require("express-async-handler");
 const { 
   registerService, 
@@ -13,7 +15,7 @@ const sendResponse = require("../utils/response");
 const { AuthError } = require("../utils/errors");
 const { createLogger } = require("../utils/logger");
 const { generateToken, extractTokenFromRequest } = require('../auth/jwt');
-const { blacklistToken } = require('../utils/auth.utils');
+const Token = require('../models/token.model');
 const { sanitizeUserData } = require('../utils/user.utils'); // Add utility for data transformation
 const logger = createLogger("AuthController");
 
@@ -151,47 +153,87 @@ const loginSuccess = asyncHandler(async (req, res) => {
  * @route   POST /auth/logout
  * @access  Private
  */
-const logout = async (req, res, next) => {
+const logout = asyncHandler(async (req, res, next) => {
   try {
-    // Extract token if present (for JWT invalidation)
+    // Extract token from the request
     const token = extractTokenFromRequest(req);
-    let jwtInvalidated = false;
     
-    // Blacklist the JWT token if present
     if (token) {
-      // Get the client IP address for auditing
-      const ipAddress = req.ip || req.connection.remoteAddress;
-      
-      // Add token to blacklist with user ID and IP address
-      jwtInvalidated = await blacklistToken(token, 'logout', ipAddress);
-      logger.info('JWT token blacklisted during logout');
+      try {
+        // Get user from token
+        const decoded = jwt.verify(token, config.jwt.secret);
+        
+        if (decoded && decoded.sub) {
+          // Calculate token expiration for cleanup purposes
+          const expiresAt = new Date(decoded.exp * 1000); // Convert seconds to milliseconds
+          
+          // Blacklist the token using our updated Token model
+          await Token.blacklistToken(token, decoded.sub, expiresAt, 'LOGOUT');
+          logger.info(`Token blacklisted for user ${decoded.sub}`);
+        }
+      } catch (tokenError) {
+        logger.warn('Error processing token during logout:', tokenError.message);
+        // Continue with logout even if token processing fails
+      }
     }
     
-    // Handle session logout if using session-based auth
-    req.logout((err) => {
-      if (err) {
-        logger.error("Error during session logout:", err);
-        return next(AuthError.loginError());
+    // Create a safer session handling approach
+    const logoutSessionHandling = async () => {
+      // Only call req.logout if it exists and is a function
+      if (req.logout && typeof req.logout === 'function') {
+        // Modern Express requires callback
+        if (req.logout.length > 0) {
+          await new Promise((resolve) => {
+            req.logout((err) => {
+              if (err) {
+                logger.error("Error during session logout:", err);
+              }
+              resolve();
+            });
+          });
+        } else {
+          // Older versions don't use callbacks
+          req.logout();
+        }
       }
       
-      // Destroy the session completely
-      req.session.destroy((sessionErr) => {
-        if (sessionErr) {
-          logger.error("Error destroying session:", sessionErr);
+      // Only try to destroy the session if it exists
+      if (req.session) {
+        try {
+          await new Promise((resolve) => {
+            req.session.destroy((err) => {
+              if (err) {
+                logger.error("Error destroying session:", err);
+              }
+              resolve();
+            });
+          });
+        } catch (sessionError) {
+          logger.error("Failed to destroy session:", sessionError);
         }
-        
-        // Clear session cookie
-        res.clearCookie('sessionId');
-        
-        logger.info(`User logged out successfully: session destroyed and JWT ${jwtInvalidated ? 'invalidated' : 'not present'}`);
-        sendResponse(res, 200, "Logged out successfully");
-      });
+      }
+      
+      // Clear cookie regardless of session state
+      res.clearCookie('connect.sid');
+    };
+
+    // Handle the session cleanup
+    await logoutSessionHandling();
+    
+    // Send success response
+    return res.status(200).json({
+      success: true,
+      message: "Logged out successfully"
     });
   } catch (error) {
     logger.error("Error during logout:", error);
-    next(error instanceof AuthError ? error : AuthError.loginError());
+    // Even if there's an error, we should try to send a response
+    return res.status(500).json({
+      success: false,
+      message: "Error during logout process"
+    });
   }
-};
+});
 
 /**
  * @desc    Handle forgot password request

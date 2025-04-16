@@ -17,6 +17,7 @@ const {
   deleteAllInventory,
 } = require("../controllers/inventory.controller");
 const isAuthenticated = require("../middlewares/auth.middleware");
+const { authorize } = require("../middlewares/auth.middleware");
 const validate = require("../middlewares/validation.middleware");
 const {
   inventoryIdValidationRules,
@@ -30,64 +31,49 @@ const {
   transferInventoryValidationRules
 } = require("../validators/inventory.validator");
 
-// Get all inventory
+// Read operations - Accessible to all authenticated users
+// These operations don't modify data, just view inventory information
 router.get("/", isAuthenticated, getAllInventory);
-
-// Get inventory by MongoDB ID
 router.get(
   "/:inventory_Id", 
   isAuthenticated, 
   validate(inventoryIdValidationRules()),
   getInventoryById
 );
-
-// Get inventory by inventory ID (IN-XXXXX format)
 router.get(
   "/inventoryID/:inventoryID", 
   isAuthenticated, 
   validate(inventoryIDFormatValidationRules()),
   getInventoryByInventoryID
 );
-
-// Get inventory by warehouse
 router.get(
   "/warehouse/:warehouseId", 
   isAuthenticated, 
   validate(warehouseIdValidationRules()),
   getInventoryByWarehouse
 );
-
-// Get inventory by product
 router.get(
   "/product/:productId", 
   isAuthenticated, 
   validate(productIdValidationRules()),
   getInventoryByProduct
 );
-
-// Get inventory by stock status
 router.get(
   "/status/:stockStatus", 
   isAuthenticated, 
   validate(stockStatusValidationRules()),
   getInventoryByStockStatus
 );
-
-// Get low stock inventory
 router.get(
   "/low-stock", 
   isAuthenticated, 
   getLowStockInventory
 );
-
-// Get out of stock inventory
 router.get(
   "/out-of-stock", 
   isAuthenticated, 
   getOutOfStockInventory
 );
-
-// Search inventory
 router.get(
   "/search", 
   isAuthenticated, 
@@ -95,39 +81,45 @@ router.get(
   searchInventory
 );
 
-// Create or update inventory
+// Create/Update operations - Restricted to management roles
+// These operations create or modify inventory data
 router.post(
   "/", 
-  isAuthenticated, 
+  isAuthenticated,
+  authorize(['ADMIN', 'MANAGER']),
   validate(createInventoryValidationRules()),
   createOrUpdateInventory
 );
 
-// Adjust inventory quantity
+// Adjust inventory quantity - Important operation affecting stock levels
 router.put(
   "/adjust", 
-  isAuthenticated, 
+  isAuthenticated,
+  authorize(['ADMIN', 'MANAGER', 'SUPERVISOR']), 
   validate(adjustInventoryValidationRules()),
   adjustInventory
 );
 
-// Transfer inventory between warehouses
+// Transfer inventory between warehouses - Requires management approval
 router.put(
   "/transfer", 
-  isAuthenticated, 
+  isAuthenticated,
+  authorize(['ADMIN', 'MANAGER', 'SUPERVISOR']), 
   validate(transferInventoryValidationRules()),
   transferInventory
 );
 
-// Delete inventory by ID
+// Delete operations - Highly restricted to admin only
+// These are destructive operations that should be carefully controlled
 router.delete(
   "/:inventory_Id", 
-  isAuthenticated, 
+  isAuthenticated,
+  authorize('ADMIN'), 
   validate(inventoryIdValidationRules()),
   deleteInventory
 );
 
-// Delete all inventory (dev/test only)
-router.delete("/", isAuthenticated, deleteAllInventory);
+// Delete all inventory - Extremely restricted operation for dev/test only
+router.delete("/", isAuthenticated, authorize('ADMIN'), deleteAllInventory);
 
 module.exports = router;

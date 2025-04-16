@@ -19,33 +19,25 @@ const {
   forgotPasswordValidationRules,
   resetPasswordValidationRules
 } = require("../validators/auth.validator");
-const isAuthenticated = require("../middlewares/auth.middleware.js");
+const { authenticate, authorize } = require("../middlewares/auth.middleware");
 
 // Apply more restrictive rate limiting to all auth routes
 router.use(authLimiter);
 
-// Registration route
+// Public routes
 router.post("/register", validate(registerValidationRules()), register);
-
-// Login route
 router.post("/login", validate(loginValidationRules()), login);
-
-// Logout route
-router.post("/logout", isAuthenticated, logout);
-
-// Get JWT token (for authenticated users via OAuth)
-router.get("/token", isAuthenticated, getToken);
-
-// Password reset routes
 router.post("/forgot-password", validate(forgotPasswordValidationRules()), forgotPassword);
 router.post("/reset-password", validate(resetPasswordValidationRules()), resetPassword);
 
-// Token verification route
-router.get("/verify", isAuthenticated, verifyTokenValidity);
+// Authenticated routes
+router.post("/logout", authenticate, logout);
+router.get("/token", authenticate, getToken);
+router.get("/verify", authenticate, verifyTokenValidity);
 
 // Debug routes (development only)
 if (process.env.NODE_ENV !== 'production') {
-  router.get("/debug/:email", isAuthenticated, debugUserStatus);
+  router.get("/debug/:email", authenticate, authorize('ADMIN'), debugUserStatus);
 }
 
 // GitHub OAuth routes

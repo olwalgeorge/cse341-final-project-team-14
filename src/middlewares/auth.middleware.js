@@ -1,86 +1,141 @@
 // src/middlewares/auth.middleware.js
 
 /**
- * Authentication Middleware
+ * Authentication & Authorization Middleware
  * 
- * Handles user authentication via session or JWT
+ * Provides middleware functions to protect routes with authentication and role-based authorization
  */
 
+const { verifyToken, extractTokenFromRequest } = require('../auth/jwt');
 const { createLogger } = require('../utils/logger');
-const User = require('../models/user.model');
-const { AuthError } = require('../utils/errors');
-const jwt = require('jsonwebtoken');
-const { isTokenBlacklisted } = require('../utils/auth.utils');
-// Use process.env directly
-const JWT_SECRET = process.env.JWT_SECRET;
 
-const logger = createLogger('AuthMiddleware');
+const logger = createLogger('Middleware:Auth');
 
 /**
- * Middleware to check if the user is authenticated
- * Supports both session-based and token-based authentication
+ * Middleware to authenticate requests using JWT
+ * This should be used before any route that requires authentication
  */
-const isAuthenticated = async (req, res, next) => {
+const authenticate = async (req, res, next) => {
   try {
-    // Check for Bearer token in Authorization header
-    const authHeader = req.headers.authorization;
-    
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      // If no token in header, check for token in session
-      if (req.isAuthenticated && req.isAuthenticated()) {
-        return next(); 
-      }
-      // Use AuthError from utils/errors instead of direct response
-      return next(AuthError.unauthorized('Authorization failed. No valid authentication found.'));
+    // Extract token from the request
+    const token = extractTokenFromRequest(req);
+
+    if (!token) {
+      logger.warn('No authentication token provided');
+      return res.status(401).json({ 
+        success: false, 
+        message: 'Authentication required. Please provide a valid token.' 
+      });
     }
+
+    // Verify the token
+    const decoded = await verifyToken(token);
     
-    // Extract the token
-    const token = authHeader.split(' ')[1];
-    
-    try {
-      // Check if token is blacklisted first
-      const blacklisted = await isTokenBlacklisted(token);
-      if (blacklisted) {
-        logger.warn('Attempt to use blacklisted token');
-        return next(AuthError.unauthorized('Token has been invalidated. Please log in again.'));
-      }
-      
-      // Verify the token with a nested try-catch for better error specificity
-      const decoded = jwt.verify(token, JWT_SECRET);
-      
-      // Find the user
-      const user = await User.findById(decoded.sub);
-      
-      // Check if user exists
-      if (!user) {
-        return next(AuthError.unauthorized('User not found'));
-      }
-      
-      // Check if token version matches (if token versioning is implemented)
-      if (user.tokenVersion && (!decoded.version || decoded.version < user.tokenVersion)) {
-        return next(AuthError.tokenExpired('Token is no longer valid. Please log in again.'));
-      }
-      
-      // Set the user on the request object
-      req.user = user;
-      
-      next();
-    } catch (tokenError) {
-      // Handle specific JWT verification errors
-      if (tokenError.name === 'TokenExpiredError') {
-        return next(AuthError.tokenExpired('Token has expired'));
-      } else if (tokenError.name === 'JsonWebTokenError') {
-        return next(AuthError.invalidToken('Invalid token'));
-      }
-      
-      // For any other token errors
-      return next(AuthError.unauthorized('Token validation failed'));
+    if (!decoded) {
+      logger.warn('Invalid or expired token provided');
+      return res.status(401).json({ 
+        success: false, 
+        message: 'Invalid or expired token. Please log in again.' 
+      });
     }
-  } catch (err) {
-    // For any other unexpected errors
-    logger.error('Authentication middleware error:', err);
-    next(AuthError.serverError('Authentication error'));
+
+    // Attach user info to the request object for use in route handlers
+    req.user = decoded;
+    next();
+  } catch (error) {
+    logger.error('Authentication error:', error);
+    return res.status(500).json({ 
+      success: false, 
+      message: 'An error occurred during authentication.' 
+    });
   }
 };
 
+/**
+ * Middleware factory to restrict access based on user roles
+ * @param {Array|String} roles - Authorized role(s) for the route
+ * @returns {Function} Middleware function
+ */
+const authorize = (roles) => {
+  // Convert string to array if a single role is provided
+  const allowedRoles = Array.isArray(roles) ? roles : [roles];
+  
+  return (req, res, next) => {
+    try {
+      // Check if user exists (authenticate middleware should be called first)
+      if (!req.user) {
+        logger.warn('Authorization attempted without authentication');
+        return res.status(401).json({ 
+          success: false, 
+          message: 'Authentication required before authorization.' 
+        });
+      }
+
+      // Check if user role is in the allowed roles
+      if (!allowedRoles.includes(req.user.role)) {
+        logger.warn(`Access denied for user ${req.user.userId} with role ${req.user.role}`);
+        return res.status(403).json({ 
+          success: false, 
+          message: 'You do not have permission to access this resource.' 
+        });
+      }
+
+      // User has appropriate role
+      next();
+    } catch (error) {
+      logger.error('Authorization error:', error);
+      return res.status(500).json({ 
+        success: false, 
+        message: 'An error occurred during authorization.' 
+      });
+    }
+  };
+};
+
+/**
+ * Middleware to check if user is requesting their own resource
+ * Useful for routes that should only allow users to access their own data
+ * @param {Function} extractResourceUserId - Function to extract user ID from request
+ */
+const authorizeOwnership = (extractResourceUserId) => {
+  return async (req, res, next) => {
+    try {
+      const resourceUserId = await extractResourceUserId(req);
+      
+      // Allow admins to access any resource
+      if (req.user.role === 'ADMIN') {
+        return next();
+      }
+      
+      // Check if the resource belongs to the requesting user
+      if (req.user.userId !== resourceUserId) {
+        logger.warn(`User ${req.user.userId} attempted to access resource owned by ${resourceUserId}`);
+        return res.status(403).json({ 
+          success: false, 
+          message: 'You do not have permission to access this resource.' 
+        });
+      }
+      
+      next();
+    } catch (error) {
+      logger.error('Ownership authorization error:', error);
+      return res.status(500).json({ 
+        success: false, 
+        message: 'An error occurred during authorization.' 
+      });
+    }
+  };
+};
+
+// For backward compatibility with existing code
+// This makes the default export function as the authenticate middleware
+// while still allowing destructured imports for the new API
+const isAuthenticated = authenticate;
+
+// Export both the new object-based API and the legacy function
 module.exports = isAuthenticated;
+
+// Add the new functions as properties to maintain the new object-based API
+module.exports.authenticate = authenticate;
+module.exports.authorize = authorize;
+module.exports.authorizeOwnership = authorizeOwnership;
