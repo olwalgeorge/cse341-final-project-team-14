@@ -54,6 +54,149 @@ const transformUserData = (data) => {
 };
 
 /**
+ * Checks schema definitions for potential duplicate indexes
+ * @param {Object} schema - Mongoose schema to check
+ * @returns {Array} - List of potentially duplicated indexes with details
+ */
+const checkDuplicateIndexes = (schema) => {
+  const indexMap = new Map();
+  const potentialDuplicates = [];
+  
+  // Check field-level indexes
+  Object.keys(schema.paths).forEach(path => {
+    const pathConfig = schema.paths[path];
+    if (pathConfig.options && pathConfig.options.index === true) {
+      const indexKey = `${path}:1`;
+      const source = indexMap.has(indexKey) ? 
+        [...indexMap.get(indexKey).sources, 'field-level'] :
+        ['field-level'];
+      
+      indexMap.set(indexKey, {
+        count: (indexMap.get(indexKey)?.count || 0) + 1,
+        path,
+        sources: source
+      });
+    }
+  });
+  
+  // Check schema-level indexes
+  if (schema._indexes && schema._indexes.length > 0) {
+    schema._indexes.forEach(([indexSpec], idx) => {
+      Object.entries(indexSpec).forEach(([key, value]) => {
+        const indexKey = `${key}:${value}`;
+        const source = indexMap.has(indexKey) ? 
+          [...indexMap.get(indexKey).sources, `schema-level[${idx}]`] :
+          [`schema-level[${idx}]`];
+        
+        indexMap.set(indexKey, {
+          count: (indexMap.get(indexKey)?.count || 0) + 1,
+          path: key,
+          sources: source
+        });
+      });
+    });
+  }
+  
+  // Find duplicates
+  for (const [key, details] of indexMap.entries()) {
+    if (details.count > 1) {
+      potentialDuplicates.push({
+        index: key,
+        path: details.path,
+        count: details.count,
+        sources: details.sources
+      });
+    }
+  }
+  
+  return potentialDuplicates;
+};
+
+/**
+ * Fixes duplicate indexes in a Mongoose schema
+ * @param {Object} schema - Mongoose schema to fix
+ * @returns {Object} - Object containing removed duplicates and modified schema
+ */
+const fixDuplicateIndexes = (schema) => {
+  const duplicates = checkDuplicateIndexes(schema);
+  const removedIndices = [];
+  
+  // If no duplicates, return early
+  if (duplicates.length === 0) {
+    return { 
+      modified: false, 
+      removedIndices: [],
+      schema 
+    };
+  }
+  
+  // Process each duplicate
+  duplicates.forEach(duplicate => {
+    // Extract path and determine if it's field-level
+    const { path, sources } = duplicate;
+    const hasFieldLevel = sources.includes('field-level');
+    
+    // If it has field-level index, remove from schema-level definitions
+    if (hasFieldLevel && schema._indexes) {
+      const initialLength = schema._indexes.length;
+      
+      // Filter out the duplicate index from schema._indexes
+      schema._indexes = schema._indexes.filter(([indexSpec]) => {
+        return indexSpec[path] === undefined;
+      });
+      
+      if (initialLength !== schema._indexes.length) {
+        removedIndices.push({
+          path,
+          type: 'schema-level',
+          keptAt: 'field-level'
+        });
+      }
+    } 
+    // Otherwise, assume we keep the first schema-level index
+    else if (schema._indexes && schema._indexes.length > 0) {
+      // Find all schema-level indexes for this path
+      const indices = sources
+        .filter(s => s.startsWith('schema-level'))
+        .map(s => {
+          const match = s.match(/schema-level\[(\d+)\]/);
+          return match ? parseInt(match[1]) : -1;
+        })
+        .filter(idx => idx !== -1)
+        .sort((a, b) => a - b);
+      
+      // Keep the first one, remove others (if any)
+      if (indices.length > 1) {
+        // Get the indices to remove (skip the first one)
+        const toRemove = indices.slice(1);
+        
+        // Create a set for quick lookup
+        const removeSet = new Set(toRemove);
+        
+        // Filter the schema indexes
+        const initialLength = schema._indexes.length;
+        schema._indexes = schema._indexes.filter((_, idx) => !removeSet.has(idx));
+        
+        if (initialLength !== schema._indexes.length) {
+          removedIndices.push({
+            path,
+            type: 'duplicate-schema-level',
+            keptAt: `schema-level[${indices[0]}]`,
+            removed: toRemove.map(i => `schema-level[${i}]`)
+          });
+        }
+      }
+    }
+  });
+  
+  return {
+    modified: removedIndices.length > 0,
+    removedIndices,
+    schema
+  };
+};
+
+/**
  * Sanitize user data by selecting specific fields or excluding sensitive fields
  * @param {Object} user - User object (can be mongoose document or plain object)
  * @param {Array} fields - Fields to include (if provided) or all except sensitive by default
@@ -117,4 +260,6 @@ module.exports = {
   generateUserId,
   transformUserData,
   sanitizeUserData,
+  checkDuplicateIndexes,
+  fixDuplicateIndexes,
 };

@@ -1,6 +1,6 @@
 ### Environment Variables
 @baseUrl = http://localhost:3000
-@authToken =eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2N2ZmYjE2YzNhYThiZmM0OWE1ZGQxZjciLCJ1c2VySWQiOiJVU1ItMDAwMDkiLCJlbWFpbCI6Im9sd2FsZ2VvcmdlMTVAZ21haWwuY29tIiwicm9sZSI6IlVTRVIiLCJ1c2VybmFtZSI6Impha29tIiwidmVyc2lvbiI6NCwiaWF0IjoxNzQ0ODEzNDg3LCJleHAiOjE3NDQ4OTk4ODd9.KHbQRWoVNSUV3_skJasryFUFrZGXutJvwyPSuKJ7bCM
+@authToken =eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2N2ZmYjE2YzNhYThiZmM0OWE1ZGQxZjciLCJ1c2VySWQiOiJVU1ItMDAwMDkiLCJlbWFpbCI6Im9sd2FsZ2VvcmdlMTVAZ21haWwuY29tIiwicm9sZSI6IlVTRVIiLCJ1c2VybmFtZSI6Impha29tIiwidmVyc2lvbiI6NywiaWF0IjoxNzQ0ODE4MzI4LCJleHAiOjE3NDQ5MDQ3Mjh9.NW5_vDX_hhMM35gi11tSymHVADBeyLArpvQk_2JSa3Q
 
 ### Register a new user
 POST {{baseUrl}}/auth/register
@@ -10,7 +10,7 @@ Content-Type: application/json
   
   "username": "jakom",
   "email": "olwalgeorge15@gmail.com",
-  "password": "Password123!",
+  "password": "NewPassword123!",
   "fullName": "Test User"
 }
 
@@ -20,7 +20,7 @@ Content-Type: application/json
 
 {
   "email": "olwalgeorge15@gmail.com",
-  "password": "NewPassword456!!"
+  "password": "NewPassword123!"
 }
 
 ### Get JWT token (for OAuth authenticated users)
@@ -31,25 +31,9 @@ Authorization: Bearer {{authToken}}
 POST {{baseUrl}}/auth/logout
 Authorization: Bearer {{authToken}}
 
-### GitHub OAuth authentication (opens browser)
-# GET {{baseUrl}}/auth/github
-
-### GitHub OAuth callback URL
-# This is handled by the server - just for documentation
-# GET {{baseUrl}}/auth/github/callback
-
 ### Verify token validity
 GET {{baseUrl}}/auth/verify
 Authorization: Bearer {{authToken}}
-
-### Refresh token (if implemented)
-POST {{baseUrl}}/auth/refresh-token
-Content-Type: application/json
-Authorization: Bearer {{authToken}}
-
-{
-  "refreshToken": "your_refresh_token_here"
-}
 
 ### Password reset request
 POST {{baseUrl}}/auth/forgot-password
@@ -64,9 +48,9 @@ POST {{baseUrl}}/auth/reset-password
 Content-Type: application/json
 
 {
-  "token": "81e9705de0817aa3b947187e439143578244f7a5b0a0b558950c65f8439077af",
-  "password": "NewPassword456!!",
-  "confirmPassword": "NewPassword456!!"
+  "token": "f30625ac5f6f98c8ddbc69b340426fb81426ddc4e62324e0091cb1e1287ab0fe",
+  "password": "NewPassword123!",
+  "confirmPassword": "NewPassword123!"
 }
 
 ### Debug user status (DEV ONLY)
