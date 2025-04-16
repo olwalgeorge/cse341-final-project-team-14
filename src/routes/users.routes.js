@@ -1,24 +1,26 @@
 const express = require("express");
+const { createRateLimiter } = require("../middlewares/rateLimit.middleware");
 const {
-  getUserProfile,
-  updateUserProfile,
-  getUserById,
-  deleteUserById,
   getAllUsers,
+  getUserById,
+  getUserByUserID,
   getUserByUsername,
   getUserByEmail,
   getUsersByRole,
-  deleteAllUsers,
   updateUserById,
-  searchUsers,
-} = require("../controllers/users.controller.js");
-const validate = require("../middlewares/validation.middleware.js");
-const isAuthenticated = require("../middlewares/auth.middleware.js");
+  deleteUserById,
+  deleteAllUsers,
+  getUserProfile,
+  updateUserProfile,
+  searchUsers
+} = require("../controllers/users.controller");
+const isAuthenticated = require("../middlewares/auth.middleware");
+const validate = require("../middlewares/validation.middleware");
 const {
+  
   userUpdateValidationRules,
   userIDValidationRules,
-  user_IdValidationRules,
-  userTypeValidationRules,
+  user_IdValidationRules, 
   usernameValidationRules,
   emailValidationRules,
   roleValidationRules,
@@ -27,66 +29,27 @@ const {
 
 const router = express.Router();
 
-router.get("/search", isAuthenticated, validate(searchValidationRules()), searchUsers);
+// Custom rate limiter for user routes - slightly more permissive than auth but still protected
+const userLimiter = createRateLimiter({
+  windowMs: 5 * 60 * 1000, // 5 minutes
+  max: 30 // 30 requests per 5 minutes
+});
 
-router.get("/profile", isAuthenticated, getUserProfile);
+// Apply rate limiting to user routes
+router.use(userLimiter);
 
-router.put(
-  "/profile",
-  isAuthenticated,
-  validate(userUpdateValidationRules()),
-  updateUserProfile
-);
-
-router.get(
-  "/userID/:userID",
-  isAuthenticated,
-  validate(userIDValidationRules()),
-  getUserById
-);
-
-router.delete(
-  "/:user_Id",
-  isAuthenticated,
-  validate(user_IdValidationRules()),
-  deleteUserById
-);
-
+// User routes
 router.get("/", isAuthenticated, getAllUsers);
-
-router.get(
-  "/username/:username",
-  isAuthenticated,
-  validate(usernameValidationRules()),
-  getUserByUsername
-);
-
-router.get(
-  "/email/:email",
-  isAuthenticated,
-  validate(emailValidationRules()),
-  getUserByEmail
-);
-
-router.get(
-  "/role/:role",
-  isAuthenticated,
-  validate(roleValidationRules()),
-  getUsersByRole
-);
-
-router.delete(
-  "/",
-  isAuthenticated,
-  validate(userTypeValidationRules()),
-  deleteAllUsers
-);
-
-router.put(
-  "/:user_Id",
-  isAuthenticated,
-  validate(userUpdateValidationRules()),
-  updateUserById
-);
+router.get("/search", isAuthenticated, validate(searchValidationRules()), searchUsers);
+router.get("/profile", isAuthenticated, getUserProfile);
+router.put("/profile", isAuthenticated, validate(userUpdateValidationRules()), updateUserProfile);
+router.get("/userID/:userID", isAuthenticated, validate(userIDValidationRules()), getUserByUserID);
+router.get("/username/:username", isAuthenticated, validate(usernameValidationRules()), getUserByUsername);
+router.get("/email/:email", isAuthenticated, validate(emailValidationRules()), getUserByEmail);
+router.get("/role/:role", isAuthenticated, validate(roleValidationRules()), getUsersByRole);
+router.get("/:user_Id", isAuthenticated, validate(user_IdValidationRules()), getUserById);
+router.put("/:user_Id", isAuthenticated, validate(user_IdValidationRules()), validate(userUpdateValidationRules()), updateUserById);
+router.delete("/:user_Id", isAuthenticated, validate(user_IdValidationRules()), deleteUserById);
+router.delete("/", isAuthenticated, deleteAllUsers);
 
 module.exports = router;

@@ -1,7 +1,7 @@
 const sendResponse = require("../utils/response.js");
 const asyncHandler = require("express-async-handler");
 const { createLogger } = require("../utils/logger.js");
-const { ApiError, DatabaseError } = require("../utils/errors.js");
+const { DatabaseError } = require("../utils/errors.js");
 const {
   getUserByIdService,
   getUserByUserIdService,
@@ -55,6 +55,27 @@ const getUserProfile = asyncHandler(async (req, res, next) => {
 });
 
 /**
+ * @desc    Get user by ID
+ * @route   GET /users/userID/:userID
+ * @access  Private
+ */
+const getUserById = asyncHandler(async (req, res, next) => {
+  logger.info(`getUserById called with ID: ${req.params.userID}`);
+  logger.debug("Request body:", req.body);
+  try {
+    const user = await getUserByIdService(req.params.user_Id);
+    if (!user) {
+      return next(DatabaseError.notFound("User"));
+    }
+    const transformedUser = transformUser(user);
+    sendResponse(res, 200, "User retrieved successfully", transformedUser);
+  } catch (error) {
+    logger.error(`Error retrieving user with ID: ${req.params.user_Id}`, error);
+    next(error);
+  }
+});
+
+/**
  * @desc    Update user profile
  * @route   PUT /users/profile
  * @access  Private
@@ -92,33 +113,13 @@ const updateUserProfile = asyncHandler(async (req, res, next) => {
   }
 });
 
-/**
- * @desc    Logout user
- * @route   GET /users/logout
- * @access  Private
- */
-const logoutUser = asyncHandler(async (req, res, next) => {
-  logger.info(`logoutUser called for user ID: ${req.user?.user_Id}`);
-  logger.debug("Request body:", req.body);
-  req.logout((err) => {
-    if (err) {
-      logger.error("Error during logout:", err);
-      return next(
-        ApiError.internal("Internal server error during logout", {
-          message: err.message,
-        })
-      );
-    }
-    sendResponse(res, 200, "User logged out successfully");
-  });
-});
 
 /**
  * @desc    Get user by ID
  * @route   GET /users/userID/:userID
  * @access  Private
  */
-const getUserById = asyncHandler(async (req, res, next) => {
+const getUserByUserID = asyncHandler(async (req, res, next) => {
   logger.info(`getUserById called with ID: ${req.params.userID}`);
   logger.debug("Request body:", req.params.userID);
   try {
@@ -352,7 +353,7 @@ const searchUsers = asyncHandler(async (req, res, next) => {
 
 module.exports = {
   getUserProfile,
-  logoutUser,
+  getUserByUserID,
   updateUserProfile,
   getUserById,
   deleteUserById,

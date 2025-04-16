@@ -67,31 +67,44 @@ const userRequiredValidationRules = () => {
   ];
 };
 
-const userGeneralValidationRules = () => {
-  return [
-    body("facebookId").optional().trim().escape(),
-    body("googleId").optional().trim().escape(),
-    body("twitterId").optional().trim().escape(),
-    body("githubId").optional().trim().escape(),
-    body("profilePicture").optional().trim().escape(),
-    body("bio").optional().trim().escape(),
-    body("website").optional().trim().escape(),
-    body("location").optional().trim().escape(),
-    body("isVerified").optional().isBoolean(),
-    body("phoneNumber").optional().trim().escape(),
-    body("preferences").optional().isObject(),
-  ];
-};
 
 const userCreateValidationRules = () => {
   return [...userRequiredValidationRules(), ...userUniquenessValidationRules()];
 };
 
-const userCreateProfileRules = () => {
-  return [...userGeneralValidationRules];
+/**
+ * Validation rules for user login
+ * @returns {Array} Array of express-validator validation middleware
+ */
+const loginValidationRules = () => {
+  return [
+    body("email", "Email is required")
+      .not()
+      .isEmpty()
+      .isEmail()
+      .withMessage("Invalid email format")
+      .normalizeEmail(),
+    body("password", "Password is required")
+      .not()
+      .isEmpty()
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,50}$/
+      )
+      .withMessage(
+        'Password must contain at least one lowercase letter, one uppercase letter, one number, and one special character, and be between 8 to 50 characters'
+      )
+    ];
 };
 
-module.exports = {
-  userCreateValidationRules,
-  userCreateProfileRules,
+/**
+ * Validation rules for user registration
+ * @returns {Array} Array of express-validator validation middleware
+ */
+const registerValidationRules = () => {
+  return userCreateValidationRules();
+};
+
+module.exports = {  
+  registerValidationRules,
+  loginValidationRules
 };

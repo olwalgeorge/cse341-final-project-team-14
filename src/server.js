@@ -2,7 +2,7 @@
 const app = require("./app.js");
 const config = require("./config/config.js");
 const { createLogger } = require("./utils/logger.js");
-const mongoose = require("mongoose");
+const { closeConnection } = require("./config/database.js");
 const logger = createLogger('Server');
 
 /**
@@ -12,15 +12,15 @@ const logger = createLogger('Server');
  */
 const gracefulShutdown = async (error, source) => {
   try {
-    logger.error(`${source}! 💥 Shutting down...`, error);
-    logger.error(error.stack);
-
-    // Close database connections
-    if (mongoose.connection.readyState !== 0) { // If connection is not closed
-      logger.info('Closing database connections...');
-      await mongoose.connection.close();
-      logger.info('Database connections closed');
+    if (error) {
+      logger.error(`${source}! 💥 Shutting down...`, error);
+      logger.error(error.stack);
+    } else {
+      logger.info(`${source}! Shutting down gracefully...`);
     }
+
+    // Close database connections using our improved function
+    await closeConnection(`graceful shutdown (${source})`);
 
     // In production, perform additional cleanup operations
     if (config.env === 'production') {
@@ -30,8 +30,8 @@ const gracefulShutdown = async (error, source) => {
 
     logger.info('Graceful shutdown complete');
     
-    // Exit with error code
-    process.exit(1);
+    // Exit with appropriate code
+    process.exit(error ? 1 : 0);
   } catch (cleanupError) {
     logger.error('Error during graceful shutdown:', cleanupError);
     process.exit(1); // Force exit even if cleanup fails
@@ -61,19 +61,15 @@ process.on('unhandledRejection', (reason, promise) => {
 process.on('SIGTERM', () => {
   logger.info('SIGTERM signal received. Shutting down gracefully.');
   server.close(async () => {
-    try {
-      // Close database connections
-      if (mongoose.connection.readyState !== 0) {
-        logger.info('Closing database connections...');
-        await mongoose.connection.close();
-        logger.info('Database connections closed');
-      }
-      logger.info('Process terminated.');
-      process.exit(0);
-    } catch (err) {
-      logger.error('Error during SIGTERM cleanup:', err);
-      process.exit(1);
-    }
+    await gracefulShutdown(null, 'SIGTERM signal');
+  });
+});
+
+// Add a graceful shutdown function for SIGINT (Ctrl+C) signals
+process.on('SIGINT', () => {
+  logger.info('SIGINT signal (Ctrl+C) received. Shutting down gracefully.');
+  server.close(async () => {
+    await gracefulShutdown(null, 'SIGINT signal (Ctrl+C)');
   });
 });
 

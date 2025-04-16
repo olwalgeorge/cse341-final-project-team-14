@@ -101,7 +101,7 @@ POST {{baseUrl}}/auth/login
 Content-Type: application/json
 
 {
-  "password": "TestPassword123!",
+  "password": "TestPassword123!3",
   "email": "john.smith@example.com"
 }
 

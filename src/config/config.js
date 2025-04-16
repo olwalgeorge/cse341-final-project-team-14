@@ -20,4 +20,13 @@ module.exports = {
     clientSecret: process.env.GITHUB_CLIENT_SECRET,
     callbackUrl: process.env.GITHUB_CALLBACK_URL,
   },
+  // Rate limiting configuration
+  rateLimit: {
+    windowMs: parseInt(process.env.RATE_LIMIT_WINDOW_MS || 15 * 60 * 1000), // 15 minutes by default
+    max: parseInt(process.env.RATE_LIMIT_MAX || 100),                       // 100 requests per windowMs by default
+    auth: {
+      windowMs: parseInt(process.env.AUTH_RATE_LIMIT_WINDOW_MS || 60 * 1000), // 1 minute for auth endpoints
+      max: parseInt(process.env.AUTH_RATE_LIMIT_MAX || 5),                    // 5 requests per minute for auth endpoints
+    }
+  },
 };

@@ -1,9 +1,10 @@
 // src/app.js
 const express = require("express");
 const cors = require("cors");
-const connectDB = require("./config/database.js");
+const { connectDB } = require("./config/database.js");
 const routes = require("./routes/index.js");
 const errorMiddleware = require("./middlewares/error.middleware.js");
+const { globalLimiter } = require("./middlewares/rateLimit.middleware.js");
 const swaggerUi = require("swagger-ui-express");
 const swaggerConfig = require("./config/swagger.js");
 const passport = require("./config/passport.js");
@@ -14,6 +15,9 @@ const { createLogger } = require("./utils/logger.js");
 const logger = createLogger('App');
 
 const app = express();
+
+// Apply global rate limiter to all requests
+app.use(globalLimiter);
 
 // Middleware
 app.use(
@@ -41,8 +45,10 @@ app.use((req, res, next) => {
   next();
 });
 
-// Database Connection
-connectDB();
+// Database Connection - using improved connect method
+connectDB().catch(err => {
+  logger.error("Failed to connect to database on startup:", err);
+});
 
 // Static files
 app.use(express.static("public"));

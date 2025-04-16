@@ -1,31 +1,32 @@
 const express = require("express");
 const router = express.Router();
 const passport = require("../config/passport.js");
-const localAuthController = require("../controllers/auth.controller.js");
+const { authLimiter } = require("../middlewares/rateLimit.middleware");
 const {
-  userCreateValidationRules,
-} = require("../validators/auth.validator.js");
-const validate = require("../middlewares/validation.middleware.js");
+  register,
+  login,
+  logout,
+} = require("../controllers/auth.controller");
+const validate = require("../middlewares/validation.middleware");
+const {
+  registerValidationRules,
+  loginValidationRules,
+} = require("../validators/auth.validator");
 const isAuthenticated = require("../middlewares/auth.middleware.js");
 
-// Local authentication routes
-router.post(
-  "/register",
-  validate(userCreateValidationRules()),
-  localAuthController.register
-);
+// Apply more restrictive rate limiting to all auth routes
+router.use(authLimiter);
 
-router.post(
-  "/login",
-  passport.authenticate("local", {
-    failureRedirect: "/login.html",
-    failureFlash: true,
-  }),
-  localAuthController.loginSuccess
-);
+// Registration route
+router.post("/register", validate(registerValidationRules()), register);
 
-router.post("/logout", isAuthenticated, localAuthController.logout);
+// Login route
+router.post("/login", validate(loginValidationRules()), login);
 
+// Logout route
+router.post("/logout", isAuthenticated, logout);
+
+// GitHub OAuth routes
 // GitHub authentication routes
 router.get(
   "/github",
