@@ -97,3 +97,45 @@ MongoServerError: E11000 duplicate key error collection: team_14_final_project.t
 2025-04-16 21:28:33 INFO [inventory-api:Database]: MongoDB Connected: cluster0-shard-00-01.wncfx.mongodb.net 
 2025-04-16 21:31:33 WARN [inventory-api:AuthMiddleware]: Attempt to use blacklisted token 
 2025-04-16 21:31:33 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: AuthError - Token has been invalidated. Please log in again. 
+2025-04-16 21:36:19 INFO [inventory-api:EnvValidator]: =============== ENVIRONMENT SUMMARY =============== 
+2025-04-16 21:36:18 INFO [inventory-api:Passport]: GitHub authentication strategy initialized successfully 
+2025-04-16 21:36:19 INFO [inventory-api:Server]: Server running on https://cse341-final-project-team-14.onrender.com in production mode 
+2025-04-16 21:36:19 INFO [inventory-api:EnvValidator]: Environment: PRODUCTION 
+2025-04-16 21:36:19 INFO [inventory-api:EnvValidator]: Port: 3000 
+2025-04-16 21:36:19 INFO [inventory-api:EnvValidator]: Database: mongodb+srv://ol****:********@cluster0.wncfx.mongodb.net/team_14_final_project?retryWrites=true&w=majority&appName=Cluster0 
+2025-04-16 21:36:19 INFO [inventory-api:EnvValidator]: External URL: https://cse341-final-project-team-14.onrender.com 
+2025-04-16 21:36:19 INFO [inventory-api:EnvValidator]: ------- Features Status ------- 
+2025-04-16 21:36:19 INFO [inventory-api:EnvValidator]: githubOAuth: Enabled ✅ 
+2025-04-16 21:36:19 INFO [inventory-api:EnvValidator]: =============================================== 
+2025-04-16 21:36:19 INFO [inventory-api:Server]: API Documentation: https://cse341-final-project-team-14.onrender.com/api-docs 
+2025-04-16 21:36:25 INFO [inventory-api:Database]: MongoDB Connected: cluster0-shard-00-01.wncfx.mongodb.net 
+2025-04-16 21:36:40 WARN [inventory-api:AuthMiddleware]: Attempt to use blacklisted token 
+2025-04-16 21:36:40 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: AuthError - Token has been invalidated. Please log in again. 
+2025-04-16 21:36:51 INFO [inventory-api:Server]: SIGINT signal received, shutting down gracefully 
+2025-04-16 21:36:51 INFO [inventory-api:Database]: Closing MongoDB connection due to server shutdown 
+2025-04-16 21:37:33 INFO [inventory-api:EnvValidator]: =============== ENVIRONMENT SUMMARY =============== 
+2025-04-16 21:37:33 INFO [inventory-api:Passport]: GitHub authentication strategy initialized successfully 
+2025-04-16 21:37:33 INFO [inventory-api:Server]: Server running on https://cse341-final-project-team-14.onrender.com in production mode 
+2025-04-16 21:37:33 INFO [inventory-api:EnvValidator]: Environment: PRODUCTION 
+2025-04-16 21:37:33 INFO [inventory-api:EnvValidator]: Port: 3000 
+2025-04-16 21:37:33 INFO [inventory-api:EnvValidator]: Database: mongodb+srv://ol****:********@cluster0.wncfx.mongodb.net/team_14_final_project?retryWrites=true&w=majority&appName=Cluster0 
+2025-04-16 21:37:33 INFO [inventory-api:EnvValidator]: External URL: https://cse341-final-project-team-14.onrender.com 
+2025-04-16 21:37:33 INFO [inventory-api:EnvValidator]: ------- Features Status ------- 
+2025-04-16 21:37:33 INFO [inventory-api:EnvValidator]: githubOAuth: Enabled ✅ 
+2025-04-16 21:37:33 INFO [inventory-api:EnvValidator]: =============================================== 
+2025-04-16 21:37:33 INFO [inventory-api:Server]: API Documentation: https://cse341-final-project-team-14.onrender.com/api-docs 
+2025-04-16 21:37:38 INFO [inventory-api:Database]: MongoDB Connected: cluster0-shard-00-02.wncfx.mongodb.net 
+2025-04-16 21:47:23 INFO [inventory-api:Server]: SIGINT signal received, shutting down gracefully 
+2025-04-16 21:47:23 INFO [inventory-api:Database]: Closing MongoDB connection due to server shutdown 
+2025-04-16 21:47:27 INFO [inventory-api:EnvValidator]: =============== ENVIRONMENT SUMMARY =============== 
+2025-04-16 21:47:27 INFO [inventory-api:Passport]: GitHub authentication strategy initialized successfully 
+2025-04-16 21:47:27 INFO [inventory-api:Server]: Server running on https://cse341-final-project-team-14.onrender.com in production mode 
+2025-04-16 21:47:27 INFO [inventory-api:EnvValidator]: Environment: PRODUCTION 
+2025-04-16 21:47:27 INFO [inventory-api:EnvValidator]: Port: 3000 
+2025-04-16 21:47:27 INFO [inventory-api:EnvValidator]: Database: mongodb+srv://ol****:********@cluster0.wncfx.mongodb.net/team_14_final_project?retryWrites=true&w=majority&appName=Cluster0 
+2025-04-16 21:47:27 INFO [inventory-api:EnvValidator]: External URL: https://cse341-final-project-team-14.onrender.com 
+2025-04-16 21:47:27 INFO [inventory-api:EnvValidator]: ------- Features Status ------- 
+2025-04-16 21:47:27 INFO [inventory-api:EnvValidator]: githubOAuth: Enabled ✅ 
+2025-04-16 21:47:27 INFO [inventory-api:EnvValidator]: =============================================== 
+2025-04-16 21:47:27 INFO [inventory-api:Server]: API Documentation: https://cse341-final-project-team-14.onrender.com/api-docs 
+2025-04-16 21:47:30 INFO [inventory-api:Database]: MongoDB Connected: cluster0-shard-00-01.wncfx.mongodb.net 

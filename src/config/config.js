@@ -62,11 +62,12 @@ const environments = {
   },
   production: {
     env: 'production',
-    appUrl: process.env.RENDER_EXTERNAL_HOSTNAME || 'https://cse341-final-project-team-14.onrender.com',
+    // Format hostname to ensure it has https:// prefix
+    appUrl: formatHostname(process.env.RENDER_EXTERNAL_HOSTNAME) || 'https://cse341-final-project-team-14.onrender.com',
     cors: {
       origin: function(origin, callback) {
         const allowedOrigins = [
-          process.env.RENDER_EXTERNAL_HOSTNAME || 'https://cse341-final-project-team-14.onrender.com'
+          formatHostname(process.env.RENDER_EXTERNAL_HOSTNAME) || 'https://cse341-final-project-team-14.onrender.com'
         ];
         // Allow requests with no origin (like mobile apps, curl requests)
         if (!origin) return callback(null, true);
@@ -78,10 +79,16 @@ const environments = {
       credentials: true,
     },
     swagger: {
-      server: process.env.RENDER_EXTERNAL_HOSTNAME || 'https://cse341-final-project-team-14.onrender.com'
+      server: formatHostname(process.env.RENDER_EXTERNAL_HOSTNAME) || 'https://cse341-final-project-team-14.onrender.com'
     }
   },
 };
+
+// Helper function to ensure hostname has https:// prefix
+function formatHostname(hostname) {
+  if (!hostname) return null;
+  return hostname.startsWith('http') ? hostname : `https://${hostname}`;
+}
 
 // Determine current environment
 const currentEnv = process.env.NODE_ENV || 'development';

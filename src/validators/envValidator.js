@@ -20,7 +20,8 @@ const ENV_GROUPS = {
     { name: 'JWT_EXPIRES_IN', validator: (val) => val && val.length > 0, required: true }
   ],
   production: [
-    { name: 'RENDER_EXTERNAL_HOSTNAME', validator: (val) => val && val.startsWith('https://'), required: true }
+    // Modified to accept URLs with or without the protocol
+    { name: 'RENDER_EXTERNAL_HOSTNAME', validator: (val) => val && (val.includes('.') || val.startsWith('http')), required: true }
   ],
   githubOAuth: [
     { name: 'GITHUB_CLIENT_ID', validator: (val) => val && val.length > 0, required: true },
