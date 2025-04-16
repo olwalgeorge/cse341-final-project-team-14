@@ -136,6 +136,21 @@ class DatabaseManager {
   }
 }
 
+/**
+ * Close MongoDB connection
+ * @param {string} [reason="application shutdown"] - Reason for closing the connection
+ */
+async function closeConnection(reason = "application shutdown") {
+  try {
+    logger.info(`Closing MongoDB connection due to ${reason}`);
+    await mongoose.disconnect();
+    logger.info("MongoDB connection closed successfully");
+  } catch (error) {
+    logger.error(`Error closing MongoDB connection: ${error.message}`);
+    throw error;
+  }
+}
+
 // Create singleton instance
 const dbManager = new DatabaseManager();
 

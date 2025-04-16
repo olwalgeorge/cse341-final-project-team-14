@@ -108,7 +108,7 @@ class ServerManager {
 
     try {
       // Close database connections
-      await closeConnection();
+      await closeConnection("server shutdown");
       logger.info("Database connections closed");
     } catch (err) {
       logger.error("Error closing database connection:", err);
