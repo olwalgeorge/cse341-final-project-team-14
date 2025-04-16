@@ -39,14 +39,13 @@ const createLogger = (moduleName = null) => {
     ],
   });
   
-  // Add console transport to each logger instance in non-production environments
-  if (config.env !== "production") {
-    logger.add(
-      new winston.transports.Console({
-        format: consoleFormat,
-      })
-    );
-  }
+  // Always add console transport regardless of environment
+  // Modified to show console output even in production mode
+  logger.add(
+    new winston.transports.Console({
+      format: consoleFormat,
+    })
+  );
   
   return logger;
 };
