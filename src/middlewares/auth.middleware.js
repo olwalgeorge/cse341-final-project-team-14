@@ -10,6 +10,7 @@ const { createLogger } = require('../utils/logger');
 const User = require('../models/user.model');
 const { AuthError } = require('../utils/errors');
 const jwt = require('jsonwebtoken');
+const { isTokenBlacklisted } = require('../utils/auth.utils');
 // Use process.env directly
 const JWT_SECRET = process.env.JWT_SECRET;
 
@@ -37,6 +38,13 @@ const isAuthenticated = async (req, res, next) => {
     const token = authHeader.split(' ')[1];
     
     try {
+      // Check if token is blacklisted first
+      const blacklisted = await isTokenBlacklisted(token);
+      if (blacklisted) {
+        logger.warn('Attempt to use blacklisted token');
+        return next(AuthError.unauthorized('Token has been invalidated. Please log in again.'));
+      }
+      
       // Verify the token with a nested try-catch for better error specificity
       const decoded = jwt.verify(token, JWT_SECRET);
       

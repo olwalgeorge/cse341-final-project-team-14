@@ -10,3 +10,88 @@
 2025-04-16 20:09:31 INFO [inventory-api:EnvValidator]: =============================================== 
 2025-04-16 20:09:31 INFO [inventory-api:Server]: API Documentation: https://cse341-final-project-team-14.onrender.com/api-docs 
 2025-04-16 20:09:34 INFO [inventory-api:Database]: MongoDB Connected: cluster0-shard-00-00.wncfx.mongodb.net 
+2025-04-16 20:57:51 INFO [inventory-api:EnvValidator]: =============== ENVIRONMENT SUMMARY =============== 
+2025-04-16 20:57:51 INFO [inventory-api:Passport]: GitHub authentication strategy initialized successfully 
+2025-04-16 20:57:51 INFO [inventory-api:Server]: Server running on https://cse341-final-project-team-14.onrender.com in production mode 
+2025-04-16 20:57:51 INFO [inventory-api:EnvValidator]: Environment: PRODUCTION 
+2025-04-16 20:57:51 INFO [inventory-api:EnvValidator]: Port: 3000 
+2025-04-16 20:57:51 INFO [inventory-api:EnvValidator]: Database: mongodb+srv://ol****:********@cluster0.wncfx.mongodb.net/team_14_final_project?retryWrites=true&w=majority&appName=Cluster0 
+2025-04-16 20:57:51 INFO [inventory-api:EnvValidator]: External URL: https://cse341-final-project-team-14.onrender.com 
+2025-04-16 20:57:51 INFO [inventory-api:EnvValidator]: ------- Features Status ------- 
+2025-04-16 20:57:51 INFO [inventory-api:EnvValidator]: githubOAuth: Enabled ✅ 
+2025-04-16 20:57:51 INFO [inventory-api:EnvValidator]: =============================================== 
+2025-04-16 20:57:51 INFO [inventory-api:Server]: API Documentation: https://cse341-final-project-team-14.onrender.com/api-docs 
+2025-04-16 20:57:54 INFO [inventory-api:Database]: MongoDB Connected: cluster0-shard-00-02.wncfx.mongodb.net 
+2025-04-16 21:07:46 INFO [inventory-api:AuthController]: login controller called 
+2025-04-16 21:07:47 INFO [inventory-api:AuthService]: User authenticated successfully: olwalgeorge15@gmail.com 
+2025-04-16 21:09:02 ERROR [inventory-api:AuthUtils]: Failed to blacklist token: Token validation failed: type: Path `type` is required. 
+ValidationError: Token validation failed: type: Path `type` is required.
+    at Document.invalidate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3329:32)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3090:17
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+2025-04-16 21:09:02 INFO [inventory-api:AuthController]: JWT token blacklisted during logout 
+2025-04-16 21:09:03 INFO [inventory-api:AuthController]: User logged out successfully: session destroyed and JWT not present 
+2025-04-16 21:13:46 INFO [inventory-api:Server]: SIGINT signal received, shutting down gracefully 
+2025-04-16 21:13:46 INFO [inventory-api:Database]: Closing MongoDB connection due to server shutdown 
+2025-04-16 21:13:58 INFO [inventory-api:EnvValidator]: =============== ENVIRONMENT SUMMARY =============== 
+2025-04-16 21:13:58 INFO [inventory-api:Passport]: GitHub authentication strategy initialized successfully 
+2025-04-16 21:13:58 INFO [inventory-api:EnvValidator]: Environment: PRODUCTION 
+2025-04-16 21:13:58 INFO [inventory-api:EnvValidator]: Port: 3000 
+2025-04-16 21:13:58 INFO [inventory-api:EnvValidator]: Database: mongodb+srv://ol****:********@cluster0.wncfx.mongodb.net/team_14_final_project?retryWrites=true&w=majority&appName=Cluster0 
+2025-04-16 21:13:58 INFO [inventory-api:EnvValidator]: External URL: https://cse341-final-project-team-14.onrender.com 
+2025-04-16 21:13:58 INFO [inventory-api:EnvValidator]: ------- Features Status ------- 
+2025-04-16 21:13:58 INFO [inventory-api:EnvValidator]: githubOAuth: Enabled ✅ 
+2025-04-16 21:13:58 INFO [inventory-api:EnvValidator]: =============================================== 
+2025-04-16 21:13:58 INFO [inventory-api:Server]: Server running on https://cse341-final-project-team-14.onrender.com in production mode 
+2025-04-16 21:13:58 INFO [inventory-api:Server]: API Documentation: https://cse341-final-project-team-14.onrender.com/api-docs 
+2025-04-16 21:14:01 INFO [inventory-api:Database]: MongoDB Connected: cluster0-shard-00-01.wncfx.mongodb.net 
+2025-04-16 21:14:48 INFO [inventory-api:AuthUtils]: Token has been blacklisted. Reason: logout 
+2025-04-16 21:14:48 INFO [inventory-api:AuthController]: JWT token blacklisted during logout 
+2025-04-16 21:14:48 INFO [inventory-api:AuthController]: User logged out successfully: session destroyed and JWT invalidated 
+2025-04-16 21:15:20 WARN [inventory-api:Auth:JWT]: Token was found in blacklist during verification 
+2025-04-16 21:16:24 INFO [inventory-api:UsersController]: getAllUsers called 
+2025-04-16 21:17:18 INFO [inventory-api:UsersController]: getAllUsers called 
+2025-04-16 21:17:21 INFO [inventory-api:UsersController]: getAllUsers called 
+2025-04-16 21:17:23 INFO [inventory-api:UsersController]: getAllUsers called 
+2025-04-16 21:17:59 WARN [inventory-api:Auth:JWT]: Token was found in blacklist during verification 
+2025-04-16 21:18:25 ERROR [inventory-api:AuthUtils]: Failed to blacklist token: E11000 duplicate key error collection: team_14_final_project.tokens index: token_1 dup key: { token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2N2ZmYjE2YzNhYThiZmM0OWE1ZGQxZjciLCJ1c2VySWQiOiJVU1ItMDAwMDkiLCJlbWFpbCI6Im9sd2FsZ2VvcmdlMTVAZ21haWwuY..." } 
+MongoServerError: E11000 duplicate key error collection: team_14_final_project.tokens index: token_1 dup key: { token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2N2ZmYjE2YzNhYThiZmM0OWE1ZGQxZjciLCJ1c2VySWQiOiJVU1ItMDAwMDkiLCJlbWFpbCI6Im9sd2FsZ2VvcmdlMTVAZ21haWwuY..." }
+    at InsertOneOperation.execute (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongodb\lib\operations\insert.js:51:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async tryOperation (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongodb\lib\operations\execute_operation.js:207:20)
+    at async executeOperation (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongodb\lib\operations\execute_operation.js:75:16)
+    at async Collection.insertOne (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongodb\lib\collection.js:157:16)
+2025-04-16 21:18:25 INFO [inventory-api:AuthController]: JWT token blacklisted during logout 
+2025-04-16 21:18:26 INFO [inventory-api:AuthController]: User logged out successfully: session destroyed and JWT not present 
+2025-04-16 21:18:51 INFO [inventory-api:UsersController]: getUserById called with ID: undefined 
+2025-04-16 21:18:51 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: DatabaseError - User not found 
+2025-04-16 21:19:12 INFO [inventory-api:UsersController]: getAllUsers called 
+2025-04-16 21:21:47 INFO [inventory-api:EnvValidator]: =============== ENVIRONMENT SUMMARY =============== 
+2025-04-16 21:21:47 INFO [inventory-api:Passport]: GitHub authentication strategy initialized successfully 
+2025-04-16 21:21:47 INFO [inventory-api:Server]: Server running on https://cse341-final-project-team-14.onrender.com in production mode 
+2025-04-16 21:21:47 INFO [inventory-api:EnvValidator]: Environment: PRODUCTION 
+2025-04-16 21:21:47 INFO [inventory-api:EnvValidator]: Port: 3000 
+2025-04-16 21:21:47 INFO [inventory-api:EnvValidator]: Database: mongodb+srv://ol****:********@cluster0.wncfx.mongodb.net/team_14_final_project?retryWrites=true&w=majority&appName=Cluster0 
+2025-04-16 21:21:47 INFO [inventory-api:EnvValidator]: External URL: https://cse341-final-project-team-14.onrender.com 
+2025-04-16 21:21:47 INFO [inventory-api:EnvValidator]: ------- Features Status ------- 
+2025-04-16 21:21:47 INFO [inventory-api:EnvValidator]: githubOAuth: Enabled ✅ 
+2025-04-16 21:21:47 INFO [inventory-api:EnvValidator]: =============================================== 
+2025-04-16 21:21:47 INFO [inventory-api:Server]: API Documentation: https://cse341-final-project-team-14.onrender.com/api-docs 
+2025-04-16 21:21:50 INFO [inventory-api:Database]: MongoDB Connected: cluster0-shard-00-01.wncfx.mongodb.net 
+2025-04-16 21:22:00 INFO [inventory-api:UsersController]: getAllUsers called 
+2025-04-16 21:22:23 INFO [inventory-api:UsersController]: getUserProfile called for user jakom (ID: 67ffb16c3aa8bfc49a5dd1f7, userID: USR-00009) 
+2025-04-16 21:28:18 INFO [inventory-api:Server]: SIGINT signal received, shutting down gracefully 
+2025-04-16 21:28:18 INFO [inventory-api:Database]: Closing MongoDB connection due to server shutdown 
+2025-04-16 21:28:30 INFO [inventory-api:EnvValidator]: =============== ENVIRONMENT SUMMARY =============== 
+2025-04-16 21:28:30 INFO [inventory-api:Passport]: GitHub authentication strategy initialized successfully 
+2025-04-16 21:28:30 INFO [inventory-api:EnvValidator]: Environment: PRODUCTION 
+2025-04-16 21:28:30 INFO [inventory-api:EnvValidator]: Port: 3000 
+2025-04-16 21:28:30 INFO [inventory-api:EnvValidator]: Database: mongodb+srv://ol****:********@cluster0.wncfx.mongodb.net/team_14_final_project?retryWrites=true&w=majority&appName=Cluster0 
+2025-04-16 21:28:30 INFO [inventory-api:EnvValidator]: External URL: https://cse341-final-project-team-14.onrender.com 
+2025-04-16 21:28:30 INFO [inventory-api:EnvValidator]: ------- Features Status ------- 
+2025-04-16 21:28:30 INFO [inventory-api:EnvValidator]: githubOAuth: Enabled ✅ 
+2025-04-16 21:28:30 INFO [inventory-api:EnvValidator]: =============================================== 
+2025-04-16 21:28:30 INFO [inventory-api:Server]: Server running on https://cse341-final-project-team-14.onrender.com in production mode 
+2025-04-16 21:28:30 INFO [inventory-api:Server]: API Documentation: https://cse341-final-project-team-14.onrender.com/api-docs 
+2025-04-16 21:28:33 INFO [inventory-api:Database]: MongoDB Connected: cluster0-shard-00-01.wncfx.mongodb.net 

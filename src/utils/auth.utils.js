@@ -43,6 +43,7 @@ async function blacklistToken(token, reason = 'logout', ipAddress = null) {
     await Token.create({
       token: token,
       userId: decoded.sub,
+      type: 'access', // Adding the required type field
       expiresAt: new Date(decoded.exp * 1000), // Convert to milliseconds
       blacklistedAt: new Date(),
       reason: reason,
@@ -130,6 +131,7 @@ const blacklistAllUserTokens = async (userId, reason = 'security_measure') => {
       await Token.create({
         blacklistAll: true,
         userId: userId,
+        type: 'access', // Adding the required type field
         expiresAt: new Date(Date.now() + (180 * 24 * 60 * 60 * 1000)), // 180 days
         blacklistedAt: new Date(),
         reason: reason
