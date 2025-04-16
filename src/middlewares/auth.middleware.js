@@ -9,6 +9,7 @@ const { verifyToken, extractTokenFromRequest } = require('../auth/jwt');
 const { createLogger } = require('../utils/logger');
 const User = require('../models/user.model');
 const { AuthError } = require('../utils/errors');
+const { isTokenBlacklisted } = require('../utils/auth.utils');
 
 const logger = createLogger('AuthMiddleware');
 
@@ -31,8 +32,15 @@ module.exports = async function isAuthenticated(req, res, next) {
       throw AuthError.unauthorized('You need to be logged in to access this resource');
     }
 
+    // Check if token is blacklisted
+    const blacklisted = await isTokenBlacklisted(token);
+    if (blacklisted) {
+      logger.debug('Token is blacklisted');
+      throw AuthError.unauthorized('Token has been revoked');
+    }
+
     // Verify the JWT token
-    const decoded = verifyToken(token);
+    const decoded = await verifyToken(token);
     if (!decoded) {
       logger.debug('Invalid authentication token');
       throw AuthError.unauthorized('Invalid or expired token');

@@ -143,7 +143,7 @@ const loginSuccess = asyncHandler(async (req, res) => {
  * @route   POST /auth/logout
  * @access  Private
  */
-const logout = (req, res, next) => {
+const logout = async (req, res, next) => {
   try {
     // Extract token if present (for JWT invalidation)
     const token = extractTokenFromRequest(req);
@@ -151,7 +151,11 @@ const logout = (req, res, next) => {
     
     // Blacklist the JWT token if present
     if (token) {
-      jwtInvalidated = blacklistToken(token);
+      // Get the client IP address for auditing
+      const ipAddress = req.ip || req.connection.remoteAddress;
+      
+      // Add token to blacklist with user ID and IP address
+      jwtInvalidated = await blacklistToken(token, 'logout', ipAddress);
       logger.info('JWT token blacklisted during logout');
     }
     
