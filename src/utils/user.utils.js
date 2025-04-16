@@ -54,6 +54,43 @@ const transformUserData = (data) => {
 };
 
 /**
+ * Sanitize user data by selecting specific fields or excluding sensitive fields
+ * @param {Object} user - User object (can be mongoose document or plain object)
+ * @param {Array} fields - Fields to include (if provided) or all except sensitive by default
+ * @param {boolean} isInclusion - If true, include fields; if false, exclude fields
+ * @returns {Object} Sanitized user data
+ */
+const sanitizeUserData = (user, fields = [], isInclusion = true) => {
+  // Convert mongoose document to plain object if needed
+  const userData = user.toObject ? user.toObject() : { ...user };
+  
+  if (fields.length === 0 && isInclusion === false) {
+    // Default exclusion fields if no fields specified and exclusion mode
+    fields = ['password', 'resetPasswordToken', 'resetPasswordExpires', '__v'];
+  }
+  
+  const result = {};
+  
+  if (isInclusion) {
+    // Include only specified fields
+    fields.forEach(field => {
+      if (userData[field] !== undefined) {
+        result[field] = userData[field];
+      }
+    });
+  } else {
+    // Include all except specified fields
+    Object.keys(userData).forEach(key => {
+      if (!fields.includes(key)) {
+        result[key] = userData[key];
+      }
+    });
+  }
+  
+  return result;
+};
+
+/**
  * Generate a unique user ID in the format USR-XXXXX
  * @returns {Promise<string>} - Generated user ID
  */
@@ -79,4 +116,5 @@ module.exports = {
   transformUser,
   generateUserId,
   transformUserData,
+  sanitizeUserData,
 };

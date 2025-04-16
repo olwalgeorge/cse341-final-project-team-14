@@ -1,6 +1,6 @@
 ### Environment Variables
 @baseUrl = http://localhost:3000
-@authToken =eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2N2ZmN2U4MTc2ZDE1M2ZjNGViOTI1OWIiLCJ1c2VySWQiOiJVU1ItMDAwMDgiLCJlbWFpbCI6InRlc3RAZXhhbXBsZS5jb20iLCJyb2xlIjoiVVNFUiIsInVzZXJuYW1lIjoidGVzdHVzZXIiLCJpYXQiOjE3NDQ4MDE3ODQsImV4cCI6MTc0NDg4ODE4NH0.8E4cX2yRk3VWGh8d0x_fZlQPlXNPCq6G7bEuJ7qRZ78
+@authToken =eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2N2ZmYjE2YzNhYThiZmM0OWE1ZGQxZjciLCJ1c2VySWQiOiJVU1ItMDAwMDkiLCJlbWFpbCI6Im9sd2FsZ2VvcmdlMTVAZ21haWwuY29tIiwicm9sZSI6IlVTRVIiLCJ1c2VybmFtZSI6Impha29tIiwidmVyc2lvbiI6NCwiaWF0IjoxNzQ0ODEzNDg3LCJleHAiOjE3NDQ4OTk4ODd9.KHbQRWoVNSUV3_skJasryFUFrZGXutJvwyPSuKJ7bCM
 
 ### Register a new user
 POST {{baseUrl}}/auth/register
@@ -8,8 +8,8 @@ Content-Type: application/json
 
 {
   
-  "username": "testuser",
-  "email": "test@example.com",
+  "username": "jakom",
+  "email": "olwalgeorge15@gmail.com",
   "password": "Password123!",
   "fullName": "Test User"
 }
@@ -19,8 +19,8 @@ POST {{baseUrl}}/auth/login
 Content-Type: application/json
 
 {
-  "email": "test@example.com",
-  "password": "Password123!"
+  "email": "olwalgeorge15@gmail.com",
+  "password": "NewPassword456!!"
 }
 
 ### Get JWT token (for OAuth authenticated users)
@@ -56,7 +56,7 @@ POST {{baseUrl}}/auth/forgot-password
 Content-Type: application/json
 
 {
-  "email": "test@example.com"
+  "email": "olwalgeorge15@gmail.com"
 }
 
 ### Password reset with token
@@ -64,10 +64,12 @@ POST {{baseUrl}}/auth/reset-password
 Content-Type: application/json
 
 {
-  "token": "password_reset_token_here",
-  "password": "NewPassword456!",
-  "confirmPassword": "NewPassword456!"
+  "token": "81e9705de0817aa3b947187e439143578244f7a5b0a0b558950c65f8439077af",
+  "password": "NewPassword456!!",
+  "confirmPassword": "NewPassword456!!"
 }
-### Get current user profile
-GET {{baseUrl}}/users/profile
+
+### Debug user status (DEV ONLY)
+GET {{baseUrl}}/auth/debug/olwalgeorge15@gmail.com
 Authorization: Bearer {{authToken}}
+

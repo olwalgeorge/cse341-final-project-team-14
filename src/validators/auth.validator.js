@@ -67,7 +67,6 @@ const userRequiredValidationRules = () => {
   ];
 };
 
-
 const userCreateValidationRules = () => {
   return [...userRequiredValidationRules(), ...userUniquenessValidationRules()];
 };
@@ -97,6 +96,51 @@ const loginValidationRules = () => {
 };
 
 /**
+ * Validation rules for forgot password request
+ * @returns {Array} Array of express-validator validation middleware
+ */
+const forgotPasswordValidationRules = () => {
+  return [
+    body("email", "Email is required")
+      .not()
+      .isEmpty()
+      .isEmail()
+      .withMessage("Invalid email format")
+      .normalizeEmail()
+  ];
+};
+
+/**
+ * Validation rules for password reset
+ * @returns {Array} Array of express-validator validation middleware
+ */
+const resetPasswordValidationRules = () => {
+  return [
+    body("token", "Token is required")
+      .not()
+      .isEmpty()
+      .isString()
+      .withMessage("Invalid token format"),
+    body("password", "Password is required")
+      .not()
+      .isEmpty()
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,50}$/
+      )
+      .withMessage(
+        "Password must be 8-50 characters and contain at least one uppercase letter, one lowercase letter, one number, and one special character"
+      ),
+    body("confirmPassword")
+      .custom((value, { req }) => {
+        if (value !== req.body.password) {
+          throw new Error("Passwords do not match");
+        }
+        return true;
+      })
+  ];
+};
+
+/**
  * Validation rules for user registration
  * @returns {Array} Array of express-validator validation middleware
  */
@@ -106,5 +150,7 @@ const registerValidationRules = () => {
 
 module.exports = {  
   registerValidationRules,
-  loginValidationRules
+  loginValidationRules,
+  forgotPasswordValidationRules,
+  resetPasswordValidationRules
 };

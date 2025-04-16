@@ -6,12 +6,18 @@ const {
   register,
   login,
   logout,
-  getToken
+  getToken,
+  forgotPassword,
+  resetPassword,
+  verifyTokenValidity,
+  debugUserStatus
 } = require("../controllers/auth.controller");
 const validate = require("../middlewares/validation.middleware");
 const {
   registerValidationRules,
   loginValidationRules,
+  forgotPasswordValidationRules,
+  resetPasswordValidationRules
 } = require("../validators/auth.validator");
 const isAuthenticated = require("../middlewares/auth.middleware.js");
 
@@ -30,8 +36,19 @@ router.post("/logout", isAuthenticated, logout);
 // Get JWT token (for authenticated users via OAuth)
 router.get("/token", isAuthenticated, getToken);
 
+// Password reset routes
+router.post("/forgot-password", validate(forgotPasswordValidationRules()), forgotPassword);
+router.post("/reset-password", validate(resetPasswordValidationRules()), resetPassword);
+
+// Token verification route
+router.get("/verify", isAuthenticated, verifyTokenValidity);
+
+// Debug routes (development only)
+if (process.env.NODE_ENV !== 'production') {
+  router.get("/debug/:email", isAuthenticated, debugUserStatus);
+}
+
 // GitHub OAuth routes
-// GitHub authentication routes
 router.get(
   "/github",
   passport.authenticate("github", {

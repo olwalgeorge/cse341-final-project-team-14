@@ -32,6 +32,9 @@ const baseConfig = {
   jwt: {
     secret: process.env.JWT_SECRET,
     expiresIn: process.env.JWT_EXPIRES_IN || '1d'
+  },
+  auth: {
+    useTokenBlacklist: process.env.USE_TOKEN_BLACKLIST === 'true' || false,
   }
 };
 

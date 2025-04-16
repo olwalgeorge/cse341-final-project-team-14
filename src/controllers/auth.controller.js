@@ -1,12 +1,20 @@
 // eslint-disable-next-line no-unused-vars
 const passport = require('passport');
 const asyncHandler = require("express-async-handler");
-const { registerService, authenticateUserService } = require("../services/auth.service.js");
+const { 
+  registerService, 
+  authenticateUserService, 
+  forgotPasswordService, 
+  resetPasswordService,
+  getUserByEmailService, // Add this service function
+  verifyUserTokenService // Add this service function
+} = require("../services/auth.service.js");
 const sendResponse = require("../utils/response");
 const { AuthError } = require("../utils/errors");
 const { createLogger } = require("../utils/logger");
 const { generateToken, extractTokenFromRequest } = require('../auth/jwt');
 const { blacklistToken } = require('../utils/auth.utils');
+const { sanitizeUserData } = require('../utils/user.utils'); // Add utility for data transformation
 const logger = createLogger("AuthController");
 
 /**
@@ -185,10 +193,132 @@ const logout = async (req, res, next) => {
   }
 };
 
+/**
+ * @desc    Handle forgot password request
+ * @route   POST /auth/forgot-password
+ * @access  Public
+ */
+// eslint-disable-next-line no-unused-vars
+const forgotPassword = asyncHandler(async (req, res, next) => {
+  logger.info("forgotPassword controller called");
+  
+  try {
+    const { email } = req.body;
+    await forgotPasswordService(email);
+    
+    // For security reasons, always return success even if email doesn't exist
+    sendResponse(
+      res,
+      200,
+      "If a user with that email exists, a password reset link has been sent"
+    );
+  } catch (error) {
+    logger.error("Error in forgotPassword controller:", error);
+    
+    // Still return success for security reasons
+    sendResponse(
+      res,
+      200,
+      "If a user with that email exists, a password reset link has been sent"
+    );
+  }
+});
+
+/**
+ * @desc    Reset password with token
+ * @route   POST /auth/reset-password
+ * @access  Public
+ */
+const resetPassword = asyncHandler(async (req, res, next) => {
+  logger.info("resetPassword controller called");
+  
+  try {
+    const { token, password } = req.body;
+    const result = await resetPasswordService(token, password);
+    
+    if (result.success) {
+      // Log additional information for debugging
+      logger.debug(`Password reset successful. User can now login with new password. User ID: ${result.userId}, Email: ${result.email}`);
+      
+      sendResponse(res, 200, "Password has been reset successfully. Please login with your new password.");
+    } else {
+      return next(AuthError.invalidToken("Password reset token is invalid or has expired"));
+    }
+  } catch (error) {
+    logger.error("Error in resetPassword controller:", error);
+    next(error);
+  }
+});
+
+/**
+ * @desc    Verify token validity
+ * @route   GET /auth/verify
+ * @access  Public
+ */
+const verifyTokenValidity = asyncHandler(async (req, res, next) => {
+  try {
+    // Extract token from request
+    const token = extractTokenFromRequest(req);
+    if (!token) {
+      return sendResponse(res, 401, "No token provided");
+    }
+    
+    // Use service to verify token and get user
+    const result = await verifyUserTokenService(token);
+    
+    if (result.success) {
+      sendResponse(res, 200, "Token is valid", { user: result.user });
+    } else {
+      sendResponse(res, 401, result.message || "Token is invalid");
+    }
+  } catch (error) {
+    logger.error("Error verifying token:", error);
+    next(error);
+  }
+});
+
+/**
+ * @desc    Debug endpoint to check user status (DEV ONLY)
+ * @route   GET /auth/debug/:email
+ * @access  Private/Admin
+ */
+const debugUserStatus = asyncHandler(async (req, res, next) => {
+  // This endpoint should only be available in development
+  if (process.env.NODE_ENV === 'production') {
+    return next(new Error('Debug endpoints not available in production'));
+  }
+  
+  try {
+    const email = req.params.email;
+    // Use service instead of direct DB access
+    const user = await getUserByEmailService(email);
+    
+    if (!user) {
+      return sendResponse(res, 404, "User not found");
+    }
+    
+    // Return basic user info and account status with sanitized data
+    const userData = sanitizeUserData(user, ['tokenVersion', 'failedLoginAttempts', 'lockedUntil']);
+    
+    // Add password hash preview separately with security measures
+    userData.passwordHash = user.password ? (user.password.substring(0, 10) + '...') : 'not set';
+    userData.isLocked = user.lockedUntil && user.lockedUntil > new Date();
+    
+    sendResponse(res, 200, "User status retrieved", userData);
+  } catch (error) {
+    logger.error("Error in debugUserStatus controller:", error);
+    next(error);
+  }
+});
+
 module.exports = {
   register,
   login,
   getToken,
   loginSuccess,
   logout,
+  forgotPassword,
+  resetPassword,
+  verifyTokenValidity,
+  debugUserStatus
 };

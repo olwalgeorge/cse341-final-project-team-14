@@ -8,51 +8,60 @@ const { createLogger } = require('../utils/logger');
 
 const logger = createLogger('TokenModel');
 
+/**
+ * Token Schema - Used for blacklisting JWT tokens
+ */
 const tokenSchema = new mongoose.Schema({
-  // The actual token value
+  // The full JWT token (for exact match checking)
   token: {
     type: String,
-    required: true,
-    unique: true,
+    sparse: true,
     index: true
   },
   
-  // Associated user ID for auditing and management
+  // User ID this token belongs to
   userId: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId, 
     ref: 'User',
-    required: false,
+    required: true,
     index: true
   },
   
-  // Token expiration date (used for automatic cleanup)
+  // Flag to blacklist all tokens for this user
+  blacklistAll: {
+    type: Boolean,
+    default: false,
+    index: true
+  },
+  
+  // When the token expires (for automatic cleanup)
   expiresAt: {
     type: Date,
-    required: true
+    required: true,
+    index: true
   },
   
-  // Why the token was blacklisted
+  // When the token was blacklisted
+  blacklistedAt: {
+    type: Date,
+    default: Date.now
+  },
+  
+  // Reason for blacklisting (logout, password_changed, security_concern)
   reason: {
     type: String,
-    enum: ['logout', 'password_changed', 'revoked_by_admin', 'security_concern'],
+    enum: ['logout', 'password_change', 'security_measure', 'account_deletion', 'admin_action', 'other'],
     default: 'logout'
   },
   
-  // IP address that initiated the revocation
+  // IP address that initiated the blacklisting (for audit)
   ipAddress: {
     type: String,
-    required: false
-  },
-  
-  // When the token was added to the blacklist
-  createdAt: {
-    type: Date,
-    default: Date.now,
-    immutable: true
+    default: null
   }
 });
 
-// Create TTL index for automatic removal of expired tokens
+// Create TTL index for automatic cleanup of expired tokens
 tokenSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0 });
 
 // Static method to check if a token is blacklisted
@@ -96,7 +105,7 @@ tokenSchema.statics.blacklist = async function(token, userId, expiresAt, reason 
   }
 };
 
-// Clean up any tokens that have expired but weren't automatically removed
+// Static method to manually clean up expired tokens
 tokenSchema.statics.cleanupExpired = async function() {
   try {
     const result = await this.deleteMany({ expiresAt: { $lt: new Date() } });

@@ -1,9 +1,11 @@
 const bcrypt = require("bcryptjs");
+const crypto = require("crypto");
 const User = require("../models/user.model.js");
 const { createLogger } = require("../utils/logger.js");
 const logger = createLogger("AuthService");
 const { ValidationError, DatabaseError, AuthError } = require("../utils/errors.js");
-const { generateUserId } = require("../utils/user.utils.js");
+const { generateUserId, sanitizeUserData } = require("../utils/user.utils.js");
+const { verifyToken } = require('../auth/jwt');
 
 /**
  * Create a new user internally for auth service
@@ -220,7 +222,157 @@ const authenticateUserService = async (email, password) => {
   }
 };
 
+/**
+ * Generate a password reset token and expiry, then send an email
+ * @param {string} email - The email of the user requesting password reset
+ * @returns {Promise<Object>} - Result of the operation
+ */
+const forgotPasswordService = async (email) => {
+  const user = await User.findOne({ email });
+  
+  // If no user found with that email, silently return
+  if (!user) {
+    logger.info(`Password reset requested for non-existent email: ${email}`);
+    return { success: false };
+  }
+  
+  // Generate reset token and expiry
+  const resetToken = crypto.randomBytes(32).toString('hex');
+  const hash = crypto.createHash('sha256').update(resetToken).digest('hex');
+  
+  // Save to user record
+  user.resetPasswordToken = hash;
+  user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+  await user.save();
+  
+  // TODO: Send email with reset link
+  // In a real app, you would use a proper email service like SendGrid, Mailgun, etc.
+  // For this implementation, we'll just log the token
+  logger.info(`Password reset token for ${email}: ${resetToken}`);
+  logger.info(`Reset link would be: ${process.env.BASE_URL || 'http://localhost:3000'}/reset-password?token=${resetToken}`);
+  
+  return { success: true };
+};
+
+/**
+ * Reset user password using valid token
+ * @param {string} token - The reset token from the email
+ * @param {string} password - The new password
+ * @returns {Promise<Object>} - Result of the operation
+ */
+const resetPasswordService = async (token, password) => {
+  // Hash the token from the request to compare with stored hash
+  const hash = crypto.createHash('sha256').update(token).digest('hex');
+  
+  // Find user with matching token and token not expired
+  const user = await User.findOne({
+    resetPasswordToken: hash,
+    resetPasswordExpires: { $gt: Date.now() }
+  });
+  
+  if (!user) {
+    logger.info('Password reset attempted with invalid or expired token');
+    return { success: false };
+  }
+  
+  try {
+    // Hash the password manually rather than relying on mongoose middleware
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(password, salt);
+    
+    // Clear reset fields
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpires = undefined;
+    
+    // Reset failed login attempts and unlock account
+    user.failedLoginAttempts = 0;
+    user.lockedUntil = null;
+    
+    // Increment token version to invalidate all existing tokens
+    if (!user.tokenVersion) {
+      user.tokenVersion = 1;
+    } else {
+      user.tokenVersion += 1;
+    }
+    
+    // Save the user with the new password and token version
+    await user.save();
+    
+    // Log the successful password reset
+    logger.info(`Password reset successful for user: ${user.email}. Token version incremented to ${user.tokenVersion}`);
+    return { 
+      success: true, 
+      userId: user._id,
+      email: user.email 
+    };
+  } catch (error) {
+    logger.error(`Error during password reset for user ${user._id}:`, error);
+    return { success: false, error: error.message };
+  }
+};
+
+/**
+ * Get user by email
+ * @param {string} email - User's email address
+ * @returns {Promise<Object|null>} User object or null if not found
+ */
+const getUserByEmailService = async (email) => {
+  try {
+    const user = await User.findOne({ email: email.toLowerCase() });
+    return user;
+  } catch (error) {
+    logger.error(`Error finding user by email: ${email}`, error);
+    throw new DatabaseError('find', 'User', 'Error retrieving user by email');
+  }
+};
+
+/**
+ * Verify a user's token and return sanitized user data
+ * @param {string} token - JWT token
+ * @returns {Promise<Object>} Result with success flag and user data
+ */
+const verifyUserTokenService = async (token) => {
+  try {
+    // Use the verifyToken function from JWT utils
+    const decoded = await verifyToken(token);
+    
+    if (!decoded) {
+      return {
+        success: false,
+        message: "Invalid or expired token"
+      };
+    }
+    
+    // Get user from database
+    const user = await User.findById(decoded.sub);
+    
+    if (!user) {
+      return {
+        success: false,
+        message: "User not found"
+      };
+    }
+    
+    // Return sanitized user data
+    return {
+      success: true,
+      user: sanitizeUserData(user, ['_id', 'username', 'email', 'role', 'tokenVersion'])
+    };
+  } catch (error) {
+    logger.error("Error in verifyUserTokenService:", error);
+    return {
+      success: false,
+      message: "Token verification failed",
+      error: error.message
+    };
+  }
+};
+
 module.exports = {
   registerService,
   authenticateUserService,
+  forgotPasswordService,
+  resetPasswordService,
+  getUserByEmailService,
+  verifyUserTokenService
 };

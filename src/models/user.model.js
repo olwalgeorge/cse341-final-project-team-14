@@ -27,7 +27,9 @@ const userSchema = new mongoose.Schema({
     unique: true,
     trim: true,
     lowercase: true,
+    // eslint-disable-next-line
     match: [
+      // eslint-disable-next-line
       /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
       'Please provide a valid email address'
     ]
@@ -35,7 +37,9 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: [true, 'Password is required'],
+    
     matches: [
+      // eslint-disable-next-line
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,50}$/,
       'Password must contain at least one lowercase letter, one uppercase letter, one number, and one special character, and be between 8 to 50 characters'
     ]
@@ -82,6 +86,12 @@ const userSchema = new mongoose.Schema({
   resetPasswordToken: String,
   resetPasswordExpires: Date,
   
+  // Token Management
+  tokenVersion: {
+    type: Number,
+    default: 1
+  },
+  
   // Security and Login
   lastLogin: {
     type: Date,
@@ -109,11 +119,31 @@ const userSchema = new mongoose.Schema({
 }, { timestamps: false });
 
 /**
- * Middleware to update timestamps
+ * Middleware to update timestamps and hash password if modified
  */
-userSchema.pre('save', function(next) {
+userSchema.pre('save', async function(next) {
   this.updatedAt = new Date();
-  next();
+  
+  // Only hash the password if it has been modified (or is new)
+  // This check prevents double-hashing when we manually hash in the service
+  if (!this.isModified('password')) {
+    return next();
+  }
+  
+  try {
+    // Check if password is already hashed (starts with $2a$ or $2b$)
+    // This prevents double-hashing if the password is already hashed in the service
+    if (this.password.startsWith('$2a$') || this.password.startsWith('$2b$')) {
+      return next();
+    }
+    
+    // Hash password with bcryptjs
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+    next();
+  } catch (error) {
+    next(error);
+  }
 });
 
 /**
