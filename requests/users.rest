@@ -1,6 +1,6 @@
 ### Environment Variables
 @baseUrl = http://localhost:3000
-@authToken = YOUR_JWT_TOKEN_HERE
+@authToken =eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2N2ZmN2U4MTc2ZDE1M2ZjNGViOTI1OWIiLCJ1c2VySWQiOiJVU1ItMDAwMDgiLCJlbWFpbCI6InRlc3RAZXhhbXBsZS5jb20iLCJyb2xlIjoiVVNFUiIsInVzZXJuYW1lIjoidGVzdHVzZXIiLCJpYXQiOjE3NDQ3OTczMjcsImV4cCI6MTc0NDg4MzcyN30.ZrBHUXHDeRGEZAE6uR2GehKmkMaQqVrWBFqQI17g1cA
 
 ### Get all users (admin only)
 GET {{baseUrl}}/users

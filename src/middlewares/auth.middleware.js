@@ -8,6 +8,7 @@
 const { verifyToken, extractTokenFromRequest } = require('../auth/jwt');
 const { createLogger } = require('../utils/logger');
 const User = require('../models/user.model');
+const { AuthError } = require('../utils/errors');
 
 const logger = createLogger('AuthMiddleware');
 
@@ -27,33 +28,21 @@ module.exports = async function isAuthenticated(req, res, next) {
     const token = extractTokenFromRequest(req);
     if (!token) {
       logger.debug('No authentication token provided');
-      return res.status(401).json({
-        success: false,
-        message: 'Authentication required',
-        error: 'You need to be logged in to access this resource'
-      });
+      throw AuthError.unauthorized('You need to be logged in to access this resource');
     }
 
     // Verify the JWT token
     const decoded = verifyToken(token);
     if (!decoded) {
       logger.debug('Invalid authentication token');
-      return res.status(401).json({
-        success: false,
-        message: 'Authentication failed',
-        error: 'Invalid or expired token'
-      });
+      throw AuthError.unauthorized('Invalid or expired token');
     }
 
     // Find the user by ID from the token
     const user = await User.findById(decoded.sub);
     if (!user) {
       logger.debug(`User not found for token: ${decoded.sub}`);
-      return res.status(401).json({
-        success: false,
-        message: 'Authentication failed',
-        error: 'User not found'
-      });
+      throw AuthError.unauthorized('User not found');
     }
 
     // Attach the user to the request object
@@ -62,10 +51,12 @@ module.exports = async function isAuthenticated(req, res, next) {
     next();
   } catch (error) {
     logger.error('Authentication error:', error);
-    return res.status(500).json({
-      success: false,
-      message: 'Authentication error',
-      error: 'An error occurred during authentication'
-    });
+    // Pass the error to the error handling middleware
+    if (!(error instanceof AuthError)) {
+      error = new AuthError('An error occurred during authentication', {
+        originalError: error.message
+      });
+    }
+    next(error);
   }
 };
