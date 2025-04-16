@@ -72,7 +72,6 @@ const errorHandler = (err, req, res, next) => {
   }
   // Handle Express Validator errors
   else if (err.array && typeof err.array === 'function') {
-    // Express validator errors
     statusCode = 400;
     errorType = 'ExpressValidationError';
     errorSource = 'validation';
@@ -132,15 +131,30 @@ const errorHandler = (err, req, res, next) => {
       };
     }
   }
-  // JSON parsing errors
-  else if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
+  // Enhanced syntax error handling
+  else if (err instanceof SyntaxError) {
     statusCode = 400;
     errorType = 'SyntaxError';
     errorSource = 'request';
-    errorMessage = 'Invalid JSON payload';
-    errorDetails = {
-      body: err.body
-    };
+    
+    // Handle JSON parsing errors
+    if (err.status === 400 && 'body' in err) {
+      errorMessage = 'Invalid JSON payload';
+      errorDetails = {
+        body: err.body
+      };
+    } 
+    // Handle other syntax errors in JavaScript code
+    else {
+      errorMessage = 'Syntax error in request or server code';
+      errorDetails = {
+        message: err.message,
+        lineNumber: err.lineNumber,
+        columnNumber: err.columnNumber,
+        fileName: err.fileName,
+        stack: process.env.NODE_ENV === 'production' ? undefined : err.stack
+      };
+    }
   }
   // Node.js system errors
   else if (err.code && typeof err.code === 'string' && err.syscall) {
