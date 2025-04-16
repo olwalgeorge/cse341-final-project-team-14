@@ -5,7 +5,8 @@ const { registerService, authenticateUserService } = require("../services/auth.s
 const sendResponse = require("../utils/response");
 const { AuthError } = require("../utils/errors");
 const { createLogger } = require("../utils/logger");
-const { generateToken } = require('../auth/jwt');
+const { generateToken, extractTokenFromRequest } = require('../auth/jwt');
+const { blacklistToken } = require('../utils/auth.utils');
 const logger = createLogger("AuthController");
 
 /**
@@ -143,14 +144,41 @@ const loginSuccess = asyncHandler(async (req, res) => {
  * @access  Private
  */
 const logout = (req, res, next) => {
-  req.logout((err) => {
-    if (err) {
-      logger.error("Error during logout:", err);
-      return next(AuthError.loginError());
+  try {
+    // Extract token if present (for JWT invalidation)
+    const token = extractTokenFromRequest(req);
+    let jwtInvalidated = false;
+    
+    // Blacklist the JWT token if present
+    if (token) {
+      jwtInvalidated = blacklistToken(token);
+      logger.info('JWT token blacklisted during logout');
     }
-    logger.info(`User logged out successfully.`);
-    sendResponse(res, 200, "Logged out successfully");
-  });
+    
+    // Handle session logout if using session-based auth
+    req.logout((err) => {
+      if (err) {
+        logger.error("Error during session logout:", err);
+        return next(AuthError.loginError());
+      }
+      
+      // Destroy the session completely
+      req.session.destroy((sessionErr) => {
+        if (sessionErr) {
+          logger.error("Error destroying session:", sessionErr);
+        }
+        
+        // Clear session cookie
+        res.clearCookie('sessionId');
+        
+        logger.info(`User logged out successfully: session destroyed and JWT ${jwtInvalidated ? 'invalidated' : 'not present'}`);
+        sendResponse(res, 200, "Logged out successfully");
+      });
+    });
+  } catch (error) {
+    logger.error("Error during logout:", error);
+    next(error instanceof AuthError ? error : AuthError.loginError());
+  }
 };
 
 module.exports = {

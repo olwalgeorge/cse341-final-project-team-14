@@ -6,6 +6,7 @@
 const jwt = require('jsonwebtoken');
 const config = require('../config/config');
 const { createLogger } = require('../utils/logger');
+const { isTokenBlacklisted } = require('../utils/auth.utils');
 
 const logger = createLogger('Auth:JWT');
 
@@ -44,6 +45,12 @@ function generateToken(user) {
  */
 function verifyToken(token) {
   try {
+    // Check if token is blacklisted first
+    if (isTokenBlacklisted(token)) {
+      logger.debug('Token is blacklisted');
+      return null;
+    }
+
     const decoded = jwt.verify(token, config.jwt.secret);
     return decoded;
   } catch (error) {
@@ -82,8 +89,12 @@ function extractTokenFromRequest(req) {
   }
 }
 
+// Expose token blacklisting through the JWT module
+const blacklistToken = tokenService.blacklistToken;
+
 module.exports = {
   generateToken,
   verifyToken,
-  extractTokenFromRequest
+  extractTokenFromRequest,
+  blacklistToken
 };
