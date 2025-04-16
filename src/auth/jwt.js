@@ -6,6 +6,7 @@
 const jwt = require('jsonwebtoken');
 const config = require('../config/config');
 const { createLogger } = require('../utils/logger');
+const { AuthError } = require('../utils/errors');
 const User = require('../models/user.model');
 const Token = require('../models/token.model');
 
@@ -33,6 +34,7 @@ const generateToken = (user) => {
  * Verify and decode a JWT token
  * @param {String} token - JWT token to verify
  * @returns {Object|null} Decoded token payload or null if invalid
+ * @throws {AuthError} If token verification fails for operational reasons
  */
 async function verifyToken(token) {
   try {
@@ -43,14 +45,14 @@ async function verifyToken(token) {
     const isBlacklisted = await Token.isTokenBlacklisted(token);
     if (isBlacklisted) {
       logger.warn('Token was found in blacklist during verification');
-      return null;
+      throw AuthError.unauthorized('Token has been revoked. Please log in again.');
     }
     
     // Check if all tokens for this user are blacklisted
     const allBlacklisted = await Token.areAllUserTokensBlacklisted(decoded.sub);
     if (allBlacklisted) {
       logger.warn(`All tokens for user ${decoded.sub} have been blacklisted`);
-      return null;
+      throw AuthError.unauthorized('All your sessions have been revoked for security reasons. Please log in again.');
     }
     
     // Check token version against user's current token version
@@ -58,20 +60,31 @@ async function verifyToken(token) {
     
     if (!user) {
       logger.warn(`User not found for token: ${decoded.sub}`);
-      return null;
+      throw AuthError.unauthorized('User account not found. Please contact support if this issue persists.');
     }
     
     // Verify token version
     if (user.tokenVersion && (!decoded.version || decoded.version < user.tokenVersion)) {
       logger.warn(`Token version mismatch. Token: ${decoded.version}, User: ${user.tokenVersion}`);
-      return null;
+      throw AuthError.unauthorized('Your session has expired due to security changes. Please log in again.');
     }
     
     // Token is valid
     return decoded;
   } catch (error) {
-    logger.error('Error verifying token:', error);
-    return null;
+    if (error instanceof AuthError) {
+      // Pass through our own errors
+      throw error; 
+    } else if (error.name === 'JsonWebTokenError') {
+      logger.warn('Invalid JWT format:', error.message);
+      throw AuthError.unauthorized('Invalid authentication token');
+    } else if (error.name === 'TokenExpiredError') {
+      logger.warn('JWT expired');
+      throw AuthError.unauthorized('Your session has expired. Please log in again.');
+    } else {
+      logger.error('Error verifying token:', error);
+      throw AuthError.unauthorized('Authentication failed');
+    }
   }
 }
 

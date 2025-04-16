@@ -35,3 +35,4 @@ TypeError: Cannot read properties of undefined (reading 'regenerate')
     at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\passport\lib\sessionmanager.js:83:17
     at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\connect-mongodb-session\index.js:222:44
     at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+2025-04-16 22:52:35 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: AuthError - You do not have permission to access this resource. Required role: ADMIN or MANAGER 

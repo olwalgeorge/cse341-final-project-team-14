@@ -8,6 +8,7 @@
 
 const { verifyToken, extractTokenFromRequest } = require('../auth/jwt');
 const { createLogger } = require('../utils/logger');
+const { AuthError } = require('../utils/errors');
 
 const logger = createLogger('Middleware:Auth');
 
@@ -22,10 +23,7 @@ const authenticate = async (req, res, next) => {
 
     if (!token) {
       logger.warn('No authentication token provided');
-      return res.status(401).json({ 
-        success: false, 
-        message: 'Authentication required. Please provide a valid token.' 
-      });
+      return next(AuthError.unauthorized('Authentication required. Please provide a valid token.'));
     }
 
     // Verify the token
@@ -33,10 +31,7 @@ const authenticate = async (req, res, next) => {
     
     if (!decoded) {
       logger.warn('Invalid or expired token provided');
-      return res.status(401).json({ 
-        success: false, 
-        message: 'Invalid or expired token. Please log in again.' 
-      });
+      return next(AuthError.unauthorized('Invalid or expired token. Please log in again.'));
     }
 
     // Attach user info to the request object for use in route handlers
@@ -44,10 +39,7 @@ const authenticate = async (req, res, next) => {
     next();
   } catch (error) {
     logger.error('Authentication error:', error);
-    return res.status(500).json({ 
-      success: false, 
-      message: 'An error occurred during authentication.' 
-    });
+    return next(AuthError.unauthorized('Authentication failed.'));
   }
 };
 
@@ -65,29 +57,20 @@ const authorize = (roles) => {
       // Check if user exists (authenticate middleware should be called first)
       if (!req.user) {
         logger.warn('Authorization attempted without authentication');
-        return res.status(401).json({ 
-          success: false, 
-          message: 'Authentication required before authorization.' 
-        });
+        return next(AuthError.unauthorized('Authentication required before authorization.'));
       }
 
       // Check if user role is in the allowed roles
       if (!allowedRoles.includes(req.user.role)) {
         logger.warn(`Access denied for user ${req.user.userId} with role ${req.user.role}`);
-        return res.status(403).json({ 
-          success: false, 
-          message: 'You do not have permission to access this resource.' 
-        });
+        return next(AuthError.forbidden(`You do not have permission to access this resource. Required role: ${allowedRoles.join(' or ')}`));
       }
 
       // User has appropriate role
       next();
     } catch (error) {
       logger.error('Authorization error:', error);
-      return res.status(500).json({ 
-        success: false, 
-        message: 'An error occurred during authorization.' 
-      });
+      return next(AuthError.forbidden('Authorization failed.'));
     }
   };
 };
@@ -110,19 +93,13 @@ const authorizeOwnership = (extractResourceUserId) => {
       // Check if the resource belongs to the requesting user
       if (req.user.userId !== resourceUserId) {
         logger.warn(`User ${req.user.userId} attempted to access resource owned by ${resourceUserId}`);
-        return res.status(403).json({ 
-          success: false, 
-          message: 'You do not have permission to access this resource.' 
-        });
+        return next(AuthError.forbidden('You do not have permission to access this resource. You can only access your own data.'));
       }
       
       next();
     } catch (error) {
       logger.error('Ownership authorization error:', error);
-      return res.status(500).json({ 
-        success: false, 
-        message: 'An error occurred during authorization.' 
-      });
+      return next(AuthError.forbidden('Authorization failed when checking resource ownership.'));
     }
   };
 };
