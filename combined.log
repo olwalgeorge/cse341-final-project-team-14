@@ -95,3 +95,5 @@ MongoServerError: E11000 duplicate key error collection: team_14_final_project.t
 2025-04-16 21:28:30 INFO [inventory-api:Server]: Server running on https://cse341-final-project-team-14.onrender.com in production mode 
 2025-04-16 21:28:30 INFO [inventory-api:Server]: API Documentation: https://cse341-final-project-team-14.onrender.com/api-docs 
 2025-04-16 21:28:33 INFO [inventory-api:Database]: MongoDB Connected: cluster0-shard-00-01.wncfx.mongodb.net 
+2025-04-16 21:31:33 WARN [inventory-api:AuthMiddleware]: Attempt to use blacklisted token 
+2025-04-16 21:31:33 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: AuthError - Token has been invalidated. Please log in again. 

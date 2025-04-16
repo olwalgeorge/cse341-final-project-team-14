@@ -12,3 +12,4 @@ MongoServerError: E11000 duplicate key error collection: team_14_final_project.t
     at async executeOperation (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongodb\lib\operations\execute_operation.js:75:16)
     at async Collection.insertOne (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongodb\lib\collection.js:157:16)
 2025-04-16 21:18:51 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: DatabaseError - User not found 
+2025-04-16 21:31:33 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: AuthError - Token has been invalidated. Please log in again. 
