@@ -224,6 +224,15 @@ describe('User Validators', () => {
         const resultValid = validationResult(reqValid);
         expect(resultValid.isEmpty()).toBe(true);
         
+        // Test with additional valid roles
+        const validRoles = ['USER', 'SUPERVISOR', 'MANAGER', 'ADMIN', 'SUPERADMIN'];
+        for (const role of validRoles) {
+          const req = mockRequest({}, { testField: role });
+          await validator(req, {}, () => {});
+          const result = validationResult(req);
+          expect(result.isEmpty()).toBe(true);
+        }
+        
         // Test with a request that has invalid role
         const reqInvalid = mockRequest({}, { testField: 'INVALID_ROLE' });
         await validator(reqInvalid, {}, () => {});

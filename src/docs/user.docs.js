@@ -172,7 +172,7 @@ module.exports = {
           required: true,
           schema: {
             type: "string",
-            enum: ["SUPERADMIN", "ADMIN", "USER", "ORG"],
+            enum: ["USER", "SUPERVISOR", "MANAGER", "ADMIN", "SUPERADMIN"],
           },
         },
       ],

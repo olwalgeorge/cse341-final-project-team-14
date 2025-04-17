@@ -3150,10 +3150,11 @@
             "schema": {
               "type": "string",
               "enum": [
-                "SUPERADMIN",
-                "ADMIN",
                 "USER",
-                "ORG"
+                "SUPERVISOR",
+                "MANAGER",
+                "ADMIN",
+                "SUPERADMIN"
               ]
             }
           }

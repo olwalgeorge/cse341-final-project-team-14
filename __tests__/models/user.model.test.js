@@ -225,7 +225,7 @@ describe('User Model', () => {
     });
     
     it('should accept valid roles', async () => {
-      const validRoles = ['SUPERADMIN', 'ADMIN', 'USER', 'ORG'];
+      const validRoles = ['USER', 'SUPERVISOR', 'MANAGER', 'ADMIN', 'SUPERADMIN'];
       
       for (const role of validRoles) {
         const user = new User({

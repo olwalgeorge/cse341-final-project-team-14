@@ -1,4 +1,4 @@
-const { check, param } = require("express-validator");
+const { check, param, body } = require("express-validator");
 
 // Reusable rule for validating MongoDB ObjectIDs in parameters
 const isMongoIdParam = (paramName, errorMessage) => {
@@ -142,11 +142,19 @@ const emailValidationRules = () => {
 
 const roleValidationRules = () => {
   return [
-    param("role", "Role must be one of SUPERADMIN, ADMIN, USER, ORG")
-      .trim()
-      .toUpperCase()
-      .isIn(["SUPERADMIN", "ADMIN", "USER", "ORG"])
-      .escape(),
+    body('role')
+      .optional()
+      .isString()
+      .withMessage('Role must be a string')
+      .isIn(['USER', 'SUPERVISOR', 'MANAGER', 'ADMIN', 'SUPERADMIN'])
+      .withMessage('Invalid role specified'),
+    
+    param('role')
+      .optional()
+      .isString()
+      .withMessage('Role must be a string')
+      .isIn(['USER', 'SUPERVISOR', 'MANAGER', 'ADMIN', 'SUPERADMIN'])
+      .withMessage('Invalid role specified')
   ];
 };
 
