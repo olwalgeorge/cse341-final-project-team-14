@@ -5,17 +5,17 @@ const isMongoIdParam = (paramName, errorMessage) => {
   return param(paramName, errorMessage).isMongoId();
 };
 
-// Reusable rule for validating the SM-xxxxx User ID format in parameters
-const isSMUserIDParam = (paramName, errorMessage) => {
-  return param(paramName, errorMessage).matches(/^SM-\d{5}$/);
+// Reusable rule for validating the USR-xxxxx User ID format in parameters
+const isUserIDParam = (paramName, errorMessage) => {
+  return param(paramName, errorMessage).matches(/^USR-\d{5}$/);
 };
 
-// Reusable rule for validating the SM-xxxxx User ID format in the body
-const isSMUserIDBody = (fieldName, errorMessage) => {
+// Reusable rule for validating the USR-xxxxx User ID format in the body
+const isUserIDBody = (fieldName, errorMessage) => {
   return check(fieldName, errorMessage)
     .optional()
     .trim()
-    .matches(/^SM-\d{5}$/);
+    .matches(/^USR-\d{5}$/);
 };
 
 // Reusable rule for validating the username format in the body
@@ -26,7 +26,8 @@ const isValidUsernameBody = (fieldName, errorMessage) => {
     .withMessage(
       "Username must not start with a number and can only contain alphanumeric characters and underscores"
     )
-    .isLength({ min: 3, max: 20 })
+    .isLength({ min: 3, max: 30 })
+    .withMessage("Username must be between 3 and 30 characters")
     .escape()
     .toLowerCase();
 };
@@ -81,12 +82,12 @@ const user_IdValidationRules = () => {
   return [isMongoIdParam("user_Id", "Invalid internal User ID format")];
 };
 
-// For /users/:userID (now using SM-xxxxx format)
+// For /users/:userID (now using USR-xxxxx format)
 const userIDValidationRules = () => {
   return [
-    isSMUserIDParam(
+    isUserIDParam(
       "userID",
-      "User ID should be in the format SM-xxxxx (where x are digits)"
+      "User ID should be in the format USR-xxxxx (where x are digits)"
     ),
   ];
 };
@@ -95,7 +96,7 @@ const userTypeValidationRules = () => {
   return [
     isValidRole(
       "role",
-      ["SUPERADMIN", "ADMIN", "USER", "ORG"],
+      ["SUPERADMIN", "ADMIN", "MANAGER", "SUPERVISOR", "USER", "ORG"],
       "Invalid user role"
     ),
   ];
@@ -104,16 +105,16 @@ const userTypeValidationRules = () => {
 const userUpdateValidationRules = () => {
   return [
     check("email").optional().trim().isEmail().normalizeEmail(),
-    isSMUserIDBody(
+    isUserIDBody(
       "userID",
-      "User ID should be in the format SM-xxxxx (where x are digits)"
+      "User ID should be in the format USR-xxxxx (where x are digits)"
     ),
-    check("fullName").optional().trim().isLength({ min: 3, max: 50 }),
+    check("fullName").optional().trim().isLength({ min: 2, max: 100 }),
     isValidUsernameBody("username", "Invalid username format").optional(),
     isValidPassword("password", "Invalid password format"),
     isValidRole(
       "role",
-      ["SUPERADMIN", "ADMIN", "USER", "ORG"],
+      ["SUPERADMIN", "ADMIN", "MANAGER", "SUPERVISOR", "USER", "ORG"],
       "Invalid user role"
     ),
     check("profilePicture").optional().trim().isLength({ max: 200 }),
@@ -128,8 +129,8 @@ const userUpdateValidationRules = () => {
 
 const usernameValidationRules = () => {
   return [
-    param("username", "Username must be between 3 and 20 characters")
-      .isLength({ min: 3, max: 20 })
+    param("username", "Username must be between 3 and 30 characters")
+      .isLength({ min: 3, max: 30 })
       .trim()
       .escape()
       .toLowerCase(),
@@ -182,8 +183,8 @@ const adminUserCreateValidationRules = () => {
       .trim()
       .notEmpty()
       .withMessage("Username is required")
-      .isLength({ min: 3, max: 20 })
-      .withMessage("Username must be between 3 and 20 characters")
+      .isLength({ min: 3, max: 30 })
+      .withMessage("Username must be between 3 and 30 characters")
       .matches(/^(?!\d)[a-zA-Z0-9_]+$/)
       .withMessage("Username must not start with a number and can only contain alphanumeric characters and underscores"),
     

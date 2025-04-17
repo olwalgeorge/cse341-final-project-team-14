@@ -358,3 +358,6 @@ AuthError: Invalid email or password
 2025-04-17 16:54:53 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: ApiError - Too many requests, please try again later. 
 2025-04-17 16:54:57 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: ApiError - Too many requests, please try again later. 
 2025-04-17 16:54:57 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: ApiError - Too many requests, please try again later. 
+2025-04-17 18:43:07 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: AuthError - Authentication required. Please provide a valid token. 
+2025-04-17 18:46:35 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: AuthError - Authentication required. Please provide a valid token. 
+2025-04-17 18:47:45 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: AuthError - You do not have permission to access this resource. Required role: ADMIN or MANAGER 

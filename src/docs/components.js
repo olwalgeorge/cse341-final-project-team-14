@@ -17,13 +17,37 @@ module.exports = {
         },
         message: {
           type: "string",
+          example: "Operation failed",
+          description: "Brief description of the error"
         },
         error: {
           type: "array",
           items: {
             type: "string",
           },
+          example: ["Validation failed", "Username already exists"],
+          description: "Detailed error messages"
         },
+        errorCode: {
+          type: "string",
+          example: "VALIDATION_ERROR",
+          description: "Error code for programmatic handling",
+          enum: [
+            "VALIDATION_ERROR",
+            "AUTH_ERROR",
+            "NOT_FOUND_ERROR",
+            "SERVER_ERROR", 
+            "DATABASE_ERROR",
+            "FORBIDDEN_ERROR",
+            "CONFLICT_ERROR",
+            "RATE_LIMIT_ERROR"
+          ]
+        },
+        statusCode: {
+          type: "number",
+          example: 400,
+          description: "HTTP status code"
+        }
       },
     },
     Success: {
@@ -35,38 +59,334 @@ module.exports = {
         },
         message: {
           type: "string",
+          example: "Operation successful",
+          description: "Brief description of the successful operation"
         },
         data: {
           type: "object",
+          description: "Result data from the operation"
         },
       },
     },
     User: {
       type: "object",
+      required: ["userID", "username", "email", "password", "fullName", "role"],
       properties: {
         userID: {
           type: "string",
-          pattern: "^SM-\\d{5}$",
-          example: "SM-00001",
+          pattern: "^USR-\\d{5}$",
+          example: "USR-00001",
+          description: "Unique identifier for the user in format USR-XXXXX"
         },
         username: {
           type: "string",
-          example: "john_doe",
+          minLength: 3,
+          maxLength: 30,
+          pattern: "^(?!\\d)[a-zA-Z0-9_]+$",
+          example: "johnsmith",
+          description: "Unique username (3-30 chars, alphanumeric and underscores, can't start with number)"
         },
         email: {
           type: "string",
           format: "email",
-          example: "john.doe@example.com",
+          example: "user@example.com",
+          description: "Unique email address for the user"
+        },
+        password: {
+          type: "string",
+          format: "password",
+          minLength: 8,
+          maxLength: 50,
+          pattern: "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,50}$",
+          example: "SecurePass123!",
+          description: "Password (8-50 chars, must include lowercase, uppercase, number, special character)"
         },
         fullName: {
           type: "string",
-          example: "John Doe",
+          minLength: 2,
+          maxLength: 100,
+          example: "John Smith",
+          description: "User's full name (2-100 characters)"
+        },
+        avatar: {
+          type: "string",
+          format: "uri",
+          example: "https://example.com/avatars/user123.jpg",
+          description: "URL to user's avatar image"
         },
         role: {
           type: "string",
-          enum: ["SUPERADMIN", "ADMIN", "USER", "ORG"],
+          enum: ["USER", "SUPERVISOR", "MANAGER", "ADMIN", "SUPERADMIN"],
+          example: "USER",
+          description: "User's role (affects permissions, higher roles inherit permissions from lower ones)"
         },
-      },
+        permissions: {
+          type: "array",
+          items: {
+            type: "string"
+          },
+          example: ["read:users", "write:products"],
+          description: "Array of specific permissions granted to this user"
+        },
+        isActive: {
+          type: "boolean",
+          example: true,
+          description: "Whether the user account is active"
+        },
+        isVerified: {
+          type: "boolean",
+          example: false,
+          description: "Whether the user's email has been verified"
+        },
+        lastLogin: {
+          type: "string",
+          format: "date-time",
+          example: "2023-04-17T14:30:00Z",
+          description: "When the user last logged in"
+        },
+        rateLimitExemptUntil: {
+          type: "string",
+          format: "date-time",
+          example: "2023-04-18T14:30:00Z",
+          description: "Date until which the user is exempt from rate limiting"
+        },
+        createdAt: {
+          type: "string",
+          format: "date-time",
+          example: "2022-10-31T14:30:00Z",
+          description: "When the user was created"
+        },
+        updatedAt: {
+          type: "string", 
+          format: "date-time",
+          example: "2023-04-17T14:30:00Z",
+          description: "When the user was last updated"
+        }
+      }
+    },
+    UserResponse: {
+      type: "object",
+      properties: {
+        user_id: {
+          type: "string",
+          example: "64f5a7b3c5dc0d34f85d969e",
+          description: "MongoDB ObjectID of the user"
+        },
+        userID: {
+          type: "string",
+          example: "USR-00001",
+          description: "Unique identifier for the user in format USR-XXXXX"
+        },
+        username: {
+          type: "string",
+          example: "johnsmith",
+          description: "User's username"
+        },
+        email: {
+          type: "string",
+          example: "user@example.com",
+          description: "User's email address"
+        },
+        fullName: {
+          type: "string",
+          example: "John Smith",
+          description: "User's full name"
+        },
+        avatar: {
+          type: "string",
+          example: "https://example.com/avatars/user123.jpg",
+          description: "URL to user's avatar image"
+        },
+        role: {
+          type: "string",
+          example: "USER",
+          description: "User's role"
+        },
+        isActive: {
+          type: "boolean",
+          example: true,
+          description: "Whether the user account is active"
+        },
+        isVerified: {
+          type: "boolean",
+          example: false,
+          description: "Whether the user's email has been verified"
+        },
+        lastLogin: {
+          type: "string",
+          format: "date-time",
+          description: "When the user last logged in"
+        },
+        createdAt: {
+          type: "string",
+          format: "date-time",
+          description: "When the user was created"
+        },
+        updatedAt: {
+          type: "string",
+          format: "date-time",
+          description: "When the user was last updated"
+        }
+      }
+    },
+    UserInput: {
+      type: "object",
+      required: ["username", "email", "password", "fullName"],
+      properties: {
+        username: {
+          type: "string", 
+          minLength: 3,
+          maxLength: 30,
+          pattern: "^(?!\\d)[a-zA-Z0-9_]+$",
+          example: "johnsmith",
+          description: "Unique username (3-30 chars, alphanumeric and underscores, can't start with number)"
+        },
+        email: {
+          type: "string",
+          format: "email",
+          example: "user@example.com",
+          description: "Unique email address for the user"
+        },
+        password: {
+          type: "string",
+          format: "password",
+          minLength: 8,
+          maxLength: 50,
+          pattern: "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,50}$",
+          example: "SecurePass123!",
+          description: "Password (8-50 chars, must include lowercase, uppercase, number, special character)"
+        },
+        fullName: {
+          type: "string",
+          minLength: 2,
+          maxLength: 100,
+          example: "John Smith",
+          description: "User's full name (2-100 characters)"
+        },
+        avatar: {
+          type: "string",
+          format: "uri",
+          example: "https://example.com/avatars/user123.jpg",
+          description: "URL to user's avatar image"
+        },
+        role: {
+          type: "string",
+          enum: ["USER", "SUPERVISOR", "MANAGER", "ADMIN"],
+          example: "USER",
+          description: "User's role (SUPERADMIN can only be assigned by special processes)"
+        }
+      }
+    },
+    UserUpdate: {
+      type: "object",
+      properties: {
+        username: {
+          type: "string",
+          minLength: 3,
+          maxLength: 30,
+          pattern: "^(?!\\d)[a-zA-Z0-9_]+$",
+          example: "johnsmith_updated",
+          description: "Updated username"
+        },
+        email: {
+          type: "string",
+          format: "email",
+          example: "updated@example.com",
+          description: "Updated email address (must be unique)"
+        },
+        fullName: {
+          type: "string",
+          minLength: 2,
+          maxLength: 100,
+          example: "John Smith Updated",
+          description: "Updated full name"
+        },
+        avatar: {
+          type: "string",
+          format: "uri",
+          example: "https://example.com/avatars/user123_new.jpg",
+          description: "Updated avatar URL"
+        },
+        role: {
+          type: "string",
+          enum: ["USER", "SUPERVISOR", "MANAGER", "ADMIN"],
+          example: "SUPERVISOR",
+          description: "Updated role (restricted based on requestor's own role)"
+        },
+        isActive: {
+          type: "boolean",
+          example: true,
+          description: "Updated active status"
+        }
+      }
+    },
+    UsersList: {
+      type: "object",
+      properties: {
+        users: {
+          type: "array",
+          items: {
+            $ref: "#/components/schemas/UserResponse"
+          },
+          description: "Array of users matching the query criteria"
+        },
+        pagination: {
+          $ref: "#/components/schemas/Pagination",
+          description: "Pagination information"
+        }
+      }
+    },
+    PasswordChange: {
+      type: "object",
+      required: ["currentPassword", "newPassword", "confirmPassword"],
+      properties: {
+        currentPassword: {
+          type: "string",
+          format: "password",
+          example: "OldPassword123!",
+          description: "User's current password"
+        },
+        newPassword: {
+          type: "string", 
+          format: "password",
+          minLength: 8,
+          maxLength: 50,
+          pattern: "^(?=.*[a-z])(?=.*[a-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,50}$",
+          example: "NewPassword456!",
+          description: "New password (must meet complexity requirements)"
+        },
+        confirmPassword: {
+          type: "string",
+          format: "password",
+          example: "NewPassword456!",
+          description: "Confirmation of new password (must match newPassword)"
+        }
+      }
+    },
+    RateLimitRevocation: {
+      type: "object",
+      required: ["ipAddress"],
+      properties: {
+        ipAddress: {
+          type: "string",
+          format: "ipv4",
+          example: "192.168.1.100",
+          description: "IP address to exempt from rate limiting"
+        },
+        reason: {
+          type: "string",
+          example: "User experiencing temporary high API usage for legitimate purposes",
+          description: "Reason for the rate limit exemption"
+        },
+        durationHours: {
+          type: "integer",
+          minimum: 1,
+          maximum: 168,
+          default: 24,
+          example: 24,
+          description: "Number of hours to exempt the user from rate limits (default: 24, max: 168)"
+        }
+      }
     },
     Supplier: {
       type: "object",
@@ -166,1352 +486,6 @@ module.exports = {
         updatedAt: { type: "string", format: "date-time" },
       },
     },
-    ProductInput: {
-      type: "object",
-      required: ["name", "price", "quantity", "category", "supplier"],
-      properties: {
-        name: { type: "string", example: "MacBook Pro M3" },
-        description: {
-          type: "string",
-          example: "Latest MacBook Pro with M3 chip",
-        },
-        price: { type: "number", example: 1999.99 },
-        quantity: { type: "integer", example: 10 },
-        category: { type: "string", example: "Electronics" },
-        supplier: { type: "string", example: "65fb123abc456d789e012345" },
-        sku: { type: "string", example: "APPL123456" },
-      },
-    },
-    ProductUpdate: {
-      type: "object",
-      properties: {
-        name: { type: "string", example: "MacBook Pro M3 Pro" },
-        description: { type: "string", example: "Updated description" },
-        price: { type: "number", example: 2199.99 },
-        quantity: { type: "integer", example: 8 },
-        category: { type: "string", example: "Electronics" },
-        supplier: { type: "string", example: "65fb123abc456d789e012345" },
-        sku: { type: "string", example: "APPL123456" },
-      },
-    },
-    Order: {
-      type: "object",
-      properties: {
-        _id: { type: "string" },
-        orderID: { type: "string", example: "OR-00001" },
-        customer: {
-          oneOf: [
-            { type: "string" },
-            { $ref: "#/components/schemas/Customer" },
-          ],
-        },
-        items: {
-          type: "array",
-          items: {
-            type: "object",
-            properties: {
-              product: {
-                oneOf: [
-                  { type: "string" },
-                  { $ref: "#/components/schemas/Product" },
-                ],
-              },
-              quantity: { type: "integer", example: 2 },
-              price: { type: "number", example: 1999.99 },
-            },
-          },
-        },
-        status: {
-          type: "string",
-          enum: ["pending", "processing", "shipped", "delivered", "cancelled"],
-        },
-        shippingAddress: {
-          type: "object",
-          properties: {
-            street: { type: "string", example: "123 Main St" },
-            city: { type: "string", example: "San Francisco" },
-            state: { type: "string", example: "CA" },
-            postalCode: { type: "string", example: "94107" },
-            country: { type: "string", example: "USA" },
-          },
-        },
-        orderDate: { type: "string", format: "date-time" },
-        createdAt: { type: "string", format: "date-time" },
-        updatedAt: { type: "string", format: "date-time" },
-      },
-    },
-    OrderInput: {
-      type: "object",
-      required: ["customer", "items", "shippingAddress"],
-      properties: {
-        customer: { type: "string", example: "65fb123abc456d789e012348" },
-        items: {
-          type: "array",
-          items: {
-            type: "object",
-            properties: {
-              product: { type: "string", example: "65fb123abc456d789e012345" },
-              quantity: { type: "integer", example: 2 },
-              price: { type: "number", example: 1999.99 },
-            },
-          },
-        },
-        status: {
-          type: "string",
-          enum: ["pending", "processing", "shipped", "delivered", "cancelled"],
-        },
-        shippingAddress: {
-          type: "object",
-          properties: {
-            street: { type: "string", example: "123 Main St" },
-            city: { type: "string", example: "San Francisco" },
-            state: { type: "string", example: "CA" },
-            postalCode: { type: "string", example: "94107" },
-            country: { type: "string", example: "USA" },
-          },
-        },
-      },
-    },
-    Customer: {
-      type: "object",
-      properties: {
-        _id: { type: "string" },
-        customerID: { type: "string", example: "CU-00001" },
-        name: { type: "string", example: "John Doe" },
-        email: { type: "string", example: "john.doe@example.com" },
-        phone: { type: "string", example: "1234567890" },
-        address: {
-          type: "object",
-          properties: {
-            street: { type: "string", example: "123 Main St" },
-            city: { type: "string", example: "Anytown" },
-            state: { type: "string", example: "CA" },
-            postalCode: { type: "string", example: "12345" },
-            country: { type: "string", example: "USA" },
-          },
-        },
-        createdAt: { type: "string", format: "date-time" },
-        updatedAt: { type: "string", format: "date-time" },
-      },
-    },
-    CustomerInput: {
-      type: "object",
-      required: ["name", "email"],
-      properties: {
-        name: { type: "string", example: "John Doe" },
-        email: { type: "string", example: "john.doe@example.com" },
-        phone: { type: "string", example: "1234567890" },
-        address: {
-          type: "object",
-          properties: {
-            street: { type: "string", example: "123 Main St" },
-            city: { type: "string", example: "Anytown" },
-            state: { type: "string", example: "CA" },
-            postalCode: { type: "string", example: "12345" },
-            country: { type: "string", example: "USA" },
-          },
-        },
-      },
-    },
-    Purchase: {
-      type: "object",
-      properties: {
-        _id: { type: "string" },
-        purchaseID: { type: "string", example: "PU-00001" },
-        supplier: {
-          oneOf: [
-            { type: "string" },
-            { $ref: "#/components/schemas/Supplier" },
-          ],
-        },
-        items: {
-          type: "array",
-          items: {
-            type: "object",
-            properties: {
-              product: {
-                oneOf: [
-                  { type: "string" },
-                  { $ref: "#/components/schemas/Product" },
-                ],
-              },
-              quantity: { type: "integer", example: 5 },
-              price: { type: "number", example: 1800.0 },
-            },
-          },
-        },
-        totalAmount: { type: "number", example: 9000.0 },
-        purchaseDate: { type: "string", format: "date-time" },
-        status: {
-          type: "string",
-          enum: ["pending", "ordered", "received", "cancelled", "returned"],
-        },
-        paymentStatus: {
-          type: "string",
-          enum: ["unpaid", "partially_paid", "paid"],
-        },
-        paymentDue: { type: "string", format: "date-time" },
-        notes: {
-          type: "string",
-          example: "Bulk purchase of laptops for inventory",
-        },
-        createdAt: { type: "string", format: "date-time" },
-        updatedAt: { type: "string", format: "date-time" },
-      },
-    },
-    PurchaseInput: {
-      type: "object",
-      required: ["supplier", "items", "totalAmount"],
-      properties: {
-        supplier: { type: "string", example: "65fb123abc456d789e012346" },
-        items: {
-          type: "array",
-          items: {
-            type: "object",
-            properties: {
-              product: { type: "string", example: "65fb123abc456d789e012345" },
-              quantity: { type: "integer", example: 5 },
-              price: { type: "number", example: 1800.0 },
-            },
-          },
-        },
-        totalAmount: { type: "number", example: 9000.0 },
-        purchaseDate: { type: "string", format: "date-time" },
-        status: {
-          type: "string",
-          enum: ["pending", "ordered", "received", "cancelled", "returned"],
-        },
-        paymentStatus: {
-          type: "string",
-          enum: ["unpaid", "partially_paid", "paid"],
-        },
-        paymentDue: { type: "string", format: "date-time" },
-        notes: {
-          type: "string",
-          example: "Bulk purchase of laptops for inventory",
-        },
-      },
-    },
-    PurchaseUpdate: {
-      type: "object",
-      properties: {
-        supplier: { type: "string", example: "65fb123abc456d789e012346" },
-        items: {
-          type: "array",
-          items: {
-            type: "object",
-            properties: {
-              product: { type: "string", example: "65fb123abc456d789e012345" },
-              quantity: { type: "integer", example: 5 },
-              price: { type: "number", example: 1800.0 },
-            },
-          },
-        },
-        totalAmount: { type: "number", example: 9000.0 },
-        purchaseDate: { type: "string", format: "date-time" },
-        status: {
-          type: "string",
-          enum: ["pending", "ordered", "received", "cancelled", "returned"],
-        },
-        paymentStatus: {
-          type: "string",
-          enum: ["unpaid", "partially_paid", "paid"],
-        },
-        paymentDue: { type: "string", format: "date-time" },
-        notes: {
-          type: "string",
-          example: "Bulk purchase of laptops for inventory",
-        },
-      },
-    },
-    InventoryTransaction: {
-      type: "object",
-      properties: {
-        _id: { type: "string" },
-        transactionID: { 
-          type: "string", 
-          example: "IT-00001",
-          pattern: "^IT-\\d{5}$" 
-        },
-        inventory: {
-          oneOf: [
-            { type: "string" },
-            { $ref: "#/components/schemas/Inventory" }
-          ]
-        },
-        product: {
-          oneOf: [
-            { type: "string" },
-            { $ref: "#/components/schemas/Product" }
-          ]
-        },
-        warehouse: {
-          oneOf: [
-            { type: "string" },
-            { $ref: "#/components/schemas/Warehouse" }
-          ]
-        },
-        transactionType: {
-          type: "string",
-          enum: [
-            "Adjustment", 
-            "Purchase", 
-            "Sale", 
-            "Return", 
-            "Transfer In", 
-            "Transfer Out", 
-            "Damaged",
-            "Expired",
-            "Initial"
-          ],
-          example: "Purchase"
-        },
-        transactionDate: {
-          type: "string",
-          format: "date-time"
-        },
-        quantityBefore: {
-          type: "number",
-          example: 10
-        },
-        quantityChange: {
-          type: "number",
-          example: 5
-        },
-        quantityAfter: {
-          type: "number",
-          example: 15
-        },
-        reference: {
-          type: "object",
-          properties: {
-            documentType: {
-              type: "string",
-              enum: [
-                "Purchase", 
-                "Order", 
-                "InventoryAdjustment", 
-                "InventoryTransfer", 
-                "InventoryReturn"
-              ],
-              example: "Purchase"
-            },
-            documentId: {
-              type: "string",
-              example: "67f66c737ed7ddb60e54af70"
-            },
-            documentCode: {
-              type: "string",
-              example: "PU-00001"
-            }
-          }
-        },
-        fromWarehouse: {
-          oneOf: [
-            { type: "string" },
-            { $ref: "#/components/schemas/Warehouse" }
-          ]
-        },
-        toWarehouse: {
-          oneOf: [
-            { type: "string" },
-            { $ref: "#/components/schemas/Warehouse" }
-          ]
-        },
-        notes: {
-          type: "string",
-          example: "Stock received from supplier"
-        },
-        performedBy: {
-          oneOf: [
-            { type: "string" },
-            { $ref: "#/components/schemas/User" }
-          ]
-        },
-        createdAt: {
-          type: "string",
-          format: "date-time"
-        },
-        updatedAt: {
-          type: "string",
-          format: "date-time"
-        }
-      }
-    },
-    InventoryTransactionInput: {
-      type: "object",
-      required: [
-        "product",
-        "warehouse",
-        "transactionType",
-        "quantityBefore",
-        "quantityChange"
-      ],
-      properties: {
-        transactionID: { 
-          type: "string", 
-          example: "IT-00001",
-          description: "Optional - will be auto-generated if not provided"
-        },
-        inventory: {
-          type: "string",
-          example: "67f8f19c967f8b21cb2ae9c5"
-        },
-        product: {
-          type: "string",
-          example: "67f8ec8aaf6bfc397a056b7f"
-        },
-        warehouse: {
-          type: "string",
-          example: "67f8e3c85b1777f2f72ac8e9"
-        },
-        transactionType: {
-          type: "string",
-          enum: [
-            "Adjustment", 
-            "Purchase", 
-            "Sale", 
-            "Return", 
-            "Transfer In", 
-            "Transfer Out", 
-            "Damaged",
-            "Expired",
-            "Initial"
-          ],
-          example: "Purchase"
-        },
-        transactionDate: {
-          type: "string",
-          format: "date-time",
-          description: "Optional - defaults to current date/time"
-        },
-        quantityBefore: {
-          type: "number",
-          example: 10
-        },
-        quantityChange: {
-          type: "number",
-          example: 5
-        },
-        reference: {
-          type: "object",
-          properties: {
-            documentType: {
-              type: "string",
-              enum: [
-                "Purchase", 
-                "Order", 
-                "InventoryAdjustment", 
-                "InventoryTransfer", 
-                "InventoryReturn"
-              ],
-              example: "Purchase"
-            },
-            documentId: {
-              type: "string",
-              example: "67f66c737ed7ddb60e54af70"
-            },
-            documentCode: {
-              type: "string",
-              example: "PU-00001"
-            }
-          }
-        },
-        fromWarehouse: {
-          type: "string",
-          example: "67f8e3c85b1777f2f72ac8e9",
-          description: "Required for Transfer Out transactions"
-        },
-        toWarehouse: {
-          type: "string",
-          example: "67fa93a246dd3dafdcbf730b",
-          description: "Required for Transfer In transactions"
-        },
-        notes: {
-          type: "string",
-          example: "Stock received from supplier"
-        }
-      }
-    },
-    Inventory: {
-      type: "object",
-      properties: {
-        _id: { type: "string" },
-        inventoryID: { 
-          type: "string", 
-          example: "IN-00001",
-          pattern: "^IN-\\d{5}$" 
-        },
-        product: {
-          oneOf: [
-            { type: "string" },
-            { $ref: "#/components/schemas/Product" }
-          ]
-        },
-        warehouse: {
-          oneOf: [
-            { type: "string" },
-            { $ref: "#/components/schemas/Warehouse" }
-          ]
-        },
-        quantity: {
-          type: "number",
-          example: 25
-        },
-        minStockLevel: {
-          type: "number",
-          example: 5
-        },
-        maxStockLevel: {
-          type: "number",
-          example: 50
-        },
-        stockStatus: {
-          type: "string",
-          enum: ["In Stock", "Low Stock", "Out of Stock", "Overstock"],
-          example: "In Stock"
-        },
-        location: {
-          type: "object",
-          properties: {
-            aisle: { type: "string", example: "A5" },
-            rack: { type: "string", example: "R3" },
-            bin: { type: "string", example: "B12" }
-          }
-        },
-        lastStockCheck: {
-          type: "string",
-          format: "date-time"
-        },
-        notes: {
-          type: "string",
-          example: "Main stock location for laptops"
-        },
-        createdAt: {
-          type: "string",
-          format: "date-time"
-        },
-        updatedAt: {
-          type: "string",
-          format: "date-time"
-        }
-      }
-    },
-    InventoryInput: {
-      type: "object",
-      required: [
-        "product",
-        "warehouse"
-      ],
-      properties: {
-        product: {
-          type: "string",
-          example: "67f8ec8aaf6bfc397a056b7f"
-        },
-        warehouse: {
-          type: "string",
-          example: "67f8e3c85b1777f2f72ac8e9"
-        },
-        quantity: {
-          type: "number",
-          example: 25,
-          description: "Default is 0 if not provided"
-        },
-        minStockLevel: {
-          type: "number",
-          example: 5
-        },
-        maxStockLevel: {
-          type: "number",
-          example: 50
-        },
-        location: {
-          type: "object",
-          properties: {
-            aisle: { type: "string", example: "A5" },
-            rack: { type: "string", example: "R3" },
-            bin: { type: "string", example: "B12" }
-          }
-        },
-        notes: {
-          type: "string",
-          example: "Main stock location for laptops"
-        }
-      }
-    },
-    InventoryUpdate: {
-      type: "object",
-      properties: {
-        quantity: {
-          type: "number",
-          example: 30
-        },
-        minStockLevel: {
-          type: "number",
-          example: 5
-        },
-        maxStockLevel: {
-          type: "number",
-          example: 50
-        },
-        location: {
-          type: "object",
-          properties: {
-            aisle: { type: "string", example: "A5" },
-            rack: { type: "string", example: "R3" },
-            bin: { type: "string", example: "B12" }
-          }
-        },
-        lastStockCheck: {
-          type: "string",
-          format: "date-time"
-        },
-        notes: {
-          type: "string",
-          example: "Updated stock location for laptops"
-        }
-      }
-    },
-    Warehouse: {
-      type: "object",
-      properties: {
-        _id: { type: "string" },
-        warehouseID: { 
-          type: "string", 
-          example: "WH-00001",
-          pattern: "^WH-\\d{5}$" 
-        },
-        name: {
-          type: "string",
-          example: "East Distribution Center"
-        },
-        description: {
-          type: "string",
-          example: "Primary warehouse for eastern region distribution"
-        },
-        capacity: {
-          type: "number",
-          example: 50000
-        },
-        capacityUnit: {
-          type: "string",
-          example: "sqft"
-        },
-        status: {
-          type: "string",
-          enum: ["Active", "Inactive", "Maintenance"],
-          example: "Active"
-        },
-        contact: {
-          type: "object",
-          properties: {
-            name: { type: "string", example: "John Manager" },
-            phone: { type: "string", example: "5551234567" },
-            email: { type: "string", example: "john.manager@example.com" }
-          }
-        },
-        address: {
-          type: "object",
-          properties: {
-            street: { type: "string", example: "123 Warehouse Blvd" },
-            city: { type: "string", example: "Atlanta" },
-            state: { type: "string", example: "GA" },
-            postalCode: { type: "string", example: "30301" },
-            country: { type: "string", example: "USA" }
-          }
-        },
-        createdAt: {
-          type: "string",
-          format: "date-time"
-        },
-        updatedAt: {
-          type: "string",
-          format: "date-time"
-        }
-      }
-    },
-    WarehouseInput: {
-      type: "object",
-      required: [
-        "name",
-        "capacity",
-        "status",
-        "address"
-      ],
-      properties: {
-        name: {
-          type: "string",
-          example: "East Distribution Center"
-        },
-        description: {
-          type: "string",
-          example: "Primary warehouse for eastern region distribution"
-        },
-        capacity: {
-          type: "number",
-          example: 50000
-        },
-        capacityUnit: {
-          type: "string",
-          example: "sqft"
-        },
-        status: {
-          type: "string",
-          enum: ["Active", "Inactive", "Maintenance"],
-          example: "Active"
-        },
-        contact: {
-          type: "object",
-          properties: {
-            name: { type: "string", example: "John Manager" },
-            phone: { type: "string", example: "5551234567" },
-            email: { type: "string", example: "john.manager@example.com" }
-          }
-        },
-        address: {
-          type: "object",
-          properties: {
-            street: { type: "string", example: "123 Warehouse Blvd" },
-            city: { type: "string", example: "Atlanta" },
-            state: { type: "string", example: "GA" },
-            postalCode: { type: "string", example: "30301" },
-            country: { type: "string", example: "USA" }
-          }
-        }
-      }
-    },
-    WarehouseUpdate: {
-      type: "object",
-      properties: {
-        name: {
-          type: "string",
-          example: "East Distribution Center Updated"
-        },
-        description: {
-          type: "string",
-          example: "Updated description for eastern region distribution center"
-        },
-        capacity: {
-          type: "number",
-          example: 60000
-        },
-        capacityUnit: {
-          type: "string",
-          example: "sqft"
-        },
-        status: {
-          type: "string",
-          enum: ["Active", "Inactive", "Maintenance"],
-          example: "Maintenance"
-        },
-        contact: {
-          type: "object",
-          properties: {
-            name: { type: "string", example: "Sarah Manager" },
-            phone: { type: "string", example: "5559876543" },
-            email: { type: "string", example: "sarah.manager@example.com" }
-          }
-        },
-        address: {
-          type: "object",
-          properties: {
-            street: { type: "string", example: "456 Warehouse Ave" },
-            city: { type: "string", example: "Atlanta" },
-            state: { type: "string", example: "GA" },
-            postalCode: { type: "string", example: "30301" },
-            country: { type: "string", example: "USA" }
-          }
-        }
-      }
-    },
-    InventoryTransfer: {
-      type: "object",
-      properties: {
-        _id: { type: "string" },
-        transferID: { 
-          type: "string", 
-          example: "TR-00001",
-          pattern: "^TR-\\d{5}$" 
-        },
-        fromWarehouse: {
-          oneOf: [
-            { type: "string" },
-            { $ref: "#/components/schemas/Warehouse" }
-          ]
-        },
-        toWarehouse: {
-          oneOf: [
-            { type: "string" },
-            { $ref: "#/components/schemas/Warehouse" }
-          ]
-        },
-        items: {
-          type: "array",
-          items: {
-            type: "object",
-            properties: {
-              product: {
-                oneOf: [
-                  { type: "string" },
-                  { $ref: "#/components/schemas/Product" }
-                ]
-              },
-              quantity: { type: "number", example: 5 },
-              receivedQuantity: { type: "number", example: 5 },
-              notes: { type: "string", example: "Transferring for stock replenishment" }
-            }
-          }
-        },
-        status: {
-          type: "string",
-          enum: ["Draft", "Pending", "Approved", "In Transit", "Partially Received", "Completed", "Canceled"],
-          example: "Pending"
-        },
-        requestDate: {
-          type: "string",
-          format: "date-time"
-        },
-        approvalDate: {
-          type: "string",
-          format: "date-time"
-        },
-        shippingDate: {
-          type: "string",
-          format: "date-time"
-        },
-        receivingDate: {
-          type: "string",
-          format: "date-time"
-        },
-        completionDate: {
-          type: "string",
-          format: "date-time"
-        },
-        expectedDeliveryDate: {
-          type: "string",
-          format: "date-time"
-        },
-        transportInfo: {
-          type: "object",
-          properties: {
-            method: { type: "string", example: "Truck" },
-            carrier: { type: "string", example: "Fast Logistics" },
-            trackingNumber: { type: "string", example: "FL123456789" }
-          }
-        },
-        requestedBy: {
-          oneOf: [
-            { type: "string" },
-            { $ref: "#/components/schemas/User" }
-          ]
-        },
-        approvedBy: {
-          oneOf: [
-            { type: "string" },
-            { $ref: "#/components/schemas/User" }
-          ]
-        },
-        receivedBy: {
-          oneOf: [
-            { type: "string" },
-            { $ref: "#/components/schemas/User" }
-          ]
-        },
-        notes: {
-          type: "string",
-          example: "Regular inventory replenishment transfer"
-        },
-        createdAt: {
-          type: "string",
-          format: "date-time"
-        },
-        updatedAt: {
-          type: "string",
-          format: "date-time"
-        }
-      }
-    },
-    InventoryTransferInput: {
-      type: "object",
-      required: [
-        "fromWarehouse",
-        "toWarehouse",
-        "items"
-      ],
-      properties: {
-        fromWarehouse: {
-          type: "string",
-          example: "67f8e3c85b1777f2f72ac8e9"
-        },
-        toWarehouse: {
-          type: "string",
-          example: "67fa93a246dd3dafdcbf730b"
-        },
-        items: {
-          type: "array",
-          items: {
-            type: "object",
-            required: ["product", "quantity"],
-            properties: {
-              product: { type: "string", example: "67f8ec8aaf6bfc397a056b7f" },
-              quantity: { type: "number", example: 5 },
-              notes: { type: "string", example: "Transferring for stock replenishment" }
-            }
-          }
-        },
-        status: {
-          type: "string",
-          enum: ["Draft", "Pending", "Approved", "In Transit", "Partially Received", "Completed", "Canceled"],
-          example: "Pending",
-          description: "Default is Pending if not provided"
-        },
-        expectedDeliveryDate: {
-          type: "string",
-          format: "date-time"
-        },
-        transportInfo: {
-          type: "object",
-          properties: {
-            method: { type: "string", example: "Truck" },
-            carrier: { type: "string", example: "Fast Logistics" },
-            trackingNumber: { type: "string", example: "FL123456789" }
-          }
-        },
-        notes: {
-          type: "string",
-          example: "Regular inventory replenishment transfer"
-        }
-      }
-    },
-    InventoryTransferUpdate: {
-      type: "object",
-      properties: {
-        status: {
-          type: "string",
-          enum: ["Draft", "Pending", "Approved", "In Transit", "Partially Received", "Completed", "Canceled"],
-          example: "Approved"
-        },
-        expectedDeliveryDate: {
-          type: "string",
-          format: "date-time"
-        },
-        transportInfo: {
-          type: "object",
-          properties: {
-            method: { type: "string", example: "Truck" },
-            carrier: { type: "string", example: "Fast Logistics" },
-            trackingNumber: { type: "string", example: "FL123456789" }
-          }
-        },
-        notes: {
-          type: "string",
-          example: "Priority transfer approved"
-        }
-      }
-    },
-    InventoryReturn: {
-      type: "object",
-      properties: {
-        _id: { type: "string" },
-        returnID: { 
-          type: "string", 
-          example: "RET-00001",
-          pattern: "^RET-\\d{5}$" 
-        },
-        returnType: {
-          type: "string",
-          enum: ["Customer Return", "Supplier Return", "Damaged Goods", "Defective Product"],
-          example: "Customer Return"
-        },
-        status: {
-          type: "string",
-          enum: ["Draft", "Pending", "Approved", "Completed", "Rejected", "Canceled"],
-          example: "Pending"
-        },
-        customer: {
-          oneOf: [
-            { type: "string" },
-            { $ref: "#/components/schemas/Customer" }
-          ]
-        },
-        supplier: {
-          oneOf: [
-            { type: "string" },
-            { $ref: "#/components/schemas/Supplier" }
-          ]
-        },
-        warehouse: {
-          oneOf: [
-            { type: "string" },
-            { $ref: "#/components/schemas/Warehouse" }
-          ]
-        },
-        items: {
-          type: "array",
-          items: {
-            type: "object",
-            properties: {
-              product: {
-                oneOf: [
-                  { type: "string" },
-                  { $ref: "#/components/schemas/Product" }
-                ]
-              },
-              quantity: { type: "number", example: 2 },
-              reason: { 
-                type: "string", 
-                enum: ["Defective", "Damaged", "Incorrect Item", "Expired", "Customer Dissatisfaction", "Other"],
-                example: "Defective" 
-              },
-              condition: { 
-                type: "string", 
-                enum: ["Good", "Damaged", "Defective", "Expired"],
-                example: "Defective" 
-              },
-              notes: { type: "string", example: "Product doesn't power on" }
-            }
-          }
-        },
-        returnDate: {
-          type: "string",
-          format: "date-time"
-        },
-        referenceOrder: {
-          type: "string",
-          example: "67f81e533e0490886947f008"
-        },
-        referencePurchase: {
-          type: "string",
-          example: "67f66c737ed7ddb60e54af70"
-        },
-        requestedBy: {
-          oneOf: [
-            { type: "string" },
-            { $ref: "#/components/schemas/User" }
-          ]
-        },
-        approvedBy: {
-          oneOf: [
-            { type: "string" },
-            { $ref: "#/components/schemas/User" }
-          ]
-        },
-        completedBy: {
-          oneOf: [
-            { type: "string" },
-            { $ref: "#/components/schemas/User" }
-          ]
-        },
-        actualReturnedItems: {
-          type: "array",
-          items: {
-            type: "object",
-            properties: {
-              product: {
-                oneOf: [
-                  { type: "string" },
-                  { $ref: "#/components/schemas/Product" }
-                ]
-              },
-              quantity: { type: "number", example: 2 },
-              condition: { 
-                type: "string", 
-                enum: ["Good", "Damaged", "Defective", "Expired"],
-                example: "Defective" 
-              },
-              notes: { type: "string", example: "Multiple scratches on casing" }
-            }
-          }
-        },
-        notes: {
-          type: "string",
-          example: "Customer returning due to defective product"
-        },
-        createdAt: {
-          type: "string",
-          format: "date-time"
-        },
-        updatedAt: {
-          type: "string",
-          format: "date-time"
-        }
-      }
-    },
-    InventoryReturnInput: {
-      type: "object",
-      required: [
-        "returnType",
-        "warehouse",
-        "items"
-      ],
-      properties: {
-        returnType: {
-          type: "string",
-          enum: ["Customer Return", "Supplier Return", "Damaged Goods", "Defective Product"],
-          example: "Customer Return"
-        },
-        status: {
-          type: "string",
-          enum: ["Draft", "Pending", "Approved", "Completed", "Rejected", "Canceled"],
-          example: "Pending",
-          description: "Default is Pending if not provided"
-        },
-        customer: {
-          type: "string",
-          example: "67f67b829d34cfbe039e94be",
-          description: "Required for Customer Returns"
-        },
-        supplier: {
-          type: "string",
-          example: "67f66c737ed7ddb60e54af6f",
-          description: "Required for Supplier Returns"
-        },
-        warehouse: {
-          type: "string",
-          example: "67f8e3c85b1777f2f72ac8e9"
-        },
-        items: {
-          type: "array",
-          items: {
-            type: "object",
-            required: ["product", "quantity", "reason"],
-            properties: {
-              product: { type: "string", example: "67f8ec8aaf6bfc397a056b7f" },
-              quantity: { type: "number", example: 2 },
-              reason: { 
-                type: "string", 
-                enum: ["Defective", "Damaged", "Incorrect Item", "Expired", "Customer Dissatisfaction", "Other"],
-                example: "Defective" 
-              },
-              condition: { 
-                type: "string", 
-                enum: ["Good", "Damaged", "Defective", "Expired"],
-                example: "Defective" 
-              },
-              notes: { type: "string", example: "Product doesn't power on" }
-            }
-          }
-        },
-        returnDate: {
-          type: "string",
-          format: "date-time",
-          description: "Optional - defaults to current date/time"
-        },
-        referenceOrder: {
-          type: "string",
-          example: "67f81e533e0490886947f008",
-          description: "Required for Customer Returns"
-        },
-        referencePurchase: {
-          type: "string",
-          example: "67f66c737ed7ddb60e54af70",
-          description: "Required for Supplier Returns"
-        },
-        notes: {
-          type: "string",
-          example: "Customer returning due to defective product"
-        }
-      }
-    },
-    InventoryReturnUpdate: {
-      type: "object",
-      properties: {
-        status: {
-          type: "string",
-          enum: ["Draft", "Pending", "Approved", "Completed", "Rejected", "Canceled"],
-          example: "Approved"
-        },
-        items: {
-          type: "array",
-          items: {
-            type: "object",
-            required: ["product", "quantity", "reason"],
-            properties: {
-              product: { type: "string", example: "67f8ec8aaf6bfc397a056b7f" },
-              quantity: { type: "number", example: 2 },
-              reason: { 
-                type: "string", 
-                enum: ["Defective", "Damaged", "Incorrect Item", "Expired", "Customer Dissatisfaction", "Other"],
-                example: "Defective" 
-              },
-              condition: { 
-                type: "string", 
-                enum: ["Good", "Damaged", "Defective", "Expired"],
-                example: "Defective" 
-              },
-              notes: { type: "string", example: "Product doesn't power on" }
-            }
-          }
-        },
-        notes: {
-          type: "string",
-          example: "Updated return information after customer inspection"
-        }
-      }
-    },
-    InventoryAdjustment: {
-      type: "object",
-      properties: {
-        _id: { type: "string" },
-        adjustmentID: { 
-          type: "string", 
-          example: "ADJ-00001",
-          pattern: "^ADJ-\\d{5}$" 
-        },
-        adjustmentType: {
-          type: "string",
-          enum: ["Quantity Correction", "Inventory Count", "Write-Off", "Expired", "Damaged"],
-          example: "Quantity Correction"
-        },
-        status: {
-          type: "string",
-          enum: ["Pending", "Approved", "Completed", "Rejected", "Canceled"],
-          example: "Pending"
-        },
-        warehouse: {
-          oneOf: [
-            { type: "string" },
-            { $ref: "#/components/schemas/Warehouse" }
-          ]
-        },
-        items: {
-          type: "array",
-          items: {
-            type: "object",
-            properties: {
-              product: {
-                oneOf: [
-                  { type: "string" },
-                  { $ref: "#/components/schemas/Product" }
-                ]
-              },
-              inventory: {
-                oneOf: [
-                  { type: "string" },
-                  { $ref: "#/components/schemas/Inventory" }
-                ]
-              },
-              currentQuantity: { type: "number", example: 18 },
-              newQuantity: { type: "number", example: 20 },
-              adjustmentQuantity: { type: "number", example: 2 },
-              reason: { type: "string", example: "Physical count correction" }
-            }
-          }
-        },
-        adjustmentDate: {
-          type: "string",
-          format: "date-time"
-        },
-        requestedBy: {
-          oneOf: [
-            { type: "string" },
-            { $ref: "#/components/schemas/User" }
-          ]
-        },
-        approvedBy: {
-          oneOf: [
-            { type: "string" },
-            { $ref: "#/components/schemas/User" }
-          ]
-        },
-        completedBy: {
-          oneOf: [
-            { type: "string" },
-            { $ref: "#/components/schemas/User" }
-          ]
-        },
-        notes: {
-          type: "string",
-          example: "Adjustment after physical inventory count"
-        },
-        createdAt: {
-          type: "string",
-          format: "date-time"
-        },
-        updatedAt: {
-          type: "string",
-          format: "date-time"
-        }
-      }
-    },
-    InventoryAdjustmentInput: {
-      type: "object",
-      required: [
-        "adjustmentType",
-        "warehouse",
-        "items"
-      ],
-      properties: {
-        adjustmentType: {
-          type: "string",
-          enum: ["Quantity Correction", "Inventory Count", "Write-Off", "Expired", "Damaged"],
-          example: "Quantity Correction"
-        },
-        status: {
-          type: "string",
-          enum: ["Pending", "Approved", "Completed", "Rejected", "Canceled"],
-          example: "Pending",
-          description: "Default is Pending if not provided"
-        },
-        warehouse: {
-          type: "string",
-          example: "67f8e3c85b1777f2f72ac8e9"
-        },
-        items: {
-          type: "array",
-          items: {
-            type: "object",
-            required: ["product", "newQuantity"],
-            properties: {
-              product: { type: "string", example: "67f8ec8aaf6bfc397a056b7f" },
-              inventory: { type: "string", example: "67f8f19c967f8b21cb2ae9c5" },
-              currentQuantity: { 
-                type: "number", 
-                example: 18, 
-                description: "Optional - will be fetched from inventory if not provided" 
-              },
-              newQuantity: { type: "number", example: 20 },
-              reason: { type: "string", example: "Physical count correction" }
-            }
-          }
-        },
-        adjustmentDate: {
-          type: "string",
-          format: "date-time",
-          description: "Optional - defaults to current date/time"
-        },
-        notes: {
-          type: "string",
-          example: "Adjustment after physical inventory count"
-        }
-      }
-    },
-    InventoryAdjustmentUpdate: {
-      type: "object",
-      properties: {
-        status: {
-          type: "string",
-          enum: ["Pending", "Approved", "Completed", "Rejected", "Canceled"],
-          example: "Approved"
-        },
-        items: {
-          type: "array",
-          items: {
-            type: "object",
-            required: ["product", "newQuantity"],
-            properties: {
-              product: { type: "string", example: "67f8ec8aaf6bfc397a056b7f" },
-              newQuantity: { type: "number", example: 20 },
-              reason: { type: "string", example: "Updated after recount" }
-            }
-          }
-        },
-        notes: {
-          type: "string",
-          example: "Adjustment verified by warehouse manager"
-        }
-      }
-    },
     Pagination: {
       type: "object",
       properties: {
@@ -1529,6 +503,13 @@ module.exports = {
         "application/json": {
           schema: {
             $ref: "#/components/schemas/Error",
+            example: {
+              success: false,
+              message: "Authentication failed",
+              error: ["Invalid or expired token"],
+              errorCode: "AUTH_ERROR",
+              statusCode: 401
+            }
           },
         },
       },
@@ -1539,6 +520,13 @@ module.exports = {
         "application/json": {
           schema: {
             $ref: "#/components/schemas/Error",
+            example: {
+              success: false,
+              message: "Not found",
+              error: ["The requested resource was not found"],
+              errorCode: "NOT_FOUND_ERROR",
+              statusCode: 404
+            }
           },
         },
       },
@@ -1549,6 +537,13 @@ module.exports = {
         "application/json": {
           schema: {
             $ref: "#/components/schemas/Error",
+            example: {
+              success: false,
+              message: "Validation failed",
+              error: ["Username must be at least 3 characters", "Invalid email format"],
+              errorCode: "VALIDATION_ERROR",
+              statusCode: 400
+            }
           },
         },
       },
@@ -1559,6 +554,13 @@ module.exports = {
         "application/json": {
           schema: {
             $ref: "#/components/schemas/Error",
+            example: {
+              success: false,
+              message: "Server Error",
+              error: ["An unexpected error occurred"],
+              errorCode: "SERVER_ERROR",
+              statusCode: 500
+            }
           },
         },
       },
@@ -1571,12 +573,15 @@ module.exports = {
           schema: {
             type: "object",
             properties: {
-              status: { type: "string", example: "error" },
+              success: { type: "boolean", example: false },
               message: { type: "string", example: "Bad Request" },
               error: {
-                type: "string",
-                example: "Validation error: Name is required",
+                type: "array",
+                items: { type: "string" },
+                example: ["Validation error: Name is required"]
               },
+              errorCode: { type: "string", example: "BAD_REQUEST" },
+              statusCode: { type: "number", example: 400 }
             },
           },
         },
@@ -1590,9 +595,15 @@ module.exports = {
           schema: {
             type: "object",
             properties: {
-              status: { type: "string", example: "error" },
+              success: { type: "boolean", example: false },
               message: { type: "string", example: "Unauthorized" },
-              error: { type: "string", example: "Authentication required" },
+              error: { 
+                type: "array",
+                items: { type: "string" },
+                example: ["Authentication required"] 
+              },
+              errorCode: { type: "string", example: "UNAUTHORIZED" },
+              statusCode: { type: "number", example: 401 }
             },
           },
         },
@@ -1606,12 +617,15 @@ module.exports = {
           schema: {
             type: "object",
             properties: {
-              status: { type: "string", example: "error" },
+              success: { type: "boolean", example: false },
               message: { type: "string", example: "Forbidden" },
               error: {
-                type: "string",
-                example: "You do not have permission to access this resource",
+                type: "array",
+                items: { type: "string" },
+                example: ["You do not have permission to access this resource"]
               },
+              errorCode: { type: "string", example: "FORBIDDEN" },
+              statusCode: { type: "number", example: 403 }
             },
           },
         },
@@ -1624,9 +638,15 @@ module.exports = {
           schema: {
             type: "object",
             properties: {
-              status: { type: "string", example: "error" },
+              success: { type: "boolean", example: false },
               message: { type: "string", example: "Not Found" },
-              error: { type: "string", example: "Resource not found" },
+              error: {
+                type: "array",
+                items: { type: "string" },
+                example: ["The requested resource was not found"]
+              },
+              errorCode: { type: "string", example: "NOT_FOUND" },
+              statusCode: { type: "number", example: 404 }
             },
           },
         },
@@ -1634,21 +654,53 @@ module.exports = {
     },
     Conflict: {
       description:
-        "Conflict - The request could not be completed due to a conflict with the current state of the resource",
+        "Conflict - The request conflicts with the current state of the resource",
       content: {
         "application/json": {
           schema: {
             type: "object",
             properties: {
-              status: { type: "string", example: "error" },
+              success: { type: "boolean", example: false },
               message: { type: "string", example: "Conflict" },
-              error: { type: "string", example: "Resource already exists" },
+              error: {
+                type: "array",
+                items: { type: "string" },
+                example: ["Username already exists", "Email already in use"]
+              },
+              errorCode: { type: "string", example: "CONFLICT" },
+              statusCode: { type: "number", example: 409 }
             },
           },
         },
       },
     },
-    InternalServerError: {
+    TooManyRequests: {
+      description: "Too Many Requests - Rate limit exceeded",
+      content: {
+        "application/json": {
+          schema: {
+            type: "object",
+            properties: {
+              success: { type: "boolean", example: false },
+              message: { type: "string", example: "Too Many Requests" },
+              error: {
+                type: "array",
+                items: { type: "string" },
+                example: ["Rate limit exceeded. Try again later."]
+              },
+              retryAfter: {
+                type: "number",
+                example: 60,
+                description: "Time in seconds until rate limit is reset"
+              },
+              errorCode: { type: "string", example: "RATE_LIMIT_EXCEEDED" },
+              statusCode: { type: "number", example: 429 }
+            },
+          },
+        },
+      },
+    },
+    ServerError: {
       description:
         "Internal Server Error - The server encountered an unexpected condition that prevented it from fulfilling the request",
       content: {
@@ -1656,16 +708,19 @@ module.exports = {
           schema: {
             type: "object",
             properties: {
-              status: { type: "string", example: "error" },
+              success: { type: "boolean", example: false },
               message: { type: "string", example: "Server Error" },
               error: {
-                type: "string",
-                example: "An unexpected error occurred",
+                type: "array",
+                items: { type: "string" },
+                example: ["An unexpected error occurred"]
               },
+              errorCode: { type: "string", example: "SERVER_ERROR" },
+              statusCode: { type: "number", example: 500 }
             },
           },
         },
       },
     },
-  },
+  }
 };
