@@ -266,3 +266,73 @@ AuthError: Invalid authentication token
 2025-04-17 12:56:31 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: ValidationError - Validation failed for field: user_Id 
 2025-04-17 12:57:30 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: ValidationError - Validation failed for field: user_Id 
 2025-04-17 12:58:21 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: ApiError - Too many requests, please try again later. 
+2025-04-17 14:09:58 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: ValidationError - Validation failed for field: password 
+2025-04-17 14:10:20 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: ValidationError - Validation failed for field: password 
+2025-04-17 14:10:59 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: ValidationError - Validation failed for field: password 
+2025-04-17 14:15:04 ERROR [inventory-api:Middleware:Auth]: Authentication error: Invalid authentication token 
+AuthError: Invalid authentication token
+    at AuthError.unauthorized (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\utils\errors.js:139:12)
+    at verifyToken (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\auth\jwt.js:80:23)
+    at authenticate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\middlewares\auth.middleware.js:31:27)
+    at Layer.handle [as handle_request] (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\express\lib\router\layer.js:95:5)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\express\lib\router\index.js:284:15
+    at Function.process_params (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\express\lib\router\index.js:280:10)
+2025-04-17 14:15:04 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: AuthError - Authentication failed. 
+2025-04-17 14:16:38 ERROR [inventory-api:AuthController]: Error in login controller: Invalid email or password 
+AuthError: Invalid email or password
+    at AuthError.invalidCredentials (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\utils\errors.js:149:12)
+    at authenticateUserService (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\auth.service.js:222:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\auth.controller.js:67:18
+2025-04-17 14:16:38 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: AuthError - Invalid email or password 
+2025-04-17 14:20:34 ERROR [inventory-api:Middleware:Auth]: Authentication error: Invalid authentication token 
+AuthError: Invalid authentication token
+    at AuthError.unauthorized (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\utils\errors.js:139:12)
+    at verifyToken (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\auth\jwt.js:80:23)
+    at authenticate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\middlewares\auth.middleware.js:31:27)
+    at Layer.handle [as handle_request] (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\express\lib\router\layer.js:95:5)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\express\lib\router\index.js:284:15
+    at Function.process_params (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\express\lib\router\index.js:280:10)
+2025-04-17 14:20:34 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: AuthError - Authentication failed. 
+2025-04-17 14:23:02 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: ValidationError - Validation failed for field: username 
+2025-04-17 14:24:22 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: SyntaxError - Expected double-quoted property name in JSON at position 122 (line 6 column 1) 
+2025-04-17 14:24:29 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: ValidationError - Validation failed for field: email 
+2025-04-17 14:29:44 ERROR [inventory-api:AuthController]: Error in login controller: Invalid email or password 
+AuthError: Invalid email or password
+    at AuthError.invalidCredentials (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\utils\errors.js:149:12)
+    at authenticateUserService (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\auth.service.js:251:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\auth.controller.js:67:18
+2025-04-17 14:29:44 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: AuthError - Invalid email or password 
+2025-04-17 14:35:33 ERROR [inventory-api:AuthController]: Error in login controller: Your account is locked until 4/17/2025, 2:59:43 PM 
+AuthError: Your account is locked until 4/17/2025, 2:59:43 PM
+    at AuthError.unauthorized (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\utils\errors.js:139:12)
+    at authenticateUserService (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\auth.service.js:232:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\auth.controller.js:67:18
+2025-04-17 14:35:33 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: AuthError - Your account is locked until 4/17/2025, 2:59:43 PM 
+2025-04-17 14:42:36 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: SyntaxError - Expected double-quoted property name in JSON at position 125 (line 7 column 3) 
+2025-04-17 14:42:43 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: ValidationError - Validation failed for field: fullName 
+2025-04-17 14:43:25 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: ValidationError - Validation failed for field: email 
+2025-04-17 14:56:44 ERROR [inventory-api:AuthController]: Error in login controller: Your account is locked until 4/17/2025, 2:59:43 PM 
+AuthError: Your account is locked until 4/17/2025, 2:59:43 PM
+    at AuthError.unauthorized (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\utils\errors.js:139:12)
+    at authenticateUserService (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\auth.service.js:232:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\auth.controller.js:67:18
+2025-04-17 14:56:44 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: AuthError - Your account is locked until 4/17/2025, 2:59:43 PM 
+2025-04-17 15:25:01 ERROR [inventory-api:Middleware:Auth]: Authentication error: Token has been revoked. Please log in again. 
+AuthError: Token has been revoked. Please log in again.
+    at AuthError.unauthorized (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\utils\errors.js:139:12)
+    at verifyToken (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\auth\jwt.js:48:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async authenticate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\middlewares\auth.middleware.js:31:21)
+2025-04-17 15:25:01 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: AuthError - Authentication failed. 

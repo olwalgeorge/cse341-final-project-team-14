@@ -1,0 +1,78 @@
+@baseUrl = http://localhost:3000
+
+### Step 1: Login to get initial token
+# @name initialLogin
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@inventory-system.com",
+  "password": "SuperAdmin123!"
+}
+
+### Store the token from the response
+@initialToken = {{initialLogin.response.body.data.token}}
+
+### Step 2: Verify the initial token is valid
+GET {{baseUrl}}/auth/verify
+Authorization: Bearer {{initialToken}}
+
+### Step 3: Use the token for an authenticated request
+GET {{baseUrl}}/users/profile
+Authorization: Bearer {{initialToken}}
+
+### Step 3.5: DEBUG - Extract and save token details for investigation
+# @name tokenInfo
+GET {{baseUrl}}/auth/verify
+Authorization: Bearer {{initialToken}}
+
+# The above should show token details including expiry time and token version
+
+### Step 4: Login again with token in Authorization header - test "already logged in" response
+# @name loginWithToken
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+Authorization: Bearer {{initialToken}}
+
+{
+  "email": "admin@inventory-system.com",
+  "password": "SuperAdmin123!"
+}
+
+# If the implementation is correct, this should return a message indicating
+# the user is already logged in, along with the existing token
+
+### Step 5: Login again without token in header - check if token is reused
+# @name secondLogin
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@inventory-system.com",
+  "password": "SuperAdmin123!"
+}
+
+# The implementation should generate a new token if the user logs in again
+
+### Store the second token
+@secondToken = {{secondLogin.response.body.data.token}}
+
+### Step 6: Compare tokens (visual inspection)
+# Visual comparison of tokens to see if they match
+# {{initialToken}} vs {{secondToken}}
+
+### Step 7: Verify the second token is valid
+GET {{baseUrl}}/auth/verify
+Authorization: Bearer {{secondToken}}
+
+### Step 8: Check if the second token works for authenticated requests
+GET {{baseUrl}}/users/profile
+Authorization: Bearer {{secondToken}}
+
+### Step 9: Logout to invalidate the token
+POST {{baseUrl}}/auth/logout
+Authorization: Bearer {{secondToken}}
+
+### Step 10: Try to use the invalidated token (should fail)
+GET {{baseUrl}}/users/profile
+Authorization: Bearer {{secondToken}}

@@ -156,13 +156,61 @@ const registerService = async (userData) => {
 };
 
 /**
+ * Check if user has a valid token that can be reused
+ * @param {string} userId - User's ID
+ * @param {string} tokenFromRequest - Token from request (if any)
+ * @returns {Promise<Object|null>} Valid token info or null
+ */
+const checkForValidToken = async (userId, tokenFromRequest) => {
+  try {
+    // If no token provided, we can't reuse
+    if (!tokenFromRequest) {
+      return null;
+    }
+    
+    // Verify the token
+    const decoded = await verifyToken(tokenFromRequest);
+    
+    if (!decoded || decoded.sub !== userId.toString()) {
+      return null;
+    }
+    
+    // Get user to check tokenVersion
+    const user = await User.findById(userId);
+    
+    if (!user || (user.tokenVersion && decoded.version !== user.tokenVersion)) {
+      return null;
+    }
+    
+    // Calculate remaining time (in seconds)
+    const currentTime = Math.floor(Date.now() / 1000);
+    const remainingTime = decoded.exp - currentTime;
+    
+    // Only reuse token if it has more than 10 minutes remaining (600 seconds)
+    if (remainingTime > 600) {
+      logger.debug(`Reusing existing token for user ${userId} with ${remainingTime}s remaining`);
+      return {
+        token: tokenFromRequest,
+        expiresIn: remainingTime
+      };
+    }
+    
+    return null;
+  } catch (error) {
+    logger.debug(`Error checking for valid token: ${error.message}`);
+    return null;
+  }
+};
+
+/**
  * Authenticate a user with email/password
  * @param {string} email - User email
  * @param {string} password - User password
+ * @param {string} existingToken - Existing token if available
  * @returns {Promise<Object>} - Authenticated user
  * @throws {AuthError} - If authentication fails
  */
-const authenticateUserService = async (email, password) => {
+const authenticateUserService = async (email, password, existingToken = null) => {
   logger.debug(`authenticateUserService called for email: ${email}`);
   
   try {
@@ -201,6 +249,21 @@ const authenticateUserService = async (email, password) => {
 
       await user.save();
       throw AuthError.invalidCredentials('Invalid email or password');
+    }
+
+    // Check for valid existing token before generating a new one
+    const validExistingToken = await checkForValidToken(user._id, existingToken);
+    
+    if (validExistingToken) {
+      logger.info(`Reused existing token for user: ${email}`);
+      // Reset failed login attempts and update last login
+      user.failedLoginAttempts = 0;
+      user.lastLogin = new Date();
+      await user.save();
+      
+      // Add token info to user object for controller to use
+      user.tokenInfo = validExistingToken;
+      return user;
     }
 
     // Reset failed login attempts and update last login
@@ -374,5 +437,6 @@ module.exports = {
   forgotPasswordService,
   resetPasswordService,
   getUserByEmailService,
-  verifyUserTokenService
+  verifyUserTokenService,
+  checkForValidToken
 };

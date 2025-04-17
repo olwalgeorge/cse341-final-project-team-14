@@ -63,16 +63,47 @@ const login = asyncHandler(async (req, res, next) => {
   logger.info("login controller called");
   
   try {
-    // Authenticate directly using the service
-    const user = await authenticateUserService(req.body.email, req.body.password);
+    // Check if user is already logged in by extracting token from request
+    const existingToken = extractTokenFromRequest(req);
     
-    // Generate a token after successful validation
-    const token = generateToken(user);
-
-    // Return both token and user data
+    if (existingToken) {
+      try {
+        // Verify if the token is valid
+        const result = await verifyUserTokenService(existingToken);
+        
+        if (result.success) {
+          // User is already logged in with a valid token
+          // We'll keep this check in the controller, as it's related to the HTTP request flow
+          // The service shouldn't handle HTTP concepts like "already logged in"
+          logger.info(`User ${result.user.email} attempted login while already having a valid token`);
+          return res.status(200).json({
+            success: true,
+            message: 'You are already logged in',
+            data: {
+              token: existingToken,
+              user: result.user,
+              alreadyLoggedIn: true
+            }
+          });
+        }
+      } catch (tokenError) {
+        // Token verification failed, proceed with normal login
+        logger.debug(`Existing token invalid, proceeding with regular login: ${tokenError.message}`);
+      }
+    }
+    
+    // Normal login flow - authenticate using the service
+    // The service will handle token validation/reuse internally based on user ID
+    // But won't have the "already logged in" concept, which is a UI/request concern
+    const user = await authenticateUserService(req.body.email, req.body.password, existingToken);
+    
+    // If the service returns a tokenInfo property, it means we're reusing an existing token
+    const token = user.tokenInfo ? user.tokenInfo.token : generateToken(user);
+    
+    // Return token and user data, noting if token was reused
     return res.status(200).json({
       success: true,
-      message: 'Login successful',
+      message: user.tokenInfo ? 'Login successful (token reused)' : 'Login successful',
       data: {
         token,
         user: {
