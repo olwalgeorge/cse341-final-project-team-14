@@ -25,19 +25,27 @@ const logger = createLogger('UsersController');
  * @access  Private
  */
 const getUserProfile = asyncHandler(async (req, res, next) => {
-  // Verify we have the req.user object with a valid ID
-  if (!req.user || !req.user._id) {
+  // Verify we have the req.user object
+  if (!req.user) {
     logger.error("getUserProfile called but no user in session");
     return next(DatabaseError.notFound("User session"));
   }
 
-  logger.info(`getUserProfile called for user ${req.user.username} (ID: ${req.user._id}, userID: ${req.user.userID})`);
+  // Get user ID from either _id (Mongoose ObjectId) or sub field (JWT payload)
+  const userId = req.user._id || req.user.sub;
+  
+  if (!userId) {
+    logger.error("getUserProfile called but no valid user ID found in session");
+    return next(DatabaseError.notFound("User ID"));
+  }
+
+  logger.info(`getUserProfile called for user ${req.user.username || req.user.userId || req.user.email || 'unknown'} (ID: ${userId})`);
   
   try {
-    // Use the Mongoose ObjectId from the authenticated user
-    const user = await getUserByIdService(req.user._id);
+    // Use the user ID to fetch the complete user data
+    const user = await getUserByIdService(userId);
     if (!user) {
-      logger.warn(`User found in session but not in database: ${req.user._id}`);
+      logger.warn(`User found in session but not in database: ${userId}`);
       return next(DatabaseError.notFound("User"));
     }
     
@@ -49,7 +57,7 @@ const getUserProfile = asyncHandler(async (req, res, next) => {
       transformedUser
     );
   } catch (error) {
-    logger.error(`Error retrieving user profile for ID: ${req.user._id}`, error);
+    logger.error(`Error retrieving user profile for ID: ${userId}`, error);
     next(error);
   }
 });

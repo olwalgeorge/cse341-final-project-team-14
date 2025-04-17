@@ -36,3 +36,18 @@ TypeError: Cannot read properties of undefined (reading 'regenerate')
     at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\connect-mongodb-session\index.js:222:44
     at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
 2025-04-16 22:52:35 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: AuthError - You do not have permission to access this resource. Required role: ADMIN or MANAGER 
+2025-04-17 10:02:52 ERROR [inventory-api:Middleware:Auth]: Authentication error: Token has been revoked. Please log in again. 
+AuthError: Token has been revoked. Please log in again.
+    at AuthError.unauthorized (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\utils\errors.js:139:12)
+    at verifyToken (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\auth\jwt.js:48:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async authenticate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\middlewares\auth.middleware.js:30:21)
+2025-04-17 10:02:52 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: AuthError - Authentication failed. 
+2025-04-17 10:04:21 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: AuthError - You do not have permission to access this resource. Required role: ADMIN or MANAGER 
+2025-04-17 10:06:01 ERROR [inventory-api:Middleware:Auth]: Authentication error: Token has been revoked. Please log in again. 
+AuthError: Token has been revoked. Please log in again.
+    at AuthError.unauthorized (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\utils\errors.js:139:12)
+    at verifyToken (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\auth\jwt.js:48:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async authenticate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\middlewares\auth.middleware.js:30:21)
+2025-04-17 10:06:01 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: AuthError - Authentication failed. 

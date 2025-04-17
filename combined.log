@@ -297,3 +297,47 @@ TypeError: Cannot read properties of undefined (reading 'regenerate')
 2025-04-16 22:52:34 DEBUG [inventory-api:App]: Session: 
 2025-04-16 22:52:35 WARN [inventory-api:Middleware:Auth]: Access denied for user USR-00009 with role USER 
 2025-04-16 22:52:35 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: AuthError - You do not have permission to access this resource. Required role: ADMIN or MANAGER 
+2025-04-17 10:02:31 DEBUG [inventory-api:TokenModel]: Fixed duplicate indexes in Token schema: 
+2025-04-17 10:02:31 INFO [inventory-api:EnvValidator]: =============== ENVIRONMENT SUMMARY =============== 
+2025-04-17 10:02:31 INFO [inventory-api:Passport]: GitHub authentication strategy initialized successfully 
+2025-04-17 10:02:31 INFO [inventory-api:Server]: Server running on http://localhost:3000 in development mode 
+2025-04-17 10:02:31 INFO [inventory-api:EnvValidator]: Environment: DEVELOPMENT 
+2025-04-17 10:02:31 INFO [inventory-api:EnvValidator]: Port: 3000 
+2025-04-17 10:02:31 INFO [inventory-api:EnvValidator]: Database: mongodb+srv://ol****:********@cluster0.wncfx.mongodb.net/team_14_final_project?retryWrites=true&w=majority&appName=Cluster0 
+2025-04-17 10:02:31 INFO [inventory-api:EnvValidator]: ------- Features Status ------- 
+2025-04-17 10:02:31 INFO [inventory-api:EnvValidator]: githubOAuth: Enabled ✅ 
+2025-04-17 10:02:31 INFO [inventory-api:EnvValidator]: =============================================== 
+2025-04-17 10:02:31 INFO [inventory-api:Server]: API Documentation: http://localhost:3000/api-docs 
+2025-04-17 10:02:34 INFO [inventory-api:Database]: MongoDB Connected: cluster0-shard-00-01.wncfx.mongodb.net 
+2025-04-17 10:02:52 DEBUG [inventory-api:App]: Session: 
+2025-04-17 10:02:52 WARN [inventory-api:Auth:JWT]: Token was found in blacklist during verification 
+2025-04-17 10:02:52 ERROR [inventory-api:Middleware:Auth]: Authentication error: Token has been revoked. Please log in again. 
+AuthError: Token has been revoked. Please log in again.
+    at AuthError.unauthorized (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\utils\errors.js:139:12)
+    at verifyToken (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\auth\jwt.js:48:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async authenticate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\middlewares\auth.middleware.js:30:21)
+2025-04-17 10:02:52 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: AuthError - Authentication failed. 
+2025-04-17 10:03:02 DEBUG [inventory-api:App]: Session: 
+2025-04-17 10:03:02 INFO [inventory-api:AuthController]: login controller called 
+2025-04-17 10:03:02 DEBUG [inventory-api:AuthService]: authenticateUserService called for email: olwalgeorge15@gmail.com 
+2025-04-17 10:03:03 INFO [inventory-api:AuthService]: User authenticated successfully: olwalgeorge15@gmail.com 
+2025-04-17 10:03:37 DEBUG [inventory-api:App]: Session: 
+2025-04-17 10:03:38 INFO [inventory-api:UsersController]: getUserProfile called for user jakom (ID: 67ffb16c3aa8bfc49a5dd1f7) 
+2025-04-17 10:03:38 DEBUG [inventory-api:UsersService]: getUserByIdService called with ID: 67ffb16c3aa8bfc49a5dd1f7 
+2025-04-17 10:04:21 DEBUG [inventory-api:App]: Session: 
+2025-04-17 10:04:21 WARN [inventory-api:Middleware:Auth]: Access denied for user USR-00009 with role USER 
+2025-04-17 10:04:21 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: AuthError - You do not have permission to access this resource. Required role: ADMIN or MANAGER 
+2025-04-17 10:05:43 DEBUG [inventory-api:App]: Session: 
+2025-04-17 10:05:51 DEBUG [inventory-api:App]: Session: 
+2025-04-17 10:05:53 INFO [inventory-api:TokenModel]: Token blacklisted for user 67ffb16c3aa8bfc49a5dd1f7 
+2025-04-17 10:05:53 INFO [inventory-api:AuthController]: Token blacklisted for user 67ffb16c3aa8bfc49a5dd1f7 
+2025-04-17 10:06:01 DEBUG [inventory-api:App]: Session: 
+2025-04-17 10:06:01 WARN [inventory-api:Auth:JWT]: Token was found in blacklist during verification 
+2025-04-17 10:06:01 ERROR [inventory-api:Middleware:Auth]: Authentication error: Token has been revoked. Please log in again. 
+AuthError: Token has been revoked. Please log in again.
+    at AuthError.unauthorized (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\utils\errors.js:139:12)
+    at verifyToken (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\auth\jwt.js:48:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async authenticate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\middlewares\auth.middleware.js:30:21)
+2025-04-17 10:06:01 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: AuthError - Authentication failed. 
