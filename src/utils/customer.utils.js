@@ -12,7 +12,7 @@ const generateCustomerId = async () => {
   try {
     // Use the Counter.getNextId method
     const customerID = await Counter.getNextId('customerID', { 
-      prefix: 'CUST-', 
+      prefix: 'CU-', 
       padLength: 5
     });
     

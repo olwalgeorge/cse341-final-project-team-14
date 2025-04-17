@@ -3,7 +3,7 @@ module.exports = {
     get: {
       tags: ["Warehouses"],
       summary: "Get all warehouses",
-      description: "Retrieve a list of all warehouses with optional filtering, sorting, and pagination",
+      description: "Retrieve a list of all warehouses with optional filtering, sorting, and pagination. Requires authentication.",
       security: [{ bearerAuth: [] }],
       parameters: [
         {
@@ -113,14 +113,35 @@ module.exports = {
             }
           }
         },
-        "401": { $ref: "#/components/responses/Unauthorized" },
-        "500": { $ref: "#/components/responses/ServerError" }
+        "401": { 
+          $ref: "#/components/responses/Unauthorized",
+          description: "Authentication token is missing, invalid, or expired"
+        },
+        "403": {
+          description: "Forbidden - Insufficient permissions to access warehouse data",
+          content: {
+            "application/json": {
+              schema: { $ref: "#/components/schemas/Error" },
+              example: {
+                success: false,
+                message: "Forbidden",
+                error: ["Insufficient permissions to access this resource"],
+                errorCode: "FORBIDDEN_ERROR",
+                statusCode: 403
+              }
+            }
+          }
+        },
+        "500": { 
+          $ref: "#/components/responses/ServerError",
+          description: "An unexpected error occurred on the server" 
+        }
       }
     },
     post: {
       tags: ["Warehouses"],
       summary: "Create a new warehouse",
-      description: "Create a new warehouse record in the system",
+      description: "Create a new warehouse record in the system. Requires ADMIN or MANAGER role.",
       security: [{ bearerAuth: [] }],
       requestBody: {
         required: true,
@@ -146,15 +167,65 @@ module.exports = {
             }
           }
         },
-        "400": { $ref: "#/components/responses/BadRequest" },
-        "401": { $ref: "#/components/responses/Unauthorized" },
-        "500": { $ref: "#/components/responses/ServerError" }
+        "400": { 
+          description: "Validation error in warehouse data",
+          content: {
+            "application/json": {
+              schema: { $ref: "#/components/schemas/Error" },
+              examples: {
+                invalidID: {
+                  summary: "Invalid warehouse ID format",
+                  value: {
+                    success: false,
+                    message: "Validation failed",
+                    error: ["Warehouse ID must be in format WH-XXXXX"],
+                    errorCode: "VALIDATION_ERROR",
+                    statusCode: 400
+                  }
+                },
+                invalidCapacity: {
+                  summary: "Invalid capacity value",
+                  value: {
+                    success: false,
+                    message: "Validation failed",
+                    error: ["Capacity cannot be negative"],
+                    errorCode: "VALIDATION_ERROR",
+                    statusCode: 400
+                  }
+                }
+              }
+            }
+          }
+        },
+        "401": { 
+          $ref: "#/components/responses/Unauthorized",
+          description: "Authentication token is missing, invalid, or expired" 
+        },
+        "409": { 
+          description: "Conflict - Warehouse with the same identifier already exists",
+          content: {
+            "application/json": {
+              schema: { $ref: "#/components/schemas/Error" },
+              example: {
+                success: false,
+                message: "Conflict",
+                error: ["Warehouse with this warehouseID already exists"],
+                errorCode: "CONFLICT_ERROR",
+                statusCode: 409
+              }
+            }
+          }
+        },
+        "500": { 
+          $ref: "#/components/responses/ServerError",
+          description: "An unexpected error occurred on the server" 
+        }
       }
     },
     delete: {
       tags: ["Warehouses"],
       summary: "Delete all warehouses",
-      description: "Delete all warehouses from the system (use with caution)",
+      description: "Delete all warehouses from the system (use with caution). Restricted to ADMIN role only.",
       security: [{ bearerAuth: [] }],
       responses: {
         "200": {
@@ -176,18 +247,22 @@ module.exports = {
       }
     }
   },
-  "/warehouses/{_id}": {
+  "/warehouses/{warehouse_Id}": {
     get: {
       tags: ["Warehouses"],
       summary: "Get warehouse by ID",
-      description: "Retrieve warehouse details by MongoDB ID",
+      description: "Retrieve warehouse details by MongoDB ID. Requires authentication. The warehouse_Id parameter is the MongoDB ObjectId (24 character hexadecimal) that uniquely identifies a warehouse in the database.",
       security: [{ bearerAuth: [] }],
       parameters: [
         {
-          name: "_id",
+          name: "warehouse_Id",
           in: "path",
           required: true,
-          schema: { type: "string" },
+          schema: { 
+            type: "string",
+            pattern: "^[a-f\\d]{24}$" 
+          },
+          example: "64f5a7b3c5dc0d34f85d969e",
           description: "MongoDB ID of the warehouse"
         }
       ],
@@ -207,22 +282,61 @@ module.exports = {
             }
           }
         },
-        "401": { $ref: "#/components/responses/Unauthorized" },
-        "404": { $ref: "#/components/responses/NotFound" },
-        "500": { $ref: "#/components/responses/ServerError" }
+        "400": { 
+          description: "Invalid MongoDB ID format",
+          content: {
+            "application/json": {
+              schema: { $ref: "#/components/schemas/Error" },
+              example: {
+                success: false,
+                message: "Validation failed",
+                error: ["Invalid MongoDB ID format"],
+                errorCode: "VALIDATION_ERROR",
+                statusCode: 400
+              }
+            }
+          }
+        },
+        "401": { 
+          $ref: "#/components/responses/Unauthorized",
+          description: "Authentication token is missing, invalid, or expired" 
+        },
+        "404": { 
+          description: "Warehouse not found with the specified ID",
+          content: {
+            "application/json": {
+              schema: { $ref: "#/components/schemas/Error" },
+              example: {
+                success: false,
+                message: "Warehouse not found",
+                error: ["No warehouse found with this ID"],
+                errorCode: "NOT_FOUND_ERROR",
+                statusCode: 404
+              }
+            }
+          }
+        },
+        "500": { 
+          $ref: "#/components/responses/ServerError",
+          description: "An unexpected error occurred on the server" 
+        }
       }
     },
     put: {
       tags: ["Warehouses"],
       summary: "Update warehouse",
-      description: "Update warehouse details by MongoDB ID",
+      description: "Update warehouse details by MongoDB ID. Requires ADMIN or MANAGER role. The warehouse_Id parameter is the MongoDB ObjectId (24 character hexadecimal) that uniquely identifies a warehouse in the database.",
       security: [{ bearerAuth: [] }],
       parameters: [
         {
-          name: "_id",
+          name: "warehouse_Id",
           in: "path",
           required: true,
-          schema: { type: "string" },
+          schema: { 
+            type: "string",
+            pattern: "^[a-f\\d]{24}$" 
+          },
+          example: "64f5a7b3c5dc0d34f85d969e",
           description: "MongoDB ID of the warehouse"
         }
       ],
@@ -250,23 +364,76 @@ module.exports = {
             }
           }
         },
-        "400": { $ref: "#/components/responses/BadRequest" },
-        "401": { $ref: "#/components/responses/Unauthorized" },
-        "404": { $ref: "#/components/responses/NotFound" },
-        "500": { $ref: "#/components/responses/ServerError" }
+        "400": { 
+          description: "Validation error in warehouse update data or invalid MongoDB ID",
+          content: {
+            "application/json": {
+              schema: { $ref: "#/components/schemas/Error" },
+              examples: {
+                invalidID: {
+                  summary: "Invalid MongoDB ID",
+                  value: {
+                    success: false,
+                    message: "Validation failed",
+                    error: ["Invalid MongoDB ID format"],
+                    errorCode: "VALIDATION_ERROR",
+                    statusCode: 400
+                  }
+                },
+                invalidData: {
+                  summary: "Invalid warehouse data",
+                  value: {
+                    success: false,
+                    message: "Validation failed",
+                    error: ["Contact email must be a valid email address"],
+                    errorCode: "VALIDATION_ERROR",
+                    statusCode: 400
+                  }
+                }
+              }
+            }
+          }
+        },
+        "401": { 
+          $ref: "#/components/responses/Unauthorized",
+          description: "Authentication token is missing, invalid, or expired" 
+        },
+        "404": { 
+          description: "Warehouse not found with the specified ID",
+          content: {
+            "application/json": {
+              schema: { $ref: "#/components/schemas/Error" },
+              example: {
+                success: false,
+                message: "Warehouse not found",
+                error: ["No warehouse found with this ID"],
+                errorCode: "NOT_FOUND_ERROR",
+                statusCode: 404
+              }
+            }
+          }
+        },
+        "500": { 
+          $ref: "#/components/responses/ServerError",
+          description: "An unexpected error occurred on the server" 
+        }
       }
     },
     delete: {
       tags: ["Warehouses"],
       summary: "Delete warehouse",
-      description: "Delete a warehouse by MongoDB ID",
+      description: "Delete a warehouse by MongoDB ID. Restricted to ADMIN role only. The warehouse_Id parameter is the MongoDB ObjectId (24 character hexadecimal) that uniquely identifies a warehouse in the database.",
       security: [{ bearerAuth: [] }],
       parameters: [
         {
-          name: "_id",
+          name: "warehouse_Id",
           in: "path",
           required: true,
-          schema: { type: "string" },
+          schema: { 
+            type: "string",
+            pattern: "^[a-f\\d]{24}$" 
+          },
+          example: "64f5a7b3c5dc0d34f85d969e",
           description: "MongoDB ID of the warehouse to delete"
         }
       ],
@@ -285,9 +452,44 @@ module.exports = {
             }
           }
         },
-        "401": { $ref: "#/components/responses/Unauthorized" },
-        "404": { $ref: "#/components/responses/NotFound" },
-        "500": { $ref: "#/components/responses/ServerError" }
+        "400": { 
+          description: "Invalid MongoDB ID format",
+          content: {
+            "application/json": {
+              schema: { $ref: "#/components/schemas/Error" },
+              example: {
+                success: false,
+                message: "Validation failed",
+                error: ["Invalid MongoDB ID format"],
+                errorCode: "VALIDATION_ERROR",
+                statusCode: 400
+              }
+            }
+          }
+        },
+        "401": { 
+          $ref: "#/components/responses/Unauthorized",
+          description: "Authentication token is missing, invalid, or expired" 
+        },
+        "404": { 
+          description: "Warehouse not found with the specified ID",
+          content: {
+            "application/json": {
+              schema: { $ref: "#/components/schemas/Error" },
+              example: {
+                success: false,
+                message: "Warehouse not found",
+                error: ["No warehouse found with this ID"],
+                errorCode: "NOT_FOUND_ERROR",
+                statusCode: 404
+              }
+            }
+          }
+        },
+        "500": { 
+          $ref: "#/components/responses/ServerError",
+          description: "An unexpected error occurred on the server" 
+        }
       }
     }
   },
@@ -295,7 +497,7 @@ module.exports = {
     get: {
       tags: ["Warehouses"],
       summary: "Get warehouse by warehouse ID",
-      description: "Retrieve warehouse details by warehouse ID (WH-XXXXX format)",
+      description: "Retrieve warehouse details by warehouse ID (WH-XXXXX format). Requires authentication.",
       security: [{ bearerAuth: [] }],
       parameters: [
         {
@@ -322,9 +524,44 @@ module.exports = {
             }
           }
         },
-        "401": { $ref: "#/components/responses/Unauthorized" },
-        "404": { $ref: "#/components/responses/NotFound" },
-        "500": { $ref: "#/components/responses/ServerError" }
+        "400": { 
+          description: "Invalid warehouse ID format",
+          content: {
+            "application/json": {
+              schema: { $ref: "#/components/schemas/Error" },
+              example: {
+                success: false,
+                message: "Validation failed",
+                error: ["Warehouse ID must be in format WH-XXXXX"],
+                errorCode: "VALIDATION_ERROR",
+                statusCode: 400
+              }
+            }
+          }
+        },
+        "401": { 
+          $ref: "#/components/responses/Unauthorized",
+          description: "Authentication token is missing, invalid, or expired" 
+        },
+        "404": { 
+          description: "Warehouse not found with the specified ID",
+          content: {
+            "application/json": {
+              schema: { $ref: "#/components/schemas/Error" },
+              example: {
+                success: false,
+                message: "Warehouse not found",
+                error: ["No warehouse found with this ID"],
+                errorCode: "NOT_FOUND_ERROR",
+                statusCode: 404
+              }
+            }
+          }
+        },
+        "500": { 
+          $ref: "#/components/responses/ServerError",
+          description: "An unexpected error occurred on the server" 
+        }
       }
     }
   },
@@ -332,7 +569,7 @@ module.exports = {
     get: {
       tags: ["Warehouses"],
       summary: "Get warehouse by name",
-      description: "Retrieve warehouse details by warehouse name",
+      description: "Retrieve warehouse details by warehouse name. Requires authentication.",
       security: [{ bearerAuth: [] }],
       parameters: [
         {
@@ -359,9 +596,29 @@ module.exports = {
             }
           }
         },
-        "401": { $ref: "#/components/responses/Unauthorized" },
-        "404": { $ref: "#/components/responses/NotFound" },
-        "500": { $ref: "#/components/responses/ServerError" }
+        "401": { 
+          $ref: "#/components/responses/Unauthorized",
+          description: "Authentication token is missing, invalid, or expired" 
+        },
+        "404": { 
+          description: "Warehouse not found with the specified name",
+          content: {
+            "application/json": {
+              schema: { $ref: "#/components/schemas/Error" },
+              example: {
+                success: false,
+                message: "Warehouse not found",
+                error: ["No warehouse found with this name"],
+                errorCode: "NOT_FOUND_ERROR",
+                statusCode: 404
+              }
+            }
+          }
+        },
+        "500": { 
+          $ref: "#/components/responses/ServerError",
+          description: "An unexpected error occurred on the server" 
+        }
       }
     }
   }

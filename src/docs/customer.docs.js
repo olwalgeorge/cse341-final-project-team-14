@@ -4,7 +4,7 @@ const customerRoutes = {
       tags: ["Customers"],
       summary: "Get all customers",
       description:
-        "Retrieve a list of all customers with optional filtering and pagination",
+        "Retrieve a list of all customers with optional filtering and pagination. Requires authentication.",
       security: [{ bearerAuth: [] }],
       parameters: [
         {
@@ -64,14 +64,37 @@ const customerRoutes = {
             },
           },
         },
-        401: { $ref: "#/components/responses/Unauthorized" },
-        500: { $ref: "#/components/responses/ServerError" },
+        401: {
+          $ref: "#/components/responses/Unauthorized",
+          description: "Authentication token is missing, invalid, or expired",
+        },
+        403: {
+          description:
+            "Forbidden - Insufficient permissions to access customer data",
+          content: {
+            "application/json": {
+              schema: { $ref: "#/components/schemas/Error" },
+              example: {
+                success: false,
+                message: "Forbidden",
+                error: ["Insufficient permissions to access this resource"],
+                errorCode: "FORBIDDEN_ERROR",
+                statusCode: 403,
+              },
+            },
+          },
+        },
+        500: {
+          $ref: "#/components/responses/ServerError",
+          description: "An unexpected error occurred on the server",
+        },
       },
     },
     post: {
       tags: ["Customers"],
       summary: "Create a new customer",
-      description: "Create a new customer in the system",
+      description:
+        "Create a new customer in the system. Requires ADMIN, MANAGER, or SUPERVISOR role.",
       security: [{ bearerAuth: [] }],
       requestBody: {
         required: true,
@@ -97,16 +120,41 @@ const customerRoutes = {
             },
           },
         },
-        400: { $ref: "#/components/responses/BadRequest" },
-        401: { $ref: "#/components/responses/Unauthorized" },
-        409: { $ref: "#/components/responses/Conflict" },
-        500: { $ref: "#/components/responses/ServerError" },
+        400: {
+          $ref: "#/components/responses/BadRequest",
+          description: "Validation error in customer data",
+        },
+        401: {
+          $ref: "#/components/responses/Unauthorized",
+          description: "Authentication token is missing, invalid, or expired",
+        },
+        409: {
+          description:
+            "Conflict - Customer with the same identifier already exists",
+          content: {
+            "application/json": {
+              schema: { $ref: "#/components/schemas/Error" },
+              example: {
+                success: false,
+                message: "Conflict",
+                error: ["Customer with the same email already exists"],
+                errorCode: "CONFLICT_ERROR",
+                statusCode: 409,
+              },
+            },
+          },
+        },
+        500: {
+          $ref: "#/components/responses/ServerError",
+          description: "An unexpected error occurred on the server",
+        },
       },
     },
     delete: {
       tags: ["Customers"],
       summary: "Delete all customers",
-      description: "Delete all customers from the system (use with caution)",
+      description:
+        "Delete all customers from the system (use with caution). Restricted to ADMIN role only.",
       security: [{ bearerAuth: [] }],
       responses: {
         200: {
@@ -132,7 +180,7 @@ const customerRoutes = {
     get: {
       tags: ["Customers"],
       summary: "Search customers",
-      description: "Search customers by name or email",
+      description: "Search customers by name or email. Requires authentication.",
       security: [{ bearerAuth: [] }],
       parameters: [
         {
@@ -172,14 +220,18 @@ const customerRoutes = {
     get: {
       tags: ["Customers"],
       summary: "Get customer by customer ID",
-      description: "Retrieve customer details by customer ID (CU-XXXXX format)",
+      description:
+        "Retrieve customer details by customer ID (CU-XXXXX format). Requires authentication.",
       security: [{ bearerAuth: [] }],
       parameters: [
         {
           in: "path",
           name: "customerID",
           required: true,
-          schema: { type: "string" },
+          schema: {
+            type: "string",
+            pattern: "^CU-\\d{5}$",
+          },
           description: "Customer ID in CU-XXXXX format",
         },
       ],
@@ -199,10 +251,46 @@ const customerRoutes = {
             },
           },
         },
-        400: { $ref: "#/components/responses/BadRequest" },
-        401: { $ref: "#/components/responses/Unauthorized" },
-        404: { $ref: "#/components/responses/NotFound" },
-        500: { $ref: "#/components/responses/ServerError" },
+        400: {
+          description: "Invalid customer ID format",
+          content: {
+            "application/json": {
+              schema: { $ref: "#/components/schemas/Error" },
+              example: {
+                success: false,
+                message: "Validation failed",
+                error: [
+                  "Customer ID must be in the format CU-XXXXX where X is a digit",
+                ],
+                errorCode: "VALIDATION_ERROR",
+                statusCode: 400,
+              },
+            },
+          },
+        },
+        401: {
+          $ref: "#/components/responses/Unauthorized",
+          description: "Authentication token is missing, invalid, or expired",
+        },
+        404: {
+          description: "Customer not found with the specified ID",
+          content: {
+            "application/json": {
+              schema: { $ref: "#/components/schemas/Error" },
+              example: {
+                success: false,
+                message: "Customer not found",
+                error: ["No customer found with this ID"],
+                errorCode: "NOT_FOUND_ERROR",
+                statusCode: 404,
+              },
+            },
+          },
+        },
+        500: {
+          $ref: "#/components/responses/ServerError",
+          description: "An unexpected error occurred on the server",
+        },
       },
     },
   },
@@ -210,7 +298,8 @@ const customerRoutes = {
     get: {
       tags: ["Customers"],
       summary: "Get customer by email",
-      description: "Retrieve customer details by email address",
+      description:
+        "Retrieve customer details by email address. Requires authentication.",
       security: [{ bearerAuth: [] }],
       parameters: [
         {
@@ -244,18 +333,23 @@ const customerRoutes = {
       },
     },
   },
-  "/customers/{_id}": {
+  "/customers/{customer_Id}": {
     get: {
       tags: ["Customers"],
       summary: "Get customer by ID",
-      description: "Retrieve customer details by MongoDB ID",
+      description:
+        "Retrieve customer details by MongoDB ID. Requires authentication. The customer_Id parameter is the MongoDB ObjectId (24 character hexadecimal) that uniquely identifies a customer in the database.",
       security: [{ bearerAuth: [] }],
       parameters: [
         {
-          name: "_id",
+          name: "customer_Id",
           in: "path",
           required: true,
-          schema: { type: "string" },
+          schema: {
+            type: "string",
+            pattern: "^[a-f\\d]{24}$",
+          },
+          example: "64f5a7b3c5dc0d34f85d969e",
           description: "MongoDB ID of the customer",
         },
       ],
@@ -275,23 +369,62 @@ const customerRoutes = {
             },
           },
         },
-        400: { $ref: "#/components/responses/BadRequest" },
-        401: { $ref: "#/components/responses/Unauthorized" },
-        404: { $ref: "#/components/responses/NotFound" },
-        500: { $ref: "#/components/responses/ServerError" },
+        400: {
+          description: "Invalid MongoDB ID format",
+          content: {
+            "application/json": {
+              schema: { $ref: "#/components/schemas/Error" },
+              example: {
+                success: false,
+                message: "Validation failed",
+                error: ["Invalid MongoDB ID format"],
+                errorCode: "VALIDATION_ERROR",
+                statusCode: 400,
+              },
+            },
+          },
+        },
+        401: {
+          $ref: "#/components/responses/Unauthorized",
+          description: "Authentication token is missing, invalid, or expired",
+        },
+        404: {
+          description: "Customer not found with the specified ID",
+          content: {
+            "application/json": {
+              schema: { $ref: "#/components/schemas/Error" },
+              example: {
+                success: false,
+                message: "Customer not found",
+                error: ["No customer found with this ID"],
+                errorCode: "NOT_FOUND_ERROR",
+                statusCode: 404,
+              },
+            },
+          },
+        },
+        500: {
+          $ref: "#/components/responses/ServerError",
+          description: "An unexpected error occurred on the server",
+        },
       },
     },
     put: {
       tags: ["Customers"],
       summary: "Update customer",
-      description: "Update customer details by MongoDB ID",
+      description:
+        "Update customer details by MongoDB ID. Requires ADMIN, MANAGER, or SUPERVISOR role. The customer_Id parameter is the MongoDB ObjectId (24 character hexadecimal) that uniquely identifies a customer in the database.",
       security: [{ bearerAuth: [] }],
       parameters: [
         {
+          name: "customer_Id",
           in: "path",
-          name: "_id",
           required: true,
-          schema: { type: "string" },
+          schema: {
+            type: "string",
+            pattern: "^[a-f\\d]{24}$",
+          },
+          example: "64f5a7b3c5dc0d34f85d969e",
           description: "MongoDB ID of the customer to update",
         },
       ],
@@ -319,23 +452,63 @@ const customerRoutes = {
             },
           },
         },
-        400: { $ref: "#/components/responses/BadRequest" },
-        401: { $ref: "#/components/responses/Unauthorized" },
-        404: { $ref: "#/components/responses/NotFound" },
-        500: { $ref: "#/components/responses/ServerError" },
+        400: {
+          description:
+            "Validation error in customer update data or invalid MongoDB ID",
+          content: {
+            "application/json": {
+              schema: { $ref: "#/components/schemas/Error" },
+              example: {
+                success: false,
+                message: "Validation failed",
+                error: ["Invalid email format"],
+                errorCode: "VALIDATION_ERROR",
+                statusCode: 400,
+              },
+            },
+          },
+        },
+        401: {
+          $ref: "#/components/responses/Unauthorized",
+          description: "Authentication token is missing, invalid, or expired",
+        },
+        404: {
+          description: "Customer not found with the specified ID",
+          content: {
+            "application/json": {
+              schema: { $ref: "#/components/schemas/Error" },
+              example: {
+                success: false,
+                message: "Customer not found",
+                error: ["No customer found with this ID"],
+                errorCode: "NOT_FOUND_ERROR",
+                statusCode: 404,
+              },
+            },
+          },
+        },
+        500: {
+          $ref: "#/components/responses/ServerError",
+          description: "An unexpected error occurred on the server",
+        },
       },
     },
     delete: {
       tags: ["Customers"],
       summary: "Delete customer",
-      description: "Delete customer by MongoDB ID",
+      description:
+        "Delete customer by MongoDB ID. Restricted to ADMIN role only. The customer_Id parameter is the MongoDB ObjectId (24 character hexadecimal) that uniquely identifies a customer in the database.",
       security: [{ bearerAuth: [] }],
       parameters: [
         {
+          name: "customer_Id",
           in: "path",
-          name: "_id",
           required: true,
-          schema: { type: "string" },
+          schema: {
+            type: "string",
+            pattern: "^[a-f\\d]{24}$",
+          },
+          example: "64f5a7b3c5dc0d34f85d969e",
           description: "MongoDB ID of the customer to delete",
         },
       ],
@@ -354,10 +527,44 @@ const customerRoutes = {
             },
           },
         },
-        400: { $ref: "#/components/responses/BadRequest" },
-        401: { $ref: "#/components/responses/Unauthorized" },
-        404: { $ref: "#/components/responses/NotFound" },
-        500: { $ref: "#/components/responses/ServerError" },
+        400: {
+          description: "Invalid MongoDB ID format",
+          content: {
+            "application/json": {
+              schema: { $ref: "#/components/schemas/Error" },
+              example: {
+                success: false,
+                message: "Validation failed",
+                error: ["Invalid MongoDB ID format"],
+                errorCode: "VALIDATION_ERROR",
+                statusCode: 400,
+              },
+            },
+          },
+        },
+        401: {
+          $ref: "#/components/responses/Unauthorized",
+          description: "Authentication token is missing, invalid, or expired",
+        },
+        404: {
+          description: "Customer not found with the specified ID",
+          content: {
+            "application/json": {
+              schema: { $ref: "#/components/schemas/Error" },
+              example: {
+                success: false,
+                message: "Customer not found",
+                error: ["No customer found with this ID"],
+                errorCode: "NOT_FOUND_ERROR",
+                statusCode: 404,
+              },
+            },
+          },
+        },
+        500: {
+          $ref: "#/components/responses/ServerError",
+          description: "An unexpected error occurred on the server",
+        },
       },
     },
   },
