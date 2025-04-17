@@ -385,6 +385,94 @@ const createUser = asyncHandler(async (req, res, next) => {
   }
 });
 
+/**
+ * @desc    Revoke rate limit for a user
+ * @route   POST /users/revoke-rate-limit/:userId
+ * @access  Private/Admin & SuperAdmin
+ */
+const revokeRateLimit = asyncHandler(async (req, res, next) => {
+  logger.info(`revokeRateLimit called for user: ${req.params.user_Id}`);
+  try {
+    // Changed from req.params.userId to req.params.user_Id
+    const user = await getUserByIdService(req.params.user_Id);
+    
+    if (!user) {
+      return next(DatabaseError.notFound("User"));
+    }
+    
+    // Get the IP address associated with the user
+    const userIP = req.body.ipAddress || user.lastLoginIP || null;
+    
+    if (!userIP) {
+      return next(new AppError("User IP address not available", 400));
+    }
+    
+    // Add the IP to the rate limit whitelist
+    // In a real implementation, this would interact with your rate limiter
+    // For this example, we'll just log it
+    logger.info(`Revoking rate limit for IP: ${userIP}`);
+
+    // Here you would typically:
+    // 1. Store the IP in a whitelist collection
+    // 2. Reset any existing rate limit counters for the IP
+
+    // For this implementation, we'll add a timestamp to the user document
+    user.rateLimitExemptUntil = new Date(Date.now() + 24 * 60 * 60 * 1000); // Exempt for 24 hours
+    await user.save();
+    
+    sendResponse(res, 200, `Rate limit revoked for user ${user.username}`, {
+      userId: user._id,
+      username: user.username,
+      exemptUntil: user.rateLimitExemptUntil
+    });
+    
+  } catch (error) {
+    logger.error(`Error revoking rate limit: ${error.message}`, error);
+    next(error);
+  }
+});
+
+/**
+ * @desc    Revoke rate limit for a user by userID
+ * @route   POST /users/userID/:userID/revoke-rate-limit
+ * @access  Private/Admin & SuperAdmin
+ */
+const revokeRateLimitByUserID = asyncHandler(async (req, res, next) => {
+  logger.info(`revokeRateLimitByUserID called for userID: ${req.params.userID}`);
+  try {
+    // Get user by userID instead of MongoDB ID
+    const user = await getUserByUserIdService(req.params.userID);
+    
+    if (!user) {
+      return next(DatabaseError.notFound("User"));
+    }
+    
+    // Get the IP address associated with the user
+    const userIP = req.body.ipAddress || user.lastLoginIP || null;
+    
+    if (!userIP) {
+      return next(new AppError("User IP address not available", 400));
+    }
+    
+    logger.info(`Revoking rate limit for user ${user.username} with IP: ${userIP}`);
+
+    // Add exemption to user record
+    user.rateLimitExemptUntil = new Date(Date.now() + 24 * 60 * 60 * 1000); // Exempt for 24 hours
+    await user.save();
+    
+    sendResponse(res, 200, `Rate limit revoked for user ${user.username}`, {
+      userId: user._id,
+      userID: user.userID,
+      username: user.username,
+      exemptUntil: user.rateLimitExemptUntil
+    });
+    
+  } catch (error) {
+    logger.error(`Error revoking rate limit by userID: ${error.message}`, error);
+    next(error);
+  }
+});
+
 module.exports = {
   getUserProfile,
   getUserByUserID,
@@ -399,5 +487,7 @@ module.exports = {
   updateUserById,
   searchUsers,
   createUser,
+  revokeRateLimit,
+  revokeRateLimitByUserID,
 };
 

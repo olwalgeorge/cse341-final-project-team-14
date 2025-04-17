@@ -97,11 +97,16 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: null
   },
+  lastLoginIP: String,
   failedLoginAttempts: {
     type: Number,
     default: 0
   },
   lockedUntil: {
+    type: Date,
+    default: null
+  },
+  rateLimitExemptUntil: {
     type: Date,
     default: null
   },

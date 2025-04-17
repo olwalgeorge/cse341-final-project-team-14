@@ -697,3 +697,349 @@ ValidationError: Validation failed for field: role
 2025-04-17 12:10:39 DEBUG [inventory-api:UserUtils]: Generated userID: USR-00015 
 2025-04-17 12:10:39 DEBUG [inventory-api:UserService:createUser]: Generated userID: USR-00015 
 2025-04-17 12:10:39 INFO [inventory-api:UserService:createUser]: User created successfully: newsupervisor (newsupervisor@example.com) 
+2025-04-17 12:13:24 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:13:24 INFO [inventory-api:UsersController]: getAllUsers called 
+2025-04-17 12:13:24 DEBUG [inventory-api:UsersService]: getAllUsersService called with query: 
+2025-04-17 12:13:24 DEBUG [inventory-api:APIFeatures]: Built filter: 
+2025-04-17 12:13:24 DEBUG [inventory-api:UsersController]: Query parameters: 
+2025-04-17 12:16:04 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:16:04 INFO [inventory-api:AuthController]: login controller called 
+2025-04-17 12:16:04 DEBUG [inventory-api:AuthService]: authenticateUserService called for email: olwalgeorge15@gmail.com 
+2025-04-17 12:16:05 ERROR [inventory-api:AuthController]: Error in login controller: Invalid email or password 
+AuthError: Invalid email or password
+    at AuthError.invalidCredentials (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\utils\errors.js:149:12)
+    at authenticateUserService (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\auth.service.js:203:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\auth.controller.js:67:18
+2025-04-17 12:16:05 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: AuthError - Invalid email or password 
+2025-04-17 12:16:46 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:16:46 INFO [inventory-api:AuthController]: login controller called 
+2025-04-17 12:16:46 DEBUG [inventory-api:AuthService]: authenticateUserService called for email: newadmin@example.com 
+2025-04-17 12:16:47 INFO [inventory-api:AuthService]: User authenticated successfully: newadmin@example.com 
+2025-04-17 12:17:33 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:17:33 INFO [inventory-api:AuthController]: login controller called 
+2025-04-17 12:17:33 DEBUG [inventory-api:AuthService]: authenticateUserService called for email: newmanager@example.com 
+2025-04-17 12:17:34 INFO [inventory-api:AuthService]: User authenticated successfully: newmanager@example.com 
+2025-04-17 12:17:46 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:17:46 INFO [inventory-api:AuthController]: login controller called 
+2025-04-17 12:17:46 DEBUG [inventory-api:AuthService]: authenticateUserService called for email: newsupervisor@example.com 
+2025-04-17 12:17:46 INFO [inventory-api:AuthService]: User authenticated successfully: newsupervisor@example.com 
+2025-04-17 12:18:02 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:18:02 INFO [inventory-api:AuthController]: login controller called 
+2025-04-17 12:18:02 DEBUG [inventory-api:AuthService]: authenticateUserService called for email: admin@inventory-system.com 
+2025-04-17 12:18:03 INFO [inventory-api:AuthService]: User authenticated successfully: admin@inventory-system.com 
+2025-04-17 12:18:45 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:18:45 INFO [inventory-api:UsersController]: getUserProfile called for user newsupervisor (ID: 6800c58f840ba03674946827) 
+2025-04-17 12:18:45 DEBUG [inventory-api:UsersService]: getUserByIdService called with ID: 6800c58f840ba03674946827 
+2025-04-17 12:19:19 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:19:20 WARN [inventory-api:Middleware:Auth]: Access denied for user USR-00015 with role SUPERVISOR 
+2025-04-17 12:19:20 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: AuthError - You do not have permission to access this resource. Required role: ADMIN or MANAGER 
+2025-04-17 12:19:50 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:19:50 WARN [inventory-api:Middleware:Auth]: Access denied for user USR-00015 with role SUPERVISOR 
+2025-04-17 12:19:50 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: AuthError - You do not have permission to access this resource. Required role: ADMIN or MANAGER 
+2025-04-17 12:20:00 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:20:01 INFO [inventory-api:UsersController]: getAllUsers called 
+2025-04-17 12:20:01 DEBUG [inventory-api:UsersService]: getAllUsersService called with query: 
+2025-04-17 12:20:01 DEBUG [inventory-api:APIFeatures]: Built filter: 
+2025-04-17 12:20:01 DEBUG [inventory-api:UsersController]: Query parameters: 
+2025-04-17 12:20:28 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:20:28 INFO [inventory-api:UsersController]: searchUsers called with term: jakom 
+2025-04-17 12:20:28 DEBUG [inventory-api:UsersService]: searchUsersService called with term: jakom 
+2025-04-17 12:21:05 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:21:06 INFO [inventory-api:UsersController]: getUserByUsername called with username: jakom 
+2025-04-17 12:21:12 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:21:13 INFO [inventory-api:UsersController]: getUserById called with ID: undefined 
+2025-04-17 12:21:13 DEBUG [inventory-api:UsersService]: getUserByIdService called with ID: 67ffb16c3aa8bfc49a5dd1f7 
+2025-04-17 12:21:13 DEBUG [inventory-api:UsersController]: Request body: 
+2025-04-17 12:21:21 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:21:22 WARN [inventory-api:Middleware:Auth]: Access denied for user USR-00012 with role MANAGER 
+2025-04-17 12:21:22 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: AuthError - You do not have permission to access this resource. Required role: ADMIN 
+2025-04-17 12:21:39 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:21:39 INFO [inventory-api:UsersController]: getAllUsers called 
+2025-04-17 12:21:39 DEBUG [inventory-api:UsersService]: getAllUsersService called with query: 
+2025-04-17 12:21:39 DEBUG [inventory-api:APIFeatures]: Built filter: 
+2025-04-17 12:21:39 DEBUG [inventory-api:UsersController]: Query parameters: 
+2025-04-17 12:21:49 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:21:50 INFO [inventory-api:UsersController]: getUsersByRole called with role: USER 
+2025-04-17 12:21:50 DEBUG [inventory-api:UsersService]: getUsersByRoleService called with role: USER 
+2025-04-17 12:21:54 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:21:54 INFO [inventory-api:UsersController]: getUsersByRole called with role: SUPERVISOR 
+2025-04-17 12:21:54 DEBUG [inventory-api:UsersService]: getUsersByRoleService called with role: SUPERVISOR 
+2025-04-17 12:22:12 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:22:13 INFO [inventory-api:UsersController]: createUser called 
+2025-04-17 12:22:13 DEBUG [inventory-api:UserUtils]: Generating userID 
+2025-04-17 12:22:13 DEBUG [inventory-api:UsersController]: Request body: 
+2025-04-17 12:22:13 DEBUG [inventory-api:UserService:createUser]: Creating new user 
+2025-04-17 12:22:13 DEBUG [inventory-api:UserUtils]: Generated userID: USR-00016 
+2025-04-17 12:22:13 DEBUG [inventory-api:UserService:createUser]: Generated userID: USR-00016 
+2025-04-17 12:22:14 INFO [inventory-api:UserService:createUser]: User created successfully: newtestuser (newtest@example.com) 
+2025-04-17 12:22:44 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:22:44 INFO [inventory-api:UsersController]: getAllUsers called 
+2025-04-17 12:22:44 DEBUG [inventory-api:UsersService]: getAllUsersService called with query: 
+2025-04-17 12:22:44 DEBUG [inventory-api:APIFeatures]: Built filter: 
+2025-04-17 12:22:44 DEBUG [inventory-api:UsersController]: Query parameters: 
+2025-04-17 12:23:05 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:23:05 INFO [inventory-api:UsersController]: getAllUsers called 
+2025-04-17 12:23:05 DEBUG [inventory-api:UsersService]: getAllUsersService called with query: 
+2025-04-17 12:23:06 DEBUG [inventory-api:APIFeatures]: Built filter: 
+2025-04-17 12:23:05 DEBUG [inventory-api:UsersController]: Query parameters: 
+2025-04-17 12:23:24 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:23:25 INFO [inventory-api:UsersController]: createUser called 
+2025-04-17 12:23:25 DEBUG [inventory-api:UserUtils]: Generating userID 
+2025-04-17 12:23:25 DEBUG [inventory-api:UsersController]: Request body: 
+2025-04-17 12:23:25 DEBUG [inventory-api:UserService:createUser]: Creating new user 
+2025-04-17 12:23:25 DEBUG [inventory-api:UserUtils]: Generated userID: USR-00017 
+2025-04-17 12:23:25 DEBUG [inventory-api:UserService:createUser]: Generated userID: USR-00017 
+2025-04-17 12:23:26 INFO [inventory-api:UserService:createUser]: User created successfully: newadmin2 (newadmin2@example.com) 
+2025-04-17 12:23:40 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:23:41 INFO [inventory-api:UsersController]: getUsersByRole called with role: MANAGER 
+2025-04-17 12:23:41 DEBUG [inventory-api:UsersService]: getUsersByRoleService called with role: MANAGER 
+2025-04-17 12:23:46 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:23:47 INFO [inventory-api:UsersController]: searchUsers called with term: new 
+2025-04-17 12:23:47 DEBUG [inventory-api:UsersService]: searchUsersService called with term: new 
+2025-04-17 12:24:12 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:24:12 INFO [inventory-api:UsersController]: getUserById called with ID: undefined 
+2025-04-17 12:24:12 DEBUG [inventory-api:UsersService]: getUserByIdService called with ID: 67fe328ec5f008d6579a6eb4 
+2025-04-17 12:24:12 DEBUG [inventory-api:UsersController]: Request body: 
+2025-04-17 12:26:56 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:26:56 INFO [inventory-api:AuthController]: login controller called 
+2025-04-17 12:26:56 DEBUG [inventory-api:AuthService]: authenticateUserService called for email: olwalgeorge15@gmail.com 
+2025-04-17 12:26:57 ERROR [inventory-api:AuthController]: Error in login controller: Invalid email or password 
+AuthError: Invalid email or password
+    at AuthError.invalidCredentials (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\utils\errors.js:149:12)
+    at authenticateUserService (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\auth.service.js:203:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\auth.controller.js:67:18
+2025-04-17 12:26:57 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: AuthError - Invalid email or password 
+2025-04-17 12:28:11 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:28:11 INFO [inventory-api:AuthController]: login controller called 
+2025-04-17 12:28:11 DEBUG [inventory-api:AuthService]: authenticateUserService called for email: olwalgeorge15@gmail.com 
+2025-04-17 12:28:12 ERROR [inventory-api:AuthController]: Error in login controller: Invalid email or password 
+AuthError: Invalid email or password
+    at AuthError.invalidCredentials (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\utils\errors.js:149:12)
+    at authenticateUserService (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\auth.service.js:203:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\auth.controller.js:67:18
+2025-04-17 12:28:12 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: AuthError - Invalid email or password 
+2025-04-17 12:28:25 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:28:25 INFO [inventory-api:AuthController]: login controller called 
+2025-04-17 12:28:25 DEBUG [inventory-api:AuthService]: authenticateUserService called for email: olwalgeorge15@gmail.com 
+2025-04-17 12:28:28 ERROR [inventory-api:AuthController]: Error in login controller: Invalid email or password 
+AuthError: Invalid email or password
+    at AuthError.invalidCredentials (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\utils\errors.js:149:12)
+    at authenticateUserService (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\auth.service.js:203:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\auth.controller.js:67:18
+2025-04-17 12:28:28 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: AuthError - Invalid email or password 
+2025-04-17 12:29:40 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:29:40 INFO [inventory-api:AuthController]: login controller called 
+2025-04-17 12:29:40 DEBUG [inventory-api:AuthService]: authenticateUserService called for email: nonexistent@example.com 
+2025-04-17 12:29:40 ERROR [inventory-api:AuthController]: Error in login controller: Invalid email or password 
+AuthError: Invalid email or password
+    at AuthError.invalidCredentials (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\utils\errors.js:149:12)
+    at authenticateUserService (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\auth.service.js:174:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\auth.controller.js:67:18
+2025-04-17 12:29:40 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: AuthError - Invalid email or password 
+2025-04-17 12:30:27 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:30:27 INFO [inventory-api:AuthController]: login controller called 
+2025-04-17 12:30:27 DEBUG [inventory-api:AuthService]: authenticateUserService called for email: olwalgeorge15@gmail.com 
+2025-04-17 12:30:27 WARN [inventory-api:AuthService]: Account locked for email: olwalgeorge15@gmail.com 
+2025-04-17 12:30:27 ERROR [inventory-api:AuthController]: Error in login controller: Invalid email or password 
+AuthError: Invalid email or password
+    at AuthError.invalidCredentials (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\utils\errors.js:149:12)
+    at authenticateUserService (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\auth.service.js:203:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\auth.controller.js:67:18
+2025-04-17 12:30:27 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: AuthError - Invalid email or password 
+2025-04-17 12:30:30 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:30:30 INFO [inventory-api:AuthController]: login controller called 
+2025-04-17 12:30:30 DEBUG [inventory-api:AuthService]: authenticateUserService called for email: nonexistent@example.com 
+2025-04-17 12:30:30 ERROR [inventory-api:AuthController]: Error in login controller: Invalid email or password 
+AuthError: Invalid email or password
+    at AuthError.invalidCredentials (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\utils\errors.js:149:12)
+    at authenticateUserService (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\auth.service.js:174:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\auth.controller.js:67:18
+2025-04-17 12:30:30 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: AuthError - Invalid email or password 
+2025-04-17 12:30:37 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:30:37 WARN [inventory-api:ValidationMiddleware]: Validation failed 
+2025-04-17 12:30:37 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: ValidationError - Validation failed for field: password 
+2025-04-17 12:30:53 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:30:53 WARN [inventory-api:ValidationMiddleware]: Validation failed 
+2025-04-17 12:30:53 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: ValidationError - Validation failed for field: password 
+2025-04-17 12:34:18 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:34:18 INFO [inventory-api:AuthController]: login controller called 
+2025-04-17 12:34:18 DEBUG [inventory-api:AuthService]: authenticateUserService called for email: olwalgeorge15@gmail.com 
+2025-04-17 12:34:18 ERROR [inventory-api:AuthController]: Error in login controller: Your account is locked until 4/17/2025, 1:00:27 PM 
+AuthError: Your account is locked until 4/17/2025, 1:00:27 PM
+    at AuthError.unauthorized (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\utils\errors.js:139:12)
+    at authenticateUserService (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\auth.service.js:184:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\auth.controller.js:67:18
+2025-04-17 12:34:18 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: AuthError - Your account is locked until 4/17/2025, 1:00:27 PM 
+2025-04-17 12:39:14 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:39:14 INFO [inventory-api:AuthController]: login controller called 
+2025-04-17 12:39:14 DEBUG [inventory-api:AuthService]: authenticateUserService called for email: newadmin@example.com 
+2025-04-17 12:39:14 INFO [inventory-api:AuthService]: User authenticated successfully: newadmin@example.com 
+2025-04-17 12:40:01 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:40:01 INFO [inventory-api:AuthController]: login controller called 
+2025-04-17 12:40:01 DEBUG [inventory-api:AuthService]: authenticateUserService called for email: admin@inventory-system.com 
+2025-04-17 12:40:02 INFO [inventory-api:AuthService]: User authenticated successfully: admin@inventory-system.com 
+2025-04-17 12:40:51 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:41:04 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:44:30 INFO [inventory-api:Server]: SIGINT signal received, shutting down gracefully 
+2025-04-17 12:44:30 INFO [inventory-api:Database]: Closing MongoDB connection due to server shutdown 
+2025-04-17 12:44:35 DEBUG [inventory-api:TokenModel]: Fixed duplicate indexes in Token schema: 
+2025-04-17 12:44:35 INFO [inventory-api:EnvValidator]: =============== ENVIRONMENT SUMMARY =============== 
+2025-04-17 12:44:35 INFO [inventory-api:Passport]: GitHub authentication strategy initialized successfully 
+2025-04-17 12:44:35 INFO [inventory-api:EnvValidator]: Environment: DEVELOPMENT 
+2025-04-17 12:44:35 INFO [inventory-api:EnvValidator]: Port: 3000 
+2025-04-17 12:44:35 INFO [inventory-api:EnvValidator]: Database: mongodb+srv://ol****:********@cluster0.wncfx.mongodb.net/team_14_final_project?retryWrites=true&w=majority&appName=Cluster0 
+2025-04-17 12:44:35 INFO [inventory-api:EnvValidator]: ------- Features Status ------- 
+2025-04-17 12:44:35 INFO [inventory-api:EnvValidator]: githubOAuth: Enabled ✅ 
+2025-04-17 12:44:35 INFO [inventory-api:EnvValidator]: =============================================== 
+2025-04-17 12:44:35 INFO [inventory-api:Server]: MongoDB connected successfully 
+2025-04-17 12:44:38 INFO [inventory-api:Database]: MongoDB Connected: cluster0-shard-00-00.wncfx.mongodb.net 
+2025-04-17 12:44:38 INFO [inventory-api:InitUtils]: SUPERADMIN account already exists. Skipping initialization. 
+2025-04-17 12:44:38 INFO [inventory-api:Server]: Server running on http://localhost:3000 in development mode 
+2025-04-17 12:44:38 INFO [inventory-api:Server]: API Documentation: http://localhost:3000/api-docs 
+2025-04-17 12:46:39 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:46:40 WARN [inventory-api:ValidationMiddleware]: Validation failed 
+2025-04-17 12:46:40 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: ValidationError - Validation failed for field: user_Id 
+2025-04-17 12:47:24 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:47:24 INFO [inventory-api:AuthController]: login controller called 
+2025-04-17 12:47:24 DEBUG [inventory-api:AuthService]: authenticateUserService called for email: newadmin@example.com 
+2025-04-17 12:47:24 INFO [inventory-api:AuthService]: User authenticated successfully: newadmin@example.com 
+2025-04-17 12:47:28 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:47:28 INFO [inventory-api:AuthController]: login controller called 
+2025-04-17 12:47:28 DEBUG [inventory-api:AuthService]: authenticateUserService called for email: newadmin@example.com 
+2025-04-17 12:47:29 INFO [inventory-api:AuthService]: User authenticated successfully: newadmin@example.com 
+2025-04-17 12:47:30 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:47:30 INFO [inventory-api:AuthController]: login controller called 
+2025-04-17 12:47:30 DEBUG [inventory-api:AuthService]: authenticateUserService called for email: newadmin@example.com 
+2025-04-17 12:47:30 INFO [inventory-api:AuthService]: User authenticated successfully: newadmin@example.com 
+2025-04-17 12:47:31 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:47:31 INFO [inventory-api:AuthController]: login controller called 
+2025-04-17 12:47:31 DEBUG [inventory-api:AuthService]: authenticateUserService called for email: newadmin@example.com 
+2025-04-17 12:47:31 INFO [inventory-api:AuthService]: User authenticated successfully: newadmin@example.com 
+2025-04-17 12:47:32 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:47:32 INFO [inventory-api:AuthController]: login controller called 
+2025-04-17 12:47:32 DEBUG [inventory-api:AuthService]: authenticateUserService called for email: newadmin@example.com 
+2025-04-17 12:47:33 INFO [inventory-api:AuthService]: User authenticated successfully: newadmin@example.com 
+2025-04-17 12:47:34 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:47:34 WARN [inventory-api:RateLimitMiddleware]: Rate limit exceeded for IP: ::ffff:127.0.0.1 
+2025-04-17 12:47:34 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: ApiError - Too many requests, please try again later. 
+2025-04-17 12:47:57 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:47:57 WARN [inventory-api:RateLimitMiddleware]: Rate limit exceeded for IP: ::ffff:127.0.0.1 
+2025-04-17 12:47:57 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: ApiError - Too many requests, please try again later. 
+2025-04-17 12:48:05 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:48:05 WARN [inventory-api:RateLimitMiddleware]: Rate limit exceeded for IP: ::ffff:127.0.0.1 
+2025-04-17 12:48:05 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: ApiError - Too many requests, please try again later. 
+2025-04-17 12:48:07 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:48:07 WARN [inventory-api:RateLimitMiddleware]: Rate limit exceeded for IP: ::ffff:127.0.0.1 
+2025-04-17 12:48:07 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: ApiError - Too many requests, please try again later. 
+2025-04-17 12:48:57 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:48:57 WARN [inventory-api:Auth:JWT]: Invalid JWT format: 
+2025-04-17 12:48:57 ERROR [inventory-api:Middleware:Auth]: Authentication error: Invalid authentication token 
+AuthError: Invalid authentication token
+    at AuthError.unauthorized (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\utils\errors.js:139:12)
+    at verifyToken (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\auth\jwt.js:80:23)
+    at authenticate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\middlewares\auth.middleware.js:31:27)
+    at Layer.handle [as handle_request] (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\express\lib\router\layer.js:95:5)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\express\lib\router\index.js:284:15
+    at param (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\express\lib\router\index.js:365:14)
+    at param (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\express\lib\router\index.js:376:14)
+2025-04-17 12:48:57 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: AuthError - Authentication failed. 
+2025-04-17 12:49:08 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:49:08 INFO [inventory-api:AuthController]: login controller called 
+2025-04-17 12:49:08 DEBUG [inventory-api:AuthService]: authenticateUserService called for email: admin@inventory-system.com 
+2025-04-17 12:49:09 INFO [inventory-api:AuthService]: User authenticated successfully: admin@inventory-system.com 
+2025-04-17 12:49:18 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:49:18 WARN [inventory-api:Auth:JWT]: Invalid JWT format: 
+2025-04-17 12:49:18 ERROR [inventory-api:Middleware:Auth]: Authentication error: Invalid authentication token 
+AuthError: Invalid authentication token
+    at AuthError.unauthorized (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\utils\errors.js:139:12)
+    at verifyToken (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\auth\jwt.js:80:23)
+    at authenticate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\middlewares\auth.middleware.js:31:27)
+    at Layer.handle [as handle_request] (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\express\lib\router\layer.js:95:5)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\express\lib\router\index.js:284:15
+    at param (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\express\lib\router\index.js:365:14)
+    at param (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\express\lib\router\index.js:376:14)
+2025-04-17 12:49:18 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: AuthError - Authentication failed. 
+2025-04-17 12:49:55 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:49:55 WARN [inventory-api:ValidationMiddleware]: Validation failed 
+2025-04-17 12:49:55 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: ValidationError - Validation failed for field: user_Id 
+2025-04-17 12:51:35 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:51:35 INFO [inventory-api:UsersController]: getAllUsers called 
+2025-04-17 12:51:35 DEBUG [inventory-api:UsersService]: getAllUsersService called with query: 
+2025-04-17 12:51:35 DEBUG [inventory-api:APIFeatures]: Built filter: 
+2025-04-17 12:51:35 DEBUG [inventory-api:UsersController]: Query parameters: 
+2025-04-17 12:53:21 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:53:22 WARN [inventory-api:ValidationMiddleware]: Validation failed 
+2025-04-17 12:53:22 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: ValidationError - Validation failed for field: user_Id 
+2025-04-17 12:54:07 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:54:07 WARN [inventory-api:ValidationMiddleware]: Validation failed 
+2025-04-17 12:54:07 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: ValidationError - Validation failed for field: user_Id 
+2025-04-17 12:55:53 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:55:54 WARN [inventory-api:ValidationMiddleware]: Validation failed 
+2025-04-17 12:55:54 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: ValidationError - Validation failed for field: user_Id 
+2025-04-17 12:56:30 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:56:31 WARN [inventory-api:ValidationMiddleware]: Validation failed 
+2025-04-17 12:56:31 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: ValidationError - Validation failed for field: user_Id 
+2025-04-17 12:57:29 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:57:30 WARN [inventory-api:ValidationMiddleware]: Validation failed 
+2025-04-17 12:57:30 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: ValidationError - Validation failed for field: user_Id 
+2025-04-17 12:57:35 INFO [inventory-api:Server]: SIGINT signal received, shutting down gracefully 
+2025-04-17 12:57:35 INFO [inventory-api:Database]: Closing MongoDB connection due to server shutdown 
+2025-04-17 12:57:40 DEBUG [inventory-api:TokenModel]: Fixed duplicate indexes in Token schema: 
+2025-04-17 12:57:40 INFO [inventory-api:EnvValidator]: =============== ENVIRONMENT SUMMARY =============== 
+2025-04-17 12:57:40 INFO [inventory-api:Passport]: GitHub authentication strategy initialized successfully 
+2025-04-17 12:57:40 INFO [inventory-api:Server]: MongoDB connected successfully 
+2025-04-17 12:57:40 INFO [inventory-api:EnvValidator]: Environment: DEVELOPMENT 
+2025-04-17 12:57:40 INFO [inventory-api:EnvValidator]: Port: 3000 
+2025-04-17 12:57:40 INFO [inventory-api:EnvValidator]: Database: mongodb+srv://ol****:********@cluster0.wncfx.mongodb.net/team_14_final_project?retryWrites=true&w=majority&appName=Cluster0 
+2025-04-17 12:57:40 INFO [inventory-api:EnvValidator]: ------- Features Status ------- 
+2025-04-17 12:57:40 INFO [inventory-api:EnvValidator]: githubOAuth: Enabled ✅ 
+2025-04-17 12:57:40 INFO [inventory-api:EnvValidator]: =============================================== 
+2025-04-17 12:57:43 INFO [inventory-api:Database]: MongoDB Connected: cluster0-shard-00-01.wncfx.mongodb.net 
+2025-04-17 12:57:43 INFO [inventory-api:InitUtils]: SUPERADMIN account already exists. Skipping initialization. 
+2025-04-17 12:57:43 INFO [inventory-api:Server]: Server running on http://localhost:3000 in development mode 
+2025-04-17 12:57:43 INFO [inventory-api:Server]: API Documentation: http://localhost:3000/api-docs 
+2025-04-17 12:57:58 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:57:58 INFO [inventory-api:AuthController]: login controller called 
+2025-04-17 12:57:58 DEBUG [inventory-api:AuthService]: authenticateUserService called for email: newadmin@example.com 
+2025-04-17 12:57:59 INFO [inventory-api:AuthService]: User authenticated successfully: newadmin@example.com 
+2025-04-17 12:58:16 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:58:16 INFO [inventory-api:AuthController]: login controller called 
+2025-04-17 12:58:16 DEBUG [inventory-api:AuthService]: authenticateUserService called for email: newadmin@example.com 
+2025-04-17 12:58:17 INFO [inventory-api:AuthService]: User authenticated successfully: newadmin@example.com 
+2025-04-17 12:58:17 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:58:17 INFO [inventory-api:AuthController]: login controller called 
+2025-04-17 12:58:17 DEBUG [inventory-api:AuthService]: authenticateUserService called for email: newadmin@example.com 
+2025-04-17 12:58:18 INFO [inventory-api:AuthService]: User authenticated successfully: newadmin@example.com 
+2025-04-17 12:58:19 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:58:19 INFO [inventory-api:AuthController]: login controller called 
+2025-04-17 12:58:19 DEBUG [inventory-api:AuthService]: authenticateUserService called for email: newadmin@example.com 
+2025-04-17 12:58:19 INFO [inventory-api:AuthService]: User authenticated successfully: newadmin@example.com 
+2025-04-17 12:58:20 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:58:20 INFO [inventory-api:AuthController]: login controller called 
+2025-04-17 12:58:20 DEBUG [inventory-api:AuthService]: authenticateUserService called for email: newadmin@example.com 
+2025-04-17 12:58:20 INFO [inventory-api:AuthService]: User authenticated successfully: newadmin@example.com 
+2025-04-17 12:58:21 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:58:21 WARN [inventory-api:RateLimitMiddleware]: Rate limit exceeded for IP: ::ffff:127.0.0.1 
+2025-04-17 12:58:21 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: ApiError - Too many requests, please try again later. 
+2025-04-17 12:58:59 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:59:00 INFO [inventory-api:UsersController]: revokeRateLimit called for user: 6800c05d2d53dbd2ed931338 
+2025-04-17 12:59:00 DEBUG [inventory-api:UsersService]: getUserByIdService called with ID: 6800c05d2d53dbd2ed931338 
+2025-04-17 12:59:00 INFO [inventory-api:UsersController]: Revoking rate limit for IP: 192.168.1.100 
+2025-04-17 12:59:36 DEBUG [inventory-api:App]: Session: 
+2025-04-17 12:59:36 INFO [inventory-api:AuthController]: login controller called 
+2025-04-17 12:59:36 DEBUG [inventory-api:AuthService]: authenticateUserService called for email: newadmin@example.com 
+2025-04-17 12:59:37 INFO [inventory-api:AuthService]: User authenticated successfully: newadmin@example.com 

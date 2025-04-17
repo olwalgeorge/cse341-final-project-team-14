@@ -1,11 +1,13 @@
 ### Environment Variables
 @baseUrl = http://localhost:3000
-@regularUserEmail = user@example.com
+@regularUserEmail = olwalgeorge15@gmail.com
 @regularUserPassword = Password123!
-@adminEmail = admin@example.com 
+@adminEmail = newadmin@example.com
 @adminPassword = AdminPass123!
-@managerEmail = manager@example.com
+@managerEmail = newmanager@example.com
 @managerPassword = ManagerPass123!
+@supervisorEmail = newsupervisor@example.com
+@supervisorPassword = SupervisorPass123!
 @superAdminEmail = admin@inventory-system.com
 @superAdminPassword = SuperAdmin123!
 
@@ -52,6 +54,19 @@ Content-Type: application/json
 ### Extract Manager Token
 @managerToken = {{loginManager.response.body.data.token}}
 
+### Login as Supervisor
+# @name loginSupervisor
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "{{supervisorEmail}}",
+  "password": "{{supervisorPassword}}"
+}
+
+### Extract Supervisor Token
+@supervisorToken = {{loginSupervisor.response.body.data.token}}
+
 ### Login as SuperAdmin
 # @name loginSuperAdmin
 POST {{baseUrl}}/auth/login
@@ -69,7 +84,7 @@ Content-Type: application/json
 ### REGULAR USER OPERATIONS
 ### =============================================
 
-### Get Own Profile (Regular User)
+### Get Own Profile (Regular User - jakom)
 GET {{baseUrl}}/users/profile
 Authorization: Bearer {{regularUserToken}}
 
@@ -79,12 +94,28 @@ Content-Type: application/json
 Authorization: Bearer {{regularUserToken}}
 
 {
-  "fullName": "Updated Regular User"
+  "fullName": "Jakom Updated"
 }
 
 ### Try to Access Admin-only Endpoint (Regular User) - Should Fail
 GET {{baseUrl}}/users
 Authorization: Bearer {{regularUserToken}}
+
+### =============================================
+### SUPERVISOR OPERATIONS
+### =============================================
+
+### Get Own Profile (Supervisor)
+GET {{baseUrl}}/users/profile
+Authorization: Bearer {{supervisorToken}}
+
+### Try to Access User Data with limited permissions
+GET {{baseUrl}}/users/userID/USR-00009
+Authorization: Bearer {{supervisorToken}}
+
+### Try to Access All Users (Should have limited access)
+GET {{baseUrl}}/users
+Authorization: Bearer {{supervisorToken}}
 
 ### =============================================
 ### MANAGER OPERATIONS
@@ -95,11 +126,15 @@ GET {{baseUrl}}/users
 Authorization: Bearer {{managerToken}}
 
 ### Search Users (Manager)
-GET {{baseUrl}}/users/search?term=admin
+GET {{baseUrl}}/users/search?term=jakom
 Authorization: Bearer {{managerToken}}
 
 ### Get User by Username (Manager)
-GET {{baseUrl}}/users/username/systemadmin
+GET {{baseUrl}}/users/username/jakom
+Authorization: Bearer {{managerToken}}
+
+### Get User by ID (Manager)
+GET {{baseUrl}}/users/67ffb16c3aa8bfc49a5dd1f7
 Authorization: Bearer {{managerToken}}
 
 ### Try to Create User (Manager) - Should Fail
@@ -108,10 +143,10 @@ Content-Type: application/json
 Authorization: Bearer {{managerToken}}
 
 {
-  "username": "newuser",
-  "email": "new@example.com",
+  "username": "testuser",
+  "email": "test@example.com",
   "password": "NewPassword123!",
-  "fullName": "New User",
+  "fullName": "Test User",
   "role": "USER"
 }
 
@@ -127,34 +162,36 @@ Authorization: Bearer {{adminToken}}
 GET {{baseUrl}}/users/role/USER
 Authorization: Bearer {{adminToken}}
 
+### Get Users by Role - Supervisor (Admin)
+GET {{baseUrl}}/users/role/SUPERVISOR
+Authorization: Bearer {{adminToken}}
+
 ### Create New User (Admin)
 POST {{baseUrl}}/users
 Content-Type: application/json
 Authorization: Bearer {{adminToken}}
 
 {
-  "username": "newuser",
-  "email": "new@example.com",
+  "username": "newtestuser",
+  "email": "newtest@example.com",
   "password": "NewPassword123!",
-  "fullName": "New User",
+  "fullName": "New Test User",
   "role": "USER"
 }
 
-### Update Another User (Admin)
-# Replace user_Id with an actual user ID from your database
-PUT {{baseUrl}}/users/64f5a7b3c5dc0d34f85d969e
+### Update User (Admin) - jakom
+PUT {{baseUrl}}/users/67ffb16c3aa8bfc49a5dd1f7
 Content-Type: application/json
 Authorization: Bearer {{adminToken}}
 
 {
-  "fullName": "Updated By Admin",
+  "fullName": "Jakom Updated By Admin",
   "role": "USER",
   "isActive": true
 }
 
-### Delete User (Admin)
-# Replace user_Id with an actual user ID from your database
-DELETE {{baseUrl}}/users/64f5a7b3c5dc0d34f85d969e
+### Get User Pagination - Page 2
+GET {{baseUrl}}/users?page=2&limit=10
 Authorization: Bearer {{adminToken}}
 
 ### =============================================
@@ -171,11 +208,24 @@ Content-Type: application/json
 Authorization: Bearer {{superAdminToken}}
 
 {
-  "username": "newadmin",
-  "email": "newadmin@example.com",
+  "username": "newadmin2",
+  "email": "newadmin2@example.com",
   "password": "AdminPass123!",
-  "fullName": "New Admin",
+  "fullName": "New Admin 2",
   "role": "ADMIN"
+}
+
+### Create New Supervisor (SuperAdmin)
+POST {{baseUrl}}/users
+Content-Type: application/json
+Authorization: Bearer {{superAdminToken}}
+
+{
+  "username": "newsupervisor2",
+  "email": "newsupervisor2@example.com",
+  "password": "SupervisorPass123!",
+  "fullName": "New Supervisor 2",
+  "role": "SUPERVISOR"
 }
 
 ### Get Users by Role - Find Managers (SuperAdmin)
@@ -183,7 +233,16 @@ GET {{baseUrl}}/users/role/MANAGER
 Authorization: Bearer {{superAdminToken}}
 
 ### Search Users (SuperAdmin)
-GET {{baseUrl}}/users/search?term=admin
+GET {{baseUrl}}/users/search?term=new
+Authorization: Bearer {{superAdminToken}}
+
+### Get User by ID (SuperAdmin) - benkipchoge
+GET {{baseUrl}}/users/67fe328ec5f008d6579a6eb4
+Authorization: Bearer {{superAdminToken}}
+
+### Delete User (SuperAdmin) - Use with caution
+# Replace with actual user ID to delete
+DELETE {{baseUrl}}/users/USER_ID_TO_DELETE
 Authorization: Bearer {{superAdminToken}}
 
 ### Delete All Users (SuperAdmin) - DANGER!

@@ -1,0 +1,83 @@
+### Environment Variables
+@baseUrl = http://localhost:3000
+@adminEmail = newadmin@example.com
+@adminPassword = AdminPass123!
+@superAdminEmail = admin@inventory-system.com
+@superAdminPassword = SuperAdmin123!
+@userId = 6800c05d2d53dbd2ed931338
+
+### Login as Admin
+# @name loginAdmin
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "{{adminEmail}}",
+  "password": "{{adminPassword}}"
+}
+
+### Extract Admin Token
+@adminToken = {{loginAdmin.response.body.data.token}}
+
+### Login as SuperAdmin
+# @name loginSuperAdmin
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "{{superAdminEmail}}",
+  "password": "{{superAdminPassword}}"
+}
+
+### Extract SuperAdmin Token
+@superAdminToken = {{loginSuperAdmin.response.body.data.token}}
+
+### Revoke Rate Limit for User (Admin)
+POST {{baseUrl}}/users/revoke-rate-limit/6800c05d2d53dbd2ed931338
+Content-Type: application/json
+Authorization: Bearer {{adminToken}}
+
+{
+  "ipAddress": "192.168.1.100",
+  "reason": "User experiencing temporary high API usage for legitimate purposes"
+}
+
+### Revoke Rate Limit for User (Admin) - Try with MongoDB ObjectID
+POST {{baseUrl}}/users/revoke-rate-limit/6800c05d2d53dbd2ed931338
+Content-Type: application/json
+Authorization: Bearer {{adminToken}}
+
+{
+  "ipAddress": "192.168.1.100",
+  "reason": "User experiencing temporary high API usage for legitimate purposes"
+}
+
+### Revoke Rate Limit for User (Admin) - Try with userID format
+POST {{baseUrl}}/users/userID/USR-00011/revoke-rate-limit
+Content-Type: application/json
+Authorization: Bearer {{adminToken}}
+
+{
+  "ipAddress": "192.168.1.100",
+  "reason": "User experiencing temporary high API usage for legitimate purposes"
+}
+
+### Revoke Rate Limit for User (SuperAdmin)
+POST {{baseUrl}}/users/revoke-rate-limit/6800c05d2d53dbd2ed931338
+Content-Type: application/json
+Authorization: Bearer {{superAdminToken}}
+
+{
+  "ipAddress": "192.168.1.100",
+  "reason": "Approved high-volume API integration"
+}
+
+### Revoke Rate Limit for User (SuperAdmin) - Try with MongoDB ObjectID
+POST {{baseUrl}}/users/revoke-rate-limit/6800c05d2d53dbd2ed931338
+Content-Type: application/json
+Authorization: Bearer {{superAdminToken}}
+
+{
+  "ipAddress": "192.168.1.100",
+  "reason": "Approved high-volume API integration"
+}

@@ -13,7 +13,9 @@ const {
   getUserProfile,
   updateUserProfile,
   searchUsers,
-  createUser
+  createUser,
+  revokeRateLimit,
+  revokeRateLimitByUserID
 } = require("../controllers/users.controller");
 const { authenticate, authorize } = require("../middlewares/auth.middleware");
 const validate = require("../middlewares/validation.middleware");
@@ -62,6 +64,12 @@ router.post(
   validate(adminUserCreateValidationRules()),
   createUser
 );
+
+// Rate limit revocation - restricted to ADMIN and SUPERADMIN
+router.post("/revoke-rate-limit/:user_Id", authenticate, authorize(['ADMIN', 'SUPERADMIN']), validate(user_IdValidationRules()), revokeRateLimit);
+
+// Rate limit revocation by userID (e.g., USR-00011)
+router.post("/userID/:userID/revoke-rate-limit", authenticate, authorize(['ADMIN', 'SUPERADMIN']), validate(userIDValidationRules()), revokeRateLimitByUserID);
 
 // Dangerous operations - restricted to ADMIN role only
 router.delete("/:user_Id", authenticate, authorize('ADMIN'), validate(user_IdValidationRules()), deleteUserById);

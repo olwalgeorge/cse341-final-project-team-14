@@ -109,6 +109,27 @@ const authorizeOwnership = (extractResourceUserId) => {
   };
 };
 
+/**
+ * Middleware to apply rate limiting with exemptions
+ * @param {Function} limiter - Rate limiting function
+ * @returns {Function} Middleware function
+ */
+const applyRateLimit = (limiter) => {
+  return async (req, res, next) => {
+    try {
+      // Skip rate limiting for exempt users
+      if (req.user && req.user.rateLimitExemptUntil && new Date(req.user.rateLimitExemptUntil) > new Date()) {
+        return next();
+      }
+      
+      // Apply rate limiting for non-exempt users
+      return limiter(req, res, next);
+    } catch (error) {
+      next(error);
+    }
+  };
+};
+
 // For backward compatibility with existing code
 // This makes the default export function as the authenticate middleware
 // while still allowing destructured imports for the new API
@@ -121,3 +142,4 @@ module.exports = isAuthenticated;
 module.exports.authenticate = authenticate;
 module.exports.authorize = authorize;
 module.exports.authorizeOwnership = authorizeOwnership;
+module.exports.applyRateLimit = applyRateLimit;
