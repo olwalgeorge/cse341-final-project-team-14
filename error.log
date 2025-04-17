@@ -370,3 +370,29 @@ AuthError: Token has been revoked. Please log in again.
     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
     at async authenticate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\middlewares\auth.middleware.js:31:21)
 2025-04-17 20:04:07 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: AuthError - Authentication failed. 
+2025-04-17 20:47:57 ERROR [inventory-api:Middleware:Auth]: Authentication error: Invalid authentication token 
+AuthError: Invalid authentication token
+    at AuthError.unauthorized (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\utils\errors.js:139:12)
+    at verifyToken (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\auth\jwt.js:80:23)
+    at authenticate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\middlewares\auth.middleware.js:31:27)
+    at Layer.handle [as handle_request] (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\express\lib\router\layer.js:95:5)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\express\lib\router\index.js:284:15
+    at Function.process_params (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\express\lib\router\index.js:280:10)
+2025-04-17 20:47:57 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: AuthError - Authentication failed. 
+2025-04-17 20:49:06 ERROR [inventory-api:SuppliersService]: Error in createSupplierService: Supplier validation failed: supplierID: Path `supplierID` is invalid (SUP-00001). 
+ValidationError: Supplier validation failed: supplierID: Path `supplierID` is invalid (SUP-00001).
+    at Document.invalidate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3329:32)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3090:17
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+2025-04-17 20:49:06 ERROR [inventory-api:SuppliersController]: Error creating supplier: Supplier validation failed: supplierID: Path `supplierID` is invalid (SUP-00001). 
+ValidationError: Supplier validation failed: supplierID: Path `supplierID` is invalid (SUP-00001).
+    at Document.invalidate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3329:32)
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\document.js:3090:17
+    at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+2025-04-17 20:49:06 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: ValidationError - Validation failed for field: supplierID 

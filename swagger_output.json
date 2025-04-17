@@ -503,26 +503,35 @@
         "type": "object",
         "properties": {
           "_id": {
-            "type": "string"
+            "type": "string",
+            "example": "64f5a7b3c5dc0d34f85d969e",
+            "description": "MongoDB ObjectID of the supplier"
           },
           "supplierID": {
             "type": "string",
-            "example": "SP-00001"
+            "example": "SUP-00001",
+            "pattern": "^SUP-\\d{5}$",
+            "description": "Unique supplier identifier in SUP-XXXXX format"
           },
           "name": {
             "type": "string",
-            "example": "TechSupply Co"
+            "example": "TechSupply Co",
+            "maxLength": 100,
+            "description": "Supplier company name (max 100 characters)"
           },
           "contact": {
             "type": "object",
             "properties": {
               "phone": {
                 "type": "string",
-                "example": "1234567890"
+                "example": "1234567890",
+                "description": "Contact phone number for the supplier"
               },
               "email": {
                 "type": "string",
-                "example": "contact@techsupply.com"
+                "example": "contact@techsupply.com",
+                "format": "email",
+                "description": "Contact email for the supplier"
               }
             }
           },
@@ -551,13 +560,28 @@
               }
             }
           },
+          "status": {
+            "type": "string",
+            "enum": [
+              "Active",
+              "Inactive",
+              "Pending",
+              "Blocked"
+            ],
+            "example": "Active",
+            "description": "Current status of the supplier"
+          },
           "createdAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2023-04-17T10:30:45Z",
+            "description": "When the supplier was created"
           },
           "updatedAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2023-04-17T10:30:45Z",
+            "description": "When the supplier was last updated"
           }
         }
       },
@@ -5994,7 +6018,7 @@
           "Suppliers"
         ],
         "summary": "Get supplier by supplier ID",
-        "description": "Retrieve supplier details by supplier ID (SP-XXXXX format)",
+        "description": "Retrieve supplier details by supplier ID (SUP-XXXXX format)",
         "security": [
           {
             "bearerAuth": []
@@ -6006,9 +6030,11 @@
             "name": "supplierID",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "pattern": "^SUP-\\d{5}$"
             },
-            "description": "Supplier ID in SP-XXXXX format"
+            "example": "SUP-00001",
+            "description": "Supplier ID in SUP-XXXXX format"
           }
         ],
         "responses": {
@@ -6042,7 +6068,7 @@
         }
       }
     },
-    "/suppliers/{_id}": {
+    "/suppliers/{supplier_Id}": {
       "get": {
         "tags": [
           "Suppliers"
@@ -6051,12 +6077,14 @@
         "description": "Retrieve supplier details by MongoDB ID",
         "parameters": [
           {
-            "name": "_id",
+            "name": "supplier_Id",
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "pattern": "^[a-f\\d]{24}$"
             },
+            "example": "64f5a7b3c5dc0d34f85d969e",
             "description": "MongoDB ID of the supplier"
           }
         ],
@@ -6112,11 +6140,13 @@
         "parameters": [
           {
             "in": "path",
-            "name": "_id",
+            "name": "supplier_Id",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "pattern": "^[a-f\\d]{24}$"
             },
+            "example": "64f5a7b3c5dc0d34f85d969e",
             "description": "MongoDB ID of the supplier to update"
           }
         ],
@@ -6180,11 +6210,13 @@
         "parameters": [
           {
             "in": "path",
-            "name": "_id",
+            "name": "supplier_Id",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "pattern": "^[a-f\\d]{24}$"
             },
+            "example": "64f5a7b3c5dc0d34f85d969e",
             "description": "MongoDB ID of the supplier to delete"
           }
         ],

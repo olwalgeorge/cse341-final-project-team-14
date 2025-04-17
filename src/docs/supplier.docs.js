@@ -170,15 +170,19 @@ const supplierRoutes = {
     get: {
       tags: ["Suppliers"],
       summary: "Get supplier by supplier ID",
-      description: "Retrieve supplier details by supplier ID (SP-XXXXX format)",
+      description: "Retrieve supplier details by supplier ID (SUP-XXXXX format)",
       security: [{ bearerAuth: [] }],
       parameters: [
         {
           in: "path",
           name: "supplierID",
           required: true,
-          schema: { type: "string" },
-          description: "Supplier ID in SP-XXXXX format",
+          schema: { 
+            type: "string",
+            pattern: "^SUP-\\d{5}$"
+          },
+          example: "SUP-00001",
+          description: "Supplier ID in SUP-XXXXX format"
         },
       ],
       responses: {
@@ -202,18 +206,22 @@ const supplierRoutes = {
       },
     },
   },
-  "/suppliers/{_id}": {
+  "/suppliers/{supplier_Id}": {
     get: {
       tags: ["Suppliers"],
       summary: "Get supplier by ID",
       description: "Retrieve supplier details by MongoDB ID",
       parameters: [
         {
-          name: "_id",
+          name: "supplier_Id",
           in: "path",
           required: true,
-          schema: { type: "string" },
-          description: "MongoDB ID of the supplier",
+          schema: { 
+            type: "string",
+            pattern: "^[a-f\\d]{24}$"
+          },
+          example: "64f5a7b3c5dc0d34f85d969e",
+          description: "MongoDB ID of the supplier"
         },
       ],
       security: [{ bearerAuth: [] }],
@@ -246,10 +254,14 @@ const supplierRoutes = {
       parameters: [
         {
           in: "path",
-          name: "_id",
+          name: "supplier_Id",
           required: true,
-          schema: { type: "string" },
-          description: "MongoDB ID of the supplier to update",
+          schema: { 
+            type: "string",
+            pattern: "^[a-f\\d]{24}$"
+          },
+          example: "64f5a7b3c5dc0d34f85d969e",
+          description: "MongoDB ID of the supplier to update"
         },
       ],
       requestBody: {
@@ -290,10 +302,14 @@ const supplierRoutes = {
       parameters: [
         {
           in: "path",
-          name: "_id",
+          name: "supplier_Id",
           required: true,
-          schema: { type: "string" },
-          description: "MongoDB ID of the supplier to delete",
+          schema: { 
+            type: "string",
+            pattern: "^[a-f\\d]{24}$"
+          },
+          example: "64f5a7b3c5dc0d34f85d969e",
+          description: "MongoDB ID of the supplier to delete"
         },
       ],
       responses: {

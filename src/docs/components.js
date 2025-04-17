@@ -391,14 +391,37 @@ module.exports = {
     Supplier: {
       type: "object",
       properties: {
-        _id: { type: "string" },
-        supplierID: { type: "string", example: "SP-00001" },
-        name: { type: "string", example: "TechSupply Co" },
+        _id: { 
+          type: "string",
+          example: "64f5a7b3c5dc0d34f85d969e",
+          description: "MongoDB ObjectID of the supplier"
+        },
+        supplierID: { 
+          type: "string", 
+          example: "SUP-00001",
+          pattern: "^SUP-\\d{5}$",
+          description: "Unique supplier identifier in SUP-XXXXX format" 
+        },
+        name: { 
+          type: "string", 
+          example: "TechSupply Co",
+          maxLength: 100,
+          description: "Supplier company name (max 100 characters)"
+        },
         contact: {
           type: "object",
           properties: {
-            phone: { type: "string", example: "1234567890" },
-            email: { type: "string", example: "contact@techsupply.com" },
+            phone: { 
+              type: "string", 
+              example: "1234567890",
+              description: "Contact phone number for the supplier"
+            },
+            email: { 
+              type: "string", 
+              example: "contact@techsupply.com",
+              format: "email",
+              description: "Contact email for the supplier"
+            },
           },
         },
         address: {
@@ -411,8 +434,24 @@ module.exports = {
             country: { type: "string", example: "USA" },
           },
         },
-        createdAt: { type: "string", format: "date-time" },
-        updatedAt: { type: "string", format: "date-time" },
+        status: {
+          type: "string",
+          enum: ["Active", "Inactive", "Pending", "Blocked"],
+          example: "Active",
+          description: "Current status of the supplier"
+        },
+        createdAt: { 
+          type: "string", 
+          format: "date-time",
+          example: "2023-04-17T10:30:45Z", 
+          description: "When the supplier was created"
+        },
+        updatedAt: { 
+          type: "string", 
+          format: "date-time",
+          example: "2023-04-17T10:30:45Z", 
+          description: "When the supplier was last updated"
+        },
       },
     },
     SupplierInput: {

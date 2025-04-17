@@ -6,8 +6,8 @@ const isMongoIdParam = (paramName, errorMessage) => {
 
 const supplierIDValidationRules = () => {
   return [
-    param("supplierID", "Supplier ID should be in the format SP-xxxxx").matches(
-      /^SP-\d{5}$/
+    param("supplierID", "Supplier ID should be in the format SUP-xxxxx").matches(
+      /^SUP-\d{5}$/
     ),
   ];
 };
@@ -198,3 +198,4 @@ module.exports = {
   supplierSearchValidationRules,
   supplierEmailValidationRules, 
 };
+
