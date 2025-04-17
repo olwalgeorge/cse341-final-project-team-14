@@ -3,7 +3,7 @@ const { createLogger } = require("./logger");
 const logger = createLogger("InventoryTransferUtils");
 
 /**
- * Generate a unique inventory transfer ID in the format TF-XXXXX
+ * Generate a unique inventory transfer ID in the format TR-XXXXX
  * @returns {Promise<string>} - Generated transfer ID
  */
 const generateTransferId = async () => {
@@ -12,7 +12,7 @@ const generateTransferId = async () => {
   try {
     // Use the Counter.getNextId method
     const transferID = await Counter.getNextId('transferID', { 
-      prefix: 'TF-', 
+      prefix: 'TR-', 
       padLength: 5
     });
     

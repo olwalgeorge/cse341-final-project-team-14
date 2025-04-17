@@ -3,7 +3,7 @@ module.exports = {
     get: {
       tags: ["Inventory Transfers"],
       summary: "Get all inventory transfers",
-      description: "Retrieve a list of all inventory transfers with optional filtering, sorting, and pagination",
+      description: "Retrieve a list of all inventory transfers with optional filtering, sorting, and pagination. Requires authentication.",
       security: [{ bearerAuth: [] }],
       parameters: [
         {
@@ -120,7 +120,7 @@ module.exports = {
     post: {
       tags: ["Inventory Transfers"],
       summary: "Create a new inventory transfer",
-      description: "Create a new inventory transfer record in the system",
+      description: "Create a new inventory transfer record in the system. Requires authentication.",
       security: [{ bearerAuth: [] }],
       requestBody: {
         required: true,
@@ -154,7 +154,7 @@ module.exports = {
     delete: {
       tags: ["Inventory Transfers"],
       summary: "Delete all inventory transfers",
-      description: "Delete all inventory transfers from the system (use with caution)",
+      description: "Delete all inventory transfers from the system (use with caution). Requires authentication.",
       security: [{ bearerAuth: [] }],
       responses: {
         "200": {
@@ -176,18 +176,22 @@ module.exports = {
       }
     }
   },
-  "/inventory-transfers/{_id}": {
+  "/inventory-transfers/{transfer_Id}": {
     get: {
       tags: ["Inventory Transfers"],
       summary: "Get inventory transfer by ID",
-      description: "Retrieve inventory transfer details by MongoDB ID",
+      description: "Retrieve inventory transfer details by MongoDB ID. Requires authentication. The transfer_Id parameter is the MongoDB ObjectId (24 character hexadecimal) that uniquely identifies an inventory transfer in the database.",
       security: [{ bearerAuth: [] }],
       parameters: [
         {
-          name: "_id",
+          name: "transfer_Id",
           in: "path",
           required: true,
-          schema: { type: "string" },
+          schema: { 
+            type: "string",
+            pattern: "^[a-f\\d]{24}$" 
+          },
+          example: "64f5a7b3c5dc0d34f85d969e",
           description: "MongoDB ID of the inventory transfer"
         }
       ],
@@ -215,14 +219,18 @@ module.exports = {
     put: {
       tags: ["Inventory Transfers"],
       summary: "Update inventory transfer",
-      description: "Update inventory transfer details by MongoDB ID",
+      description: "Update inventory transfer details by MongoDB ID. Requires authentication. The transfer_Id parameter is the MongoDB ObjectId (24 character hexadecimal) that uniquely identifies an inventory transfer in the database.",
       security: [{ bearerAuth: [] }],
       parameters: [
         {
-          name: "_id",
+          name: "transfer_Id",
           in: "path",
           required: true,
-          schema: { type: "string" },
+          schema: { 
+            type: "string",
+            pattern: "^[a-f\\d]{24}$" 
+          },
+          example: "64f5a7b3c5dc0d34f85d969e",
           description: "MongoDB ID of the inventory transfer"
         }
       ],
@@ -259,14 +267,18 @@ module.exports = {
     delete: {
       tags: ["Inventory Transfers"],
       summary: "Delete inventory transfer",
-      description: "Delete an inventory transfer by MongoDB ID",
+      description: "Delete an inventory transfer by MongoDB ID. Requires authentication. The transfer_Id parameter is the MongoDB ObjectId (24 character hexadecimal) that uniquely identifies an inventory transfer in the database.",
       security: [{ bearerAuth: [] }],
       parameters: [
         {
-          name: "_id",
+          name: "transfer_Id",
           in: "path",
           required: true,
-          schema: { type: "string" },
+          schema: { 
+            type: "string",
+            pattern: "^[a-f\\d]{24}$" 
+          },
+          example: "64f5a7b3c5dc0d34f85d969e",
           description: "MongoDB ID of the inventory transfer to delete"
         }
       ],
@@ -295,7 +307,7 @@ module.exports = {
     get: {
       tags: ["Inventory Transfers"],
       summary: "Get inventory transfer by transfer ID",
-      description: "Retrieve inventory transfer details by transfer ID (TR-XXXXX format)",
+      description: "Retrieve inventory transfer details by transfer ID (TR-XXXXX format). Requires authentication.",
       security: [{ bearerAuth: [] }],
       parameters: [
         {
@@ -328,18 +340,22 @@ module.exports = {
       }
     }
   },
-  "/inventory-transfers/{_id}/approve": {
+  "/inventory-transfers/{transfer_Id}/approve": {
     put: {
       tags: ["Inventory Transfers"],
       summary: "Approve inventory transfer",
-      description: "Approve an inventory transfer and change its status to Approved",
+      description: "Approve an inventory transfer and change its status to Approved. Requires authentication. The transfer_Id parameter is the MongoDB ObjectId (24 character hexadecimal) that uniquely identifies an inventory transfer in the database.",
       security: [{ bearerAuth: [] }],
       parameters: [
         {
-          name: "_id",
+          name: "transfer_Id",
           in: "path",
           required: true,
-          schema: { type: "string" },
+          schema: { 
+            type: "string",
+            pattern: "^[a-f\\d]{24}$" 
+          },
+          example: "64f5a7b3c5dc0d34f85d969e",
           description: "MongoDB ID of the inventory transfer to approve"
         }
       ],
@@ -382,18 +398,22 @@ module.exports = {
       }
     }
   },
-  "/inventory-transfers/{_id}/ship": {
+  "/inventory-transfers/{transfer_Id}/ship": {
     put: {
       tags: ["Inventory Transfers"],
       summary: "Ship inventory transfer",
-      description: "Ship an inventory transfer, update inventory at source warehouse, and change status to In Transit",
+      description: "Ship an inventory transfer, update inventory at source warehouse, and change status to In Transit. Requires authentication. The transfer_Id parameter is the MongoDB ObjectId (24 character hexadecimal) that uniquely identifies an inventory transfer in the database.",
       security: [{ bearerAuth: [] }],
       parameters: [
         {
-          name: "_id",
+          name: "transfer_Id",
           in: "path",
           required: true,
-          schema: { type: "string" },
+          schema: { 
+            type: "string",
+            pattern: "^[a-f\\d]{24}$" 
+          },
+          example: "64f5a7b3c5dc0d34f85d969e",
           description: "MongoDB ID of the inventory transfer to ship"
         }
       ],
@@ -444,18 +464,22 @@ module.exports = {
       }
     }
   },
-  "/inventory-transfers/{_id}/receive": {
+  "/inventory-transfers/{transfer_Id}/receive": {
     put: {
       tags: ["Inventory Transfers"],
       summary: "Receive inventory transfer",
-      description: "Receive items from an inventory transfer, update inventory at destination warehouse, and update status",
+      description: "Receive items from an inventory transfer, update inventory at destination warehouse, and update status. Requires authentication. The transfer_Id parameter is the MongoDB ObjectId (24 character hexadecimal) that uniquely identifies an inventory transfer in the database.",
       security: [{ bearerAuth: [] }],
       parameters: [
         {
-          name: "_id",
+          name: "transfer_Id",
           in: "path",
           required: true,
-          schema: { type: "string" },
+          schema: { 
+            type: "string",
+            pattern: "^[a-f\\d]{24}$" 
+          },
+          example: "64f5a7b3c5dc0d34f85d969e",
           description: "MongoDB ID of the inventory transfer to receive"
         }
       ],
@@ -514,14 +538,18 @@ module.exports = {
     get: {
       tags: ["Inventory Transfers"],
       summary: "Get transfers by source warehouse",
-      description: "Retrieve inventory transfers from a specific warehouse",
+      description: "Retrieve inventory transfers from a specific warehouse. Requires authentication. The warehouseId parameter is the MongoDB ObjectId that identifies a warehouse in the database.",
       security: [{ bearerAuth: [] }],
       parameters: [
         {
           name: "warehouseId",
           in: "path",
           required: true,
-          schema: { type: "string" },
+          schema: { 
+            type: "string",
+            pattern: "^[a-f\\d]{24}$" 
+          },
+          example: "64f5a7b3c5dc0d34f85d969e",
           description: "MongoDB ID of the source warehouse"
         },
         {
@@ -586,14 +614,18 @@ module.exports = {
     get: {
       tags: ["Inventory Transfers"],
       summary: "Get transfers by destination warehouse",
-      description: "Retrieve inventory transfers to a specific warehouse",
+      description: "Retrieve inventory transfers to a specific warehouse. Requires authentication. The warehouseId parameter is the MongoDB ObjectId that identifies a warehouse in the database.",
       security: [{ bearerAuth: [] }],
       parameters: [
         {
           name: "warehouseId",
           in: "path",
           required: true,
-          schema: { type: "string" },
+          schema: { 
+            type: "string",
+            pattern: "^[a-f\\d]{24}$" 
+          },
+          example: "64f5a7b3c5dc0d34f85d969e",
           description: "MongoDB ID of the destination warehouse"
         },
         {
@@ -658,7 +690,7 @@ module.exports = {
     get: {
       tags: ["Inventory Transfers"],
       summary: "Get transfers by status",
-      description: "Retrieve inventory transfers with a specific status",
+      description: "Retrieve inventory transfers with a specific status. Requires authentication.",
       security: [{ bearerAuth: [] }],
       parameters: [
         {
