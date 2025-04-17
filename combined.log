@@ -2251,3 +2251,17 @@ ValidationError: Supplier validation failed: supplierID: Path `supplierID` is in
 2025-04-17 23:25:33 DEBUG [inventory-api:App]: Session: 
 2025-04-17 23:25:33 DEBUG [inventory-api:HealthController]: Server status requested 
 2025-04-17 23:25:33 DEBUG [inventory-api:HealthMiddleware]: Server status check executed 
+2025-04-17 23:48:00 DEBUG [inventory-api:TokenModel]: Fixed duplicate indexes in Token schema: 
+2025-04-17 23:48:00 INFO [inventory-api:EnvValidator]: =============== ENVIRONMENT SUMMARY =============== 
+2025-04-17 23:48:00 INFO [inventory-api:Passport]: GitHub authentication strategy initialized successfully 
+2025-04-17 23:48:00 INFO [inventory-api:EnvValidator]: Environment: DEVELOPMENT 
+2025-04-17 23:48:00 INFO [inventory-api:EnvValidator]: Port: 3000 
+2025-04-17 23:48:00 INFO [inventory-api:EnvValidator]: Database: mongodb+srv://ol****:********@cluster0.wncfx.mongodb.net/team_14_final_project?retryWrites=true&w=majority&appName=Cluster0 
+2025-04-17 23:48:00 INFO [inventory-api:EnvValidator]: ------- Features Status ------- 
+2025-04-17 23:48:00 INFO [inventory-api:EnvValidator]: githubOAuth: Enabled ✅ 
+2025-04-17 23:48:00 INFO [inventory-api:EnvValidator]: =============================================== 
+2025-04-17 23:48:00 INFO [inventory-api:Server]: MongoDB connected successfully 
+2025-04-17 23:48:03 INFO [inventory-api:Database]: MongoDB Connected: cluster0-shard-00-01.wncfx.mongodb.net 
+2025-04-17 23:48:03 INFO [inventory-api:InitUtils]: SUPERADMIN account already exists. Skipping initialization. 
+2025-04-17 23:48:03 INFO [inventory-api:Server]: Server running on http://localhost:3000 in development mode 
+2025-04-17 23:48:03 INFO [inventory-api:Server]: API Documentation: http://localhost:3000/api-docs 

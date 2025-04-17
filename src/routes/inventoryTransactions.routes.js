@@ -13,6 +13,8 @@ const {
   deleteAllTransactions
 } = require("../controllers/inventoryTransactions.controller");
 const isAuthenticated = require("../middlewares/auth.middleware");
+const isAuthorized = require("../middlewares/authorization.middleware");
+const { ROLES } = require("../config/roles.config");
 const validate = require("../middlewares/validation.middleware");
 const {
   transaction_IdValidationRules,
@@ -84,24 +86,31 @@ router.get(
   getTransactionsByReference
 );
 
-// Create new transaction
+// Create new transaction - requires MANAGER or ADMIN role
 router.post(
   "/", 
-  isAuthenticated, 
+  isAuthenticated,
+  isAuthorized([ROLES.ADMIN, ROLES.MANAGER]),
   validate(createTransactionValidationRules()),
   createTransaction
 );
 
-// Delete transaction by ID
+// Delete transaction by ID - requires MANAGER or ADMIN role
 router.delete(
   "/:transaction_Id", 
-  isAuthenticated, 
+  isAuthenticated,
+  isAuthorized([ROLES.ADMIN, ROLES.MANAGER]), 
   validate(transaction_IdValidationRules()),
   deleteTransaction
 );
 
-// Delete all transactions
-router.delete("/", isAuthenticated, deleteAllTransactions);
+// Delete all transactions - restricted to ADMIN role only
+router.delete(
+  "/", 
+  isAuthenticated, 
+  isAuthorized([ROLES.ADMIN]),
+  deleteAllTransactions
+);
 
 module.exports = router;
 

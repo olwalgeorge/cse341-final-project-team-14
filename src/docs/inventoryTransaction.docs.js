@@ -3,7 +3,7 @@ module.exports = {
     get: {
       tags: ["Inventory Transactions"],
       summary: "Get all inventory transactions",
-      description: "Retrieve a list of all inventory transactions with optional filtering, sorting, and pagination",
+      description: "Retrieve a list of all inventory transactions with optional filtering, sorting, and pagination. Requires authentication.",
       security: [{ bearerAuth: [] }],
       parameters: [
         {
@@ -139,13 +139,14 @@ module.exports = {
           }
         },
         "401": { $ref: "#/components/responses/Unauthorized" },
+        "403": { $ref: "#/components/responses/Forbidden" },
         "500": { $ref: "#/components/responses/ServerError" }
       }
     },
     post: {
       tags: ["Inventory Transactions"],
       summary: "Create a new inventory transaction",
-      description: "Create a new inventory transaction record in the system",
+      description: "Create a new inventory transaction record in the system. Requires MANAGER or ADMIN role.",
       security: [{ bearerAuth: [] }],
       requestBody: {
         required: true,
@@ -173,13 +174,14 @@ module.exports = {
         },
         "400": { $ref: "#/components/responses/BadRequest" },
         "401": { $ref: "#/components/responses/Unauthorized" },
+        "403": { $ref: "#/components/responses/Forbidden" },
         "500": { $ref: "#/components/responses/ServerError" }
       }
     },
     delete: {
       tags: ["Inventory Transactions"],
       summary: "Delete all inventory transactions",
-      description: "Delete all inventory transactions from the system (use with caution)",
+      description: "Delete all inventory transactions from the system (use with caution). Restricted to ADMIN role only.",
       security: [{ bearerAuth: [] }],
       responses: {
         "200": {
@@ -197,22 +199,27 @@ module.exports = {
           }
         },
         "401": { $ref: "#/components/responses/Unauthorized" },
+        "403": { $ref: "#/components/responses/Forbidden" },
         "500": { $ref: "#/components/responses/ServerError" }
       }
     }
   },
-  "/inventory-transactions/{_id}": {
+  "/inventory-transactions/{transaction_Id}": {
     get: {
       tags: ["Inventory Transactions"],
       summary: "Get inventory transaction by ID",
-      description: "Retrieve inventory transaction details by MongoDB ID",
+      description: "Retrieve inventory transaction details by MongoDB ID. Requires authentication. The transaction_Id parameter is the MongoDB ObjectId (24 character hexadecimal) that uniquely identifies a transaction in the database.",
       security: [{ bearerAuth: [] }],
       parameters: [
         {
-          name: "_id",
+          name: "transaction_Id",
           in: "path",
           required: true,
-          schema: { type: "string" },
+          schema: { 
+            type: "string",
+            pattern: "^[a-f\\d]{24}$" 
+          },
+          example: "64f5a7b3c5dc0d34f85d969e",
           description: "MongoDB ID of the inventory transaction"
         }
       ],
@@ -232,6 +239,7 @@ module.exports = {
             }
           }
         },
+        "400": { $ref: "#/components/responses/BadRequest" },
         "401": { $ref: "#/components/responses/Unauthorized" },
         "404": { $ref: "#/components/responses/NotFound" },
         "500": { $ref: "#/components/responses/ServerError" }
@@ -240,14 +248,18 @@ module.exports = {
     delete: {
       tags: ["Inventory Transactions"],
       summary: "Delete inventory transaction",
-      description: "Delete an inventory transaction by MongoDB ID",
+      description: "Delete an inventory transaction by MongoDB ID. Requires ADMIN or MANAGER role. The transaction_Id parameter is the MongoDB ObjectId (24 character hexadecimal) that uniquely identifies a transaction in the database.",
       security: [{ bearerAuth: [] }],
       parameters: [
         {
-          name: "_id",
+          name: "transaction_Id",
           in: "path",
           required: true,
-          schema: { type: "string" },
+          schema: { 
+            type: "string",
+            pattern: "^[a-f\\d]{24}$" 
+          },
+          example: "64f5a7b3c5dc0d34f85d969e",
           description: "MongoDB ID of the inventory transaction to delete"
         }
       ],
@@ -266,7 +278,9 @@ module.exports = {
             }
           }
         },
+        "400": { $ref: "#/components/responses/BadRequest" },
         "401": { $ref: "#/components/responses/Unauthorized" },
+        "403": { $ref: "#/components/responses/Forbidden" },
         "404": { $ref: "#/components/responses/NotFound" },
         "500": { $ref: "#/components/responses/ServerError" }
       }
@@ -276,7 +290,7 @@ module.exports = {
     get: {
       tags: ["Inventory Transactions"],
       summary: "Get inventory transaction by transaction ID",
-      description: "Retrieve inventory transaction details by transaction ID (IT-XXXXX format)",
+      description: "Retrieve inventory transaction details by transaction ID (IT-XXXXX format). Requires authentication.",
       security: [{ bearerAuth: [] }],
       parameters: [
         {
@@ -284,6 +298,7 @@ module.exports = {
           in: "path",
           required: true,
           schema: { type: "string", pattern: "^IT-\\d{5}$" },
+          example: "IT-00001",
           description: "Transaction ID in IT-XXXXX format"
         }
       ],
@@ -303,6 +318,7 @@ module.exports = {
             }
           }
         },
+        "400": { $ref: "#/components/responses/BadRequest" },
         "401": { $ref: "#/components/responses/Unauthorized" },
         "404": { $ref: "#/components/responses/NotFound" },
         "500": { $ref: "#/components/responses/ServerError" }
@@ -313,14 +329,18 @@ module.exports = {
     get: {
       tags: ["Inventory Transactions"],
       summary: "Get inventory transactions by product",
-      description: "Retrieve inventory transactions for a specific product",
+      description: "Retrieve inventory transactions for a specific product. Requires authentication. The productId parameter is the MongoDB ObjectId (24 character hexadecimal) that identifies a product in the database.",
       security: [{ bearerAuth: [] }],
       parameters: [
         {
           name: "productId",
           in: "path",
           required: true,
-          schema: { type: "string" },
+          schema: { 
+            type: "string",
+            pattern: "^[a-f\\d]{24}$" 
+          },
+          example: "64f5a7b3c5dc0d34f85d969e",
           description: "MongoDB ID of the product"
         },
         {
@@ -391,7 +411,9 @@ module.exports = {
             }
           }
         },
+        "400": { $ref: "#/components/responses/BadRequest" },
         "401": { $ref: "#/components/responses/Unauthorized" },
+        "404": { $ref: "#/components/responses/NotFound" },
         "500": { $ref: "#/components/responses/ServerError" }
       }
     }
@@ -400,14 +422,18 @@ module.exports = {
     get: {
       tags: ["Inventory Transactions"],
       summary: "Get inventory transactions by warehouse",
-      description: "Retrieve inventory transactions for a specific warehouse",
+      description: "Retrieve inventory transactions for a specific warehouse. Requires authentication. The warehouseId parameter is the MongoDB ObjectId (24 character hexadecimal) that identifies a warehouse in the database.",
       security: [{ bearerAuth: [] }],
       parameters: [
         {
           name: "warehouseId",
           in: "path",
           required: true,
-          schema: { type: "string" },
+          schema: { 
+            type: "string",
+            pattern: "^[a-f\\d]{24}$" 
+          },
+          example: "64f5a7b3c5dc0d34f85d969e",
           description: "MongoDB ID of the warehouse"
         },
         {
@@ -478,7 +504,9 @@ module.exports = {
             }
           }
         },
+        "400": { $ref: "#/components/responses/BadRequest" },
         "401": { $ref: "#/components/responses/Unauthorized" },
+        "404": { $ref: "#/components/responses/NotFound" },
         "500": { $ref: "#/components/responses/ServerError" }
       }
     }
@@ -487,7 +515,7 @@ module.exports = {
     get: {
       tags: ["Inventory Transactions"],
       summary: "Get inventory transactions by type",
-      description: "Retrieve inventory transactions of a specific type",
+      description: "Retrieve inventory transactions of a specific type. Requires authentication.",
       security: [{ bearerAuth: [] }],
       parameters: [
         {
