@@ -170,7 +170,7 @@ const supplierRoutes = {
     get: {
       tags: ["Suppliers"],
       summary: "Get supplier by supplier ID",
-      description: "Retrieve supplier details by supplier ID (SUP-XXXXX format)",
+      description: "Retrieve supplier details by supplier ID (SP-XXXXX format)",
       security: [{ bearerAuth: [] }],
       parameters: [
         {
@@ -179,10 +179,10 @@ const supplierRoutes = {
           required: true,
           schema: { 
             type: "string",
-            pattern: "^SUP-\\d{5}$"
+            pattern: "^SP-\\d{5}$"
           },
-          example: "SUP-00001",
-          description: "Supplier ID in SUP-XXXXX format"
+          example: "SP-00001",
+          description: "Supplier ID in SP-XXXXX format"
         },
       ],
       responses: {

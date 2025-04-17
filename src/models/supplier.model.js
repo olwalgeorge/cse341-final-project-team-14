@@ -6,7 +6,7 @@ const supplierSchema = new Schema(
     supplierID: {
       type: String,
       unique: true,
-      match: [/^SUP-\d{5}$/],
+      match: [/^SP-\d{5}$/],
       required: true,
     },
     name: {

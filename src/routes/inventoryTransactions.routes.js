@@ -12,9 +12,8 @@ const {
   deleteTransaction,
   deleteAllTransactions
 } = require("../controllers/inventoryTransactions.controller");
-const isAuthenticated = require("../middlewares/auth.middleware");
-const isAuthorized = require("../middlewares/authorization.middleware");
-const { ROLES } = require("../config/roles.config");
+const { authenticate, authorize } = require("../middlewares/auth.middleware");
+const { ROLE_HIERARCHY } = require("../utils/auth.utils");
 const validate = require("../middlewares/validation.middleware");
 const {
   transaction_IdValidationRules,
@@ -28,12 +27,12 @@ const {
 } = require("../validators/inventoryTransaction.validator");
 
 // Get all inventory transactions
-router.get("/", isAuthenticated, getAllTransactions);
+router.get("/", authenticate, getAllTransactions);
 
 // Get transaction by MongoDB ID
 router.get(
   "/:transaction_Id", 
-  isAuthenticated, 
+  authenticate, 
   validate(transaction_IdValidationRules()),
   getTransactionById
 );
@@ -41,7 +40,7 @@ router.get(
 // Get transaction by transaction ID (IT-XXXXX format)
 router.get(
   "/transactionID/:transactionID", 
-  isAuthenticated, 
+  authenticate, 
   validate(transactionIDValidationRules()),
   getTransactionsByReference
 );
@@ -49,7 +48,7 @@ router.get(
 // Get transactions by product
 router.get(
   "/product/:productId", 
-  isAuthenticated, 
+  authenticate, 
   validate(productIdValidationRules()),
   getTransactionsByProduct
 );
@@ -57,7 +56,7 @@ router.get(
 // Get transactions by warehouse
 router.get(
   "/warehouse/:warehouseId", 
-  isAuthenticated, 
+  authenticate, 
   validate(warehouseIdValidationRules()),
   getTransactionsByWarehouse
 );
@@ -65,7 +64,7 @@ router.get(
 // Get transactions by transaction type
 router.get(
   "/type/:transactionType", 
-  isAuthenticated, 
+  authenticate, 
   validate(transactionTypeValidationRules()),
   getTransactionsByType
 );
@@ -73,7 +72,7 @@ router.get(
 // Get transactions by date range
 router.get(
   "/dateRange/:startDate/:endDate", 
-  isAuthenticated, 
+  authenticate, 
   validate(dateRangeValidationRules()),
   getTransactionsByDateRange
 );
@@ -81,7 +80,7 @@ router.get(
 // Get transactions by reference
 router.get(
   "/reference/:referenceType/:referenceId",
-  isAuthenticated,
+  authenticate,
   validate(referenceValidationRules()),
   getTransactionsByReference
 );
@@ -89,8 +88,8 @@ router.get(
 // Create new transaction - requires MANAGER or ADMIN role
 router.post(
   "/", 
-  isAuthenticated,
-  isAuthorized([ROLES.ADMIN, ROLES.MANAGER]),
+  authenticate,
+  authorize([ROLE_HIERARCHY.ADMIN, ROLE_HIERARCHY.MANAGER]),
   validate(createTransactionValidationRules()),
   createTransaction
 );
@@ -98,8 +97,8 @@ router.post(
 // Delete transaction by ID - requires MANAGER or ADMIN role
 router.delete(
   "/:transaction_Id", 
-  isAuthenticated,
-  isAuthorized([ROLES.ADMIN, ROLES.MANAGER]), 
+  authenticate,
+  authorize([ROLE_HIERARCHY.ADMIN, ROLE_HIERARCHY.MANAGER]), 
   validate(transaction_IdValidationRules()),
   deleteTransaction
 );
@@ -107,8 +106,8 @@ router.delete(
 // Delete all transactions - restricted to ADMIN role only
 router.delete(
   "/", 
-  isAuthenticated, 
-  isAuthorized([ROLES.ADMIN]),
+  authenticate, 
+  authorize([ROLE_HIERARCHY.ADMIN]),
   deleteAllTransactions
 );
 

@@ -3,7 +3,7 @@ const { createLogger } = require("./logger");
 const logger = createLogger("SupplierUtils");
 
 /**
- * Generate a unique supplier ID in the format SUP-XXXXX
+ * Generate a unique supplier ID in the format SP-XXXXX
  * @returns {Promise<string>} - Generated supplier ID
  */
 const generateSupplierId = async () => {
@@ -12,7 +12,7 @@ const generateSupplierId = async () => {
   try {
     // Use the Counter.getNextId method
     const supplierID = await Counter.getNextId('supplierID', { 
-      prefix: 'SUP-', 
+      prefix: 'SP-', 
       padLength: 5
     });
     
