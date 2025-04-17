@@ -9,6 +9,7 @@
 const { verifyToken, extractTokenFromRequest } = require('../auth/jwt');
 const { createLogger } = require('../utils/logger');
 const { AuthError } = require('../utils/errors');
+const { hasRole } = require('../utils/auth.utils');
 
 const logger = createLogger('Middleware:Auth');
 
@@ -60,8 +61,12 @@ const authorize = (roles) => {
         return next(AuthError.unauthorized('Authentication required before authorization.'));
       }
 
-      // Check if user role is in the allowed roles
-      if (!allowedRoles.includes(req.user.role)) {
+      // Check if user has sufficient role based on hierarchy
+      const hasPermission = allowedRoles.some(role => 
+        hasRole(req.user.role, role)
+      );
+
+      if (!hasPermission) {
         logger.warn(`Access denied for user ${req.user.userId} with role ${req.user.role}`);
         return next(AuthError.forbidden(`You do not have permission to access this resource. Required role: ${allowedRoles.join(' or ')}`));
       }

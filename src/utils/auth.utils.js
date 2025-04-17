@@ -14,7 +14,8 @@ const ROLE_HIERARCHY = {
   'USER': 0,
   'SUPERVISOR': 1,
   'MANAGER': 2, 
-  'ADMIN': 3
+  'ADMIN': 3,
+  'SUPERADMIN': 4  // Add SUPERADMIN as the highest role
 };
 
 // Configuration for token invalidation strategy
@@ -32,6 +33,13 @@ const tokenConfig = {
 function hasRole(userRole, requiredRole) {
   if (!ROLE_HIERARCHY.hasOwnProperty(userRole) || !ROLE_HIERARCHY.hasOwnProperty(requiredRole)) {
     logger.warn(`Invalid role comparison: ${userRole} vs ${requiredRole}`);
+    
+    // Special case: If user is SUPERADMIN, always grant access regardless of role hierarchy
+    if (userRole === 'SUPERADMIN') {
+      logger.info(`Granting access to SUPERADMIN user despite missing role in hierarchy: ${requiredRole}`);
+      return true;
+    }
+    
     return false;
   }
   
