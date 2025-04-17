@@ -5,6 +5,10 @@
 @superAdminEmail = admin@inventory-system.com
 @superAdminPassword = SuperAdmin123!
 @userId = 6800c05d2d53dbd2ed931338
+@userEmail = newuser5@example.com
+@userPassword = NewUser123!
+@managerId = 6800c05d2d53dbd2ed931339
+@normalUserId = 6800c05d2d53dbd2ed931340
 
 ### Login as Admin
 # @name loginAdmin
@@ -81,3 +85,274 @@ Authorization: Bearer {{superAdminToken}}
   "ipAddress": "192.168.1.100",
   "reason": "Approved high-volume API integration"
 }
+
+### =====================================================
+### SECTION 1: REGULAR USER RATE LIMIT TESTING
+### =====================================================
+
+### Login as Regular User
+# @name loginRegularUser
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "{{userEmail}}",
+  "password": "{{userPassword}}"
+}
+
+### Extract User Token
+@userToken = {{loginRegularUser.response.body.data.token}}
+
+### Test Regular User Rate Limit - 1 of 5
+GET {{baseUrl}}/users/profile
+Authorization: Bearer {{userToken}}
+
+
+
+### =====================================================
+### SECTION 2: ADMIN USER BYPASS RATE LIMIT TESTING
+### =====================================================
+
+### Test Admin User Bypass Rate Limit - 1 of 10
+GET {{baseUrl}}/in
+Authorization: Bearer {{adminToken}}
+
+### Test Admin User Bypass Rate Limit - 2 of 10
+GET {{baseUrl}}/users/profile
+Authorization: Bearer {{adminToken}}
+
+### Test Admin User Bypass Rate Limit - 3 of 10
+GET {{baseUrl}}/users
+Authorization: Bearer {{adminToken}}
+
+### Test Admin User Bypass Rate Limit - 4 of 10
+GET {{baseUrl}}/users/profile
+Authorization: Bearer {{adminToken}}
+
+### Test Admin User Bypass Rate Limit - 5 of 10
+GET {{baseUrl}}/users/profile
+Authorization: Bearer {{adminToken}}
+
+### Test Admin User Bypass Rate Limit - 6 of 10
+GET {{baseUrl}}/users/profile
+Authorization: Bearer {{adminToken}}
+
+### Test Admin User Bypass Rate Limit - 7 of 10
+GET {{baseUrl}}/users/profile
+Authorization: Bearer {{adminToken}}
+
+### Test Admin User Bypass Rate Limit - 8 of 10
+GET {{baseUrl}}/users/profile
+Authorization: Bearer {{adminToken}}
+
+### Test Admin User Bypass Rate Limit - 9 of 10
+GET {{baseUrl}}/users/profile
+Authorization: Bearer {{adminToken}}
+
+### Test Admin User Bypass Rate Limit - 10 of 10
+GET {{baseUrl}}/users/profile
+Authorization: Bearer {{adminToken}}
+
+### =====================================================
+### SECTION 3: SUPERADMIN USER BYPASS RATE LIMIT TESTING
+### =====================================================
+
+### Test SuperAdmin User Bypass Rate Limit - 1 of 10
+GET {{baseUrl}}/users/profile
+Authorization: Bearer {{superAdminToken}}
+
+### Test SuperAdmin User Bypass Rate Limit - 2 of 10
+GET {{baseUrl}}/users/profile
+Authorization: Bearer {{superAdminToken}}
+
+### Test SuperAdmin User Bypass Rate Limit - 3 of 10
+GET {{baseUrl}}/users/profile
+Authorization: Bearer {{superAdminToken}}
+
+### Test SuperAdmin User Bypass Rate Limit - 4 of 10
+GET {{baseUrl}}/users/profile
+Authorization: Bearer {{superAdminToken}}
+
+### Test SuperAdmin User Bypass Rate Limit - 5 of 10
+GET {{baseUrl}}/users/profile
+Authorization: Bearer {{superAdminToken}}
+
+### Test SuperAdmin User Bypass Rate Limit - 6 of 10
+GET {{baseUrl}}/users/profile
+Authorization: Bearer {{superAdminToken}}
+
+### Test SuperAdmin User Bypass Rate Limit - 7 of 10
+GET {{baseUrl}}/users/profile
+Authorization: Bearer {{superAdminToken}}
+
+### Test SuperAdmin User Bypass Rate Limit - 8 of 10
+GET {{baseUrl}}/users/profile
+Authorization: Bearer {{superAdminToken}}
+
+### Test SuperAdmin User Bypass Rate Limit - 9 of 10
+GET {{baseUrl}}/users/profile
+Authorization: Bearer {{superAdminToken}}
+
+### Test SuperAdmin User Bypass Rate Limit - 10 of 10
+GET {{baseUrl}}/users/profile
+Authorization: Bearer {{superAdminToken}}
+
+### =====================================================
+### SECTION 4: AUTHENTICATION RATE LIMIT TESTING
+### =====================================================
+
+### Auth Rate Limit Test - 1 of 5
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "nonexistent@example.com",
+  "password": "WrongPassword123!"
+}
+
+### Auth Rate Limit Test - 2 of 5
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "nonexistent@example.com",
+  "password": "WrongPassword123!"
+}
+
+### Auth Rate Limit Test - 3 of 5
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "nonexistent@example.com",
+  "password": "WrongPassword123!"
+}
+
+### Auth Rate Limit Test - 4 of 5
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "nonexistent@example.com",
+  "password": "WrongPassword123!"
+}
+
+### Auth Rate Limit Test - 5 of 5
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "nonexistent@example.com",
+  "password": "WrongPassword123!"
+}
+
+### Auth Rate Limit Test - Should Hit Rate Limit (6 of 5)
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "nonexistent@example.com",
+  "password": "WrongPassword123!"
+}
+
+### =====================================================
+### SECTION 5: USER EXEMPTION MANAGEMENT AND TESTING
+### =====================================================
+
+### 5.1 Grant Exemption to Regular User
+POST {{baseUrl}}/users/revoke-rate-limit/{{normalUserId}}
+Content-Type: application/json
+Authorization: Bearer {{adminToken}}
+
+{
+  "ipAddress": "192.168.1.100",
+  "reason": "Testing exemption for high-volume legitimate API usage"
+}
+
+### 5.2 Verify Rate Limit Exemption for Regular User (Need to login as that exempted user first)
+# @name loginExemptedUser
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "exempteduser@example.com",
+  "password": "UserPass123!"
+}
+
+### Extract Exempted User Token
+@exemptedUserToken = {{loginExemptedUser.response.body.data.token}}
+
+### Test Exempted User Rate Limit - Should pass all requests despite limits
+### Test Exempted User Rate Limit - 1 of 10
+GET {{baseUrl}}/users/profile
+Authorization: Bearer {{exemptedUserToken}}
+
+### Test Exempted User Rate Limit - 2 of 10
+GET {{baseUrl}}/users/profile
+Authorization: Bearer {{exemptedUserToken}}
+
+### Test Exempted User Rate Limit - 3 of 10
+GET {{baseUrl}}/users/profile
+Authorization: Bearer {{exemptedUserToken}}
+
+### Test Exempted User Rate Limit - 4 of 10
+GET {{baseUrl}}/users/profile
+Authorization: Bearer {{exemptedUserToken}}
+
+### Test Exempted User Rate Limit - 5 of 10
+GET {{baseUrl}}/users/profile
+Authorization: Bearer {{exemptedUserToken}}
+
+### Test Exempted User Rate Limit - 6 of 10
+GET {{baseUrl}}/users/profile
+Authorization: Bearer {{exemptedUserToken}}
+
+### Test Exempted User Rate Limit - 7 of 10
+GET {{baseUrl}}/users/profile
+Authorization: Bearer {{exemptedUserToken}}
+
+### Test Exempted User Rate Limit - 8 of 10
+GET {{baseUrl}}/users/profile
+Authorization: Bearer {{exemptedUserToken}}
+
+### Test Exempted User Rate Limit - 9 of 10
+GET {{baseUrl}}/users/profile
+Authorization: Bearer {{exemptedUserToken}}
+
+### Test Exempted User Rate Limit - 10 of 10
+GET {{baseUrl}}/users/profile
+Authorization: Bearer {{exemptedUserToken}}
+
+### =====================================================
+### SECTION 6: ALTERNATE ROUTES RATE LIMIT TESTING
+### =====================================================
+
+### Test Rate Limit on Warehouses API - Regular User
+GET {{baseUrl}}/warehouses
+Authorization: Bearer {{userToken}}
+
+### Test Rate Limit on Suppliers API - Regular User
+GET {{baseUrl}}/suppliers
+Authorization: Bearer {{userToken}}
+
+### Test Rate Limit on Inventory Transfers API - Regular User
+GET {{baseUrl}}/inventory-transfers
+Authorization: Bearer {{userToken}}
+
+### Test Rate Limit on Inventory Returns API - Regular User
+GET {{baseUrl}}/inventory-returns
+Authorization: Bearer {{userToken}}
+
+### Test Rate Limit on User Profile - Regular User (should still work if under limit)
+GET {{baseUrl}}/users/profile
+Authorization: Bearer {{userToken}}
+
+### =====================================================
+### SECTION 7: HEADER INSPECTION
+### =====================================================
+
+### Check Rate Limit Headers - This request should show remaining count in headers
+GET {{baseUrl}}/users/profile
+Authorization: Bearer {{userToken}}
+
+
