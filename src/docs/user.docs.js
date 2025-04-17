@@ -684,16 +684,51 @@ module.exports = {
           description: "Sort order (ascending or descending)",
         },
         {
-          name: "filter",
+          name: "username",
           in: "query",
           required: false,
           schema: {
-            type: "object",
+            type: "string"
           },
-          description: "Filter criteria (format: field=value)",
-          style: "form",
-          explode: true,
+          description: "Filter by username (partial match)"
         },
+        {
+          name: "email",
+          in: "query",
+          required: false,
+          schema: {
+            type: "string"
+          },
+          description: "Filter by email (partial match)"
+        },
+        {
+          name: "fullName",
+          in: "query",
+          required: false,
+          schema: {
+            type: "string"
+          },
+          description: "Filter by user's full name (partial match)"
+        },
+        {
+          name: "role",
+          in: "query",
+          required: false,
+          schema: {
+            type: "string",
+            enum: ["USER", "SUPERVISOR", "MANAGER", "ADMIN", "SUPERADMIN"]
+          },
+          description: "Filter by user role"
+        },
+        {
+          name: "isVerified",
+          in: "query",
+          required: false,
+          schema: {
+            type: "boolean"
+          },
+          description: "Filter by verification status"
+        }
       ],
       responses: {
         200: {

@@ -362,3 +362,11 @@ AuthError: Invalid email or password
 2025-04-17 18:46:35 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: AuthError - Authentication required. Please provide a valid token. 
 2025-04-17 18:47:45 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: AuthError - You do not have permission to access this resource. Required role: ADMIN or MANAGER 
 2025-04-17 19:30:46 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: AuthError - Authentication required. Please provide a valid token. 
+2025-04-17 20:02:12 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: AuthError - Authentication required. Please provide a valid token. 
+2025-04-17 20:04:07 ERROR [inventory-api:Middleware:Auth]: Authentication error: Token has been revoked. Please log in again. 
+AuthError: Token has been revoked. Please log in again.
+    at AuthError.unauthorized (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\utils\errors.js:139:12)
+    at verifyToken (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\auth\jwt.js:48:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async authenticate (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\middlewares\auth.middleware.js:31:21)
+2025-04-17 20:04:07 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: AuthError - Authentication failed. 

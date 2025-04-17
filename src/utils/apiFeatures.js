@@ -33,7 +33,7 @@ class APIFeatures {
       // Process each query parameter based on custom filter mapping
       for (const [key, value] of Object.entries(query)) {
         // Skip pagination and sorting related parameters
-        if (['page', 'limit', 'sort', 'fields'].includes(key)) continue;
+        if (['page', 'limit', 'sort', 'order', 'fields'].includes(key)) continue;
         
         // If there's a custom filter mapping for this query parameter
         if (customFilters[key]) {
@@ -112,6 +112,17 @@ class APIFeatures {
    */
   static getSort(query, defaultSort = 'createdAt') {
     try {
+      // Handle sort and order parameters separately (common in Swagger UI)
+      if (query.sort && query.order) {
+        const sortObj = {};
+        const sortField = query.sort;
+        const sortOrder = query.order === 'desc' ? -1 : 1;
+        sortObj[sortField] = sortOrder;
+        logger.debug('Using sort field and order:', { field: sortField, order: sortOrder });
+        return sortObj;
+      }
+      
+      // Handle comma-separated sort parameter (e.g., sort=name,-age)
       let sortStr = query.sort || defaultSort;
       
       // Convert sortStr to MongoDB sort object
@@ -126,6 +137,7 @@ class APIFeatures {
         }
       }
       
+      logger.debug('Using sort object:', sortObj);
       return sortObj;
     } catch (error) {
       logger.error('Error getting sort parameters:', error);
@@ -137,6 +149,7 @@ class APIFeatures {
         : defaultSort;
       
       defaultSortObj[defaultField] = defaultSort.startsWith('-') ? -1 : 1;
+      logger.debug('Using default sort:', defaultSortObj);
       return defaultSortObj;
     }
   }
