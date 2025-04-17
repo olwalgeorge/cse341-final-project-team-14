@@ -13,6 +13,7 @@ const {
   deleteAllUsersService,
   updateUserService,
   searchUsersService,
+  createUserService,
 } = require("../services/users.service.js");
 const { transformUser, transformUserData } = require("../utils/user.utils.js");
 
@@ -359,6 +360,31 @@ const searchUsers = asyncHandler(async (req, res, next) => {
   }
 });
 
+/**
+ * @desc    Create a new user (admin only)
+ * @route   POST /users
+ * @access  Private/Admin
+ */
+const createUser = asyncHandler(async (req, res, next) => {
+  logger.info("createUser called");
+  logger.debug("Request body:", req.body);
+  
+  try {
+    const user = await createUserService(req.body);
+    const transformedUser = transformUser(user);
+    
+    sendResponse(
+      res,
+      201,
+      "User created successfully",
+      transformedUser
+    );
+  } catch (error) {
+    logger.error("Error creating user:", error);
+    next(error);
+  }
+});
+
 module.exports = {
   getUserProfile,
   getUserByUserID,
@@ -372,5 +398,6 @@ module.exports = {
   deleteAllUsers,
   updateUserById,
   searchUsers,
+  createUser,
 };
 

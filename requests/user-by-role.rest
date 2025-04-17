@@ -1,0 +1,192 @@
+### Environment Variables
+@baseUrl = http://localhost:3000
+@regularUserEmail = user@example.com
+@regularUserPassword = Password123!
+@adminEmail = admin@example.com 
+@adminPassword = AdminPass123!
+@managerEmail = manager@example.com
+@managerPassword = ManagerPass123!
+@superAdminEmail = admin@inventory-system.com
+@superAdminPassword = SuperAdmin123!
+
+### =============================================
+### AUTHENTICATION - Get tokens for different roles
+### =============================================
+
+### Login as Regular User
+# @name loginRegularUser
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "{{regularUserEmail}}",
+  "password": "{{regularUserPassword}}"
+}
+
+### Extract Regular User Token
+@regularUserToken = {{loginRegularUser.response.body.data.token}}
+
+### Login as Admin
+# @name loginAdmin
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "{{adminEmail}}",
+  "password": "{{adminPassword}}"
+}
+
+### Extract Admin Token
+@adminToken = {{loginAdmin.response.body.data.token}}
+
+### Login as Manager
+# @name loginManager
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "{{managerEmail}}",
+  "password": "{{managerPassword}}"
+}
+
+### Extract Manager Token
+@managerToken = {{loginManager.response.body.data.token}}
+
+### Login as SuperAdmin
+# @name loginSuperAdmin
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "{{superAdminEmail}}",
+  "password": "{{superAdminPassword}}"
+}
+
+### Extract SuperAdmin Token
+@superAdminToken = {{loginSuperAdmin.response.body.data.token}}
+
+### =============================================
+### REGULAR USER OPERATIONS
+### =============================================
+
+### Get Own Profile (Regular User)
+GET {{baseUrl}}/users/profile
+Authorization: Bearer {{regularUserToken}}
+
+### Update Own Profile (Regular User)
+PUT {{baseUrl}}/users/profile
+Content-Type: application/json
+Authorization: Bearer {{regularUserToken}}
+
+{
+  "fullName": "Updated Regular User"
+}
+
+### Try to Access Admin-only Endpoint (Regular User) - Should Fail
+GET {{baseUrl}}/users
+Authorization: Bearer {{regularUserToken}}
+
+### =============================================
+### MANAGER OPERATIONS
+### =============================================
+
+### Get All Users (Manager)
+GET {{baseUrl}}/users
+Authorization: Bearer {{managerToken}}
+
+### Search Users (Manager)
+GET {{baseUrl}}/users/search?term=admin
+Authorization: Bearer {{managerToken}}
+
+### Get User by Username (Manager)
+GET {{baseUrl}}/users/username/systemadmin
+Authorization: Bearer {{managerToken}}
+
+### Try to Create User (Manager) - Should Fail
+POST {{baseUrl}}/users
+Content-Type: application/json
+Authorization: Bearer {{managerToken}}
+
+{
+  "username": "newuser",
+  "email": "new@example.com",
+  "password": "NewPassword123!",
+  "fullName": "New User",
+  "role": "USER"
+}
+
+### =============================================
+### ADMIN OPERATIONS
+### =============================================
+
+### Get All Users (Admin)
+GET {{baseUrl}}/users
+Authorization: Bearer {{adminToken}}
+
+### Get Users by Role (Admin)
+GET {{baseUrl}}/users/role/USER
+Authorization: Bearer {{adminToken}}
+
+### Create New User (Admin)
+POST {{baseUrl}}/users
+Content-Type: application/json
+Authorization: Bearer {{adminToken}}
+
+{
+  "username": "newuser",
+  "email": "new@example.com",
+  "password": "NewPassword123!",
+  "fullName": "New User",
+  "role": "USER"
+}
+
+### Update Another User (Admin)
+# Replace user_Id with an actual user ID from your database
+PUT {{baseUrl}}/users/64f5a7b3c5dc0d34f85d969e
+Content-Type: application/json
+Authorization: Bearer {{adminToken}}
+
+{
+  "fullName": "Updated By Admin",
+  "role": "USER",
+  "isActive": true
+}
+
+### Delete User (Admin)
+# Replace user_Id with an actual user ID from your database
+DELETE {{baseUrl}}/users/64f5a7b3c5dc0d34f85d969e
+Authorization: Bearer {{adminToken}}
+
+### =============================================
+### SUPERADMIN OPERATIONS
+### =============================================
+
+### Get All Users (SuperAdmin)
+GET {{baseUrl}}/users
+Authorization: Bearer {{superAdminToken}}
+
+### Create New Admin User (SuperAdmin)
+POST {{baseUrl}}/users
+Content-Type: application/json
+Authorization: Bearer {{superAdminToken}}
+
+{
+  "username": "newadmin",
+  "email": "newadmin@example.com",
+  "password": "AdminPass123!",
+  "fullName": "New Admin",
+  "role": "ADMIN"
+}
+
+### Get Users by Role - Find Managers (SuperAdmin)
+GET {{baseUrl}}/users/role/MANAGER
+Authorization: Bearer {{superAdminToken}}
+
+### Search Users (SuperAdmin)
+GET {{baseUrl}}/users/search?term=admin
+Authorization: Bearer {{superAdminToken}}
+
+### Delete All Users (SuperAdmin) - DANGER!
+# Uncomment to test but use with extreme caution
+# DELETE {{baseUrl}}/users
+# Authorization: Bearer {{superAdminToken}}

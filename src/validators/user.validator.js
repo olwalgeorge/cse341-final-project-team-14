@@ -165,6 +165,61 @@ const searchValidationRules = () => {
   ];
 };
 
+/**
+ * Validation rules for creating a new user by an admin
+ */
+const adminUserCreateValidationRules = () => {
+  return [
+    check("username")
+      .trim()
+      .notEmpty()
+      .withMessage("Username is required")
+      .isLength({ min: 3, max: 20 })
+      .withMessage("Username must be between 3 and 20 characters")
+      .matches(/^(?!\d)[a-zA-Z0-9_]+$/)
+      .withMessage("Username must not start with a number and can only contain alphanumeric characters and underscores"),
+    
+    check("email")
+      .trim()
+      .notEmpty()
+      .withMessage("Email is required")
+      .isEmail()
+      .withMessage("Invalid email format")
+      .normalizeEmail(),
+    
+    check("password")
+      .notEmpty()
+      .withMessage("Password is required")
+      .isLength({ min: 8, max: 50 })
+      .withMessage("Password must be between 8 and 50 characters")
+      .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,50}$/)
+      .withMessage("Password must contain at least one lowercase letter, one uppercase letter, one number, and one special character"),
+    
+    check("fullName")
+      .trim()
+      .notEmpty()
+      .withMessage("Full name is required")
+      .isLength({ min: 2, max: 100 })
+      .withMessage("Full name must be between 2 and 100 characters"),
+    
+    isValidRoleBody(
+      "role",
+      ["ADMIN", "MANAGER", "SUPERVISOR", "USER"],
+      "Role must be one of: ADMIN, MANAGER, SUPERVISOR, USER"
+    ),
+    
+    check("isActive")
+      .optional()
+      .isBoolean()
+      .withMessage("isActive must be a boolean value"),
+    
+    check("isVerified")
+      .optional()
+      .isBoolean()
+      .withMessage("isVerified must be a boolean value")
+  ];
+};
+
 module.exports = {
   userUpdateValidationRules,
   userIDValidationRules,
@@ -177,4 +232,5 @@ module.exports = {
   emailValidationRules,
   roleValidationRules,
   searchValidationRules,
+  adminUserCreateValidationRules,
 };

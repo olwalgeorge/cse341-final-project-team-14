@@ -1,6 +1,7 @@
 ### Environment Variables
 @baseUrl = http://localhost:3000
-@authToken =eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2N2ZmYjE2YzNhYThiZmM0OWE1ZGQxZjciLCJ1c2VySWQiOiJVU1ItMDAwMDkiLCJlbWFpbCI6Im9sd2FsZ2VvcmdlMTVAZ21haWwuY29tIiwicm9sZSI6IlVTRVIiLCJ1c2VybmFtZSI6Impha29tIiwidmVyc2lvbiI6NywiaWF0IjoxNzQ0ODczMzgzLCJleHAiOjE3NDQ5NTk3ODN9.wmfjYnQ6DhH58infZe13W1f14vYBfx_vE0Yq8acw7HI
+@authToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2N2ZmYjE2YzNhYThiZmM0OWE1ZGQxZjciLCJ1c2VySWQiOiJVU1ItMDAwMDkiLCJlbWFpbCI6Im9sd2FsZ2VvcmdlMTVAZ21haWwuY29tIiwicm9sZSI6IlVTRVIiLCJ1c2VybmFtZSI6Impha29tIiwidmVyc2lvbiI6NywiaWF0IjoxNzQ0ODczMzgzLCJleHAiOjE3NDQ5NTk3ODN9.wmfjYnQ6DhH58infZe13W1f14vYBfx_vE0Yq8acw7HI
+@superAdminToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2ODAwYWRlZDcwNzc3N2Q1YTY5ZTI2NzAiLCJ1c2VySWQiOiJVU1ItMDAwMTAiLCJlbWFpbCI6ImFkbWluQGludmVudG9yeS1zeXN0ZW0uY29tIiwicm9sZSI6IlNVUEVSQURNSU4iLCJ1c2VybmFtZSI6InN5c3RlbWFkbWluIiwidmVyc2lvbiI6MSwiaWF0IjoxNzQ0ODc5Mzk2LCJleHAiOjE3NDQ5NjU3OTZ9.vLA-15S9SQyUdkvabBWdAmmj8YFqJD3ws1rkwN_RxfY
 
 ### Get all users (admin only)
 GET {{baseUrl}}/users
@@ -39,20 +40,20 @@ Authorization: Bearer {{authToken}}
 ### Create a new user (admin only)
 POST {{baseUrl}}/users
 Content-Type: application/json
-Authorization: Bearer {{authToken}}
+Authorization: Bearer {{superAdminToken}}
 
 {
-  "username": "newuser",
-  "email": "newuser@example.com",
-  "password": "Password123!",
-  "fullName": "New User",
-  "role": "USER"
+  "username": "newsupervisor",
+  "email": "newsupervisor@example.com",
+  "password": "SupervisorPass123!",
+  "fullName": "New Supervisor",
+  "role": "SUPERVISOR"
 }
 
 ### Update user by ID (admin only)
 PUT {{baseUrl}}/users/64f5a7b3c5dc0d34f85d969e
 Content-Type: application/json
-Authorization: Bearer {{authToken}}
+Authorization: Bearer {{authToken}} | Bearer {{superAdminToken}}
 
 {
   "fullName": "Updated User",
@@ -62,11 +63,11 @@ Authorization: Bearer {{authToken}}
 
 ### Delete user by ID (admin only)
 DELETE {{baseUrl}}/users/64f5a7b3c5dc0d34f85d969e
-Authorization: Bearer {{authToken}}
+Authorization: Bearer {{authToken}} | Bearer {{superAdminToken}}
 
 ### Search users (admin only)
 GET {{baseUrl}}/users/search?query=john&role=MANAGER&status=ACTIVE&limit=10&page=1
-Authorization: Bearer {{authToken}}
+Authorization: Bearer {{authToken}} | Bearer {{superAdminToken}}
 
 ### Superadmin Login
 POST {{baseUrl}}/auth/login
@@ -76,9 +77,36 @@ Content-Type: application/json
   "email": "admin@inventory-system.com",
   "password": "SuperAdmin123!"
 }
+### Get Admin Profile
+GET {{baseUrl}}/users/profile
+Authorization: Bearer {{superAdminToken}}
 
-### Use the superadmin token for admin operations (replace with token from login response)
-@superAdminToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2ODAwYWRlZDcwNzc3N2Q1YTY5ZTI2NzAiLCJ1c2VySWQiOiJVU1ItMDAwMTAiLCJlbWFpbCI6ImFkbWluQGludmVudG9yeS1zeXN0ZW0uY29tIiwicm9sZSI6IlNVUEVSQURNSU4iLCJ1c2VybmFtZSI6InN5c3RlbWFkbWluIiwidmVyc2lvbiI6MSwiaWF0IjoxNzQ0ODc2MzAwLCJleHAiOjE3NDQ5NjI3MDB9.mAWZJvNbXr1MC0uZLIcpK3iXS7mAtlnNb4SdX_f8oyY
+### Update Admin Profile
+PUT {{baseUrl}}/users/profile
+Content-Type: application/json
+Authorization: Bearers {{superAdminToken}}
+
+{
+  "fullName": "Updated Admin Name",
+  "avatar": "https://example.com/new-avatar.jpg",
+  "phone": "0987654321"
+}
+
+### Get SuperAdmin Profile
+GET {{baseUrl}}/users/profile
+Authorization: Bearer {{superAdminToken}}
+
+### Update SuperAdmin Profile
+PUT {{baseUrl}}/users/profile
+Content-Type: application/json
+Authorization: Bearer {{superAdminToken}}
+
+{
+  "fullName": "Updated SuperAdmin Name",
+  "avatar": "https://example.com/new-avatar.jpg",
+  "phone": "1234567890"
+}
+
 
 ### Get all users with superadmin privileges 
 GET {{baseUrl}}/users
@@ -87,3 +115,12 @@ Authorization: Bearer {{superAdminToken}}
 ### Get users by role (accessible by superadmin)
 GET {{baseUrl}}/users/role/ADMIN
 Authorization: Bearer {{superAdminToken}}
+
+### Get token for the logged user
+GET {{baseUrl}}/auth/token
+Authorization: Bearer {{authToken}}
+
+### Verify the logged user token
+GET {{baseUrl}}/auth/verify
+Authorization: Bearer {{authToken}}
+

@@ -1,7 +1,10 @@
 // src/services/user.service.js
-const User = require("../models/user.model.js");
-const { createLogger } = require("../utils/logger.js");
-const APIFeatures = require("../utils/apiFeatures.js");
+const User = require("../models/user.model");
+const { createLogger } = require("../utils/logger");
+const APIFeatures = require("../utils/apiFeatures");
+const bcrypt = require("bcryptjs");
+const { generateUserId, transformUserData } = require("../utils/user.utils");
+const { ValidationError, DatabaseError } = require("../utils/errors");
 
 // Create module-specific logger
 const logger = createLogger('UsersService');
@@ -194,7 +197,60 @@ const deleteAllUsersService = async () => {
   return await User.deleteMany({});
 };
 
+/**
+ * Create a new user (admin only)
+ * @param {Object} userData - User data
+ * @returns {Promise<Object>} - Created user object
+ */
+const createUserService = async (userData) => {
+  const logger = createLogger("UserService:createUser");
+  logger.debug("Creating new user");
 
+  try {
+    // Generate a user ID
+    userData.userID = await generateUserId();
+    logger.debug(`Generated userID: ${userData.userID}`);
+
+    // Hash the password
+    const salt = await bcrypt.genSalt(10);
+    userData.password = await bcrypt.hash(userData.password, salt);
+
+    // Create the user
+    const user = new User(userData);
+    await user.save();
+
+    logger.info(`User created successfully: ${userData.username} (${userData.email})`);
+    return user;
+  } catch (error) {
+    // Handle MongoDB validation errors
+    if (error.name === 'ValidationError') {
+      const firstErrorKey = Object.keys(error.errors)[0];
+      const firstError = error.errors[firstErrorKey];
+      
+      throw new ValidationError(
+        firstErrorKey,
+        firstError.value,
+        firstError.message
+      );
+    }
+    
+    // Handle duplicate key errors
+    if (error.code === 11000) {
+      const field = Object.keys(error.keyPattern)[0];
+      const value = error.keyValue[field];
+      
+      throw new DatabaseError(
+        'duplicate',
+        'User',
+        `A user with this ${field} already exists`,
+        { field, value }
+      );
+    }
+    
+    logger.error("Error in createUserService:", error);
+    throw error;
+  }
+};
 
 module.exports = {
   getUserByIdService,
@@ -206,5 +262,6 @@ module.exports = {
   getUsersByRoleService,
   deleteAllUsersService,
   updateUserService,
-  searchUsersService  
+  searchUsersService,
+  createUserService
 };

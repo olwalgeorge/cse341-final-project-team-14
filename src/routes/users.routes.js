@@ -12,7 +12,8 @@ const {
   deleteAllUsers,
   getUserProfile,
   updateUserProfile,
-  searchUsers
+  searchUsers,
+  createUser
 } = require("../controllers/users.controller");
 const { authenticate, authorize } = require("../middlewares/auth.middleware");
 const validate = require("../middlewares/validation.middleware");
@@ -24,6 +25,7 @@ const {
   emailValidationRules,
   roleValidationRules,
   searchValidationRules,
+  adminUserCreateValidationRules,
 } = require("../validators/user.validator.js");
 
 const router = express.Router();
@@ -51,6 +53,15 @@ router.get("/email/:email", authenticate, authorize(['ADMIN', 'MANAGER']), valid
 router.get("/role/:role", authenticate, authorize(['ADMIN', 'MANAGER']), validate(roleValidationRules()), getUsersByRole);
 router.get("/:user_Id", authenticate, authorize(['ADMIN', 'MANAGER']), validate(user_IdValidationRules()), getUserById);
 router.put("/:user_Id", authenticate, authorize(['ADMIN']), validate(user_IdValidationRules()), validate(userUpdateValidationRules()), updateUserById);
+
+// Create user route - restricted to ADMIN role only
+router.post(
+  "/", 
+  authenticate, 
+  authorize('ADMIN'),
+  validate(adminUserCreateValidationRules()),
+  createUser
+);
 
 // Dangerous operations - restricted to ADMIN role only
 router.delete("/:user_Id", authenticate, authorize('ADMIN'), validate(user_IdValidationRules()), deleteUserById);
