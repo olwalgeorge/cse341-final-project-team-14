@@ -3,7 +3,7 @@ module.exports = {
     get: {
       tags: ["Inventory Returns"],
       summary: "Get all inventory returns",
-      description: "Retrieve a list of all inventory returns with optional filtering, sorting, and pagination",
+      description: "Retrieve a list of all inventory returns with optional filtering, sorting, and pagination. Requires authentication.",
       security: [{ bearerAuth: [] }],
       parameters: [
         {
@@ -123,7 +123,7 @@ module.exports = {
     post: {
       tags: ["Inventory Returns"],
       summary: "Create a new inventory return",
-      description: "Create a new inventory return record in the system",
+      description: "Create a new inventory return record in the system. Requires authentication.",
       security: [{ bearerAuth: [] }],
       requestBody: {
         required: true,
@@ -153,20 +153,48 @@ module.exports = {
         "401": { $ref: "#/components/responses/Unauthorized" },
         "500": { $ref: "#/components/responses/ServerError" }
       }
+    },
+    delete: {
+      tags: ["Inventory Returns"],
+      summary: "Delete all inventory returns",
+      description: "Delete all inventory returns from the system (use with caution). Requires authentication.",
+      security: [{ bearerAuth: [] }],
+      responses: {
+        "200": {
+          description: "All inventory returns deleted successfully",
+          content: {
+            "application/json": {
+              schema: {
+                type: "object",
+                properties: {
+                  success: { type: "boolean", example: true },
+                  message: { type: "string" }
+                }
+              }
+            }
+          }
+        },
+        "401": { $ref: "#/components/responses/Unauthorized" },
+        "500": { $ref: "#/components/responses/ServerError" }
+      }
     }
   },
-  "/inventory-returns/{_id}": {
+  "/inventory-returns/{return_Id}": {
     get: {
       tags: ["Inventory Returns"],
       summary: "Get inventory return by ID",
-      description: "Retrieve inventory return details by MongoDB ID",
+      description: "Retrieve inventory return details by MongoDB ID. Requires authentication. The return_Id parameter is the MongoDB ObjectId (24 character hexadecimal) that uniquely identifies an inventory return in the database.",
       security: [{ bearerAuth: [] }],
       parameters: [
         {
-          name: "_id",
+          name: "return_Id",
           in: "path",
           required: true,
-          schema: { type: "string" },
+          schema: { 
+            type: "string",
+            pattern: "^[a-f\\d]{24}$" 
+          },
+          example: "64f5a7b3c5dc0d34f85d969e",
           description: "MongoDB ID of the inventory return"
         }
       ],
@@ -194,14 +222,18 @@ module.exports = {
     put: {
       tags: ["Inventory Returns"],
       summary: "Update inventory return",
-      description: "Update inventory return details by MongoDB ID",
+      description: "Update inventory return details by MongoDB ID. Requires authentication. The return_Id parameter is the MongoDB ObjectId (24 character hexadecimal) that uniquely identifies an inventory return in the database.",
       security: [{ bearerAuth: [] }],
       parameters: [
         {
-          name: "_id",
+          name: "return_Id",
           in: "path",
           required: true,
-          schema: { type: "string" },
+          schema: { 
+            type: "string",
+            pattern: "^[a-f\\d]{24}$" 
+          },
+          example: "64f5a7b3c5dc0d34f85d969e",
           description: "MongoDB ID of the inventory return"
         }
       ],
@@ -238,14 +270,18 @@ module.exports = {
     delete: {
       tags: ["Inventory Returns"],
       summary: "Delete inventory return",
-      description: "Delete an inventory return by MongoDB ID",
+      description: "Delete an inventory return by MongoDB ID. Requires authentication. The return_Id parameter is the MongoDB ObjectId (24 character hexadecimal) that uniquely identifies an inventory return in the database.",
       security: [{ bearerAuth: [] }],
       parameters: [
         {
-          name: "_id",
+          name: "return_Id",
           in: "path",
           required: true,
-          schema: { type: "string" },
+          schema: { 
+            type: "string",
+            pattern: "^[a-f\\d]{24}$" 
+          },
+          example: "64f5a7b3c5dc0d34f85d969e",
           description: "MongoDB ID of the inventory return to delete"
         }
       ],
@@ -274,7 +310,7 @@ module.exports = {
     get: {
       tags: ["Inventory Returns"],
       summary: "Get inventory return by return ID",
-      description: "Retrieve inventory return details by return ID (RET-XXXXX format)",
+      description: "Retrieve inventory return details by return ID (RET-XXXXX format). Requires authentication.",
       security: [{ bearerAuth: [] }],
       parameters: [
         {
@@ -307,18 +343,22 @@ module.exports = {
       }
     }
   },
-  "/inventory-returns/{_id}/approve": {
+  "/inventory-returns/{return_Id}/approve": {
     put: {
       tags: ["Inventory Returns"],
       summary: "Approve inventory return",
-      description: "Approve an inventory return request and change its status to Approved",
+      description: "Approve an inventory return request and change its status to Approved. Requires authentication. The return_Id parameter is the MongoDB ObjectId (24 character hexadecimal) that uniquely identifies an inventory return in the database.",
       security: [{ bearerAuth: [] }],
       parameters: [
         {
-          name: "_id",
+          name: "return_Id",
           in: "path",
           required: true,
-          schema: { type: "string" },
+          schema: { 
+            type: "string",
+            pattern: "^[a-f\\d]{24}$" 
+          },
+          example: "64f5a7b3c5dc0d34f85d969e",
           description: "MongoDB ID of the inventory return to approve"
         }
       ],
@@ -361,18 +401,22 @@ module.exports = {
       }
     }
   },
-  "/inventory-returns/{_id}/complete": {
+  "/inventory-returns/{return_Id}/complete": {
     put: {
       tags: ["Inventory Returns"],
       summary: "Complete inventory return",
-      description: "Mark an inventory return as completed and update inventory accordingly",
+      description: "Mark an inventory return as completed and update inventory accordingly. Requires authentication. The return_Id parameter is the MongoDB ObjectId (24 character hexadecimal) that uniquely identifies an inventory return in the database.",
       security: [{ bearerAuth: [] }],
       parameters: [
         {
-          name: "_id",
+          name: "return_Id",
           in: "path",
           required: true,
-          schema: { type: "string" },
+          schema: { 
+            type: "string",
+            pattern: "^[a-f\\d]{24}$" 
+          },
+          example: "64f5a7b3c5dc0d34f85d969e",
           description: "MongoDB ID of the inventory return to complete"
         }
       ],
@@ -436,7 +480,7 @@ module.exports = {
     get: {
       tags: ["Inventory Returns"],
       summary: "Get returns by status",
-      description: "Retrieve inventory returns with a specific status",
+      description: "Retrieve inventory returns with a specific status. Requires authentication.",
       security: [{ bearerAuth: [] }],
       parameters: [
         {
@@ -503,7 +547,7 @@ module.exports = {
     get: {
       tags: ["Inventory Returns"],
       summary: "Get returns by type",
-      description: "Retrieve inventory returns of a specific type",
+      description: "Retrieve inventory returns of a specific type. Requires authentication.",
       security: [{ bearerAuth: [] }],
       parameters: [
         {
@@ -515,6 +559,221 @@ module.exports = {
             enum: ["Customer Return", "Supplier Return", "Damaged Goods", "Defective Product"]
           },
           description: "Return type to filter by"
+        },
+        {
+          in: "query",
+          name: "page",
+          schema: { type: "integer", default: 1 },
+          description: "Page number for pagination"
+        },
+        {
+          in: "query",
+          name: "limit",
+          schema: { type: "integer", default: 10 },
+          description: "Number of records per page"
+        },
+        {
+          in: "query",
+          name: "sort",
+          schema: { type: "string", default: "-createdAt" },
+          description: "Sort fields (comma separated), prefix with - for descending order"
+        }
+      ],
+      responses: {
+        "200": {
+          description: "Successful operation",
+          content: {
+            "application/json": {
+              schema: {
+                type: "object",
+                properties: {
+                  success: { type: "boolean", example: true },
+                  message: { type: "string" },
+                  data: {
+                    type: "object",
+                    properties: {
+                      returns: {
+                        type: "array",
+                        items: { $ref: "#/components/schemas/InventoryReturn" }
+                      },
+                      pagination: { $ref: "#/components/schemas/Pagination" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "400": { $ref: "#/components/responses/BadRequest" },
+        "401": { $ref: "#/components/responses/Unauthorized" },
+        "500": { $ref: "#/components/responses/ServerError" }
+      }
+    }
+  },
+  "/inventory-returns/warehouse/{warehouseId}": {
+    get: {
+      tags: ["Inventory Returns"],
+      summary: "Get returns by warehouse",
+      description: "Retrieve inventory returns for a specific warehouse. Requires authentication. The warehouseId parameter is the MongoDB ObjectId that identifies a warehouse in the database.",
+      security: [{ bearerAuth: [] }],
+      parameters: [
+        {
+          name: "warehouseId",
+          in: "path",
+          required: true,
+          schema: { 
+            type: "string",
+            pattern: "^[a-f\\d]{24}$" 
+          },
+          example: "64f5a7b3c5dc0d34f85d969e",
+          description: "MongoDB ID of the warehouse"
+        },
+        {
+          in: "query",
+          name: "page",
+          schema: { type: "integer", default: 1 },
+          description: "Page number for pagination"
+        },
+        {
+          in: "query",
+          name: "limit",
+          schema: { type: "integer", default: 10 },
+          description: "Number of records per page"
+        },
+        {
+          in: "query",
+          name: "sort",
+          schema: { type: "string", default: "-createdAt" },
+          description: "Sort fields (comma separated), prefix with - for descending order"
+        }
+      ],
+      responses: {
+        "200": {
+          description: "Successful operation",
+          content: {
+            "application/json": {
+              schema: {
+                type: "object",
+                properties: {
+                  success: { type: "boolean", example: true },
+                  message: { type: "string" },
+                  data: {
+                    type: "object",
+                    properties: {
+                      returns: {
+                        type: "array",
+                        items: { $ref: "#/components/schemas/InventoryReturn" }
+                      },
+                      pagination: { $ref: "#/components/schemas/Pagination" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "400": { $ref: "#/components/responses/BadRequest" },
+        "401": { $ref: "#/components/responses/Unauthorized" },
+        "500": { $ref: "#/components/responses/ServerError" }
+      }
+    }
+  },
+  "/inventory-returns/supplier/{supplierId}": {
+    get: {
+      tags: ["Inventory Returns"],
+      summary: "Get returns by supplier",
+      description: "Retrieve inventory returns for a specific supplier. Requires authentication. The supplierId parameter is the MongoDB ObjectId that identifies a supplier in the database.",
+      security: [{ bearerAuth: [] }],
+      parameters: [
+        {
+          name: "supplierId",
+          in: "path",
+          required: true,
+          schema: { 
+            type: "string",
+            pattern: "^[a-f\\d]{24}$" 
+          },
+          example: "64f5a7b3c5dc0d34f85d969e",
+          description: "MongoDB ID of the supplier"
+        },
+        {
+          in: "query",
+          name: "page",
+          schema: { type: "integer", default: 1 },
+          description: "Page number for pagination"
+        },
+        {
+          in: "query",
+          name: "limit",
+          schema: { type: "integer", default: 10 },
+          description: "Number of records per page"
+        },
+        {
+          in: "query",
+          name: "sort",
+          schema: { type: "string", default: "-createdAt" },
+          description: "Sort fields (comma separated), prefix with - for descending order"
+        }
+      ],
+      responses: {
+        "200": {
+          description: "Successful operation",
+          content: {
+            "application/json": {
+              schema: {
+                type: "object",
+                properties: {
+                  success: { type: "boolean", example: true },
+                  message: { type: "string" },
+                  data: {
+                    type: "object",
+                    properties: {
+                      returns: {
+                        type: "array",
+                        items: { $ref: "#/components/schemas/InventoryReturn" }
+                      },
+                      pagination: { $ref: "#/components/schemas/Pagination" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "400": { $ref: "#/components/responses/BadRequest" },
+        "401": { $ref: "#/components/responses/Unauthorized" },
+        "500": { $ref: "#/components/responses/ServerError" }
+      }
+    }
+  },
+  "/inventory-returns/date-range/{fromDate}/{toDate}": {
+    get: {
+      tags: ["Inventory Returns"],
+      summary: "Get returns by date range",
+      description: "Retrieve inventory returns within a specific date range. Requires authentication.",
+      security: [{ bearerAuth: [] }],
+      parameters: [
+        {
+          name: "fromDate",
+          in: "path",
+          required: true,
+          schema: { 
+            type: "string",
+            format: "date" 
+          },
+          example: "2023-01-01",
+          description: "Start date (YYYY-MM-DD)"
+        },
+        {
+          name: "toDate",
+          in: "path",
+          required: true,
+          schema: { 
+            type: "string",
+            format: "date" 
+          },
+          example: "2023-12-31",
+          description: "End date (YYYY-MM-DD)"
         },
         {
           in: "query",
