@@ -13,6 +13,7 @@ const inventoryTransactionRoutes = require("../docs/inventoryTransaction.docs");
 const inventoryTransferRoutes = require("../docs/inventoryTransfer.docs");
 const inventoryReturnRoutes = require("../docs/inventoryReturn.docs");
 const inventoryAdjustmentRoutes = require("../docs/inventoryAdjustment.docs");
+const healthRoutes = require("../docs/health.docs");
 const components = require("../docs/components");
 
 const swaggerConfig = {
@@ -34,6 +35,7 @@ const swaggerConfig = {
     },
   ],
   tags: [
+    { name: "Health", description: "API health and status endpoints" },
     { name: "Authentication", description: "Authentication endpoints" },
     { name: "Users", description: "User management endpoints" },
     { name: "Products", description: "Product management endpoints" },
@@ -50,6 +52,7 @@ const swaggerConfig = {
   ],
   components: components,
   paths: {
+    ...healthRoutes,
     ...authRoutes,
     ...userRoutes,
     ...productRoutes,

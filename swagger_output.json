@@ -17,6 +17,10 @@
   ],
   "tags": [
     {
+      "name": "Health",
+      "description": "API health and status endpoints"
+    },
+    {
       "name": "Authentication",
       "description": "Authentication endpoints"
     },
@@ -1340,6 +1344,110 @@
     }
   },
   "paths": {
+    "/health": {
+      "get": {
+        "tags": [
+          "Health"
+        ],
+        "summary": "API health check",
+        "description": "Check if the API is up and running",
+        "responses": {
+          "200": {
+            "description": "API is healthy",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "healthy"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "API is running properly"
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time",
+                      "example": "2023-07-21T15:30:45Z"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/health/status": {
+      "get": {
+        "tags": [
+          "Health"
+        ],
+        "summary": "API status details",
+        "description": "Get detailed information about the API status including uptime, memory usage, and service status",
+        "responses": {
+          "200": {
+            "description": "API status details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "healthy"
+                    },
+                    "uptime": {
+                      "type": "number",
+                      "example": 3600
+                    },
+                    "startTime": {
+                      "type": "string",
+                      "format": "date-time",
+                      "example": "2023-07-21T10:30:45Z"
+                    },
+                    "memory": {
+                      "type": "object",
+                      "properties": {
+                        "used": {
+                          "type": "string",
+                          "example": "128MB"
+                        },
+                        "total": {
+                          "type": "string",
+                          "example": "512MB"
+                        }
+                      }
+                    },
+                    "services": {
+                      "type": "object",
+                      "properties": {
+                        "database": {
+                          "type": "string",
+                          "example": "connected"
+                        },
+                        "cache": {
+                          "type": "string",
+                          "example": "connected"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
     "/auth/register": {
       "post": {
         "tags": [
@@ -8424,7 +8532,7 @@
         }
       }
     },
-    "/inventory/{_id}": {
+    "/inventory/{inventory_Id}": {
       "get": {
         "tags": [
           "Inventory"
@@ -8438,12 +8546,14 @@
         ],
         "parameters": [
           {
-            "name": "_id",
+            "name": "inventory_Id",
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "pattern": "^[a-f\\d]{24}$"
             },
+            "example": "64f5a7b3c5dc0d34f85d969e",
             "description": "MongoDB ID of the inventory item"
           }
         ],
@@ -8494,12 +8604,14 @@
         ],
         "parameters": [
           {
-            "name": "_id",
+            "name": "inventory_Id",
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "pattern": "^[a-f\\d]{24}$"
             },
+            "example": "64f5a7b3c5dc0d34f85d969e",
             "description": "MongoDB ID of the inventory item"
           }
         ],
@@ -8563,12 +8675,14 @@
         ],
         "parameters": [
           {
-            "name": "_id",
+            "name": "inventory_Id",
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "pattern": "^[a-f\\d]{24}$"
             },
+            "example": "64f5a7b3c5dc0d34f85d969e",
             "description": "MongoDB ID of the inventory item to delete"
           }
         ],
@@ -13182,7 +13296,7 @@
         }
       }
     },
-    "/inventory-adjustments/{_id}": {
+    "/inventory-adjustments/{adjustment_Id}": {
       "get": {
         "tags": [
           "Inventory Adjustments"
@@ -13196,12 +13310,14 @@
         ],
         "parameters": [
           {
-            "name": "_id",
+            "name": "adjustment_Id",
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "pattern": "^[a-f\\d]{24}$"
             },
+            "example": "64f5a7b3c5dc0d34f85d969e",
             "description": "MongoDB ID of the inventory adjustment"
           }
         ],
@@ -13252,12 +13368,14 @@
         ],
         "parameters": [
           {
-            "name": "_id",
+            "name": "adjustment_Id",
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "pattern": "^[a-f\\d]{24}$"
             },
+            "example": "64f5a7b3c5dc0d34f85d969e",
             "description": "MongoDB ID of the inventory adjustment"
           }
         ],
@@ -13321,12 +13439,14 @@
         ],
         "parameters": [
           {
-            "name": "_id",
+            "name": "adjustment_Id",
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "pattern": "^[a-f\\d]{24}$"
             },
+            "example": "64f5a7b3c5dc0d34f85d969e",
             "description": "MongoDB ID of the inventory adjustment to delete"
           }
         ],
@@ -13421,7 +13541,7 @@
         }
       }
     },
-    "/inventory-adjustments/{_id}/approve": {
+    "/inventory-adjustments/{adjustment_Id}/approve": {
       "put": {
         "tags": [
           "Inventory Adjustments"
@@ -13435,12 +13555,14 @@
         ],
         "parameters": [
           {
-            "name": "_id",
+            "name": "adjustment_Id",
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "pattern": "^[a-f\\d]{24}$"
             },
+            "example": "64f5a7b3c5dc0d34f85d969e",
             "description": "MongoDB ID of the inventory adjustment to approve"
           }
         ],
@@ -13498,7 +13620,7 @@
         }
       }
     },
-    "/inventory-adjustments/{_id}/complete": {
+    "/inventory-adjustments/{adjustment_Id}/complete": {
       "put": {
         "tags": [
           "Inventory Adjustments"
@@ -13512,12 +13634,14 @@
         ],
         "parameters": [
           {
-            "name": "_id",
+            "name": "adjustment_Id",
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "pattern": "^[a-f\\d]{24}$"
             },
+            "example": "64f5a7b3c5dc0d34f85d969e",
             "description": "MongoDB ID of the inventory adjustment to complete"
           }
         ],
