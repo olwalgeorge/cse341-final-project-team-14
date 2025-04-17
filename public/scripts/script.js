@@ -1,32 +1,108 @@
-// script.js
+// script.js - Enhanced Authentication Module
 document.addEventListener("DOMContentLoaded", function () {
-  // Update dashboard path check
-  if (window.location.pathname === "/dashboard.html") {
-    checkAuthAndLoadDashboard();
-  }
-
-  // Handle login form
-  const loginForm = document.getElementById("loginForm");
-  if (loginForm) {
-    loginForm.addEventListener("submit", handleLoginSubmit);
-  }
-
-  // Handle register form
-  const registerForm = document.querySelector('form[action="/auth/register"]');
-  if (registerForm) {
-    registerForm.addEventListener("submit", async function (e) {
-      e.preventDefault();
-
-      const formData = new FormData(registerForm);
-      const userData = Object.fromEntries(formData);
-      
-      // Client-side validation before sending to server
-      const validationError = validateRegistrationData(userData);
-      if (validationError) {
-        showError(validationError);
-        return;
+  // Auth module for centralized authentication functions
+  const Auth = {
+    // Store auth token in localStorage
+    setToken: (token) => {
+      localStorage.setItem('authToken', token);
+    },
+    
+    // Get stored auth token
+    getToken: () => {
+      return localStorage.getItem('authToken');
+    },
+    
+    // Remove auth token
+    clearToken: () => {
+      localStorage.removeItem('authToken');
+    },
+    
+    // Check if user has a valid token
+    isLoggedIn: () => {
+      return !!Auth.getToken();
+    },
+    
+    // Helper to create auth headers
+    getAuthHeaders: () => {
+      const token = Auth.getToken();
+      return token ? { 'Authorization': `Bearer ${token}` } : {};
+    },
+    
+    // Get current user's profile
+    fetchUserProfile: async () => {
+      try {
+        const headers = Auth.getAuthHeaders();
+        const response = await fetch("/users/profile", {
+          headers,
+          credentials: "include",
+        });
+        
+        if (!response.ok) {
+          throw new Error('Failed to fetch profile');
+        }
+        
+        const data = await response.json();
+        return data.data || null;
+      } catch (error) {
+        console.error("Error fetching user profile:", error);
+        return null;
       }
-
+    },
+    
+    // Login handler with retry capability
+    login: async (email, password, onSuccess, onError) => {
+      UI.showLoading('loginBtn');
+      
+      try {
+        const response = await fetch("/auth/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
+          credentials: "include",
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok) {
+          // Store token if provided
+          if (data.data && data.data.token) {
+            Auth.setToken(data.data.token);
+          }
+          
+          // Fire success callback
+          if (onSuccess) {
+            onSuccess(data);
+          } else {
+            // Default success behavior
+            window.location.href = "/dashboard.html";
+          }
+        } else {
+          // Handle various error response formats
+          const errorMsg = data.message || data.error || "Login failed";
+          if (onError) {
+            onError(errorMsg);
+          } else {
+            UI.showError(errorMsg);
+          }
+        }
+      } catch (error) {
+        console.error("Login error:", error);
+        if (onError) {
+          onError("Network error. Please check your connection and try again.");
+        } else {
+          UI.showError("Network error. Please check your connection and try again.");
+        }
+      } finally {
+        UI.hideLoading('loginBtn');
+      }
+    },
+    
+    // Register handler
+    register: async (userData, onSuccess, onError) => {
+      UI.showLoading('registerBtn');
+      
       try {
         const response = await fetch("/auth/register", {
           method: "POST",
@@ -36,140 +112,309 @@ document.addEventListener("DOMContentLoaded", function () {
           body: JSON.stringify(userData),
           credentials: "include",
         });
-
+        
         if (response.ok) {
-          window.location.href = "/dashboard.html";
-        } else {
           const data = await response.json();
           
-          // Enhanced error handling for various response formats
-          if (data.error && Array.isArray(data.error)) {
-            // Handle array of errors
-            showError(data.error[0]);
-          } else if (data.details && data.details.field) {
-            // Handle field-specific error
-            showError(`${data.details.field}: ${data.message}`);
+          // Store token if provided
+          if (data.data && data.data.token) {
+            Auth.setToken(data.data.token);
+          }
+          
+          // Fire success callback
+          if (onSuccess) {
+            onSuccess(data);
           } else {
-            // Handle general error message
-            showError(data.message || "Registration failed.");
+            // Default success behavior
+            window.location.href = "/dashboard.html";
+          }
+        } else {
+          const data = await response.json();
+          // Handle various error response formats
+          let errorMsg = "Registration failed.";
+          
+          if (data.error && Array.isArray(data.error)) {
+            errorMsg = data.error[0];
+          } else if (data.details && data.details.field) {
+            errorMsg = `${data.details.field}: ${data.message}`;
+          } else if (data.message) {
+            errorMsg = data.message;
+          }
+          
+          if (onError) {
+            onError(errorMsg);
+          } else {
+            UI.showError(errorMsg);
           }
         }
       } catch (error) {
         console.error("Registration error:", error);
-        showError("Registration failed. Please try again.");
+        if (onError) {
+          onError("Network error. Please check your connection and try again.");
+        } else {
+          UI.showError("Network error. Please check your connection and try again.");
+        }
+      } finally {
+        UI.hideLoading('registerBtn');
       }
-    });
-  }
-
-  // Function to validate registration data client-side
-  function validateRegistrationData(userData) {
-    // Check for missing required fields
-    if (!userData.email || !userData.password || !userData.username || !userData.fullName) {
-      return "All fields are required";
-    }
+    },
     
-    // Email format validation
-    const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    if (!emailRegex.test(userData.email)) {
-      return "Please enter a valid email address";
-    }
-    
-    // Username format validation
-    if (/^\d/.test(userData.username)) {
-      return "Username cannot start with a number";
-    }
-    
-    const usernameRegex = /^[a-zA-Z0-9_]+$/;
-    if (!usernameRegex.test(userData.username)) {
-      return "Username can only contain letters, numbers, and underscores";
-    }
-    
-    if (userData.username.length < 3 || userData.username.length > 20) {
-      return "Username must be between 3 and 20 characters";
-    }
-    
-    // Password complexity validation
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,50}$/;
-    if (!passwordRegex.test(userData.password)) {
-      return "Password must contain at least one lowercase letter, one uppercase letter, one number, one special character, and be 8-50 characters long";
-    }
-    
-    // Full name validation
-    if (userData.fullName.length < 2 || userData.fullName.length > 100) {
-      return "Full name must be between 2 and 100 characters";
-    }
-    
-    return null; // No validation errors
-  }
-
-  // Handle GitHub OAuth redirect
-  if (window.location.pathname === "/auth/github/callback") {
-    const urlParams = new URLSearchParams(window.location.search);
-    const code = urlParams.get("code");
-
-    if (code) {
-      window.location.href = "/dashboard.html";
-    }
-  }
-
-  async function checkAuthAndLoadDashboard() {
-    try {
-      const response = await fetch("/users/profile", {
-        credentials: "include",
-      });
-
-      if (!response.ok) {
+    // Logout handler
+    logout: async () => {
+      try {
+        await fetch("/auth/logout", {
+          method: "POST",
+          headers: Auth.getAuthHeaders(),
+          credentials: "include"
+        });
+      } catch (error) {
+        console.error("Logout error:", error);
+      } finally {
+        // Always clear local auth data, even if server request fails
+        Auth.clearToken();
         window.location.href = "/login.html";
-        return;
       }
-
-      const data = await response.json();
-      if (data.data) {
-        const userNameElement = document.getElementById("userName");
-        if (userNameElement) {
-          userNameElement.textContent =
-            data.data.fullName || data.data.username;
+    },
+    
+    // Validate current auth and redirect if needed
+    validateAuth: async (protectedPath = true) => {
+      try {
+        // If on a protected page and no token exists, redirect to login
+        if (protectedPath && !Auth.getToken()) {
+          window.location.href = "/login.html";
+          return false;
+        }
+        
+        // If on login/register page with valid token, redirect to dashboard
+        if (!protectedPath && Auth.getToken()) {
+          const isValid = await Auth.validateToken();
+          if (isValid) {
+            window.location.href = "/dashboard.html";
+            return true;
+          }
+        }
+        
+        return !!Auth.getToken();
+      } catch (error) {
+        console.error("Auth validation error:", error);
+        return false;
+      }
+    },
+    
+    // Validate if stored token is still valid
+    validateToken: async () => {
+      try {
+        const token = Auth.getToken();
+        if (!token) return false;
+        
+        const response = await fetch("/auth/verify", {
+          headers: Auth.getAuthHeaders(),
+          credentials: "include"
+        });
+        
+        return response.ok;
+      } catch (error) {
+        console.error("Token validation error:", error);
+        return false;
+      }
+    }
+  };
+  
+  // UI helper functions
+  const UI = {
+    showError: (message) => {
+      const errorElement = document.querySelector(".error-message");
+      if (errorElement) {
+        errorElement.textContent = message;
+        errorElement.style.display = "block";
+      }
+    },
+    
+    hideError: () => {
+      const errorElement = document.querySelector(".error-message");
+      if (errorElement) {
+        errorElement.style.display = "none";
+      }
+    },
+    
+    showLoading: (buttonId) => {
+      const button = document.getElementById(buttonId);
+      if (button) {
+        button.disabled = true;
+        button.dataset.originalText = button.textContent;
+        button.textContent = "Processing...";
+      }
+    },
+    
+    hideLoading: (buttonId) => {
+      const button = document.getElementById(buttonId);
+      if (button) {
+        button.disabled = false;
+        if (button.dataset.originalText) {
+          button.textContent = button.dataset.originalText;
         }
       }
-    } catch (error) {
-      console.error("Dashboard error:", error);
-      window.location.href = "/login.html";
     }
-  }
-
-  function showError(message) {
-    const errorElement = document.querySelector(".error-message");
-    if (errorElement) {
-      errorElement.textContent = message;
-      errorElement.style.display = "block";
+  };
+  
+  // Validation helper
+  const Validator = {
+    validateRegistrationData: (userData) => {
+      // Check for missing required fields
+      if (!userData.email || !userData.password || !userData.username || !userData.fullName) {
+        return "All fields are required";
+      }
+      
+      // Email format validation
+      const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+      if (!emailRegex.test(userData.email)) {
+        return "Please enter a valid email address";
+      }
+      
+      // Username format validation
+      if (/^\d/.test(userData.username)) {
+        return "Username cannot start with a number";
+      }
+      
+      const usernameRegex = /^[a-zA-Z0-9_]+$/;
+      if (!usernameRegex.test(userData.username)) {
+        return "Username can only contain letters, numbers, and underscores";
+      }
+      
+      if (userData.username.length < 3 || userData.username.length > 20) {
+        return "Username must be between 3 and 20 characters";
+      }
+      
+      // Password complexity validation
+      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,50}$/;
+      if (!passwordRegex.test(userData.password)) {
+        return "Password must contain at least one lowercase letter, one uppercase letter, one number, one special character, and be 8-50 characters long";
+      }
+      
+      // Full name validation
+      if (userData.fullName.length < 2 || userData.fullName.length > 100) {
+        return "Full name must be between 2 and 100 characters";
+      }
+      
+      return null; // No validation errors
     }
-  }
-
-  async function handleLoginSubmit(e) {
-    e.preventDefault();
-
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
-
-    try {
-      const response = await fetch("/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-        credentials: "include",
-      });
-
-      if (response.ok) {
+  };
+  
+  // Page-specific logic
+  const initPageHandlers = () => {
+    const path = window.location.pathname;
+    
+    // Dashboard initialization
+    if (path === "/dashboard.html") {
+      initDashboard();
+    }
+    
+    // Login page initialization
+    if (path === "/login.html") {
+      initLoginPage();
+    }
+    
+    // Registration page initialization
+    if (path === "/register.html") {
+      initRegisterPage();
+    }
+    
+    // Logout page handling
+    if (path === "/logout.html") {
+      Auth.logout();
+    }
+    
+    // Handle GitHub OAuth redirect
+    if (path === "/auth/github/callback") {
+      const urlParams = new URLSearchParams(window.location.search);
+      const code = urlParams.get("code");
+      
+      if (code) {
         window.location.href = "/dashboard.html";
-      } else {
-        const data = await response.json();
-        showError(data.message || "Login failed.");
+      }
+    }
+    
+    // Initialize logout button listeners on all pages
+    const logoutBtn = document.getElementById("logoutBtn");
+    if (logoutBtn) {
+      logoutBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        Auth.logout();
+      });
+    }
+  };
+  
+  // Dashboard initialization
+  async function initDashboard() {
+    try {
+      // Validate authentication before proceeding
+      const isAuthenticated = await Auth.validateAuth(true);
+      if (!isAuthenticated) {
+        return; // Auth.validateAuth will handle redirection
+      }
+      
+      const profile = await Auth.fetchUserProfile();
+      if (profile) {
+        const userNameElement = document.getElementById("userName");
+        if (userNameElement) {
+          userNameElement.textContent = profile.fullName || profile.username;
+        }
+        
+        // Additional dashboard initialization can go here
+        console.log("Dashboard initialized for user:", profile.username);
       }
     } catch (error) {
-      console.error("Login error:", error);
-      showError("An error occurred. Please try again.");
+      console.error("Dashboard initialization error:", error);
     }
   }
+  
+  // Login page initialization
+  async function initLoginPage() {
+    // Check if already authenticated
+    await Auth.validateAuth(false);
+    
+    // Set up login form handler
+    const loginForm = document.getElementById("loginForm");
+    if (loginForm) {
+      loginForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        UI.hideError();
+        
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+        
+        Auth.login(email, password);
+      });
+    }
+  }
+  
+  // Registration page initialization
+  async function initRegisterPage() {
+    // Check if already authenticated
+    await Auth.validateAuth(false);
+    
+    // Set up registration form handler
+    const registerForm = document.querySelector('form[action="/auth/register"]');
+    if (registerForm) {
+      registerForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        UI.hideError();
+        
+        const formData = new FormData(registerForm);
+        const userData = Object.fromEntries(formData);
+        
+        // Client-side validation
+        const validationError = Validator.validateRegistrationData(userData);
+        if (validationError) {
+          UI.showError(validationError);
+          return;
+        }
+        
+        Auth.register(userData);
+      });
+    }
+  }
+  
+  // Initialize all page handlers
+  initPageHandlers();
 });

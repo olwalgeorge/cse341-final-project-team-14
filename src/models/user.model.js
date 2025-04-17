@@ -36,8 +36,11 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: [true, 'Password is required'],
-    
+    // Password required only if not using OAuth/social login
+    required: function() {
+      // Password is not required if githubId is present
+      return !this.githubId;
+    },
     matches: [
       // eslint-disable-next-line
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,50}$/,
@@ -45,6 +48,15 @@ const userSchema = new mongoose.Schema({
     ]
     // Password will be hashed before saving
   },
+  
+  // GitHub OAuth
+  githubId: {
+    type: String,
+    unique: true,
+    sparse: true
+  },
+  githubAccessToken: String,
+  githubRefreshToken: String,
   
   // Personal Information
   fullName: {

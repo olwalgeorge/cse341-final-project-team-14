@@ -37,7 +37,11 @@ const userRequiredValidationRules = () => {
   return [
     body("email", "Email is required").not().isEmpty(),
     isValidEmail("email", "Invalid email format"),
-    body("password", "Password is required").not().isEmpty(),
+    // Make password conditional based on presence of githubId
+    body("password", "Password is required")
+      .if((value, { req }) => !req.body.githubId) // Only required if no githubId
+      .not()
+      .isEmpty(),
     body("username", "Username is required").not().isEmpty(),
     isValidUsernameBody(
       "username",
@@ -50,10 +54,12 @@ const userRequiredValidationRules = () => {
       .trim()
       .isLength({ min: 3, max: 50 })
       .escape(),
+    // Make password validation conditional - only check format if password is provided
     body(
       "password",
       "Password must contain at least one lowercase letter, one uppercase letter, one number, and one special character, and be between 8 to 50 characters"
     )
+      .if(body("password").exists().notEmpty())
       .trim()
       .matches(
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,50}$/
