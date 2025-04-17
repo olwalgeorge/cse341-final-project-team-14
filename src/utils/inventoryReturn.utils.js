@@ -1,4 +1,3 @@
-
 const Counter = require("../models/counter.model");
 const { createLogger } = require("./logger");
 const logger = createLogger("InventoryReturnUtils");
@@ -153,7 +152,7 @@ const transformReturn = (returnData) => {
   
   // Keep existing transformation logic if any, or implement a basic transform
   const transformed = {
-    id: returnData._id,
+    return_id: returnData._id,
     returnID: returnData.returnID,
     supplier: returnData.supplier,
     warehouse: returnData.warehouse,

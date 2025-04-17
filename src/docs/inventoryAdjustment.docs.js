@@ -143,7 +143,7 @@ module.exports = {
       }
     }
   },
-  "/inventory-adjustments/{_id}": {
+  "/inventory-adjustments/{adjustment_Id}": {
     get: {
       tags: ["Inventory Adjustments"],
       summary: "Get inventory adjustment by ID",
@@ -151,10 +151,14 @@ module.exports = {
       security: [{ bearerAuth: [] }],
       parameters: [
         {
-          name: "_id",
+          name: "adjustment_Id",
           in: "path",
           required: true,
-          schema: { type: "string" },
+          schema: { 
+            type: "string",
+            pattern: "^[a-f\\d]{24}$" 
+          },
+          example: "64f5a7b3c5dc0d34f85d969e",
           description: "MongoDB ID of the inventory adjustment"
         }
       ],
@@ -186,10 +190,14 @@ module.exports = {
       security: [{ bearerAuth: [] }],
       parameters: [
         {
-          name: "_id",
+          name: "adjustment_Id",
           in: "path",
           required: true,
-          schema: { type: "string" },
+          schema: { 
+            type: "string",
+            pattern: "^[a-f\\d]{24}$" 
+          },
+          example: "64f5a7b3c5dc0d34f85d969e",
           description: "MongoDB ID of the inventory adjustment"
         }
       ],
@@ -230,10 +238,14 @@ module.exports = {
       security: [{ bearerAuth: [] }],
       parameters: [
         {
-          name: "_id",
+          name: "adjustment_Id",
           in: "path",
           required: true,
-          schema: { type: "string" },
+          schema: { 
+            type: "string",
+            pattern: "^[a-f\\d]{24}$" 
+          },
+          example: "64f5a7b3c5dc0d34f85d969e",
           description: "MongoDB ID of the inventory adjustment to delete"
         }
       ],
@@ -295,7 +307,7 @@ module.exports = {
       }
     }
   },
-  "/inventory-adjustments/{_id}/approve": {
+  "/inventory-adjustments/{adjustment_Id}/approve": {
     put: {
       tags: ["Inventory Adjustments"],
       summary: "Approve inventory adjustment",
@@ -303,10 +315,14 @@ module.exports = {
       security: [{ bearerAuth: [] }],
       parameters: [
         {
-          name: "_id",
+          name: "adjustment_Id",
           in: "path",
           required: true,
-          schema: { type: "string" },
+          schema: { 
+            type: "string",
+            pattern: "^[a-f\\d]{24}$" 
+          },
+          example: "64f5a7b3c5dc0d34f85d969e",
           description: "MongoDB ID of the inventory adjustment to approve"
         }
       ],
@@ -349,7 +365,7 @@ module.exports = {
       }
     }
   },
-  "/inventory-adjustments/{_id}/complete": {
+  "/inventory-adjustments/{adjustment_Id}/complete": {
     put: {
       tags: ["Inventory Adjustments"],
       summary: "Complete inventory adjustment",
@@ -357,10 +373,14 @@ module.exports = {
       security: [{ bearerAuth: [] }],
       parameters: [
         {
-          name: "_id",
+          name: "adjustment_Id",
           in: "path",
           required: true,
-          schema: { type: "string" },
+          schema: { 
+            type: "string",
+            pattern: "^[a-f\\d]{24}$" 
+          },
+          example: "64f5a7b3c5dc0d34f85d969e",
           description: "MongoDB ID of the inventory adjustment to complete"
         }
       ],
