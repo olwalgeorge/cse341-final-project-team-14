@@ -38,6 +38,14 @@ const baseConfig = {
   }
 };
 
+// Superadmin default configuration
+const superadmin = {
+  email: process.env.SUPERADMIN_EMAIL,
+  password: process.env.SUPERADMIN_PASSWORD,
+  username: process.env.SUPERADMIN_USERNAME,
+  fullName: process.env.SUPERADMIN_NAME
+};
+
 // Environment-specific configurations
 const environments = {
   development: {
@@ -96,7 +104,8 @@ const currentEnv = process.env.NODE_ENV || 'development';
 // Merge base config with environment-specific config
 const config = {
   ...baseConfig,
-  ...environments[currentEnv]
+  ...environments[currentEnv],
+  superadmin
 };
 
 module.exports = config;

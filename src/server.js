@@ -4,7 +4,26 @@ const config = require("./config/config.js");
 const { createLogger } = require("./utils/logger.js");
 const { closeConnection } = require("./config/database.js");
 const { validateEnvironment, logEnvironmentSummary } = require("./validators/envValidator.js");
+const { initializeSuperAdmin } = require('./utils/init.utils');
+const mongoose = require('mongoose');
 const logger = createLogger('Server');
+
+/**
+ * Connect to MongoDB database
+ * @returns {Promise<void>}
+ */
+const connectDB = async () => {
+  try {
+    await mongoose.connect(config.db.uri, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    logger.info('MongoDB connected successfully');
+  } catch (error) {
+    logger.error('MongoDB connection error:', error.message);
+    throw error; // Rethrow to be caught by the startServer function
+  }
+};
 
 /**
  * Manages the server lifecycle, including graceful shutdown
@@ -48,6 +67,17 @@ class ServerManager {
         
         process.exit(1);
       }
+
+      // Connect to the database
+      await connectDB();
+
+      // Initialize superadmin if needed
+      await initializeSuperAdmin({
+        email: config.superadmin?.email,
+        password: config.superadmin?.password,
+        username: config.superadmin?.username,
+        fullName: config.superadmin?.fullName
+      });
 
       // Start the HTTP server
       const port = config.port;

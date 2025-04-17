@@ -18,7 +18,8 @@
     "test:user": "jest __tests__/models/user.model.test.js",
     "test:user:watch": "jest --watch __tests__/models/user.model.test.js",
     "start:prod": "cross-env NODE_ENV=production node src/server.js",
-    "start:prod:win": "set NODE_ENV=production && node src/server.js"
+    "start:prod:win": "set NODE_ENV=production && node src/server.js",
+    "reset-superadmin": "node scripts/resetSuperadmin.js"
   },
   "keywords": [
     "inventory",
