@@ -2286,3 +2286,57 @@ ValidationError: Supplier validation failed: supplierID: Path `supplierID` is in
 2025-04-18 00:12:43 DEBUG [inventory-api:App]: Session: 
 2025-04-18 00:12:43 DEBUG [inventory-api:App]: Session: 
 2025-04-18 00:12:43 DEBUG [inventory-api:App]: Session: 
+2025-04-18 00:42:17 INFO [inventory-api:Server]: SIGINT signal received, shutting down gracefully 
+2025-04-18 00:42:17 INFO [inventory-api:Database]: Closing MongoDB connection due to server shutdown 
+2025-04-18 00:42:23 DEBUG [inventory-api:TokenModel]: Fixed duplicate indexes in Token schema: 
+2025-04-18 00:42:24 INFO [inventory-api:EnvValidator]: =============== ENVIRONMENT SUMMARY =============== 
+2025-04-18 00:42:23 INFO [inventory-api:Passport]: GitHub authentication strategy initialized successfully 
+2025-04-18 00:42:24 INFO [inventory-api:EnvValidator]: Environment: DEVELOPMENT 
+2025-04-18 00:42:24 INFO [inventory-api:EnvValidator]: Port: 3000 
+2025-04-18 00:42:24 INFO [inventory-api:EnvValidator]: Database: mongodb+srv://ol****:********@cluster0.wncfx.mongodb.net/team_14_final_project?retryWrites=true&w=majority&appName=Cluster0 
+2025-04-18 00:42:24 INFO [inventory-api:EnvValidator]: ------- Features Status ------- 
+2025-04-18 00:42:24 INFO [inventory-api:EnvValidator]: githubOAuth: Enabled ✅ 
+2025-04-18 00:42:24 INFO [inventory-api:EnvValidator]: =============================================== 
+2025-04-18 00:42:24 INFO [inventory-api:Server]: MongoDB connected successfully 
+2025-04-18 00:42:26 INFO [inventory-api:Database]: MongoDB Connected: cluster0-shard-00-01.wncfx.mongodb.net 
+2025-04-18 00:42:26 INFO [inventory-api:InitUtils]: SUPERADMIN account already exists. Skipping initialization. 
+2025-04-18 00:42:26 INFO [inventory-api:Server]: Server running on http://localhost:3000 in development mode 
+2025-04-18 00:42:26 INFO [inventory-api:Server]: API Documentation: http://localhost:3000/api-docs 
+2025-04-18 00:42:32 DEBUG [inventory-api:App]: Session: 
+2025-04-18 00:42:32 DEBUG [inventory-api:App]: Session: 
+2025-04-18 00:42:32 DEBUG [inventory-api:App]: Session: 
+2025-04-18 00:42:32 DEBUG [inventory-api:App]: Session: 
+2025-04-18 00:42:32 DEBUG [inventory-api:App]: Session: 
+2025-04-18 00:42:50 DEBUG [inventory-api:App]: Session: 
+2025-04-18 00:42:50 DEBUG [inventory-api:App]: Session: 
+2025-04-18 00:42:50 DEBUG [inventory-api:App]: Session: 
+2025-04-18 00:42:52 DEBUG [inventory-api:App]: Session: 
+2025-04-18 00:42:52 DEBUG [inventory-api:App]: Session: 
+2025-04-18 00:42:52 DEBUG [inventory-api:App]: Session: 
+2025-04-18 00:42:54 DEBUG [inventory-api:App]: Session: 
+2025-04-18 00:42:54 INFO [inventory-api:AuthController]: login controller called 
+2025-04-18 00:42:54 DEBUG [inventory-api:AuthService]: authenticateUserService called for email: local@exaple.com 
+2025-04-18 00:42:54 ERROR [inventory-api:AuthController]: Error in login controller: Invalid email or password 
+AuthError: Invalid email or password
+    at AuthError.invalidCredentials (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\utils\errors.js:149:12)
+    at authenticateUserService (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\auth.service.js:222:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\auth.controller.js:98:18
+2025-04-18 00:42:54 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: AuthError - Invalid email or password 
+2025-04-18 00:43:05 DEBUG [inventory-api:App]: Session: 
+2025-04-18 00:43:05 INFO [inventory-api:AuthController]: login controller called 
+2025-04-18 00:43:05 DEBUG [inventory-api:AuthService]: authenticateUserService called for email: superadmin@example.com 
+2025-04-18 00:43:06 INFO [inventory-api:AuthService]: User authenticated successfully: superadmin@example.com 
+2025-04-18 00:43:06 DEBUG [inventory-api:App]: Session: 
+2025-04-18 00:43:06 DEBUG [inventory-api:App]: Session: 
+2025-04-18 00:43:06 DEBUG [inventory-api:App]: Session: 
+2025-04-18 00:43:06 DEBUG [inventory-api:App]: Session: 
+2025-04-18 00:43:06 DEBUG [inventory-api:App]: Session: 
+2025-04-18 00:43:06 DEBUG [inventory-api:App]: Session: 
+2025-04-18 00:43:06 WARN [inventory-api:Middleware:Auth]: No authentication token provided 
+2025-04-18 00:43:06 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: AuthError - Authentication required. Please provide a valid token. 
+2025-04-18 00:43:06 DEBUG [inventory-api:App]: Session: 
+2025-04-18 00:43:07 DEBUG [inventory-api:App]: Session: 
+2025-04-18 00:43:07 DEBUG [inventory-api:App]: Session: 
+2025-04-18 00:44:08 INFO [inventory-api:Server]: SIGINT signal received, shutting down gracefully 
+2025-04-18 00:44:08 INFO [inventory-api:Database]: Closing MongoDB connection due to server shutdown 

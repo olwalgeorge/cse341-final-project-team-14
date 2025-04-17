@@ -3,7 +3,7 @@ const GitHubStrategy = require("passport-github2").Strategy;
 const config = require("../config/config");
 const User = require("../models/user.model");
 const { createLogger } = require("../utils/logger");
-const { generateuserID } = require("../utils/user.utils");
+const { generateUserId } = require("../utils/user.utils");
 
 // Create module-specific logger
 const logger = createLogger('GitHubAuth');
@@ -41,7 +41,7 @@ if (!config.github.clientId || !config.github.clientSecret || !config.github.cal
             return done(null, false, { message: "Email already exists." });
           }
 
-          const userID = await generateuserID();
+          const userID = await generateUserId();
           user = new User({
             githubId: profile.id,
             username: profile.username.toLowerCase(),

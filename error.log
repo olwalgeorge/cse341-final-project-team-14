@@ -396,3 +396,11 @@ ValidationError: Supplier validation failed: supplierID: Path `supplierID` is in
     at C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\node_modules\mongoose\lib\schemaType.js:1407:9
     at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
 2025-04-17 20:49:06 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: ValidationError - Validation failed for field: supplierID 
+2025-04-18 00:42:54 ERROR [inventory-api:AuthController]: Error in login controller: Invalid email or password 
+AuthError: Invalid email or password
+    at AuthError.invalidCredentials (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\utils\errors.js:149:12)
+    at authenticateUserService (C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\services\auth.service.js:222:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async C:\Users\PC\OneDrive\Documents\BYU\Pathway\cse341 classwork\week-04\cse341-final-project-team-14\src\controllers\auth.controller.js:98:18
+2025-04-18 00:42:54 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: AuthError - Invalid email or password 
+2025-04-18 00:43:06 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: AuthError - Authentication required. Please provide a valid token. 
