@@ -2,6 +2,7 @@
  * JWT Authentication Module
  * 
  * Handles JWT token generation, verification, and related functions
+ * Updated to work with hybrid session/token authentication
  */
 const jwt = require('jsonwebtoken');
 const config = require('../config/config');
@@ -89,7 +90,8 @@ async function verifyToken(token) {
 }
 
 /**
- * Extract token from request headers, query, or cookies
+ * Extract token from request headers, query, cookies, or session
+ * Enhanced to work with hybrid authentication systems
  * @param {Object} req - Express request object
  * @returns {String|null} JWT token or null if not found
  */
@@ -109,6 +111,20 @@ function extractTokenFromRequest(req) {
     // Check for token in cookies
     if (req.cookies && req.cookies.token) {
       return req.cookies.token;
+    }
+    
+    // Check for token in session (added for hybrid auth)
+    if (req.session && req.session.jwt) {
+      return req.session.jwt;
+    }
+    
+    // Check if user information is available in session via Passport
+    // and a token was previously associated with this user
+    if (req.isAuthenticated && req.isAuthenticated() && req.user && req.user._id) {
+      // We have a session but no token - this is okay in hybrid systems
+      // We'll return null and let the authenticate middleware handle it
+      logger.debug('User authenticated via session but no JWT token found');
+      return null;
     }
 
     return null;

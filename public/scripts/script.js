@@ -28,8 +28,8 @@ document.addEventListener("DOMContentLoaded", function () {
       return token ? { 'Authorization': `Bearer ${token}` } : {};
     },
     
-    // Get current user's profile
-    fetchUserProfile: async () => {
+    // Get current user's profile with retry mechanism
+    fetchUserProfile: async (retryCount = 0) => {
       try {
         // Always include credentials to send cookies, regardless of token
         const headers = {
@@ -43,6 +43,12 @@ document.addEventListener("DOMContentLoaded", function () {
         });
         
         if (!response.ok) {
+          if (retryCount < 2) {
+            // Wait a short time and retry - session might not be fully established
+            console.log(`Profile fetch failed, retrying (${retryCount + 1}/2)...`);
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            return Auth.fetchUserProfile(retryCount + 1);
+          }
           throw new Error('Failed to fetch profile');
         }
         
@@ -184,12 +190,29 @@ document.addEventListener("DOMContentLoaded", function () {
     // Validate current auth and redirect if needed
     validateAuth: async (protectedPath = true) => {
       try {
+        // Prevent immediate redirects by adding a grace period
+        if (Auth.isFirstLoad && protectedPath) {
+          Auth.isFirstLoad = false;
+          // Set a flag in sessionStorage to track the authentication attempt
+          sessionStorage.setItem('authAttempt', 'true');
+          
+          // Check if we just came from login page - if so, give extra time for session to establish
+          const referrer = document.referrer;
+          const fromLoginPage = referrer.includes('login.html') || referrer.includes('/auth/');
+          
+          if (fromLoginPage) {
+            console.log('Just logged in, giving extra time for session to establish...');
+            await new Promise(resolve => setTimeout(resolve, 1000));
+          }
+        }
+
         // Always check with the server first using session cookies
         const profile = await Auth.fetchUserProfile();
         
         // If authenticated by session or profile exists
         if (profile) {
           // We're authenticated by session cookies
+          sessionStorage.removeItem('authAttempt');
           if (protectedPath) {
             // On protected page, we're good to stay
             return true;
@@ -204,15 +227,39 @@ document.addEventListener("DOMContentLoaded", function () {
             // We have a token, try to validate it
             const isValid = await Auth.validateToken();
             if (isValid) {
+              sessionStorage.removeItem('authAttempt');
               return true;
             } else {
               // Invalid token, clear it
               Auth.clearToken();
+              
+              // Check if this is a refresh after a failed first attempt
+              const authAttempt = sessionStorage.getItem('authAttempt');
+              if (authAttempt && !Auth.hasTriedRefresh) {
+                Auth.hasTriedRefresh = true;
+                console.log('Authentication failed on first try, attempting one more time...');
+                // Try one more time after a delay
+                await new Promise(resolve => setTimeout(resolve, 1500));
+                return Auth.validateAuth(protectedPath);
+              }
+              
+              sessionStorage.removeItem('authAttempt');
               window.location.href = "/login.html";
               return false;
             }
           } else if (protectedPath) {
             // No authentication at all on protected page
+            // Check if this is a refresh after a failed first attempt
+            const authAttempt = sessionStorage.getItem('authAttempt');
+            if (authAttempt && !Auth.hasTriedRefresh) {
+              Auth.hasTriedRefresh = true;
+              console.log('No authentication found, attempting one more check...');
+              // Try one more time after a delay
+              await new Promise(resolve => setTimeout(resolve, 1500));
+              return Auth.validateAuth(protectedPath);
+            }
+            
+            sessionStorage.removeItem('authAttempt');
             window.location.href = "/login.html";
             return false;
           }
@@ -245,7 +292,11 @@ document.addEventListener("DOMContentLoaded", function () {
         console.error("Token validation error:", error);
         return false;
       }
-    }
+    },
+    
+    // State flags to prevent redirect loops
+    isFirstLoad: true,
+    hasTriedRefresh: false
   };
   
   // UI helper functions
@@ -378,6 +429,14 @@ document.addEventListener("DOMContentLoaded", function () {
       // Show loading state
       document.body.classList.add('loading');
       
+      // Check for recently logged in flag to give session time to establish
+      const recentLogin = sessionStorage.getItem('recentLogin');
+      if (recentLogin) {
+        console.log('Recently logged in, waiting for session to fully establish...');
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        sessionStorage.removeItem('recentLogin');
+      }
+      
       // Check authentication status with the server
       const profile = await Auth.fetchUserProfile();
       
@@ -421,7 +480,46 @@ document.addEventListener("DOMContentLoaded", function () {
         const email = document.getElementById("email").value;
         const password = document.getElementById("password").value;
         
-        Auth.login(email, password);
+        // Traditional login function with added session establishment marker
+        const loginWithSessionTracking = async () => {
+          try {
+            const response = await fetch("/auth/login", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ email, password }),
+              credentials: "include",
+            });
+            
+            const data = await response.json();
+            
+            if (response.ok) {
+              // Store token if provided
+              if (data.data && data.data.token) {
+                Auth.setToken(data.data.token);
+              }
+              
+              // Set a flag that we've just logged in
+              sessionStorage.setItem('recentLogin', 'true');
+              
+              // Redirect to dashboard
+              window.location.href = "/dashboard.html";
+            } else {
+              // Handle various error response formats
+              const errorMsg = data.message || data.error || "Login failed";
+              UI.showError(errorMsg);
+            }
+          } catch (error) {
+            console.error("Login error:", error);
+            UI.showError("Network error. Please check your connection and try again.");
+          } finally {
+            UI.hideLoading('loginBtn');
+          }
+        };
+        
+        UI.showLoading('loginBtn');
+        loginWithSessionTracking();
       });
     }
   }

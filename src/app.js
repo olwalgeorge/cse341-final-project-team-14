@@ -33,13 +33,31 @@ app.use(session);
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Add this before routes to debug session issues
+// Enhanced session debugging middleware
 app.use((req, res, next) => {
-  logger.debug("Session:", {
-    id: req.sessionID,
-    authenticated: req.isAuthenticated(),
-    user: req.user?._id,
-  });
+  // Only log for relevant routes (auth, users, dashboard)
+  const relevantRoutes = ['/auth', '/users', '/dashboard'];
+  const isRelevantRoute = relevantRoutes.some(route => req.path.startsWith(route));
+  
+  if (isRelevantRoute) {
+    logger.debug("Session debug:", {
+      path: req.path,
+      method: req.method,
+      sessionID: req.sessionID || 'no-session-id',
+      authenticated: req.isAuthenticated ? req.isAuthenticated() : 'not-available',
+      user: req.user ? {
+        id: req.user._id || req.user.sub || 'no-id',
+        username: req.user.username || 'no-username',
+        email: req.user.email || 'no-email'
+      } : 'no-user-in-session',
+      headers: {
+        cookie: req.headers.cookie ? 'present' : 'absent',
+        authorization: req.headers.authorization ? 'present' : 'absent'
+      },
+      cookies: Object.keys(req.cookies || {})
+    });
+  }
+  
   next();
 });
 

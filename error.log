@@ -421,3 +421,6 @@ AuthError: Invalid email or password
 2025-04-18 00:48:06 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: AuthError - Invalid email or password 
 2025-04-18 00:55:30 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: ValidationError - Validation failed for field: email 
 2025-04-18 01:00:27 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: AuthError - Authentication required. Please provide a valid token. 
+2025-04-18 01:19:32 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: AuthError - Authentication required. Please provide a valid token. 
+2025-04-18 01:19:37 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: AuthError - Authentication required. Please provide a valid token. 
+2025-04-18 01:23:08 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: AuthError - Authentication required. Please provide a valid token. 

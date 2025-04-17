@@ -4,30 +4,50 @@
  * Authentication & Authorization Middleware
  * 
  * Provides middleware functions to protect routes with authentication and role-based authorization
+ * Supports both JWT token and session-based authentication
  */
 
 const { verifyToken, extractTokenFromRequest } = require('../auth/jwt');
 const { createLogger } = require('../utils/logger');
 const { AuthError } = require('../utils/errors');
 const { hasRole } = require('../utils/auth.utils');
+const User = require('../models/user.model');
 
 const logger = createLogger('Middleware:Auth');
 
 /**
- * Middleware to authenticate requests using JWT
+ * Middleware to authenticate requests using either JWT or session
  * This should be used before any route that requires authentication
  */
 const authenticate = async (req, res, next) => {
   try {
-    // Extract token from the request
+    // First check if user is already authenticated via session (Passport.js)
+    if (req.isAuthenticated && req.isAuthenticated() && req.user) {
+      logger.debug('User authenticated via session');
+      // If we have a session but not all user data, fetch additional data if needed
+      if (!req.user._id && req.user.sub) {
+        // If we only have JWT data in the session, fetch full user
+        try {
+          const user = await User.findById(req.user.sub);
+          if (user) {
+            req.user = user;
+          }
+        } catch (err) {
+          logger.error('Error fetching full user data from JWT session:', err);
+        }
+      }
+      return next();
+    }
+
+    // If no session, try JWT authentication
     const token = extractTokenFromRequest(req);
 
     if (!token) {
-      logger.warn('No authentication token provided');
-      return next(AuthError.unauthorized('Authentication required. Please provide a valid token.'));
+      logger.warn('No authentication token provided and no active session found');
+      return next(AuthError.unauthorized('Authentication required. Please log in.'));
     }
 
-    // Verify the token
+    // Verify the JWT token
     const decoded = await verifyToken(token);
     
     if (!decoded) {
@@ -35,8 +55,21 @@ const authenticate = async (req, res, next) => {
       return next(AuthError.unauthorized('Invalid or expired token. Please log in again.'));
     }
 
-    // Attach user info to the request object for use in route handlers
+    // Set the user info from the JWT
     req.user = decoded;
+    
+    // Optionally, fetch the full user from database if needed
+    try {
+      const user = await User.findById(decoded.sub);
+      if (user) {
+        // Merge JWT data with user data from database
+        req.user = { ...decoded, ...user.toObject() };
+      }
+    } catch (err) {
+      // Continue even if this fails, we already have the essential JWT data
+      logger.debug('Could not fetch full user data for JWT token:', err);
+    }
+
     next();
   } catch (error) {
     logger.error('Authentication error:', error);
@@ -67,7 +100,7 @@ const authorize = (roles) => {
       );
 
       if (!hasPermission) {
-        logger.warn(`Access denied for user ${req.user.userId} with role ${req.user.role}`);
+        logger.warn(`Access denied for user ${req.user._id || req.user.userId || req.user.sub} with role ${req.user.role}`);
         return next(AuthError.forbidden(`You do not have permission to access this resource. Required role: ${allowedRoles.join(' or ')}`));
       }
 
