@@ -393,3 +393,15 @@ AuthError: Token has been revoked. Please log in again.
 2025-04-17 10:44:51 INFO [inventory-api:InitUtils]: SUPERADMIN account already exists. Skipping initialization. 
 2025-04-17 10:44:51 INFO [inventory-api:Server]: Server running on http://localhost:3000 in development mode 
 2025-04-17 10:44:51 INFO [inventory-api:Server]: API Documentation: http://localhost:3000/api-docs 
+2025-04-17 10:48:29 DEBUG [inventory-api:App]: Session: 
+2025-04-17 10:48:29 DEBUG [inventory-api:App]: Session: 
+2025-04-17 10:48:29 DEBUG [inventory-api:App]: Session: 
+2025-04-17 10:48:29 DEBUG [inventory-api:App]: Session: 
+2025-04-17 10:48:29 DEBUG [inventory-api:App]: Session: 
+2025-04-17 10:51:39 DEBUG [inventory-api:App]: Session: 
+2025-04-17 10:51:39 INFO [inventory-api:AuthController]: login controller called 
+2025-04-17 10:51:39 DEBUG [inventory-api:AuthService]: authenticateUserService called for email: admin@inventory-system.com 
+2025-04-17 10:51:40 INFO [inventory-api:AuthService]: User authenticated successfully: admin@inventory-system.com 
+2025-04-17 10:57:06 DEBUG [inventory-api:App]: Session: 
+2025-04-17 10:57:06 WARN [inventory-api:Middleware:Auth]: Access denied for user USR-00010 with role SUPERADMIN 
+2025-04-17 10:57:06 ERROR [inventory-api:ErrorMiddleware]: Error caught in middleware: AuthError - You do not have permission to access this resource. Required role: ADMIN or MANAGER 

@@ -1,6 +1,7 @@
 ### Environment Variables
 @baseUrl = http://localhost:3000
 @authToken =eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2N2ZmYjE2YzNhYThiZmM0OWE1ZGQxZjciLCJ1c2VySWQiOiJVU1ItMDAwMDkiLCJlbWFpbCI6Im9sd2FsZ2VvcmdlMTVAZ21haWwuY29tIiwicm9sZSI6IlVTRVIiLCJ1c2VybmFtZSI6Impha29tIiwidmVyc2lvbiI6NywiaWF0IjoxNzQ0ODczMzgzLCJleHAiOjE3NDQ5NTk3ODN9.wmfjYnQ6DhH58infZe13W1f14vYBfx_vE0Yq8acw7HI
+
 ### Get all users (admin only)
 GET {{baseUrl}}/users
 Authorization: Bearer {{authToken}}
@@ -66,3 +67,23 @@ Authorization: Bearer {{authToken}}
 ### Search users (admin only)
 GET {{baseUrl}}/users/search?query=john&role=MANAGER&status=ACTIVE&limit=10&page=1
 Authorization: Bearer {{authToken}}
+
+### Superadmin Login
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@inventory-system.com",
+  "password": "SuperAdmin123!"
+}
+
+### Use the superadmin token for admin operations (replace with token from login response)
+@superAdminToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2ODAwYWRlZDcwNzc3N2Q1YTY5ZTI2NzAiLCJ1c2VySWQiOiJVU1ItMDAwMTAiLCJlbWFpbCI6ImFkbWluQGludmVudG9yeS1zeXN0ZW0uY29tIiwicm9sZSI6IlNVUEVSQURNSU4iLCJ1c2VybmFtZSI6InN5c3RlbWFkbWluIiwidmVyc2lvbiI6MSwiaWF0IjoxNzQ0ODc2MzAwLCJleHAiOjE3NDQ5NjI3MDB9.mAWZJvNbXr1MC0uZLIcpK3iXS7mAtlnNb4SdX_f8oyY
+
+### Get all users with superadmin privileges 
+GET {{baseUrl}}/users
+Authorization: Bearer {{superAdminToken}}
+
+### Get users by role (accessible by superadmin)
+GET {{baseUrl}}/users/role/ADMIN
+Authorization: Bearer {{superAdminToken}}
