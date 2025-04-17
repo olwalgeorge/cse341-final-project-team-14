@@ -17,6 +17,10 @@ const logger = createLogger('App');
 
 const app = express();
 
+// Trust proxy - required when running behind a reverse proxy like Render
+// This enables the rate limiter to use X-Forwarded-For header for client IP
+app.set('trust proxy', 1);
+
 // Apply global rate limiter to all requests
 app.use(globalLimiter);
 
