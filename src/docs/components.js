@@ -465,26 +465,239 @@ module.exports = {
     Product: {
       type: "object",
       properties: {
-        _id: { type: "string" },
-        productID: { type: "string", example: "PR-00001" },
-        name: { type: "string", example: "MacBook Pro M3" },
+        _id: { 
+          type: "string",
+          example: "64f5a7b3c5dc0d34f85d969e",
+          description: "MongoDB ObjectID of the product"
+        },
+        productID: { 
+          type: "string", 
+          example: "PR-00001",
+          pattern: "^PR-\\d{5}$",
+          description: "Unique product identifier in PR-XXXXX format"
+        },
+        name: { 
+          type: "string", 
+          example: "MacBook Pro M3",
+          maxLength: 100,
+          description: "Product name (max 100 characters)" 
+        },
         description: {
           type: "string",
           example: "Latest MacBook Pro with M3 chip",
+          maxLength: 500,
+          description: "Product description (max 500 characters)"
         },
-        price: { type: "number", example: 1999.99 },
-        quantity: { type: "integer", example: 10 },
-        category: { type: "string", example: "Electronics" },
+        sellingPrice: { 
+          type: "number", 
+          example: 1999.99,
+          minimum: 0,
+          description: "Price at which the product is sold (cannot be negative)"
+        },
+        costPrice: { 
+          type: "number", 
+          example: 1499.99,
+          minimum: 0, 
+          description: "Cost price of the product (cannot be negative)"
+        },
+        category: { 
+          type: "string", 
+          example: "Electronics",
+          enum: ["Electronics", "Clothing", "Food", "Furniture", "Other"],
+          description: "Product category"
+        },
         supplier: {
           oneOf: [
-            { type: "string" },
-            { $ref: "#/components/schemas/Supplier" },
+            { 
+              type: "string",
+              example: "64f5a7b3c5dc0d34f85d969f",
+              description: "MongoDB ObjectID reference to the supplier"
+            },
+            { 
+              $ref: "#/components/schemas/Supplier",
+              description: "Populated supplier object"
+            }
           ],
+          description: "Supplier reference (either ID or full object when populated)"
         },
-        sku: { type: "string", example: "APPL123456" },
-        createdAt: { type: "string", format: "date-time" },
-        updatedAt: { type: "string", format: "date-time" },
+        sku: { 
+          type: "string", 
+          example: "APPL-MBP-M3",
+          description: "Stock Keeping Unit, a unique identifier for the product"
+        },
+        tags: { 
+          type: "array", 
+          items: { 
+            type: "string" 
+          },
+          example: ["laptop", "apple", "macbook"],
+          description: "Tags for categorizing and searching products"
+        },
+        images: { 
+          type: "array", 
+          items: { 
+            type: "string" 
+          },
+          example: ["https://example.com/images/macbook1.jpg", "https://example.com/images/macbook2.jpg"],
+          description: "Array of image URLs for the product"
+        },
+        unit: { 
+          type: "string", 
+          example: "pcs",
+          enum: ["kg", "g", "l", "ml", "pcs"],
+          default: "pcs",
+          description: "Unit of measurement for the product"
+        },
+        createdAt: { 
+          type: "string", 
+          format: "date-time",
+          example: "2023-04-17T10:30:45Z",
+          description: "When the product was created" 
+        },
+        updatedAt: { 
+          type: "string", 
+          format: "date-time",
+          example: "2023-04-17T10:30:45Z", 
+          description: "When the product was last updated"
+        }
       },
+      required: ["productID", "name", "sellingPrice", "costPrice", "category", "supplier"]
+    },
+    ProductInput: {
+      type: "object",
+      required: ["name", "sellingPrice", "costPrice", "category", "supplier"],
+      properties: {
+        name: { 
+          type: "string", 
+          example: "MacBook Pro M3",
+          maxLength: 100,
+          description: "Product name (max 100 characters)"
+        },
+        description: {
+          type: "string",
+          example: "Latest MacBook Pro with M3 chip",
+          maxLength: 500,
+          description: "Product description (max 500 characters)"
+        },
+        sellingPrice: { 
+          type: "number", 
+          example: 1999.99,
+          minimum: 0,
+          description: "Price at which the product is sold (cannot be negative)"
+        },
+        costPrice: { 
+          type: "number", 
+          example: 1499.99,
+          minimum: 0,
+          description: "Cost price of the product (cannot be negative)"
+        },
+        category: { 
+          type: "string", 
+          example: "Electronics",
+          enum: ["Electronics", "Clothing", "Food", "Furniture", "Other"],
+          description: "Product category"
+        },
+        supplier: { 
+          type: "string", 
+          example: "64f5a7b3c5dc0d34f85d969f",
+          description: "MongoDB ObjectID reference to the supplier"
+        },
+        sku: { 
+          type: "string", 
+          example: "APPL-MBP-M3",
+          description: "Stock Keeping Unit, a unique identifier for the product"
+        },
+        tags: { 
+          type: "array", 
+          items: { 
+            type: "string" 
+          },
+          example: ["laptop", "apple", "macbook"],
+          description: "Tags for categorizing and searching products"
+        },
+        images: { 
+          type: "array", 
+          items: { 
+            type: "string" 
+          },
+          example: ["https://example.com/images/macbook1.jpg", "https://example.com/images/macbook2.jpg"],
+          description: "Array of image URLs for the product"
+        },
+        unit: { 
+          type: "string", 
+          example: "pcs",
+          enum: ["kg", "g", "l", "ml", "pcs"],
+          default: "pcs",
+          description: "Unit of measurement for the product"
+        }
+      }
+    },
+    ProductUpdate: {
+      type: "object",
+      properties: {
+        name: { 
+          type: "string", 
+          example: "MacBook Pro M3 Pro",
+          maxLength: 100,
+          description: "Updated product name (max 100 characters)"
+        },
+        description: {
+          type: "string",
+          example: "Updated MacBook Pro with M3 Pro chip",
+          maxLength: 500,
+          description: "Updated product description (max 500 characters)"
+        },
+        sellingPrice: { 
+          type: "number", 
+          example: 2499.99,
+          minimum: 0,
+          description: "Updated selling price (cannot be negative)"
+        },
+        costPrice: { 
+          type: "number", 
+          example: 1899.99,
+          minimum: 0,
+          description: "Updated cost price (cannot be negative)"
+        },
+        category: { 
+          type: "string", 
+          example: "Electronics",
+          enum: ["Electronics", "Clothing", "Food", "Furniture", "Other"],
+          description: "Updated product category"
+        },
+        supplier: { 
+          type: "string", 
+          example: "64f5a7b3c5dc0d34f85d969f",
+          description: "Updated supplier reference (MongoDB ObjectID)"
+        },
+        sku: { 
+          type: "string", 
+          example: "APPL-MBP-M3-PRO",
+          description: "Updated Stock Keeping Unit"
+        },
+        tags: { 
+          type: "array", 
+          items: { 
+            type: "string" 
+          },
+          example: ["laptop", "apple", "macbook", "pro"],
+          description: "Updated tags for the product"
+        },
+        images: { 
+          type: "array", 
+          items: { 
+            type: "string" 
+          },
+          example: ["https://example.com/images/macbook_pro1.jpg", "https://example.com/images/macbook_pro2.jpg"],
+          description: "Updated array of image URLs"
+        },
+        unit: { 
+          type: "string", 
+          example: "pcs",
+          enum: ["kg", "g", "l", "ml", "pcs"],
+          description: "Updated unit of measurement"
+        }
+      }
     },
     Pagination: {
       type: "object",

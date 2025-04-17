@@ -24,19 +24,33 @@ const {
   supplierIdValidationRules,
 } = require("../validators/product.validator.js");
 
-// Public routes - no authentication required
-router.get("/", getAllProducts);
-router.get("/search", searchProducts);
+// Protected routes - require authentication and proper authorization
+router.get("/", isAuthenticated, getAllProducts);
+router.get("/search", isAuthenticated, searchProducts);
 router.get(
   "/productID/:productID",
+  isAuthenticated,
   validate(productIDValidationRules()),
   getProductByProductID
 );
-router.get("/category/:category", validate(categoryValidationRules()), getProductsByCategory);
-router.get("/supplier/:supplierId", validate(supplierIdValidationRules()), getProductsBySupplier);
-router.get("/:product_Id", validate(product_IdValidationRules()), getProductById);
-
-// Protected routes - require authentication and proper authorization
+router.get(
+  "/category/:category",
+  isAuthenticated,
+  validate(categoryValidationRules()),
+  getProductsByCategory
+);
+router.get(
+  "/supplier/:supplierId",
+  isAuthenticated,
+  validate(supplierIdValidationRules()),
+  getProductsBySupplier
+);
+router.get(
+  "/:product_Id",
+  isAuthenticated,
+  validate(product_IdValidationRules()),
+  getProductById
+);
 // Create products - restricted to management roles
 router.post(
   "/",
