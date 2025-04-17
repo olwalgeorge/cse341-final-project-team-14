@@ -158,7 +158,7 @@ module.exports = {
       }
     }
   },
-  "/inventory/{_id}": {
+  "/inventory/{inventory_Id}": {
     get: {
       tags: ["Inventory"],
       summary: "Get inventory item by ID",
@@ -166,10 +166,14 @@ module.exports = {
       security: [{ bearerAuth: [] }],
       parameters: [
         {
-          name: "_id",
+          name: "inventory_Id",
           in: "path",
           required: true,
-          schema: { type: "string" },
+          schema: { 
+            type: "string",
+            pattern: "^[a-f\\d]{24}$" 
+          },
+          example: "64f5a7b3c5dc0d34f85d969e",
           description: "MongoDB ID of the inventory item"
         }
       ],
@@ -201,10 +205,14 @@ module.exports = {
       security: [{ bearerAuth: [] }],
       parameters: [
         {
-          name: "_id",
+          name: "inventory_Id",
           in: "path",
           required: true,
-          schema: { type: "string" },
+          schema: { 
+            type: "string",
+            pattern: "^[a-f\\d]{24}$" 
+          },
+          example: "64f5a7b3c5dc0d34f85d969e",
           description: "MongoDB ID of the inventory item"
         }
       ],
@@ -245,10 +253,14 @@ module.exports = {
       security: [{ bearerAuth: [] }],
       parameters: [
         {
-          name: "_id",
+          name: "inventory_Id",
           in: "path",
           required: true,
-          schema: { type: "string" },
+          schema: { 
+            type: "string",
+            pattern: "^[a-f\\d]{24}$" 
+          },
+          example: "64f5a7b3c5dc0d34f85d969e",
           description: "MongoDB ID of the inventory item to delete"
         }
       ],

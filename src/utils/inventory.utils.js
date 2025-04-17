@@ -10,7 +10,7 @@ const transformInventory = (inventory) => {
   if (!inventory) return null;
   
   const transformed = {
-    id: inventory._id,
+    inventory_id: inventory._id,
     inventoryID: inventory.inventoryID,
     product: inventory.product,
     warehouse: inventory.warehouse,
