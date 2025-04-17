@@ -31,7 +31,12 @@ document.addEventListener("DOMContentLoaded", function () {
     // Get current user's profile
     fetchUserProfile: async () => {
       try {
-        const headers = Auth.getAuthHeaders();
+        // Always include credentials to send cookies, regardless of token
+        const headers = {
+          ...Auth.getAuthHeaders(),
+          'Content-Type': 'application/json'
+        };
+        
         const response = await fetch("/users/profile", {
           headers,
           credentials: "include",
@@ -179,24 +184,47 @@ document.addEventListener("DOMContentLoaded", function () {
     // Validate current auth and redirect if needed
     validateAuth: async (protectedPath = true) => {
       try {
-        // If on a protected page and no token exists, redirect to login
-        if (protectedPath && !Auth.getToken()) {
-          window.location.href = "/login.html";
-          return false;
-        }
+        // Always check with the server first using session cookies
+        const profile = await Auth.fetchUserProfile();
         
-        // If on login/register page with valid token, redirect to dashboard
-        if (!protectedPath && Auth.getToken()) {
-          const isValid = await Auth.validateToken();
-          if (isValid) {
+        // If authenticated by session or profile exists
+        if (profile) {
+          // We're authenticated by session cookies
+          if (protectedPath) {
+            // On protected page, we're good to stay
+            return true;
+          } else {
+            // On login/register page but already authenticated, redirect to dashboard
             window.location.href = "/dashboard.html";
             return true;
           }
+        } else {
+          // Not authenticated by session, try token
+          if (protectedPath && Auth.getToken()) {
+            // We have a token, try to validate it
+            const isValid = await Auth.validateToken();
+            if (isValid) {
+              return true;
+            } else {
+              // Invalid token, clear it
+              Auth.clearToken();
+              window.location.href = "/login.html";
+              return false;
+            }
+          } else if (protectedPath) {
+            // No authentication at all on protected page
+            window.location.href = "/login.html";
+            return false;
+          }
         }
         
-        return !!Auth.getToken();
+        // Default case for login/register pages
+        return false;
       } catch (error) {
         console.error("Auth validation error:", error);
+        if (protectedPath) {
+          window.location.href = "/login.html";
+        }
         return false;
       }
     },
@@ -347,14 +375,14 @@ document.addEventListener("DOMContentLoaded", function () {
   // Dashboard initialization
   async function initDashboard() {
     try {
-      // Validate authentication before proceeding
-      const isAuthenticated = await Auth.validateAuth(true);
-      if (!isAuthenticated) {
-        return; // Auth.validateAuth will handle redirection
-      }
+      // Show loading state
+      document.body.classList.add('loading');
       
+      // Check authentication status with the server
       const profile = await Auth.fetchUserProfile();
+      
       if (profile) {
+        // User is authenticated, update the UI
         const userNameElement = document.getElementById("userName");
         if (userNameElement) {
           userNameElement.textContent = profile.fullName || profile.username;
@@ -362,9 +390,19 @@ document.addEventListener("DOMContentLoaded", function () {
         
         // Additional dashboard initialization can go here
         console.log("Dashboard initialized for user:", profile.username);
+        document.body.classList.remove('loading');
+      } else {
+        // Not authenticated via session, check token
+        const isAuthenticated = await Auth.validateAuth(true);
+        if (!isAuthenticated) {
+          // validateAuth will handle redirection
+          return;
+        }
       }
     } catch (error) {
       console.error("Dashboard initialization error:", error);
+      // If there's an error, still remove loading state
+      document.body.classList.remove('loading');
     }
   }
   
